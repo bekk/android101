@@ -6,6 +6,9 @@ title: Interface Builder
 <ul>
 	<li><a href="#storyboard">Lage storyboard og sette main interface</a></li>
 	<li><a href="#leggetilelementer">Legge til elementer på storyboard</a></li>
+	<li><a href="#knytteviewcontroller">Knytte ViewController klasse til ViewController i Interface builder</a></li>
+	<li><a href="#outlet">Knytte interface-elementer til underliggende ViewController</a></li>
+	<li><a href="#inspisereconnections">Inspisere og endre connections til View Controller</a></li>
 </ul>
 
 <h2 id="storyboard">Lage storyboard og sette main interface</h2>
@@ -20,3 +23,31 @@ title: Interface Builder
 <h2 id="leggetilelementer">Legge til elementer på storyboard</h2>
 Finn "Object library" knappen og dra inn elementer som viewcontroller, labels, textfelt m.m:
 <img src="{{ site.baseurl }}/img/xcode_add_elements.png" />
+
+<h2 id="knytteviewcontroller">Knytte ViewController klasse til ViewController i Interface builder</h2>
+
+<ol>
+	<li>File new -> Objective C class.</li>
+	<li>Velg UIViewController som subclass</li>
+	<li>Gå til storyboard, velg ViewControlleren (se bildet) og trykk i "Custom Class". Sett dette til navnet på klassen du laget. Dette vil "linke sammen" interface builder og ViewController-klassen.</li>
+</ol>
+
+<img src="{{ site.baseurl }}/img/xcode_knyttevc.png" />
+
+<h2 id="outlet">Knytte interface-elementer til underliggende ViewController</h2>
+<ol>
+	<li>Velg "Assistant editor knappen" (se bilde)</li>
+	<li>Velg om nødvendig relevant ".h" fil i dropdown (se bilde), slik at du har story boardet til venstre og relevant .h-fil til høyre</li>
+	<li>Marker elementet (labelen i dette filfellet). Hold inne CTRL og dra fra elementet og slipp i inne i interfacet (slik bildet viser)
+	</li>
+</ol>
+<img src="{{ site.baseurl }}/img/xcode_ib_assistant.png" />
+
+Skriv inn et navn og connect. 
+<img src="{{ site.baseurl }}/img/xcode_outlet.png" />
+
+Property og GUI-elementet er nå knyttet sammen:
+<img src="{{ site.baseurl }}/img/xcode_outlet_done.png" />
+
+<h2 id="inspisereconnections">Inspisere og endre connections til View Controller</h2>
+<img src="{{ site.baseurl }}/img/xcode_connections.png" />
