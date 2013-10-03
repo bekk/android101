@@ -5,4 +5,73 @@ title: Table View Controllers
 
 <img src="{{ site.baseurl }}/img/tableviewcontroller.png" />
 
-<img src="{{ site.baseurl }}/img/tableviewcontroller1.png" />
+<p>Et <code>UITableView</code> får dataene og oppførselen sin fra en <code>UITableViewController</code>.</p>
+<p><code>UITableViewController</code> implementerer <a href="protocols.html">protokollene</a> <code>UITableViewDelegate</code> og <code>UITableViewDataSource</code></p>
+
+{% highlight objective-c %}
+@interface UITableViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+...
+@end
+{% endhighlight %}
+
+<p>Når <code>UITableViewController</code> skal trenger informasjon om hvilke data som skal vises (hvor mange rader? hva er innholdet i cella?) spør den sin <code>UITableViewDataSource</code> om dette. Tilsvarende spør den <code>UITableViewDelegate</code> om oppførsel (kan man trykke på cellen? hvor høy skal raden være?)</p>
+
+<div class="alert alert-block">
+  <h3>Delegate patternet</h3>
+Måten <code>UITableViewController</code> spør <code>UITableViewDelegate</code> og <code>UITableViewDataSource</code> er et eksempel på bruk av <a href="delegates.html">delegate patternet</a>
+</div>
+
+<h2>Eksempel på UITableViewController</h2>
+
+
+<strong>SpotifySearchResultTableViewController.h</strong>
+{% highlight objective-c %}
+@interface SpotifySearchResultTableViewController : UITableViewController
+@end
+{% endhighlight %}
+
+<strong>SpotifySearchResultTableViewController.m</strong>
+<div class="alert alert-block">
+I dokumentasjonen til <code>UITableViewDataSource</code> vil du se at vi minimum må implementere to metoder:
+<img src="{{ site.baseurl }}/img/uitableviewdatasource_required.png" />
+</div>
+{% highlight objective-c %}
+#import "SpotifySearchResultTableViewController.h"
+#import "SpotifyService.h"
+#import "SpotifyTrack.h"
+
+@interface SpotifySearchResultTableViewController ()
+@property (nonatomic, strong) NSArray* tracks;
+@end
+
+@implementation SpotifySearchResultTableViewController
+#pragma mark - Table view data source
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.tracks.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"trackCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    SpotifyTrack *track = self.tracks[indexPath.row];
+    cell.textLabel.text = track.title;
+    cell.detailTextLabel.text = track.artist;
+    
+    return cell;
+}
+@end
+{% endhighlight %}
+
+<div class="alert alert-block">
+<h3>dequeueReusableCellWithIdentifier?</h3>
+
+{% highlight objective-c %}
+static NSString *CellIdentifier = @"trackCell";
+UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+{% endhighlight %}
+
+<p>Disse linjene ser kanskje kryptiske ut, men er helt geniale! Det som skjer i praksis er at Cocoa Touch prøver å finne en celle som allerede er laget og scrollet ut av skjermen med IDen <code>trackCell</code>. Hvis det finnes en slik celle, blir den den gjenbrukt slik at man slipper å instansiere en ny og holde denne i minnet. Finnes den ikke blir det allokert et nytt UI celle for deg. Dette betyr at selv om du har en array med 1000 elementer, vil det aldri finnes flere UI celler enn man får plass til på skjermen.</p>
+
+</div>
