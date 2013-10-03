@@ -19,7 +19,7 @@ title: Manus
 	<li><a href="interface-builder.html#leggetilelementer">Dra inn en ViewController, knapp og label i Storyboardet</a></li>
 	<li><a href="interface-builder.html#knytteviewcontroller">Lage og sette tilhørende ViewController klasse</a> (<a href="klasser.html#lage">Hva er *.h og *.m filene</a>)</li>
 	<li><a href="interface-builder.html#outlet">Knytte interface-elementer til underliggende ViewController</a>, slik at de kan refereres fra kode</li>
-	<li>Lage SpotifyTrack (Klasser, Arv, imports, @properties (ivars), Objekter har pekere)
+	<li>Lag SpotifyTrack (<a href="klasser.html">Klasser, Arv, imports, @properties (ivars), Objekter har pekere</a>)
 {% highlight objective-c %}
 @interface SpotifyTrack : NSObject
 	@property (nonatomic, strong) NSString *id;
@@ -30,16 +30,20 @@ title: Manus
 {% endhighlight %}
 
 	</li>
-	<li>Lage en ny SpotifyTrack i viewDidLoad
+	<li><a href="klasser.html">Opprett en ny SpotifyTrack</a> i SpotifyPlayerViewController sin viewDidLoad
 {% highlight objective-c %}
-SpotifyTrack *track = [[SpotifyTrack alloc] init];
-track.id = @"";
-track.title = @"";
-self.titleLabel.text = track.title;
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    SpotifyTrack *track = [[SpotifyTrack alloc] init];
+    track.id = @"";
+    track.title = @"";
+    self.titleLabel.text = track.title;
+}
 {% endhighlight %}
 	</li>
 	<li>
-	Knytte knapp til IBAction og forklare message passing (metode kall)
+	<a href="interface-builder.html#outlet">Knytte knapp til IBAction</a> og forklare <a href="klasser.html#metoder">message passing (metode kall)</a>
 
 {% highlight objective-c %}
 - (IBAction)openInSpotifyButtonTouch:(id)sender {

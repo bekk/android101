@@ -1,29 +1,26 @@
 ---
 layout: default
-title: Klasser
+title: Klasser, metoder og arv
 ---
 
 <ul>
 	<li><a href="#lage">Lage klasser</a></li>
 	<li><a href="#definere">Definere og benytte klasser</a>
 		<ul>
-			<li><a href="#instansiere">Instansiere</a></li>
+			<li><a href="#instansiere">Instansiere, konstruktører</a></li>
 			<li><a href="#instansvariabler">Instansvariabler</a></li>
 			<li><a href="#properties">Properties</a></li>
 			<li><a href="#metoder">Metoder</a></li>
 		</ul>
 	</li>
-	<li>Arv</li>
+	<li><a href="#arv">Arv</a></li>
 </ul>
-
-TODO importering av filer
 
 <h2 id="lage">Lage nye klasser</h2>
 <ol>
 	<li>File -> New file...</li>
 </ol>
-<img src="{{ site.baseurl }}/img/new-class1.png" />
-<img src="{{ site.baseurl }}/img/new-class2.png" />
+<img src="{{ site.baseurl }}/img/new-class.png" />
 
 <div class="alert alert-block">
   <h3>Navnekonvensjon</h3>
@@ -62,10 +59,25 @@ TODO importering av filer
 	</ul>
 </div>
 
+<div class="alert alert-error"><strong>Import:</strong> Interfacer må importeres før bruk. Dvs. at når du vil bruke en klasse må du huske å importere den med <code>#import "Klasse.h"</code>. Dette gjelder også når du skal definere interfacet (.h) i implementasjonsfila (.m).
+</div>
+
 <h3 id="instansiere">Instansiere klasser</h3>
 {% highlight objective-c %}
 SpotifyTrack *track = [[SpotifyTrack alloc] init];
 {% endhighlight %}
+
+<div class="alert alert-block">
+<h4>Konstruktører?</h4>
+Objective-C har ikke egne konstruktører, men det er en konvensjon at alle metoder som begynner på <code>init</code> benyttes til dette. Eksempler:
+
+<dl>
+	<dt>Ikke parametrisk "konstruktør"</dt>
+	<dd><code>[[SpotifyTrack alloc] init]</code></dd>
+	<dt>Parameterisert "konstruktør"</dt>
+	<dd><code>[[SpotifyTrack alloc] initWithId:@"123" andTitle:@"D-D-Dance"]</code></dd>
+</dl>
+</div>
 
 <h3 id="instansvariabler">Instansvariabler</h3>
 <ul>
@@ -132,7 +144,153 @@ NSLog(@"Artist: %@", track.artist); // kaller getter
 	- `nonatomic` - sier seg kanskje selv, motsatte av atomic
 
 <h3 id="metoder">Metoder</h3>
-TODO
+<h4>Definere klassemetoder (statiske metoder, + foran)</h4>
+{% highlight objective-c %}
++ (id)alloc /* Allokerer en plass i minne til objektet */
+{% endhighlight %}
+
+<h4>Definere instansmetoder (- foran)</h4>
+{% highlight objective-c %}
+- (id)init /* Gjør initialiseringen som kreves av et objekt for å bli klart */
+{% endhighlight %}
+
+Ofte bruker man en kombinasjon av klasse og instansmetoder, som vist under. <code>alloc</code> kalles først som en klassemetode slik at man allokerer plass til et objekt. Deretter kalles instansmetoden <code>init</code>.
+{% highlight objective-c %}
+[[MyObject alloc] init]
+{% endhighlight %}
+
+
+<h4>Objective-C Message Passing</h4>
+<ul>
+	<li>I Objective-C kaller man ikke metoder på objekter, men sender en beskjed</li>
+	<li>Navngir ikke selve metoden, men hver parameter</li>
+	<li>Skriver metoder mer som om man snakker til objektet</li>
+</ul>
+
+
+<strong>Definere metoder</strong>
+{% highlight objective-c %}
+// Med to parametere
+- (id)initWithId:(NSString *)id andTitle:(NSString *)title;
+
+// Setter med et parameter
+- (void)setTitle:(NSString *)title;
+
+// Getter
+- (NSString *)title;
+{% endhighlight %}
+
+<strong>Java eksempel</strong>
+{% highlight java %}
+SpotifyTrack track = new SpotifyTrack("id", "I'm awsome!");
+
+person.setTitle("I'm awsome!");
+
+String title = track.getTitle();
+{% endhighlight %}
+
+<strong>Objective-C ekvivalent</strong>
+{% highlight objective-c %}
+SpotifyTrack *track = [[SpotifyTrack alloc] initWithId:@"id" andTitle:@"I'm awsome!"];
+
+[track setTitle:@"I'm awsome!"];
+
+NSString *title = [track title];
+{% endhighlight %}
+
+<div class="alert alert-block">
+<h4>Navnekonvensjon</h4>
+<p>Objective-C er rimelig verbost når det kommer til metodenavn. Navnene blir en del av metodesignaturen og må brukes når man kaller på metoden senere.</p>
+<strong>Metodesignatur (worst case?):</strong>
+
+{% highlight objective-c %}
+- (id)initWithBitmapDataPlanes:(unsigned char **)planes 
+                    pixelsWide:(NSInteger)width 
+                    pixelsHigh:(NSInteger)height 
+                 bitsPerSample:(NSInteger)bps 
+               samplesPerPixel:(NSInteger)spp 
+                      hasAlpha:(BOOL)alpha
+                      isPlanar:(BOOL)isPlanar 
+                colorSpaceName:(NSString *)colorSpaceName
+                  bitmapFormat:(NSBitmapFormat)bitmapFormat 
+                   bytesPerRow:(NSInteger)rowBytes
+                  bitsPerPixel:(NSInteger)pixelBits
+{% endhighlight %}
+
+<strong>Sende melding til metoden:</strong>
+{% highlight objective-c %}
+[[NSBitmapImageRep alloc]
+                     initWithBitmapDataPlanes:NULL
+                     pixelsWide:nsRectFrameRect.size.width 
+                     pixelsHigh:nsRectFrameRect.size.height
+                     bitsPerSample:8 
+                     samplesPerPixel:3 
+                     hasAlpha:NO 
+                     isPlanar:NO 
+                     colorSpaceName:@"NSCalibratedRGBColorSpace" 
+                     bytesPerRow:0 
+                     bitsPerPixel:0];
+{% endhighlight %}
+</div>
+
+<h4>Kalle metoder på samme klasse</h4>
+{% highlight objective-c %}
+[self enInstansmetode];
+[MinKlasse enKlasseMetode];
+{% endhighlight %}
+
+<h4>Kalle på metoder med dot syntax</h4>
+<p>En alternativ måte å kalle tilgangsmetoder (accessor methods, get, set):</p>
+
+{% highlight objective-c %}
+NSString *artist = track.artist;
+track.title = @"I'm awsome!";
+track.artist.firstname = @"Superman";
+{% endhighlight %}
+
+{% highlight objective-c %}
+NSString *artist = [track artist]; 
+[track setTitle:@"I'm awsome!"];
+[[track artist] setFirstname:@"Superman"];
+{% endhighlight %}
+
+<h3>Terminologi</h3>
+
+<dl>
+<dt>Message expression</dt>
+<dd>
+{% highlight objective-c %}
+	[person setAge:25];
+{% endhighlight %}
+</dd>
+
+<dt>Message</dt>
+<dd>
+{% highlight objective-c %}
+	setAge:25
+{% endhighlight %}
+</dd>
+
+<dt>Selector</dt>
+<dd>
+{% highlight objective-c %}
+	setAge:
+{% endhighlight %}
+</dd>
+</dl>
+
 
 <h2 id="arv">Arv</h2>
-TODO
+Arv defineres i interface med <code>Subclass : Superclass</code> syntaks. 
+
+{% highlight objective-c %}
+// i SpotifyTrack.h. Får SpotifyTrack til å arve fra NSObject
+@interface SpotifyTrack : NSObject
+@end
+
+{% endhighlight %}
+<ul>
+	<li>Rotklassen i Objective-C kalles <code>NSObject</code></li>
+	<li>Arv spesifiseres i headerfilen (.h)</li>
+	<li><code>super</code> brukes for å sende meldinger til klassen man arver fra. Eks. <code>[super enmetodepåsuperklassen]</code></li>
+</ul>
