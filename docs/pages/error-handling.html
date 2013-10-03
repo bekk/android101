@@ -21,13 +21,15 @@ Venn *venn = [[Venn alloc] init];
 {% endhighlight %}
 
 
-<ol><li> De fleste (og Apple) bruker heller `NSError`</li></ol>
+<h2>NSError</h2>
+
+<ol><li> De fleste (og Apple) bruker <code>NSError</code></li></ol>
 
 {% highlight objective-c %}
 NSError *myError = nil;
 NSString *fileContent = [NSString stringWithContentsOfFile:@"minfil.txt"
-												 encoding:NSUTF8StringEncoding
-												    error:&myError];
+							 encoding:NSUTF8StringEncoding
+						    	error:\&myError];
 if (myError != nil) {
 	// Noe feilet
 }

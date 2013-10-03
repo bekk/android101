@@ -1,5 +1,13 @@
 h1 {
-  margin-bottom: 30px;
+  margin-bottom: 5em;
+}
+
+h2 {
+  margin-top: 3em;
+}
+
+h2:first-of-type {
+  margin-top: 1em;
 }
 
 .main {
@@ -8,4 +16,8 @@ h1 {
 
 .page-header {
   margin-top: 0;
+}
+
+img, pre {
+  margin: 20px 0 20px 0;
 }

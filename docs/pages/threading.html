@@ -5,21 +5,21 @@ title: Threading
 
 Objective-C gir oss flere forskjellige måter å lage tråder på, her har vi tre forskjellige
 
-<ul><li> __NSThread__ gir oss muligheten til å kjøre en selector i en ny tråd</li></ul>
+<ul><li> <code>NSThread</code> gir oss muligheten til å kjøre en selector i en ny tråd</li></ul>
 
 {% highlight objective-c %}
 [NSThread detachNewThreadSelector:
 	@selector(startBakgrunnsJobb) toTarget:self withObject:nil];  
 {% endhighlight %}
 
-<ul><li>__NSOperationQueue__ og __NSOperation__
-	<li> Oppretter en ny `NSOperationQueue`</li>
-	<li> Oppretter objekter av klasser som subklasser `NSOperation`</li>
-	<li>`[queue addOperation:myOperation]`</li>
+<ul><li><code>NSOperationQueue</code> og <code>NSOperation</code>
+	<li> Oppretter en ny <code>NSOperationQueue</code></li>
+	<li> Oppretter objekter av klasser som subklasser <code>NSOperation</code></li>
+	<li><code>[queue addOperation:myOperation]</code></li>
 </li></ul>
 
- <ul><li>__Grand Central Dispatch (GCD)__ - C-bibliotek for å kjøre ting parallelt
+ <ul><li>Grand Central Dispatch (GCD) - C-bibliotek for å kjøre ting parallelt
 	<li>(Kanskje) vanskeligere å bruke, men mer kontroll</li>
 	<li>Benytter mye blocks</li>
-	<li>`dispatch_async` kjører en block i bakgrunnen</li>
+	<li><code>dispatch_async</code> kjører en block i bakgrunnen</li>
 </li></ul>
