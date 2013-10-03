@@ -3,91 +3,39 @@ layout: default
 title: Delegates
 ---
 
-<ol>
-	<li>"Design pattern" for å få et objekt til å delegere deler av sine oppgaver til et annet objekt</li>
-	<li>Ikke originalt GoF pattern</li>
-</ol>
+<p>Design pattern for å få et objekt til å delegere deler av sine oppgaver til et annet objekt</p>
 
-
-{% highlight objective-c %}
-	@implementation Car
-		- (id) init
-		{
-			self = [super init];
-
-			if(self != nil)
-			{
-				self.engine = [[Engine alloc] init];
-			}
-			return self;
-		}
-		- (void) start
-		{
-			[self.engine start];
-		}
-	@end
-{% endhighlight %}
-
-<ol>
-	<li>Du kaller start på en `Car`, men bilen kaller start på `Engine`</li>
-	<li>Negativt: Skaper knytning mellom `Car` og `Engine`. (High coupling)</li>
-</ol>
-
-
-
-<h2>Delegate med Inversion of control (IoC) med constructor injection</h2>
-
-{% highlight objective-c %}
-@implementation Car
-	- (id) initWithEngine:(Engine)engine
-	{
-		self = [super init];
-
-		if(self != nil)
-
-		{
-			self.engine = engine;
-		}
-		return self;
-	}
-	- (void) start
-	{
-		[self.engine start];
-	}
-@end
-{% endhighlight %}
-
-<ol><li>Low coupling</li></ol>
+<img src="{{ site.baseurl }}/img/delegate.png" />
 
 
 <h2>Eksempel med UIAlertView</h2>
-<h3>Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på oss ved hjelp av en selector</h3>
+<p>Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på oss ved hjelp av en selector</p>
 
 {% highlight objective-c %}
 @implementation MinViewController
-	- (void)showAlertView {
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Advarsel"
-			message:@"Beskjed"
-			delegate:self /* Setter oss selv som delegate på UIAlertViewet */
-			cancelButtonTitle:@"Ok"
-			otherButtonTitles:nil];
-		[alert show];
-	}
+- (void)showAlertView {
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Advarsel"
+		message:@"Beskjed"
+		delegate:self /* Setter oss selv som delegate på UIAlertViewet */
+		cancelButtonTitle:@"Ok"
+		otherButtonTitles:nil];
+	[alert show];
+}
 
-	- (void)alertView:(UIAlertView *)alertView 
-		clickedButtonAtIndex:(NSInteger)buttonIndex {
-		NSLog(@"Trykket på en knapp!");
-	}
+- (void)alertView:(UIAlertView *)alertView 
+	clickedButtonAtIndex:(NSInteger)buttonIndex {
+	NSLog(@"Trykket på en knapp!");
+}
 @end
 
 
 @implementation UIAlertView
-	//[...show...]
-		/* UIAlertView vises, og kjører følgende kode når man trykker på en knapp */
-		if ([_delegate respondsToSelector:@selector(alertView:clickedButtonAtIndex:)]) {
-			/* Kaller funksjonen alertView:clickedButtonAtIndex: på delegatet */
-			[_delegate alertView:self clickedButtonAtIndex:buttonIndex];
-		}
-	//[...]
+//[...show...]
+	/* UIAlertView vises, og kjører følgende kode når man trykker på en knapp */
+	if ([_delegate respondsToSelector:@selector(alertView:clickedButtonAtIndex:)]) {
+		/* Kaller funksjonen alertView:clickedButtonAtIndex: på delegatet */
+		[_delegate alertView:self clickedButtonAtIndex:buttonIndex];
+	}
+//[...]
 @end
 {% endhighlight %}
