@@ -38,7 +38,7 @@
 {
     
     [KURLConnection startWithRequest:
-     [KURLConnection createGetRequestForUrl:[NSURL URLWithString:@"http://localhost:3000/message"]]
+     [KURLConnection createGetRequestForUrl:[NSURL URLWithString:@"http://ios-course.herokuapp.com//message"]]
                       successHandler:^(NSData *data)
      {
          MessageParser *messageParser = [[MessageParser alloc] init];

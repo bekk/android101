@@ -77,7 +77,7 @@ static NSString *usernameKey = @"username";
 - (void)postFrom:(NSString *)from withMessage:(NSString *)message
 {
     
-    NSURL *postUrl = [NSURL URLWithString:@"http://localhost:3000/message"];
+    NSURL *postUrl = [NSURL URLWithString:@"http://ios-course.herokuapp.com/"];
     Message *messageObject = [[Message alloc] init];
     messageObject.from = from;
     messageObject.message = message;
