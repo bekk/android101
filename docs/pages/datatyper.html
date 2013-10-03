@@ -3,15 +3,11 @@ layout: default
 title: Datatyper
 ---
 
-TODO: datatyper, objekter, pekere, datatyper, id vs statisk dynamisk
-
-TODO: itereringseksempler
-
-<h2>Objective-C Literals</h2>
+<h2>Objective-C Datatyper og Literals</h2>
 
 <ul>
-	<li> Noen som husker <code>@</code> for å lage <code>NSString</code>?</li>
-	<li>Nylig utvidet for å kunne lage <code>NSNumber</code>, <code>NSArray</code> og <code>NSDictionary</code></li>
+	<li>Man bruker snarveier som <code>@</code> for å lage <code>NSString</code></li>
+	<li>Men man kan også bruke snarveier for å lage <code>NSNumber</code>, <code>NSArray</code> og <code>NSDictionary</code></li>
 </ul>
 
 <h3>NSNumber</h3>
@@ -55,4 +51,84 @@ NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
 */
 
 NSLog(@"Første element: %@", dictionary["firstname"]);
+{% endhighlight %}
+
+<h2>Itterere</h2>
+
+<h3>For-loop</h3>
+
+{% highlight objective-c %}
+NSArray songs = [@"Hello", @"Someday", @"Help"];
+
+for (NSUInteger index = 0; index < songs.count; index++)
+{
+    loop-body
+}
+{% endhighlight %}
+
+<h3>For-in-loop</h3>
+
+{% highlight objective-c %}
+
+NSArray songs = [@"Hello", @"Someday", @"Help"];
+
+for (NSString *string in songs)
+{
+    // do stuff...
+}
+{% endhighlight %}
+
+<h2>Pekere</h2>
+
+<div class="alert alert-info">
+<p>Først og fremst, hva er disse * overalt?</p>
+
+<p>Det er hvordan man definerer en peker til minnet</p>
+</div>
+
+<h2>Dynamisk eller statisk?</h2>
+
+<p>Ved bruk av `id` bruker man ikke * da den har en peker automatisk</p>
+
+<div class="alert alert-info">
+Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske typer når man skriver koden.
+
+<p>Det betyr at: Statisk typing er kun til for å gi deg typesikkerhet ved kompilering; alle spor forsvinner etter kompilering, foruten primitiver som ikke er pekere og derfor statiske</p>
+</div>
+
+<h4>Eksempel</h4>
+
+{% highlight objective-c %}
+id track = [[SpotifyTrack alloc] init]; /* dynamisk typet */
+SpotifyTrack *track = [[SpotifyTrack alloc] init]; /* statisk typet */
+int songCount = 3; /* primitiv */
+{% endhighlight %}
+
+<ol>
+	<li><code>id</code> er definert som en pointer til hva som helst</li>
+	<li>Hvis vi ser på initializerne ser vi at de alltid returnerer <code>id</code>.</li>
+</ol>
+
+<h2>Nil</h2>
+
+<ul>
+	<li>I Objective-C bruker man <code>nil</code>, i stedet for <code>null</code> som i mange andre språk</li>
+	<li>Om man kaller en metode på nil får man bare nil tilbake, ingen exception!</li>
+</ul>
+
+{% highlight objective-c %}
+NSString *string = nil;
+NSString *low = [string lowercaseString];
+NSLog(@"%@", low); // => null
+{% endhighlight %}
+
+<ul>
+<li>Dette vil logge (null) uten å krœsje</li>
+<li><code>NULL</code> og <code>nil</code> kompileres begge til tallet <code>0</code>, så dette er også lov:</li>
+</ul>
+
+{% highlight objective-c %}
+NSString *string = 0;
+NSString *low = [string lowercaseString];
+NSLog(@"%@", low); // => null
 {% endhighlight %}
