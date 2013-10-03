@@ -1,40 +1,44 @@
 ---
 layout: default
-title: Oppgaver
+title: Oppgaver - Lets code!
 ---
 
-
-<h2>Lets code!</h1>
 <h3>Twitter aktig app</h2>
 
-<ul><li>Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)</li></ul>
+<p>Vi skal lage en twitter aktig app ved å snakke med en server. Her kan man utfordre seg selv på GUI flikking, eller man kan sørge for å kunne utføre alle handlingene API'et tilbyr.</p>
 
+<h2>Server</h2>
 
-<h2>Hint</h2>
+<p>Serveren ligger på <a href="http://ios-course.herokuapp.com">
+		http://ios-course.herokuapp.com</a></p>
 
-<ul>
-	<li>Serveren ligger på [http://ios-course.herokuapp.com](http://ios-course.herokuapp.com)</li>
-	<li>Rest endepunktene leverer JSON og fungerer på følgende måte:
-	<ol>
-		<li>[http://ios-course.herokuapp.com/message](http://ios-course.herokuapp.com/message) (GET) <- alle beskjeder</li>
-		<li>[http://ios-course.herokuapp.com/message](http://ios-course.herokuapp.com/message) (POST) <- JSON i body</li>
-		<li>[http://ios-course.herokuapp.com/message/{id}](http://ios-course.herokuapp.com/message/{id}) (DELETE) <- Slette</li>
-		<li>[http://ios-course.herokuapp.com/message/{id}](http://ios-course.herokuapp.com/message/{id}) (PUT) <- Oppdatere</li>
-	</ol>
-	</li>
-</ul>
+<p>
+Rest endepunktene leverer JSON og fungerer på følgende måte:
+	<ul>
+		<li><a href="http://ios-course.herokuapp.com/message">http://ios-course.herokuapp.com/message</a> (GET) <- alle beskjeder</li>
+		<li><a href="http://ios-course.herokuapp.com/message">http://ios-course.herokuapp.com/message</a> (POST) <- JSON i body</li>
+		<li><a href="http://ios-course.herokuapp.com/message/{id}">http://ios-course.herokuapp.com/message/{id}</a> (DELETE) <- Slette</li>
+		<li><a href="http://ios-course.herokuapp.com/message/{id}">http://ios-course.herokuapp.com/message/{id}</a> (PUT) <- Oppdatere</li>
+	</ul>
+<p>
 
-{% highlight javascript %}	
+<h3>Eksempel POST</h3>
+
+{% highlight javascript %}
 {
+	//date må man ikke ha med, men kan vœre morsom å manipulere.;)
 	"from":"hinderberg",
 	"message":"Denne funker fint!:)",
-	"date":"2012-10-18T17:43:48.011Z" //date må man ikke ha med
+	"date":"2012-10-18T17:43:48.011Z" 
 }
 {% endhighlight %}
 
-<p />
+<h2>Hjelp</h2>
+
+<p>
+Hjelpeklasser for å snakke med serveren: <a href="http.html">HTTP</a>
+</p>
 
 {% highlight objective-c %}
 NSJSONSerialization //Kan brukes til å parse JSON til Objective-C 
-#import <library/library.h> //Hjelpe klassene importeres
 {% endhighlight %}
