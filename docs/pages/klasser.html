@@ -81,7 +81,7 @@ Objective-C har ikke egne konstruktører, men det er en konvensjon at alle metod
 
 <h3 id="instansvariabler">Instansvariabler</h3>
 <ul>
-<li>Alle instansvariabler deklarert i .h-filen er automatisk interne (@protected)</li>
+<li>Alle instansvariabler deklarert i .h-filen er automatisk interne (<code>@protected</code>)</li>
 <li>Kan overstyres ved hjelp av 'scope directives'</li>
 </ul>
 
@@ -129,19 +129,28 @@ NSLog(@"Artist: %@", track.artist); // kaller getter
 
 
 <h4>Styre oppførslen til properties</h4>
-<div class="alert alert-error">TODO: oppdater</div>
 
-* Tilgjengelighet
-	- `readonly` - kun getter
-	- `readwrite` - både getter og setter (default)
-* Hvordan setteren skal fungere
-	- `strong` - denne klassen eier propertien, og styrer minnehåndtering
-	- `weak` - denne klassen eier _ikke_ propertien, og styrer derfor _ikke_ minnehåndteringen
-	- `copy` - en kopi av objektet vil bli brukt ved assignment
-	- `assign` - setter verdien direkte. Brukes ofte på primitiver
-* Trådsikkerhet
-	- `atomic` - Default, men bør brukes sjelden da den er tregere. Har tilleggsfunksjonalitet som gjør at man alltid returnerer ett helt objekt når flere tråder snakker med setter og getter
-	- `nonatomic` - sier seg kanskje selv, motsatte av atomic
+<p>Når man bruker <code>@property</code> for å generere en getter og setter kan man bestemme oppførsel ved hjelp av flere parametre</p>
+
+<h5>Tilgjengelighet</h5>
+<ul>
+	<li><code>readonly</code> lager kun en getter og ikke en setter</li>
+	<li><code>readwrite</code> lager både getter og setter (default)</li>
+</ul>
+
+<h5>Bestemme oppførselen til en setter</h5>
+<ul>
+<li><code>strong</code> bestemmer at klassen som lager propertien eier instasvariabelen, og styrer minnehåndtering</li>
+<li><code>weak</code> klassen som lager propertien eier ikke instansvariabelen, og styrer derfor ikke minnehåndteringen</li>
+<li><code>copy</code> lager en kopi av instansvariabelen når man bruker setteren som blir generert av <code>@property</code></li>
+<li><code>assign</code> setter verdien direkte. Brukes blant annet ofte på primitiver</li>
+</ul>
+
+<h5>Trådsikkerhet</h5>
+<ul>
+	<li><code>atomic</code> Default, men bør brukes sjelden da den er tregere. Har tilleggsfunksjonalitet som gjør at man alltid returnerer ett helt objekt når flere tråder snakker med setter og getter
+	<li><code>nonatomic</code> er ikke trådsikker og man kan risikere å få hente instansvariabelen samtidig som noen skriver til den</li>
+</ul>	
 
 <h3 id="metoder">Metoder</h3>
 <h4>Definere klassemetoder (statiske metoder, + foran)</h4>

@@ -2,3 +2,11 @@
 layout: default
 title: View Controllers
 ---
+
+Brukes til å orkistrere andre views
+I en custom UIViewController limes model objekter, andre controller klasser og grensesnitt sammen
+Ett lite tips er å dra all logikk som ikke har med view ut i andre gjenbrukbare klasser og bruke disse i view controlleren.
+En viewcontroller kan også inneholde andre view controllere.
+Den står for resizing av views, tilpasse inneholde til viewene og lytter på events som fyres av fra disse viewene når brukeren interaktere med dem.
+Det er vanlig å ha flere view controllere i en app.
+En view controller eies ofte enten av ett window (det som finnes i AppDelegate), eller en annen view controller.
