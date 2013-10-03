@@ -6,33 +6,83 @@
         <title>Interface Builder</title>
         <meta name="viewport" content="width=device-width">
 
-        <!-- syntax highlighting CSS -->
         <link rel="stylesheet" href="/ios101/css/syntax.css">
-
-        <!-- Custom CSS -->
         <link href="/ios101/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" href="/ios101/css/main.css">
+        <script src="/ios101/js/jquery.min.js"></script>
         <script src="/ios101/js/bootstrap.min.js"></script>
 
     </head>
     <body>
-      <div class="container-fluid">
+      <div class="container-fluid main">
         <div class="row-fluid">
           <div class="span8">
-            <h1>Interface Builder</h1>
-            
+            <h1 class="page-header">Interface Builder</h1>
+            <ul>
+	<li><a href="#storyboard">Lage storyboard og sette main interface</a></li>
+	<li><a href="#leggetilelementer">Legge til elementer på storyboard</a></li>
+	<li><a href="#knytteviewcontroller">Knytte ViewController klasse til ViewController i Interface builder</a></li>
+	<li><a href="#outlet">Knytte interface-elementer til underliggende ViewController</a></li>
+	<li><a href="#inspisereconnections">Inspisere og endre connections til View Controller</a></li>
+</ul>
+
+<h2 id="storyboard">Lage storyboard og sette main interface</h2>
+<ol>   
+    <li>Opprett med File -> New file. Velg User Inferface -> Storyboard. Next. Next. Create</li>
+    <li>Få applikasjonen til å benytte dette storyboardet som default:
+
+<img src="/ios101/img/xcode_set_storyboard.png" />
+    </li>
+</ol>
+
+<h2 id="leggetilelementer">Legge til elementer på storyboard</h2>
+Finn "Object library" knappen og dra inn elementer som viewcontroller, labels, textfelt m.m:
+<img src="/ios101/img/xcode_add_elements.png" />
+
+<h2 id="knytteviewcontroller">Knytte ViewController klasse til ViewController i Interface builder</h2>
+
+<ol>
+	<li>File new -> Objective C class.</li>
+	<li>Velg UIViewController som subclass</li>
+	<li>Gå til storyboard, velg ViewControlleren (se bildet) og trykk i "Custom Class". Sett dette til navnet på klassen du laget. Dette vil "linke sammen" interface builder og ViewController-klassen.</li>
+</ol>
+
+<img src="/ios101/img/xcode_knyttevc.png" />
+
+<h2 id="outlet">Knytte interface-elementer til underliggende ViewController</h2>
+<ol>
+	<li>Velg "Assistant editor knappen" (se bilde)</li>
+	<li>Velg om nødvendig relevant ".h" fil i dropdown (se bilde), slik at du har story boardet til venstre og relevant .h-fil til høyre</li>
+	<li>Marker elementet (labelen i dette filfellet). Hold inne CTRL og dra fra elementet og slipp i inne i interfacet (slik bildet viser)
+	</li>
+</ol>
+<img src="/ios101/img/xcode_ib_assistant.png" />
+
+Skriv inn et navn og connect. 
+<img src="/ios101/img/xcode_outlet.png" />
+
+Property og GUI-elementet er nå knyttet sammen:
+<img src="/ios101/img/xcode_outlet_done.png" />
+
+<p>For å knytte en knapp til en metode, CTRL-dra fra knappen og inn i implementasjonsfila:</p>
+<img src="/ios101/img/xcode_ibaction.png" />
+
+<p>Knapp er nå linket opp! Do your magic:</p>
+<img src="/ios101/img/xcode_ibaction_done.png" />
+
+<h2 id="inspisereconnections">Inspisere og endre connections til View Controller</h2>
+<img src="/ios101/img/xcode_connections.png" />
 
           </div>
           <nav class="span4">
             <strong>XCode</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
   
 
-  
-    
   
     
   
@@ -88,8 +138,6 @@
 
   
 
-  
-    
   
     
   
@@ -191,8 +239,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/xcode-prosjektinnstillinger.html">Prosjektinnstillinger</a></li>
     
   
@@ -202,8 +248,6 @@
 
   
 
-  
-    
   
     
   
@@ -275,9 +319,7 @@
     
   
     
-  
-    
-      <li class="current"><a href="/ios101/pages/interface-builder.html">Interface Builder</a></li>
+      <li class="active"><a href="/ios101/pages/interface-builder.html">Interface Builder</a></li>
     
   
     
@@ -316,7 +358,7 @@
 
             <strong>Objective-C</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
@@ -348,7 +390,7 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/objective-c.html">Objective-C</a></li>
     
   
     
@@ -377,8 +419,6 @@
 
   
 
-  
-    
   
     
   
@@ -452,9 +492,7 @@
     
   
     
-  
-    
-      <li class=""><a href="/ios101/pages/klasser.html">Klasser</a></li>
+      <li class=""><a href="/ios101/pages/klasser.html">Klasser, metoder og arv</a></li>
     
   
     
@@ -491,122 +529,6 @@
 
   
 
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-      <li class=""><a href="/ios101/pages/metoder.html">Metoder</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-
-  
-    
-  
-    
-      <li class=""><a href="/ios101/pages/arv.html">Arv</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-
-  
-    
   
     
   
@@ -662,8 +584,6 @@
 
   
 
-  
-    
   
     
   
@@ -749,10 +669,6 @@
     
   
     
-  
-    
-  
-    
       <li class=""><a href="/ios101/pages/protocols.html">Protocols</a></li>
     
   
@@ -770,14 +686,14 @@
   
     
   
-
-
-  
-
-  
-
-  
     
+  
+
+
+  
+
+  
+
   
     
   
@@ -865,7 +781,7 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/selectors.html">Selectors</a></li>
     
   
     
@@ -888,8 +804,6 @@
 
   
 
-  
-    
   
     
   
@@ -957,8 +871,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/error-handling.html">Error Handling</a></li>
     
   
@@ -1002,14 +914,12 @@
 
             <strong>Cocoa Touch</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
   
 
-  
-    
   
     
   
@@ -1099,8 +1009,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/table-view-controllers.html">Table View Controllers</a></li>
     
   
@@ -1146,11 +1054,9 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/navigation-controllers.html">Navigation Controllers</a></li>
     
   
-    
-      <li class=""><a href="/ios101/pages/navigation-controller.html">Navigation Controller</a></li>
     
   
     
@@ -1179,7 +1085,7 @@
 
             <strong>Ressurser</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
@@ -1213,11 +1119,9 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/oppgaver.html">Oppgaver - Lets code!</a></li>
     
   
-    
-      <li class=""><a href="/ios101/pages/oppgaver.html">Oppgaver</a></li>
     
   
     
@@ -1242,8 +1146,6 @@
 
   
 
-  
-    
   
     
   
@@ -1321,8 +1223,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/merinfo.html">Ressurser</a></li>
     
   
@@ -1356,8 +1256,6 @@
 
   
 
-  
-    
   
     
   

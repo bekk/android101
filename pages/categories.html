@@ -6,61 +6,55 @@
         <title>Categories</title>
         <meta name="viewport" content="width=device-width">
 
-        <!-- syntax highlighting CSS -->
         <link rel="stylesheet" href="/ios101/css/syntax.css">
-
-        <!-- Custom CSS -->
         <link href="/ios101/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" href="/ios101/css/main.css">
+        <script src="/ios101/js/jquery.min.js"></script>
         <script src="/ios101/js/bootstrap.min.js"></script>
 
     </head>
     <body>
-      <div class="container-fluid">
+      <div class="container-fluid main">
         <div class="row-fluid">
           <div class="span8">
-            <h1>Categories</h1>
-            * Categories brukes for å legge nye funksjoner til eksisterende klasser, og er et alternativ til arv.
-* En category vil kjøre som en del av klassen, og ha tilgang til self.
+            <h1 class="page-header">Categories</h1>
+            <ol>
+	<li>Categories brukes for å legge nye funksjoner til eksisterende klasser, og er et alternativ til arv</li>
+	<li>En category vil kjøre som en del av klassen, og ha tilgang til self</li>
+</ol>
 
 
+<div class="highlight"><pre><code class="objective-c"><span class="k">@interface</span> <span class="nc">NSString</span> <span class="nl">(MyCategory)</span>
 
-.objective-c
-	@interface NSString (MyCategory)
+<span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">isEmptyString</span><span class="p">;</span>
 
-	- (BOOL)isEmptyString;
+<span class="k">@end</span>
 
-	@end
+<span class="k">@implementation</span> <span class="nc">NSString</span> <span class="nl">(MyCategory)</span>
 
-	@implementation NSString (MyCategory)
+<span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">isEmptyString</span> <span class="p">{</span>
+	<span class="cm">/* implementation.. */</span>
+<span class="p">}</span>
 
-	- (BOOL)isEmptyString {
-		/* implementation.. */
-	}
+<span class="k">@end</span>
+</code></pre></div>
 
-	@end
+<ol><li> NB: Bruk med forsiktighet (..monkey patching)</li></ol>
 
-
-* NB: Bruk med forsiktighet (..monkey patching)
-
-
-
-.objective-c
-	BOOL empty = [@"" isEmptyString];
-	/* YES */
-
+<div class="highlight"><pre><code class="objective-c">	<span class="kt">BOOL</span> <span class="n">empty</span> <span class="o">=</span> <span class="p">[</span><span class="s">@&quot;&quot;</span> <span class="n">isEmptyString</span><span class="p">];</span>
+	<span class="cm">/* YES */</span>
+</code></pre></div>
 
           </div>
           <nav class="span4">
             <strong>XCode</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
   
 
-  
-    
   
     
   
@@ -116,8 +110,6 @@
 
   
 
-  
-    
   
     
   
@@ -219,8 +211,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/xcode-prosjektinnstillinger.html">Prosjektinnstillinger</a></li>
     
   
@@ -230,8 +220,6 @@
 
   
 
-  
-    
   
     
   
@@ -303,8 +291,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/interface-builder.html">Interface Builder</a></li>
     
   
@@ -344,7 +330,7 @@
 
             <strong>Objective-C</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
@@ -376,7 +362,7 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/objective-c.html">Objective-C</a></li>
     
   
     
@@ -405,8 +391,6 @@
 
   
 
-  
-    
   
     
   
@@ -480,9 +464,7 @@
     
   
     
-  
-    
-      <li class=""><a href="/ios101/pages/klasser.html">Klasser</a></li>
+      <li class=""><a href="/ios101/pages/klasser.html">Klasser, metoder og arv</a></li>
     
   
     
@@ -519,122 +501,6 @@
 
   
 
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-      <li class=""><a href="/ios101/pages/metoder.html">Metoder</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-
-  
-    
-  
-    
-      <li class=""><a href="/ios101/pages/arv.html">Arv</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-
-  
-    
   
     
   
@@ -696,9 +562,7 @@
     
   
     
-  
-    
-      <li class="current"><a href="/ios101/pages/categories.html">Categories</a></li>
+      <li class="active"><a href="/ios101/pages/categories.html">Categories</a></li>
     
   
     
@@ -747,10 +611,6 @@
 
   
 
-  
-    
-  
-    
   
     
   
@@ -798,14 +658,14 @@
   
     
   
-
-
-  
-
-  
-
-  
     
+  
+
+
+  
+
+  
+
   
     
   
@@ -893,7 +753,7 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/selectors.html">Selectors</a></li>
     
   
     
@@ -916,8 +776,6 @@
 
   
 
-  
-    
   
     
   
@@ -985,8 +843,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/error-handling.html">Error Handling</a></li>
     
   
@@ -1030,14 +886,12 @@
 
             <strong>Cocoa Touch</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
   
 
-  
-    
   
     
   
@@ -1127,8 +981,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/table-view-controllers.html">Table View Controllers</a></li>
     
   
@@ -1174,11 +1026,9 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/navigation-controllers.html">Navigation Controllers</a></li>
     
   
-    
-      <li class=""><a href="/ios101/pages/navigation-controller.html">Navigation Controller</a></li>
     
   
     
@@ -1207,7 +1057,7 @@
 
             <strong>Ressurser</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
@@ -1241,11 +1091,9 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/oppgaver.html">Oppgaver - Lets code!</a></li>
     
   
-    
-      <li class=""><a href="/ios101/pages/oppgaver.html">Oppgaver</a></li>
     
   
     
@@ -1270,8 +1118,6 @@
 
   
 
-  
-    
   
     
   
@@ -1349,8 +1195,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/merinfo.html">Ressurser</a></li>
     
   
@@ -1384,8 +1228,6 @@
 
   
 
-  
-    
   
     
   

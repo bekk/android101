@@ -6,54 +6,57 @@
         <title>Blocks</title>
         <meta name="viewport" content="width=device-width">
 
-        <!-- syntax highlighting CSS -->
         <link rel="stylesheet" href="/ios101/css/syntax.css">
-
-        <!-- Custom CSS -->
         <link href="/ios101/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" href="/ios101/css/main.css">
+        <script src="/ios101/js/jquery.min.js"></script>
         <script src="/ios101/js/bootstrap.min.js"></script>
 
     </head>
     <body>
-      <div class="container-fluid">
+      <div class="container-fluid main">
         <div class="row-fluid">
           <div class="span8">
-            <h1>Blocks</h1>
-            * Minner mye om closures, og brukes ofte for å
-	* kunne kjøre små kodeblokker samtidig
-	* iterere over objekter i et array
-	* kjøre kode som et callback
-* Man definerer en block med `.objective-c ^{ /*min fine block*/ }`
-	* Alt inne i blocken kan lese variabler på utsiden
-	* Variabler på utsiden må defineres med `__block` for å være skrivbare
+            <h1 class="page-header">Blocks</h1>
+            <ol>
+	<li>Minner mye om closures, og brukes ofte for å
+		<ol>
+			<li>kunne kjøre små kodeblokker samtidig</li>
+			<li>iterere over objekter i et array</li>
+			<li>kjøre kode som et callback</li>
+		</ol>
+	</li>
+	<li>Man definerer en block med <code>^{ /*min fine block*/ }</code>
+		<ol>
+			<li>Alt inne i blocken kan lese variabler på utsiden</li>
+			<li>Variabler på utsiden må defineres med <code>__block</code> for å være skrivbare</li>
+		</ol>
+	</li>
+</ol>
 
+<div class="highlight"><pre><code class="objective-c"><span class="cm">/* En block-definisjon */</span>
+<span class="k">typedef</span> <span class="nf">void</span><span class="p">(</span><span class="o">^</span><span class="n">KURLConnectionSuccessHandler</span><span class="p">)(</span><span class="n">NSData</span> <span class="o">*</span><span class="n">data</span><span class="p">);</span>
 
+<span class="cm">/* metodedefinisjon med block som input */</span>
+<span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">startWithSuccessHandler:</span><span class="p">(</span><span class="n">KURLConnectionSuccessHandler</span><span class="p">)</span><span class="nv">successHandler</span><span class="p">;</span>
 
-.objective-c
-	/* En block-definisjon */
-	typedef void(^KURLConnectionSuccessHandler)(NSData *data);
-
-	/* metodedefinisjon med block som input */
-	+ (void)startWithSuccessHandler:(KURLConnectionSuccessHandler)successHandler;
-
-	/* Kall på metode med block lik block-definisjonen */
-	[KURLConnection startWithSuccessHandler:^(NSData *data)
-    {
-		[self cancelTouch:nil];
-    }];
+<span class="cm">/* Kall på metode med block lik block-definisjonen */</span>
+<span class="p">[</span><span class="n">KURLConnection</span> <span class="n">startWithSuccessHandler</span><span class="o">:^</span><span class="p">(</span><span class="n">NSData</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="p">[</span><span class="n">self</span> <span class="n">cancelTouch</span><span class="o">:</span><span class="nb">nil</span><span class="p">];</span>
+<span class="p">}];</span>
+</code></pre></div>
 
           </div>
           <nav class="span4">
             <strong>XCode</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
   
 
-  
-    
   
     
   
@@ -109,8 +112,6 @@
 
   
 
-  
-    
   
     
   
@@ -212,8 +213,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/xcode-prosjektinnstillinger.html">Prosjektinnstillinger</a></li>
     
   
@@ -223,8 +222,6 @@
 
   
 
-  
-    
   
     
   
@@ -296,8 +293,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/interface-builder.html">Interface Builder</a></li>
     
   
@@ -337,7 +332,7 @@
 
             <strong>Objective-C</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
@@ -369,7 +364,7 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/objective-c.html">Objective-C</a></li>
     
   
     
@@ -398,8 +393,6 @@
 
   
 
-  
-    
   
     
   
@@ -473,9 +466,7 @@
     
   
     
-  
-    
-      <li class=""><a href="/ios101/pages/klasser.html">Klasser</a></li>
+      <li class=""><a href="/ios101/pages/klasser.html">Klasser, metoder og arv</a></li>
     
   
     
@@ -516,66 +507,7 @@
     
   
     
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-      <li class=""><a href="/ios101/pages/metoder.html">Metoder</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-
-  
-    
-  
-    
-      <li class=""><a href="/ios101/pages/arv.html">Arv</a></li>
-    
-  
+      <li class="active"><a href="/ios101/pages/blocks.html">Blocks</a></li>
     
   
     
@@ -626,65 +558,6 @@
 
   
 
-  
-    
-  
-    
-  
-    
-      <li class="current"><a href="/ios101/pages/blocks.html">Blocks</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-
-  
-    
   
     
   
@@ -770,10 +643,6 @@
     
   
     
-  
-    
-  
-    
       <li class=""><a href="/ios101/pages/protocols.html">Protocols</a></li>
     
   
@@ -791,14 +660,14 @@
   
     
   
-
-
-  
-
-  
-
-  
     
+  
+
+
+  
+
+  
+
   
     
   
@@ -886,7 +755,7 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/selectors.html">Selectors</a></li>
     
   
     
@@ -909,8 +778,6 @@
 
   
 
-  
-    
   
     
   
@@ -978,8 +845,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/error-handling.html">Error Handling</a></li>
     
   
@@ -1023,14 +888,12 @@
 
             <strong>Cocoa Touch</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
   
 
-  
-    
   
     
   
@@ -1120,8 +983,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/table-view-controllers.html">Table View Controllers</a></li>
     
   
@@ -1167,11 +1028,9 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/navigation-controllers.html">Navigation Controllers</a></li>
     
   
-    
-      <li class=""><a href="/ios101/pages/navigation-controller.html">Navigation Controller</a></li>
     
   
     
@@ -1200,7 +1059,7 @@
 
             <strong>Ressurser</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
@@ -1234,11 +1093,9 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/oppgaver.html">Oppgaver - Lets code!</a></li>
     
   
-    
-      <li class=""><a href="/ios101/pages/oppgaver.html">Oppgaver</a></li>
     
   
     
@@ -1263,8 +1120,6 @@
 
   
 
-  
-    
   
     
   
@@ -1342,8 +1197,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/merinfo.html">Ressurser</a></li>
     
   
@@ -1377,8 +1230,6 @@
 
   
 
-  
-    
   
     
   

@@ -3,43 +3,39 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Klasser</title>
+        <title>Klasser, metoder og arv</title>
         <meta name="viewport" content="width=device-width">
 
-        <!-- syntax highlighting CSS -->
         <link rel="stylesheet" href="/ios101/css/syntax.css">
-
-        <!-- Custom CSS -->
         <link href="/ios101/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" href="/ios101/css/main.css">
+        <script src="/ios101/js/jquery.min.js"></script>
         <script src="/ios101/js/bootstrap.min.js"></script>
 
     </head>
     <body>
-      <div class="container-fluid">
+      <div class="container-fluid main">
         <div class="row-fluid">
           <div class="span8">
-            <h1>Klasser</h1>
+            <h1 class="page-header">Klasser, metoder og arv</h1>
             <ul>
 	<li><a href="#lage">Lage klasser</a></li>
 	<li><a href="#definere">Definere og benytte klasser</a>
 		<ul>
-			<li><a href="#instansiere">Instansiere</a></li>
+			<li><a href="#instansiere">Instansiere, konstruktører</a></li>
 			<li><a href="#instansvariabler">Instansvariabler</a></li>
 			<li><a href="#properties">Properties</a></li>
 			<li><a href="#metoder">Metoder</a></li>
 		</ul>
 	</li>
-	<li>Arv</li>
+	<li><a href="#arv">Arv</a></li>
 </ul>
-
-TODO importering av filer
 
 <h2 id="lage">Lage nye klasser</h2>
 <ol>
 	<li>File -> New file...</li>
 </ol>
-<img src="/img/new-class1.png" />
-<img src="/img/new-class2.png" />
+<img src="/ios101/img/new-class.png" />
 
 <div class="alert alert-block">
   <h3>Navnekonvensjon</h3>
@@ -76,13 +72,28 @@ TODO importering av filer
 	</ul>
 </div>
 
+<div class="alert alert-error"><strong>Import:</strong> Interfacer må importeres før bruk. Dvs. at når du vil bruke en klasse må du huske å importere den med <code>#import "Klasse.h"</code>. Dette gjelder også når du skal definere interfacet (.h) i implementasjonsfila (.m).
+</div>
+
 <h3 id="instansiere">Instansiere klasser</h3>
 <div class="highlight"><pre><code class="objective-c"><span class="n">SpotifyTrack</span> <span class="o">*</span><span class="n">track</span> <span class="o">=</span> <span class="p">[[</span><span class="n">SpotifyTrack</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
 </code></pre></div>
 
+<div class="alert alert-block">
+<h4>Konstruktører?</h4>
+Objective-C har ikke egne konstruktører, men det er en konvensjon at alle metoder som begynner på <code>init</code> benyttes til dette. Eksempler:
+
+<dl>
+	<dt>Ikke parametrisk "konstruktør"</dt>
+	<dd><code>[[SpotifyTrack alloc] init]</code></dd>
+	<dt>Parameterisert "konstruktør"</dt>
+	<dd><code>[[SpotifyTrack alloc] initWithId:@"123" andTitle:@"D-D-Dance"]</code></dd>
+</dl>
+</div>
+
 <h3 id="instansvariabler">Instansvariabler</h3>
 <ul>
-<li>Alle instansvariabler deklarert i .h-filen er automatisk interne (@protected)</li>
+<li>Alle instansvariabler deklarert i .h-filen er automatisk interne (<code>@protected</code>)</li>
 <li>Kan overstyres ved hjelp av 'scope directives'</li>
 </ul>
 
@@ -128,39 +139,176 @@ TODO importering av filer
 
 
 <h4>Styre oppførslen til properties</h4>
-<div class="alert alert-error">TODO: oppdater</div>
 
-* Tilgjengelighet
-	- `readonly` - kun getter
-	- `readwrite` - både getter og setter (default)
-* Hvordan setteren skal fungere
-	- `strong` - denne klassen eier propertien, og styrer minnehåndtering
-	- `weak` - denne klassen eier _ikke_ propertien, og styrer derfor _ikke_ minnehåndteringen
-	- `copy` - en kopi av objektet vil bli brukt ved assignment
-	- `assign` - setter verdien direkte. Brukes ofte på primitiver
-* Trådsikkerhet
-	- `atomic` - Default, men bør brukes sjelden da den er tregere. Har tilleggsfunksjonalitet som gjør at man alltid returnerer ett helt objekt når flere tråder snakker med setter og getter
-	- `nonatomic` - sier seg kanskje selv, motsatte av atomic
+<p>Når man bruker <code>@property</code> for å generere en getter og setter kan man bestemme oppførsel ved hjelp av flere parametre</p>
+
+<h5>Tilgjengelighet</h5>
+<ul>
+	<li><code>readonly</code> lager kun en getter og ikke en setter</li>
+	<li><code>readwrite</code> lager både getter og setter (default)</li>
+</ul>
+
+<h5>Bestemme oppførselen til en setter</h5>
+<ul>
+<li><code>strong</code> bestemmer at klassen som lager propertien eier instasvariabelen, og styrer minnehåndtering</li>
+<li><code>weak</code> klassen som lager propertien eier ikke instansvariabelen, og styrer derfor ikke minnehåndteringen</li>
+<li><code>copy</code> lager en kopi av instansvariabelen når man bruker setteren som blir generert av <code>@property</code></li>
+<li><code>assign</code> setter verdien direkte. Brukes blant annet ofte på primitiver</li>
+</ul>
+
+<h5>Trådsikkerhet</h5>
+<ul>
+	<li><code>atomic</code> Default, men bør brukes sjelden da den er tregere. Har tilleggsfunksjonalitet som gjør at man alltid returnerer ett helt objekt når flere tråder snakker med setter og getter
+	<li><code>nonatomic</code> er ikke trådsikker og man kan risikere å få hente instansvariabelen samtidig som noen skriver til den</li>
+</ul>	
 
 <h3 id="metoder">Metoder</h3>
-TODO
+<h4>Definere klassemetoder (statiske metoder, + foran)</h4>
+<div class="highlight"><pre><code class="objective-c"><span class="k">+</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">alloc</span> <span class="cm">/* Allokerer en plass i minne til objektet */</span>
+</code></pre></div>
+
+<h4>Definere instansmetoder (- foran)</h4>
+<div class="highlight"><pre><code class="objective-c"><span class="k">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">init</span> <span class="cm">/* Gjør initialiseringen som kreves av et objekt for å bli klart */</span>
+</code></pre></div>
+
+Ofte bruker man en kombinasjon av klasse og instansmetoder, som vist under. <code>alloc</code> kalles først som en klassemetode slik at man allokerer plass til et objekt. Deretter kalles instansmetoden <code>init</code>.
+<div class="highlight"><pre><code class="objective-c"><span class="p">[[</span><span class="n">MyObject</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">]</span>
+</code></pre></div>
+
+
+<h4>Objective-C Message Passing</h4>
+<ul>
+	<li>I Objective-C kaller man ikke metoder på objekter, men sender en beskjed</li>
+	<li>Navngir ikke selve metoden, men hver parameter</li>
+	<li>Skriver metoder mer som om man snakker til objektet</li>
+</ul>
+
+
+<strong>Definere metoder</strong>
+<div class="highlight"><pre><code class="objective-c"><span class="c1">// Med to parametere</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">initWithId:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">id</span> <span class="nf">andTitle:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">title</span><span class="p">;</span>
+
+<span class="c1">// Setter med et parameter</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setTitle:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">title</span><span class="p">;</span>
+
+<span class="c1">// Getter</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nf">title</span><span class="p">;</span>
+</code></pre></div>
+
+<strong>Java eksempel</strong>
+<div class="highlight"><pre><code class="java"><span class="n">SpotifyTrack</span> <span class="n">track</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SpotifyTrack</span><span class="o">(</span><span class="s">&quot;id&quot;</span><span class="o">,</span> <span class="s">&quot;I&#39;m awsome!&quot;</span><span class="o">);</span>
+
+<span class="n">person</span><span class="o">.</span><span class="na">setTitle</span><span class="o">(</span><span class="s">&quot;I&#39;m awsome!&quot;</span><span class="o">);</span>
+
+<span class="n">String</span> <span class="n">title</span> <span class="o">=</span> <span class="n">track</span><span class="o">.</span><span class="na">getTitle</span><span class="o">();</span>
+</code></pre></div>
+
+<strong>Objective-C ekvivalent</strong>
+<div class="highlight"><pre><code class="objective-c"><span class="n">SpotifyTrack</span> <span class="o">*</span><span class="n">track</span> <span class="o">=</span> <span class="p">[[</span><span class="n">SpotifyTrack</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">initWithId</span><span class="o">:</span><span class="s">@&quot;id&quot;</span> <span class="n">andTitle</span><span class="o">:</span><span class="s">@&quot;I&#39;m awsome!&quot;</span><span class="p">];</span>
+
+<span class="p">[</span><span class="n">track</span> <span class="n">setTitle</span><span class="o">:</span><span class="s">@&quot;I&#39;m awsome!&quot;</span><span class="p">];</span>
+
+<span class="n">NSString</span> <span class="o">*</span><span class="n">title</span> <span class="o">=</span> <span class="p">[</span><span class="n">track</span> <span class="n">title</span><span class="p">];</span>
+</code></pre></div>
+
+<div class="alert alert-block">
+<h4>Navnekonvensjon</h4>
+<p>Objective-C er rimelig verbost når det kommer til metodenavn. Navnene blir en del av metodesignaturen og må brukes når man kaller på metoden senere.</p>
+<strong>Metodesignatur (worst case?):</strong>
+
+<div class="highlight"><pre><code class="objective-c"><span class="k">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">initWithBitmapDataPlanes:</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">**</span><span class="p">)</span><span class="nv">planes</span> 
+                    <span class="nf">pixelsWide:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">width</span> 
+                    <span class="nf">pixelsHigh:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">height</span> 
+                 <span class="nf">bitsPerSample:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">bps</span> 
+               <span class="nf">samplesPerPixel:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">spp</span> 
+                      <span class="nf">hasAlpha:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">alpha</span>
+                      <span class="nl">isPlanar:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">isPlanar</span> 
+                <span class="nf">colorSpaceName:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">colorSpaceName</span>
+                  <span class="nl">bitmapFormat:</span><span class="p">(</span><span class="n">NSBitmapFormat</span><span class="p">)</span><span class="nv">bitmapFormat</span> 
+                   <span class="nf">bytesPerRow:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">rowBytes</span>
+                  <span class="nl">bitsPerPixel:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">pixelBits</span>
+</code></pre></div>
+
+<strong>Sende melding til metoden:</strong>
+<div class="highlight"><pre><code class="objective-c"><span class="p">[[</span><span class="n">NSBitmapImageRep</span> <span class="n">alloc</span><span class="p">]</span>
+                     <span class="nl">initWithBitmapDataPlanes:</span><span class="nb">NULL</span>
+                     <span class="nl">pixelsWide:</span><span class="n">nsRectFrameRect</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span> 
+                     <span class="n">pixelsHigh</span><span class="o">:</span><span class="n">nsRectFrameRect</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span>
+                     <span class="nl">bitsPerSample:</span><span class="mi">8</span> 
+                     <span class="n">samplesPerPixel</span><span class="o">:</span><span class="mi">3</span> 
+                     <span class="n">hasAlpha</span><span class="o">:</span><span class="nb">NO</span> 
+                     <span class="n">isPlanar</span><span class="o">:</span><span class="nb">NO</span> 
+                     <span class="n">colorSpaceName</span><span class="o">:</span><span class="s">@&quot;NSCalibratedRGBColorSpace&quot;</span> 
+                     <span class="n">bytesPerRow</span><span class="o">:</span><span class="mi">0</span> 
+                     <span class="n">bitsPerPixel</span><span class="o">:</span><span class="mi">0</span><span class="p">];</span>
+</code></pre></div>
+</div>
+
+<h4>Kalle metoder på samme klasse</h4>
+<div class="highlight"><pre><code class="objective-c"><span class="p">[</span><span class="n">self</span> <span class="n">enInstansmetode</span><span class="p">];</span>
+<span class="p">[</span><span class="n">MinKlasse</span> <span class="n">enKlasseMetode</span><span class="p">];</span>
+</code></pre></div>
+
+<h4>Kalle på metoder med dot syntax</h4>
+<p>En alternativ måte å kalle tilgangsmetoder (accessor methods, get, set):</p>
+
+<div class="highlight"><pre><code class="objective-c"><span class="n">NSString</span> <span class="o">*</span><span class="n">artist</span> <span class="o">=</span> <span class="n">track</span><span class="p">.</span><span class="n">artist</span><span class="p">;</span>
+<span class="n">track</span><span class="p">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">@&quot;I&#39;m awsome!&quot;</span><span class="p">;</span>
+<span class="n">track</span><span class="p">.</span><span class="n">artist</span><span class="p">.</span><span class="n">firstname</span> <span class="o">=</span> <span class="s">@&quot;Superman&quot;</span><span class="p">;</span>
+</code></pre></div>
+
+<div class="highlight"><pre><code class="objective-c"><span class="n">NSString</span> <span class="o">*</span><span class="n">artist</span> <span class="o">=</span> <span class="p">[</span><span class="n">track</span> <span class="n">artist</span><span class="p">];</span> 
+<span class="p">[</span><span class="n">track</span> <span class="n">setTitle</span><span class="o">:</span><span class="s">@&quot;I&#39;m awsome!&quot;</span><span class="p">];</span>
+<span class="p">[[</span><span class="n">track</span> <span class="n">artist</span><span class="p">]</span> <span class="n">setFirstname</span><span class="o">:</span><span class="s">@&quot;Superman&quot;</span><span class="p">];</span>
+</code></pre></div>
+
+<h3>Terminologi</h3>
+
+<dl>
+<dt>Message expression</dt>
+<dd>
+<div class="highlight"><pre><code class="objective-c">	<span class="p">[</span><span class="n">person</span> <span class="n">setAge</span><span class="o">:</span><span class="mi">25</span><span class="p">];</span>
+</code></pre></div>
+</dd>
+
+<dt>Message</dt>
+<dd>
+<div class="highlight"><pre><code class="objective-c">	<span class="nl">setAge:</span><span class="mi">25</span>
+</code></pre></div>
+</dd>
+
+<dt>Selector</dt>
+<dd>
+<div class="highlight"><pre><code class="objective-c">	<span class="nl">setAge:</span>
+</code></pre></div>
+</dd>
+</dl>
+
 
 <h2 id="arv">Arv</h2>
-TODO
+Arv defineres i interface med <code>Subclass : Superclass</code> syntaks. 
+
+<div class="highlight"><pre><code class="objective-c"><span class="c1">// i SpotifyTrack.h. Får SpotifyTrack til å arve fra NSObject</span>
+<span class="k">@interface</span> <span class="nc">SpotifyTrack</span> : <span class="nc">NSObject</span>
+<span class="k">@end</span>
+</code></pre></div>
+<ul>
+	<li>Rotklassen i Objective-C kalles <code>NSObject</code></li>
+	<li>Arv spesifiseres i headerfilen (.h)</li>
+	<li><code>super</code> brukes for å sende meldinger til klassen man arver fra. Eks. <code>[super enmetodepåsuperklassen]</code></li>
+</ul>
 
 
           </div>
           <nav class="span4">
             <strong>XCode</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
   
 
-  
-    
   
     
   
@@ -216,8 +364,6 @@ TODO
 
   
 
-  
-    
   
     
   
@@ -319,8 +465,6 @@ TODO
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/xcode-prosjektinnstillinger.html">Prosjektinnstillinger</a></li>
     
   
@@ -330,8 +474,6 @@ TODO
 
   
 
-  
-    
   
     
   
@@ -403,8 +545,6 @@ TODO
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/interface-builder.html">Interface Builder</a></li>
     
   
@@ -444,7 +584,7 @@ TODO
 
             <strong>Objective-C</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
@@ -476,7 +616,7 @@ TODO
     
   
     
-  
+      <li class=""><a href="/ios101/pages/objective-c.html">Objective-C</a></li>
     
   
     
@@ -505,8 +645,6 @@ TODO
 
   
 
-  
-    
   
     
   
@@ -580,9 +718,7 @@ TODO
     
   
     
-  
-    
-      <li class="current"><a href="/ios101/pages/klasser.html">Klasser</a></li>
+      <li class="active"><a href="/ios101/pages/klasser.html">Klasser, metoder og arv</a></li>
     
   
     
@@ -619,122 +755,6 @@ TODO
 
   
 
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-      <li class=""><a href="/ios101/pages/metoder.html">Metoder</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-
-  
-    
-  
-    
-      <li class=""><a href="/ios101/pages/arv.html">Arv</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-
-  
-    
   
     
   
@@ -790,8 +810,6 @@ TODO
 
   
 
-  
-    
   
     
   
@@ -877,10 +895,6 @@ TODO
     
   
     
-  
-    
-  
-    
       <li class=""><a href="/ios101/pages/protocols.html">Protocols</a></li>
     
   
@@ -898,14 +912,14 @@ TODO
   
     
   
-
-
-  
-
-  
-
-  
     
+  
+
+
+  
+
+  
+
   
     
   
@@ -993,7 +1007,7 @@ TODO
     
   
     
-  
+      <li class=""><a href="/ios101/pages/selectors.html">Selectors</a></li>
     
   
     
@@ -1016,8 +1030,6 @@ TODO
 
   
 
-  
-    
   
     
   
@@ -1085,8 +1097,6 @@ TODO
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/error-handling.html">Error Handling</a></li>
     
   
@@ -1130,14 +1140,12 @@ TODO
 
             <strong>Cocoa Touch</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
   
 
-  
-    
   
     
   
@@ -1227,8 +1235,6 @@ TODO
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/table-view-controllers.html">Table View Controllers</a></li>
     
   
@@ -1274,11 +1280,9 @@ TODO
     
   
     
-  
+      <li class=""><a href="/ios101/pages/navigation-controllers.html">Navigation Controllers</a></li>
     
   
-    
-      <li class=""><a href="/ios101/pages/navigation-controller.html">Navigation Controller</a></li>
     
   
     
@@ -1307,7 +1311,7 @@ TODO
 
             <strong>Ressurser</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
@@ -1341,11 +1345,9 @@ TODO
     
   
     
-  
+      <li class=""><a href="/ios101/pages/oppgaver.html">Oppgaver - Lets code!</a></li>
     
   
-    
-      <li class=""><a href="/ios101/pages/oppgaver.html">Oppgaver</a></li>
     
   
     
@@ -1370,8 +1372,6 @@ TODO
 
   
 
-  
-    
   
     
   
@@ -1449,8 +1449,6 @@ TODO
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/merinfo.html">Ressurser</a></li>
     
   
@@ -1484,8 +1482,6 @@ TODO
 
   
 
-  
-    
   
     
   

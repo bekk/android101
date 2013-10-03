@@ -6,135 +6,65 @@
         <title>Delegates</title>
         <meta name="viewport" content="width=device-width">
 
-        <!-- syntax highlighting CSS -->
         <link rel="stylesheet" href="/ios101/css/syntax.css">
-
-        <!-- Custom CSS -->
         <link href="/ios101/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" href="/ios101/css/main.css">
+        <script src="/ios101/js/jquery.min.js"></script>
         <script src="/ios101/js/bootstrap.min.js"></script>
 
     </head>
     <body>
-      <div class="container-fluid">
+      <div class="container-fluid main">
         <div class="row-fluid">
           <div class="span8">
-            <h1>Delegates</h1>
-            * "Design pattern" for å få et objekt til å delegere deler av sine oppgaver til et annet objekt.
-* Ikke originalt GoF pattern.
+            <h1 class="page-header">Delegates</h1>
+            <p>Design pattern for å få et objekt til å delegere deler av sine oppgaver til et annet objekt</p>
+
+<img src="/ios101/img/delegate.png" />
 
 
+<h2>Eksempel med UIAlertView</h2>
+<p>Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på oss ved hjelp av en selector</p>
 
-.objective-c
-	@implementation Car
-		- (id) init
-		{
-			self = [super init];
+<div class="highlight"><pre><code class="objective-c"><span class="k">@implementation</span> <span class="nc">MinViewController</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">showAlertView</span> <span class="p">{</span>
+	<span class="n">UIAlertView</span> <span class="o">*</span><span class="n">alert</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIAlertView</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">initWithTitle</span><span class="o">:</span><span class="s">@&quot;Advarsel&quot;</span>
+		<span class="nl">message:</span><span class="s">@&quot;Beskjed&quot;</span>
+		<span class="nl">delegate:</span><span class="n">self</span> <span class="cm">/* Setter oss selv som delegate på UIAlertViewet */</span>
+		<span class="nl">cancelButtonTitle:</span><span class="s">@&quot;Ok&quot;</span>
+		<span class="nl">otherButtonTitles:</span><span class="nb">nil</span><span class="p">];</span>
+	<span class="p">[</span><span class="n">alert</span> <span class="n">show</span><span class="p">];</span>
+<span class="p">}</span>
 
-			if(self != nil)
-			{
-				self.engine = [[Engine alloc] init];
-			}
-			return self;
-		}
-		- (void) start
-		{
-			[self.engine start];
-		}
-	@end
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">alertView:</span><span class="p">(</span><span class="n">UIAlertView</span> <span class="o">*</span><span class="p">)</span><span class="nv">alertView</span> 
+	<span class="nf">clickedButtonAtIndex:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">buttonIndex</span> <span class="p">{</span>
+	<span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;Trykket på en knapp!&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">@end</span>
 
-
-
-
-* Du kaller start på en `Car`, men bilen kaller start på `Engine`.
-* Negativt: Skaper knytning mellom `Car` og `Engine`. (High coupling)
-
-
----
-
-
-
-# Delegates #2
-
-* Delegate med Inversion of control (IoC) med constructor injection
-
-
-
-.objective-c
-	@implementation Car
-		- (id) initWithEngine:(Engine)engine
-		{
-			self = [super init];
-
-			if(self != nil)
-
-			{
-				self.engine = engine;
-			}
-			return self;
-		}
-		- (void) start
-		{
-			[self.engine start];
-		}
-	@end
-
-
-* Low coupling
-
-
----
-
-
-# Delegates #3
-
-
-
-.objective-c
-	@implementation MinViewController
-		- (void)showAlertView {
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Advarsel"
-				message:@"Beskjed"
-				delegate:self /* Setter oss selv som delegate på UIAlertViewet */
-				cancelButtonTitle:@"Ok"
-				otherButtonTitles:nil];
-			[alert show];
-		}
-
-		- (void)alertView:(UIAlertView *)alertView 
-			clickedButtonAtIndex:(NSInteger)buttonIndex {
-			NSLog(@"Trykket på en knapp!");
-		}
-	@end
-<p/>
-
-
-.objective-c
-	@implementation UIAlertView
-		//[...show...]
-			/* UIAlertView vises, og kjører følgende kode når man trykker på en knapp */
-			if ([_delegate respondsToSelector:@selector(alertView:clickedButtonAtIndex:)]) {
-				/* Kaller funksjonen alertView:clickedButtonAtIndex: på delegatet */
-				[_delegate alertView:self clickedButtonAtIndex:buttonIndex];
-			}
-		//[...]
-	@end
-
-
-Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på oss ved hjelp av en selector
+<span class="c1">// Mulig implementasjon av UIAlertView</span>
+<span class="k">@implementation</span> <span class="nc">UIAlertView</span>
+<span class="c1">//[...show...]</span>
+	<span class="cm">/* UIAlertView vises, og kjører følgende kode når man trykker på en knapp */</span>
+	<span class="k">if</span> <span class="p">([</span><span class="n">_delegate</span> <span class="n">respondsToSelector</span><span class="o">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">alertView</span><span class="o">:</span><span class="n">clickedButtonAtIndex</span><span class="o">:</span><span class="p">)])</span> <span class="p">{</span>
+		<span class="cm">/* Kaller funksjonen alertView:clickedButtonAtIndex: på delegatet */</span>
+		<span class="p">[</span><span class="n">_delegate</span> <span class="n">alertView</span><span class="o">:</span><span class="n">self</span> <span class="n">clickedButtonAtIndex</span><span class="o">:</span><span class="n">buttonIndex</span><span class="p">];</span>
+	<span class="p">}</span>
+<span class="c1">//[...]</span>
+<span class="k">@end</span>
+</code></pre></div>
 
 
           </div>
           <nav class="span4">
             <strong>XCode</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
   
 
-  
-    
   
     
   
@@ -190,8 +120,6 @@ Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på os
 
   
 
-  
-    
   
     
   
@@ -293,8 +221,6 @@ Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på os
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/xcode-prosjektinnstillinger.html">Prosjektinnstillinger</a></li>
     
   
@@ -304,8 +230,6 @@ Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på os
 
   
 
-  
-    
   
     
   
@@ -377,8 +301,6 @@ Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på os
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/interface-builder.html">Interface Builder</a></li>
     
   
@@ -418,7 +340,7 @@ Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på os
 
             <strong>Objective-C</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
@@ -450,7 +372,7 @@ Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på os
     
   
     
-  
+      <li class=""><a href="/ios101/pages/objective-c.html">Objective-C</a></li>
     
   
     
@@ -479,8 +401,6 @@ Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på os
 
   
 
-  
-    
   
     
   
@@ -554,9 +474,7 @@ Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på os
     
   
     
-  
-    
-      <li class=""><a href="/ios101/pages/klasser.html">Klasser</a></li>
+      <li class=""><a href="/ios101/pages/klasser.html">Klasser, metoder og arv</a></li>
     
   
     
@@ -593,122 +511,6 @@ Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på os
 
   
 
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-      <li class=""><a href="/ios101/pages/metoder.html">Metoder</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-
-  
-    
-  
-    
-      <li class=""><a href="/ios101/pages/arv.html">Arv</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-
-  
-    
   
     
   
@@ -764,8 +566,6 @@ Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på os
 
   
 
-  
-    
   
     
   
@@ -851,10 +651,6 @@ Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på os
     
   
     
-  
-    
-  
-    
       <li class=""><a href="/ios101/pages/protocols.html">Protocols</a></li>
     
   
@@ -872,61 +668,6 @@ Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på os
   
     
   
-
-
-  
-
-  
-
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-      <li class="current"><a href="/ios101/pages/delegates.html">Delegates</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
     
   
 
@@ -945,7 +686,7 @@ Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på os
     
   
     
-  
+      <li class="active"><a href="/ios101/pages/delegates.html">Delegates</a></li>
     
   
     
@@ -992,6 +733,59 @@ Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på os
 
   
     
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/ios101/pages/selectors.html">Selectors</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
   
     
   
@@ -1059,8 +853,6 @@ Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på os
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/error-handling.html">Error Handling</a></li>
     
   
@@ -1104,14 +896,12 @@ Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på os
 
             <strong>Cocoa Touch</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
   
 
-  
-    
   
     
   
@@ -1201,8 +991,6 @@ Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på os
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/table-view-controllers.html">Table View Controllers</a></li>
     
   
@@ -1248,11 +1036,9 @@ Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på os
     
   
     
-  
+      <li class=""><a href="/ios101/pages/navigation-controllers.html">Navigation Controllers</a></li>
     
   
-    
-      <li class=""><a href="/ios101/pages/navigation-controller.html">Navigation Controller</a></li>
     
   
     
@@ -1281,7 +1067,7 @@ Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på os
 
             <strong>Ressurser</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
@@ -1315,11 +1101,9 @@ Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på os
     
   
     
-  
+      <li class=""><a href="/ios101/pages/oppgaver.html">Oppgaver - Lets code!</a></li>
     
   
-    
-      <li class=""><a href="/ios101/pages/oppgaver.html">Oppgaver</a></li>
     
   
     
@@ -1344,8 +1128,6 @@ Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på os
 
   
 
-  
-    
   
     
   
@@ -1423,8 +1205,6 @@ Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på os
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/merinfo.html">Ressurser</a></li>
     
   
@@ -1458,8 +1238,6 @@ Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på os
 
   
 
-  
-    
   
     
   

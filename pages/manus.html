@@ -6,38 +6,35 @@
         <title>Manus</title>
         <meta name="viewport" content="width=device-width">
 
-        <!-- syntax highlighting CSS -->
         <link rel="stylesheet" href="/ios101/css/syntax.css">
-
-        <!-- Custom CSS -->
         <link href="/ios101/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" href="/ios101/css/main.css">
+        <script src="/ios101/js/jquery.min.js"></script>
         <script src="/ios101/js/bootstrap.min.js"></script>
 
     </head>
     <body>
-      <div class="container-fluid">
+      <div class="container-fluid main">
         <div class="row-fluid">
           <div class="span8">
-            <h1>Manus</h1>
+            <h1 class="page-header">Manus</h1>
             <h2>Xcode</h2>
 
 <ol>
-	<li>Starte Xcode</li>
-	<li>Opprette prosjekt</li>
-	<li>Empty application</li>
-	<li>Venstre, høyre og midt i Xcode</li>
-	<li>Prosjekt instillinger</li>
-	<li>Trykke play og vise simulator</li>
+	<li><a href="xcode-opprette-prosjekt.html">Starte Xcode, Opprette prosjekt, Empty application</a></li>
+	<li><a href="xcode-introduksjon.html">Oversikt over XCode</a></li>
+	<li>Prosjektinnstillinger</li>
+	<li><a href="xcode-byggekjore.html">Bygge og kjøre apps</a></li>
 </ol>
 
 <h2>Lage SpotifyPlayerViewController</h2>
 
 <ol>
-	<li>Lage storyboard og sette main interface</li>
-	<li>Dra inn en ViewController, knapp og label</li>
-	<li>Lage og sette tilhørende ViewController klasse (Hva er *.h og *.m filene)</li>
-	<li>Lage IBOutlet's og IBAction's</li>
-	<li>Lage SpotifyTrack (Klasser, Arv, imports, @properties (ivars), Objekter har pekere)
+	<li><a href="interface-builder.html#storyboard">Lage storyboard og sette main interface</a></li>
+	<li><a href="interface-builder.html#leggetilelementer">Dra inn en ViewController, knapp og label i Storyboardet</a></li>
+	<li><a href="interface-builder.html#knytteviewcontroller">Lage og sette tilhørende ViewController klasse</a> (<a href="klasser.html#lage">Hva er *.h og *.m filene</a>)</li>
+	<li><a href="interface-builder.html#outlet">Knytte interface-elementer til underliggende ViewController</a>, slik at de kan refereres fra kode</li>
+	<li>Lag SpotifyTrack (<a href="klasser.html">Klasser, Arv, imports, @properties (ivars), Objekter har pekere</a>)
 <div class="highlight"><pre><code class="objective-c"><span class="k">@interface</span> <span class="nc">SpotifyTrack</span> : <span class="nc">NSObject</span>
 	<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="kt">id</span><span class="p">;</span>
 	<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">artist</span><span class="p">;</span>
@@ -47,15 +44,19 @@
 </code></pre></div>
 
 	</li>
-	<li>Lage en ny SpotifyTrack i viewDidLoad
-<div class="highlight"><pre><code class="objective-c"><span class="n">SpotifyTrack</span> <span class="o">*</span><span class="n">track</span> <span class="o">=</span> <span class="p">[[</span><span class="n">SpotifyTrack</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
-<span class="n">track</span><span class="p">.</span><span class="kt">id</span> <span class="o">=</span> <span class="s">@&quot;&quot;</span><span class="p">;</span>
-<span class="n">track</span><span class="p">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">@&quot;&quot;</span><span class="p">;</span>
-<span class="n">self</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">track</span><span class="p">.</span><span class="n">title</span><span class="p">;</span>
+	<li><a href="klasser.html">Opprett en ny SpotifyTrack</a> i SpotifyPlayerViewController sin viewDidLoad
+<div class="highlight"><pre><code class="objective-c"><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewDidLoad</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">super</span> <span class="n">viewDidLoad</span><span class="p">];</span>
+    <span class="n">SpotifyTrack</span> <span class="o">*</span><span class="n">track</span> <span class="o">=</span> <span class="p">[[</span><span class="n">SpotifyTrack</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+    <span class="n">track</span><span class="p">.</span><span class="kt">id</span> <span class="o">=</span> <span class="s">@&quot;&quot;</span><span class="p">;</span>
+    <span class="n">track</span><span class="p">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">@&quot;&quot;</span><span class="p">;</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">track</span><span class="p">.</span><span class="n">title</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 	</li>
 	<li>
-	Knytte knapp til IBAction og forklare message passing (metode kall)
+	<a href="interface-builder.html#outlet">Knytte knapp til IBAction</a> og forklare <a href="klasser.html#metoder">message passing (metode kall)</a>
 
 <div class="highlight"><pre><code class="objective-c"><span class="k">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span><span class="nf">openInSpotifyButtonTouch:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
     <span class="p">[[</span><span class="n">UIApplication</span> <span class="n">sharedApplication</span><span class="p">]</span> <span class="n">openURL</span><span class="o">:</span><span class="p">[</span><span class="n">NSURL</span> <span class="n">URLWithString</span><span class="o">:</span><span class="p">[</span><span class="n">NSString</span> <span class="n">stringWithFormat</span><span class="o">:</span><span class="s">@&quot;spotify://%@&quot;</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">track</span><span class="p">.</span><span class="kt">id</span><span class="p">]]];</span>
@@ -67,9 +68,9 @@
 <h2>Lage SpotifySearchResultTableViewController</h2>
 
 <ol>
-	<li>Lage TableViewController og NavigationController i Interface Builder</li>
-	<li>Vise og forklare TableViewController med figurer (delegates)</li>
-	<li>Implementere statisk array med SpotifyTracks
+	<li>Lage <a href="table-view-controllers.html">TableViewController</a> og <a href="navigation-controllers.html">NavigationController</a> i Interface Builder</li>
+	<li><a href="delegates.html">Forklare Delegates</a></li>
+	<li>Implementere <a href="datatyper.html">statisk array</a> med SpotifyTracks
 <div class="highlight"><pre><code class="objective-c"><span class="n">SpotifyTrack</span> <span class="n">track1</span> <span class="o">=</span> <span class="p">[</span><span class="n">SpotifyTrack</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
 <span class="n">track1</span><span class="p">.</span><span class="kt">id</span> <span class="o">=</span> <span class="s">@&quot;1&quot;</span>
 <span class="n">track1</span><span class="p">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">@&quot;Title&quot;</span><span class="p">;</span>
@@ -83,13 +84,8 @@
 <span class="n">self</span><span class="p">.</span><span class="n">tracks</span> <span class="o">=</span> <span class="err">@</span><span class="p">[</span><span class="n">track1</span><span class="p">,</span> <span class="n">track2</span><span class="p">];</span>
 </code></pre></div>
 	</li>
-	<li>Implementere DataSource metodene til UITableView delegate
-<div class="highlight"><pre><code class="objective-c"><span class="k">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nf">numberOfSectionsInTableView:</span><span class="p">(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nf">tableView:</span><span class="p">(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">numberOfRowsInSection:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">section</span>
+	<li><a href="table-view-controllers.html">Implementere DataSource metodene til UITableView delegate</a>
+<div class="highlight"><pre><code class="objective-c"><span class="k">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nf">tableView:</span><span class="p">(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">numberOfRowsInSection:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">section</span>
 <span class="p">{</span>
     <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">tracks</span><span class="p">.</span><span class="n">count</span><span class="p">;</span>
 <span class="p">}</span>
@@ -107,7 +103,7 @@
 </code></pre></div>
 	</li>
 	<li>Lage property på SpotifyPlayerViewController for track og fjerne fra viewDidLoad</li>
-	<li>Vise hvordan man kan sende data via navigationController seque
+	<li>Vise hvordan man kan sende data via <a href="navigation-controllers.html">navigationController</a> seque
 <div class="highlight"><pre><code class="objective-c"><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">prepareForSegue:</span><span class="p">(</span><span class="n">UIStoryboardSegue</span> <span class="o">*</span><span class="p">)</span><span class="nv">segue</span> <span class="nf">sender:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span>
 <span class="p">{</span>
     <span class="n">SpotifyPlayerViewController</span> <span class="o">*</span><span class="n">viewController</span> <span class="o">=</span> <span class="p">(</span><span class="n">SpotifyPlayerViewController</span> <span class="o">*</span><span class="p">)[</span><span class="n">segue</span> <span class="n">destinationViewController</span><span class="p">];</span>
@@ -120,7 +116,7 @@
 <h2>Lage SpotifyService</h2>
 
 <ol>
-	<li> Forklare Klasse metoder og Blocks
+	<li>Forklare <a href="klasser.html">Klasse metoder</a> og <a href="blocks.html">Blocks</a>
 <div class="highlight"><pre><code class="objective-c">		
 <span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
 <span class="k">@class</span> <span class="nc">SpotifyTrack</span>;
@@ -183,13 +179,12 @@
 </code></pre></div>
 
 	</li>
-	<li>Forklare Error handling</li>
-	<li>Forklare Blocks</li>
-	<li>Forklare KURLConnection med threading</li>
-	<li>Forklare NSJSONSerialization</li>
-	<li>NSDictionary</li>
+	<li>Forklare <a href="error-handling.html">Error handling</a></li>
+	<li>Forklare <a href="blocks.html">Blocks</a></li>
+	<li>Forklare <a href="http.html">KURLConnection med threading og NSJSONSerialization</a></li>
+	<li>Forklare <a href="datatyper.html">NSDictionary</a></li>
 	<li>Bytt ut statisk array med service</li>
-	<li>Lag UISearchBar og set opp delegate
+	<li>Lag UISearchBar og set opp <a href="delegates.html">delegate</a>
 
 <div class="highlight"><pre><code class="objective-c">	
 <span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">searchBarSearchButtonClicked:</span><span class="p">(</span><span class="n">UISearchBar</span> <span class="o">*</span><span class="p">)</span><span class="nv">searchBar</span> <span class="p">{</span>
@@ -212,14 +207,12 @@
           <nav class="span4">
             <strong>XCode</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
   
 
-  
-    
   
     
   
@@ -275,8 +268,6 @@
 
   
 
-  
-    
   
     
   
@@ -378,8 +369,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/xcode-prosjektinnstillinger.html">Prosjektinnstillinger</a></li>
     
   
@@ -389,8 +378,6 @@
 
   
 
-  
-    
   
     
   
@@ -462,8 +449,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/interface-builder.html">Interface Builder</a></li>
     
   
@@ -503,7 +488,7 @@
 
             <strong>Objective-C</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
@@ -535,7 +520,7 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/objective-c.html">Objective-C</a></li>
     
   
     
@@ -564,8 +549,6 @@
 
   
 
-  
-    
   
     
   
@@ -639,9 +622,7 @@
     
   
     
-  
-    
-      <li class=""><a href="/ios101/pages/klasser.html">Klasser</a></li>
+      <li class=""><a href="/ios101/pages/klasser.html">Klasser, metoder og arv</a></li>
     
   
     
@@ -678,122 +659,6 @@
 
   
 
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-      <li class=""><a href="/ios101/pages/metoder.html">Metoder</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-
-  
-    
-  
-    
-      <li class=""><a href="/ios101/pages/arv.html">Arv</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-
-  
-    
   
     
   
@@ -849,8 +714,6 @@
 
   
 
-  
-    
   
     
   
@@ -936,10 +799,6 @@
     
   
     
-  
-    
-  
-    
       <li class=""><a href="/ios101/pages/protocols.html">Protocols</a></li>
     
   
@@ -957,14 +816,14 @@
   
     
   
-
-
-  
-
-  
-
-  
     
+  
+
+
+  
+
+  
+
   
     
   
@@ -1052,7 +911,7 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/selectors.html">Selectors</a></li>
     
   
     
@@ -1075,8 +934,6 @@
 
   
 
-  
-    
   
     
   
@@ -1144,8 +1001,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/error-handling.html">Error Handling</a></li>
     
   
@@ -1189,14 +1044,12 @@
 
             <strong>Cocoa Touch</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
   
 
-  
-    
   
     
   
@@ -1286,8 +1139,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/table-view-controllers.html">Table View Controllers</a></li>
     
   
@@ -1333,11 +1184,9 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/navigation-controllers.html">Navigation Controllers</a></li>
     
   
-    
-      <li class=""><a href="/ios101/pages/navigation-controller.html">Navigation Controller</a></li>
     
   
     
@@ -1366,7 +1215,7 @@
 
             <strong>Ressurser</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
@@ -1400,11 +1249,9 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/oppgaver.html">Oppgaver - Lets code!</a></li>
     
   
-    
-      <li class=""><a href="/ios101/pages/oppgaver.html">Oppgaver</a></li>
     
   
     
@@ -1429,8 +1276,6 @@
 
   
 
-  
-    
   
     
   
@@ -1508,8 +1353,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/merinfo.html">Ressurser</a></li>
     
   
@@ -1563,9 +1406,7 @@
     
   
     
-  
-    
-      <li class="current"><a href="/ios101/pages/manus.html">Manus</a></li>
+      <li class="active"><a href="/ios101/pages/manus.html">Manus</a></li>
     
   
     

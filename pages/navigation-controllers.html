@@ -3,45 +3,46 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Arv</title>
+        <title>Navigation Controllers</title>
         <meta name="viewport" content="width=device-width">
 
-        <!-- syntax highlighting CSS -->
         <link rel="stylesheet" href="/ios101/css/syntax.css">
-
-        <!-- Custom CSS -->
         <link href="/ios101/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" href="/ios101/css/main.css">
+        <script src="/ios101/js/jquery.min.js"></script>
         <script src="/ios101/js/bootstrap.min.js"></script>
 
     </head>
     <body>
-      <div class="container-fluid">
+      <div class="container-fluid main">
         <div class="row-fluid">
           <div class="span8">
-            <h1>Arv</h1>
-            <div class="highlight"><pre><code class="objective-c"><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
+            <h1 class="page-header">Navigation Controllers</h1>
+            <img src="/ios101/img/navigation_controller.jpeg" />
 
-<span class="k">@interface</span> <span class="nc">SpotifyTrack</span> : <span class="nc">NSObject</span>
+<h2>Storyboard: Sende data mellom ViewControllers i et NavigationView</h2>
 
-<span class="k">@end</span>
+<div class="highlight"><pre><code class="objective-c"><span class="c1">// I &quot;MasterViewController&quot;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">prepareForSegue:</span><span class="p">(</span><span class="n">UIStoryboardSegue</span> <span class="o">*</span><span class="p">)</span><span class="nv">segue</span> <span class="nf">sender:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span>
+<span class="p">{</span>
+	<span class="c1">// Få tak i destinasjonen og sett data på den før vi navigerer.</span>
+	<span class="c1">// Krever at &quot;track&quot; er en property på destinasjonskontrolleren</span>
+    <span class="n">SpotifyPlayerViewController</span> <span class="o">*</span><span class="n">viewController</span> <span class="o">=</span> <span class="p">(</span><span class="n">SpotifyPlayerViewController</span> <span class="o">*</span><span class="p">)[</span><span class="n">segue</span> <span class="n">destinationViewController</span><span class="p">];</span>
+    <span class="n">viewController</span><span class="p">.</span><span class="n">track</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">tracks</span><span class="p">[[[</span><span class="n">self</span><span class="p">.</span><span class="n">tableView</span> <span class="n">indexPathForSelectedRow</span><span class="p">]</span> <span class="n">row</span><span class="p">]];</span>
+<span class="p">}</span>
 </code></pre></div>
 
-<li>Rootklassen i Objective-C kalles NSObject</li>
-<li>Arv spesifiseres i headerfilen, på samme plass som man navngir klassen sin</li>
-<li>`super` brukes for å sende meldinger til klassen man arver fra</li>
 
           </div>
           <nav class="span4">
             <strong>XCode</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
   
 
-  
-    
   
     
   
@@ -97,8 +98,6 @@
 
   
 
-  
-    
   
     
   
@@ -200,8 +199,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/xcode-prosjektinnstillinger.html">Prosjektinnstillinger</a></li>
     
   
@@ -211,8 +208,6 @@
 
   
 
-  
-    
   
     
   
@@ -284,8 +279,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/interface-builder.html">Interface Builder</a></li>
     
   
@@ -325,7 +318,7 @@
 
             <strong>Objective-C</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
@@ -357,7 +350,7 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/objective-c.html">Objective-C</a></li>
     
   
     
@@ -386,8 +379,6 @@
 
   
 
-  
-    
   
     
   
@@ -461,9 +452,7 @@
     
   
     
-  
-    
-      <li class=""><a href="/ios101/pages/klasser.html">Klasser</a></li>
+      <li class=""><a href="/ios101/pages/klasser.html">Klasser, metoder og arv</a></li>
     
   
     
@@ -500,122 +489,6 @@
 
   
 
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-      <li class=""><a href="/ios101/pages/metoder.html">Metoder</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-
-  
-    
-  
-    
-      <li class="current"><a href="/ios101/pages/arv.html">Arv</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-
-  
-    
   
     
   
@@ -671,8 +544,6 @@
 
   
 
-  
-    
   
     
   
@@ -758,10 +629,6 @@
     
   
     
-  
-    
-  
-    
       <li class=""><a href="/ios101/pages/protocols.html">Protocols</a></li>
     
   
@@ -779,14 +646,14 @@
   
     
   
-
-
-  
-
-  
-
-  
     
+  
+
+
+  
+
+  
+
   
     
   
@@ -874,7 +741,7 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/selectors.html">Selectors</a></li>
     
   
     
@@ -897,8 +764,6 @@
 
   
 
-  
-    
   
     
   
@@ -966,8 +831,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/error-handling.html">Error Handling</a></li>
     
   
@@ -1011,14 +874,12 @@
 
             <strong>Cocoa Touch</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
   
 
-  
-    
   
     
   
@@ -1108,8 +969,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/table-view-controllers.html">Table View Controllers</a></li>
     
   
@@ -1155,11 +1014,9 @@
     
   
     
-  
+      <li class="active"><a href="/ios101/pages/navigation-controllers.html">Navigation Controllers</a></li>
     
   
-    
-      <li class=""><a href="/ios101/pages/navigation-controller.html">Navigation Controller</a></li>
     
   
     
@@ -1188,7 +1045,7 @@
 
             <strong>Ressurser</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
@@ -1222,11 +1079,9 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/oppgaver.html">Oppgaver - Lets code!</a></li>
     
   
-    
-      <li class=""><a href="/ios101/pages/oppgaver.html">Oppgaver</a></li>
     
   
     
@@ -1251,8 +1106,6 @@
 
   
 
-  
-    
   
     
   
@@ -1330,8 +1183,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/merinfo.html">Ressurser</a></li>
     
   
@@ -1365,8 +1216,6 @@
 
   
 
-  
-    
   
     
   

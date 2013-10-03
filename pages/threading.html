@@ -6,50 +6,53 @@
         <title>Threading</title>
         <meta name="viewport" content="width=device-width">
 
-        <!-- syntax highlighting CSS -->
         <link rel="stylesheet" href="/ios101/css/syntax.css">
-
-        <!-- Custom CSS -->
         <link href="/ios101/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" href="/ios101/css/main.css">
+        <script src="/ios101/js/jquery.min.js"></script>
         <script src="/ios101/js/bootstrap.min.js"></script>
 
     </head>
     <body>
-      <div class="container-fluid">
+      <div class="container-fluid main">
         <div class="row-fluid">
           <div class="span8">
-            <h1>Threading</h1>
+            <h1 class="page-header">Threading</h1>
             Objective-C gir oss flere forskjellige måter å lage tråder på, her har vi tre forskjellige
 
-* __NSThread__ gir oss muligheten til å kjøre en selector i en ny tråd
+<h2>NSThread</h2>
+<o>Gir oss muligheten til å kjøre en selector i en ny tråd</p>
 
+<div class="highlight"><pre><code class="objective-c"><span class="p">[</span><span class="n">NSThread</span> <span class="n">detachNewThreadSelector</span><span class="o">:</span>
+	<span class="k">@selector</span><span class="p">(</span><span class="n">startBakgrunnsJobb</span><span class="p">)</span> <span class="n">toTarget</span><span class="o">:</span><span class="n">self</span> <span class="n">withObject</span><span class="o">:</span><span class="nb">nil</span><span class="p">];</span>  
+</code></pre></div>
 
+<h2>NSOperationQueue og NSOperation</h2>
 
-.objective-c
-	[NSThread detachNewThreadSelector:
-		@selector(startBakgrunnsJobb) toTarget:self withObject:nil];  
+<ul>
+	<li> Oppretter en ny <code>NSOperationQueue</code></li>
+	<li> Oppretter objekter av klasser som subklasser <code>NSOperation</code></li>
+	<li><code>[queue addOperation:myOperation]</code></li>
+</ul>
 
-* __NSOperationQueue__ og __NSOperation__
-	* Oppretter en ny `NSOperationQueue`
-	* Oppretter objekter av klasser som subklasser `NSOperation`
-	* `[queue addOperation:myOperation]`
-* __Grand Central Dispatch (GCD)__ - C-bibliotek for å kjøre ting parallelt
-	* (Kanskje) vanskeligere å bruke, men mer kontroll
-	* Benytter mye blocks
-	* `dispatch_async` kjører en block i bakgrunnen
+ <h2>Grand Central Dispatch (GCD)</h2>
+ <ul>
+ 	<li>C-bibliotek for å kjøre ting parallelt</li>
+	<li>(Kanskje) vanskeligere å bruke, men mer kontroll</li>
+	<li>Benytter mye blocks</li>
+	<li><code>dispatch_async</code> kjører en block i bakgrunnen</li>
+</ul>
 
           </div>
           <nav class="span4">
             <strong>XCode</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
   
 
-  
-    
   
     
   
@@ -105,8 +108,6 @@
 
   
 
-  
-    
   
     
   
@@ -208,8 +209,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/xcode-prosjektinnstillinger.html">Prosjektinnstillinger</a></li>
     
   
@@ -219,8 +218,6 @@
 
   
 
-  
-    
   
     
   
@@ -292,8 +289,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/interface-builder.html">Interface Builder</a></li>
     
   
@@ -333,7 +328,7 @@
 
             <strong>Objective-C</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
@@ -365,7 +360,7 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/objective-c.html">Objective-C</a></li>
     
   
     
@@ -394,8 +389,6 @@
 
   
 
-  
-    
   
     
   
@@ -469,9 +462,7 @@
     
   
     
-  
-    
-      <li class=""><a href="/ios101/pages/klasser.html">Klasser</a></li>
+      <li class=""><a href="/ios101/pages/klasser.html">Klasser, metoder og arv</a></li>
     
   
     
@@ -508,122 +499,6 @@
 
   
 
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-      <li class=""><a href="/ios101/pages/metoder.html">Metoder</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-
-  
-    
-  
-    
-      <li class=""><a href="/ios101/pages/arv.html">Arv</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-
-  
-    
   
     
   
@@ -679,8 +554,6 @@
 
   
 
-  
-    
   
     
   
@@ -766,10 +639,6 @@
     
   
     
-  
-    
-  
-    
       <li class=""><a href="/ios101/pages/protocols.html">Protocols</a></li>
     
   
@@ -787,14 +656,14 @@
   
     
   
-
-
-  
-
-  
-
-  
     
+  
+
+
+  
+
+  
+
   
     
   
@@ -882,7 +751,7 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/selectors.html">Selectors</a></li>
     
   
     
@@ -941,9 +810,7 @@
     
   
     
-  
-    
-      <li class="current"><a href="/ios101/pages/threading.html">Threading</a></li>
+      <li class="active"><a href="/ios101/pages/threading.html">Threading</a></li>
     
   
     
@@ -962,8 +829,6 @@
 
   
 
-  
-    
   
     
   
@@ -1019,14 +884,12 @@
 
             <strong>Cocoa Touch</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
   
 
-  
-    
   
     
   
@@ -1116,8 +979,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/table-view-controllers.html">Table View Controllers</a></li>
     
   
@@ -1163,11 +1024,9 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/navigation-controllers.html">Navigation Controllers</a></li>
     
   
-    
-      <li class=""><a href="/ios101/pages/navigation-controller.html">Navigation Controller</a></li>
     
   
     
@@ -1196,7 +1055,7 @@
 
             <strong>Ressurser</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
@@ -1230,11 +1089,9 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/oppgaver.html">Oppgaver - Lets code!</a></li>
     
   
-    
-      <li class=""><a href="/ios101/pages/oppgaver.html">Oppgaver</a></li>
     
   
     
@@ -1259,8 +1116,6 @@
 
   
 
-  
-    
   
     
   
@@ -1338,8 +1193,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/merinfo.html">Ressurser</a></li>
     
   
@@ -1373,8 +1226,6 @@
 
   
 
-  
-    
   
     
   

@@ -3,66 +3,69 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Oppgaver</title>
+        <title>Oppgaver - Lets code!</title>
         <meta name="viewport" content="width=device-width">
 
-        <!-- syntax highlighting CSS -->
         <link rel="stylesheet" href="/ios101/css/syntax.css">
-
-        <!-- Custom CSS -->
         <link href="/ios101/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" href="/ios101/css/main.css">
+        <script src="/ios101/js/jquery.min.js"></script>
         <script src="/ios101/js/bootstrap.min.js"></script>
 
     </head>
     <body>
-      <div class="container-fluid">
+      <div class="container-fluid main">
         <div class="row-fluid">
           <div class="span8">
-            <h1>Oppgaver</h1>
-            .middle.center
-# Lets code!
-## Twitter aktig app
+            <h1 class="page-header">Oppgaver - Lets code!</h1>
+            <h3>Twitter aktig app</h2>
 
-Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)
+<p>Vi skal lage en twitter aktig app ved å snakke med en server. Her kan man utfordre seg selv på GUI flikking, eller man kan sørge for å kunne utføre alle handlingene API'et tilbyr.</p>
 
----
+<h2>Server</h2>
 
-# Twitter aktig app - hint
+<p>Serveren ligger på <a href="http://ios-course.herokuapp.com">
+		http://ios-course.herokuapp.com</a></p>
 
-* Serveren ligger på [http://ios-course.herokuapp.com](http://ios-course.herokuapp.com)
-* Rest endepunktene leverer JSON og fungerer på følgende måte:
-	* [http://ios-course.herokuapp.com/message](http://ios-course.herokuapp.com/message) (GET) <- alle beskjeder
-	* [http://ios-course.herokuapp.com/message](http://ios-course.herokuapp.com/message) (POST) <- JSON i body
-	* [http://ios-course.herokuapp.com/message/{id}](http://ios-course.herokuapp.com/message/{id}) (DELETE) <- Slette
-	* [http://ios-course.herokuapp.com/message/{id}](http://ios-course.herokuapp.com/message/{id}) (PUT) <- Oppdatere
+<p>
+Rest endepunktene leverer JSON og fungerer på følgende måte:
+	<ul>
+		<li><a href="http://ios-course.herokuapp.com/message">http://ios-course.herokuapp.com/message</a> (GET) <- alle beskjeder</li>
+		<li><a href="http://ios-course.herokuapp.com/message">http://ios-course.herokuapp.com/message</a> (POST) <- JSON i body</li>
+		<li><a href="http://ios-course.herokuapp.com/message/{id}">http://ios-course.herokuapp.com/message/{id}</a> (DELETE) <- Slette</li>
+		<li><a href="http://ios-course.herokuapp.com/message/{id}">http://ios-course.herokuapp.com/message/{id}</a> (PUT) <- Oppdatere</li>
+	</ul>
+<p>
 
+<h3>Eksempel POST</h3>
 
-	.javascript
-	{
-		"from":"hinderberg",
-		"message":"Denne funker fint!:)",
-		"date":"2012-10-18T17:43:48.011Z" //date må man ikke ha med
-	}
+<div class="highlight"><pre><code class="javascript"><span class="p">{</span>
+	<span class="c1">//date må man ikke ha med, men kan vœre morsom å manipulere.;)</span>
+	<span class="s2">&quot;from&quot;</span><span class="o">:</span><span class="s2">&quot;hinderberg&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;message&quot;</span><span class="o">:</span><span class="s2">&quot;Denne funker fint!:)&quot;</span><span class="p">,</span>
+	<span class="s2">&quot;date&quot;</span><span class="o">:</span><span class="s2">&quot;2012-10-18T17:43:48.011Z&quot;</span> 
+<span class="p">}</span>
+</code></pre></div>
 
-<p />
+<h2>Hjelp</h2>
 
-	.objective-c
-	NSJSONSerialization //Kan brukes til å parse JSON til Objective-C 
-	#import <library/library.h> //Hjelpe klassene importeres
+<p>
+Hjelpeklasser for å snakke med serveren: <a href="http.html">HTTP</a>
+</p>
 
+<div class="highlight"><pre><code class="objective-c"><span class="n">NSJSONSerialization</span> <span class="c1">//Kan brukes til å parse JSON til Objective-C </span>
+</code></pre></div>
 
           </div>
           <nav class="span4">
             <strong>XCode</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
   
 
-  
-    
   
     
   
@@ -118,8 +121,6 @@ Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)
 
   
 
-  
-    
   
     
   
@@ -221,8 +222,6 @@ Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/xcode-prosjektinnstillinger.html">Prosjektinnstillinger</a></li>
     
   
@@ -232,8 +231,6 @@ Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)
 
   
 
-  
-    
   
     
   
@@ -305,8 +302,6 @@ Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/interface-builder.html">Interface Builder</a></li>
     
   
@@ -346,7 +341,7 @@ Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)
 
             <strong>Objective-C</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
@@ -378,7 +373,7 @@ Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)
     
   
     
-  
+      <li class=""><a href="/ios101/pages/objective-c.html">Objective-C</a></li>
     
   
     
@@ -407,8 +402,6 @@ Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)
 
   
 
-  
-    
   
     
   
@@ -482,9 +475,7 @@ Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)
     
   
     
-  
-    
-      <li class=""><a href="/ios101/pages/klasser.html">Klasser</a></li>
+      <li class=""><a href="/ios101/pages/klasser.html">Klasser, metoder og arv</a></li>
     
   
     
@@ -521,122 +512,6 @@ Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)
 
   
 
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-      <li class=""><a href="/ios101/pages/metoder.html">Metoder</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-
-  
-    
-  
-    
-      <li class=""><a href="/ios101/pages/arv.html">Arv</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-
-  
-    
   
     
   
@@ -692,8 +567,6 @@ Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)
 
   
 
-  
-    
   
     
   
@@ -779,10 +652,6 @@ Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)
     
   
     
-  
-    
-  
-    
       <li class=""><a href="/ios101/pages/protocols.html">Protocols</a></li>
     
   
@@ -800,14 +669,14 @@ Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)
   
     
   
-
-
-  
-
-  
-
-  
     
+  
+
+
+  
+
+  
+
   
     
   
@@ -895,7 +764,7 @@ Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)
     
   
     
-  
+      <li class=""><a href="/ios101/pages/selectors.html">Selectors</a></li>
     
   
     
@@ -918,8 +787,6 @@ Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)
 
   
 
-  
-    
   
     
   
@@ -987,8 +854,6 @@ Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/error-handling.html">Error Handling</a></li>
     
   
@@ -1032,14 +897,12 @@ Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)
 
             <strong>Cocoa Touch</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
   
 
-  
-    
   
     
   
@@ -1129,8 +992,6 @@ Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/table-view-controllers.html">Table View Controllers</a></li>
     
   
@@ -1176,11 +1037,9 @@ Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)
     
   
     
-  
+      <li class=""><a href="/ios101/pages/navigation-controllers.html">Navigation Controllers</a></li>
     
   
-    
-      <li class=""><a href="/ios101/pages/navigation-controller.html">Navigation Controller</a></li>
     
   
     
@@ -1209,7 +1068,7 @@ Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)
 
             <strong>Ressurser</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
@@ -1243,11 +1102,9 @@ Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)
     
   
     
-  
+      <li class="active"><a href="/ios101/pages/oppgaver.html">Oppgaver - Lets code!</a></li>
     
   
-    
-      <li class="current"><a href="/ios101/pages/oppgaver.html">Oppgaver</a></li>
     
   
     
@@ -1272,8 +1129,6 @@ Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)
 
   
 
-  
-    
   
     
   
@@ -1351,8 +1206,6 @@ Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/merinfo.html">Ressurser</a></li>
     
   
@@ -1386,8 +1239,6 @@ Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)
 
   
 
-  
-    
   
     
   

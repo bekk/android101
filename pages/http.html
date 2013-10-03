@@ -6,35 +6,63 @@
         <title>HTTP</title>
         <meta name="viewport" content="width=device-width">
 
-        <!-- syntax highlighting CSS -->
         <link rel="stylesheet" href="/ios101/css/syntax.css">
-
-        <!-- Custom CSS -->
         <link href="/ios101/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" href="/ios101/css/main.css">
+        <script src="/ios101/js/jquery.min.js"></script>
         <script src="/ios101/js/bootstrap.min.js"></script>
 
     </head>
     <body>
-      <div class="container-fluid">
+      <div class="container-fluid main">
         <div class="row-fluid">
           <div class="span8">
-            <h1>HTTP</h1>
-            GJøre kall
+            <h1 class="page-header">HTTP</h1>
+            For å komme i gang med å gjøre HTTP kall har vi laget noen hjelpe-klasser som kan brukes. 
 
-KOnvertere til JSON
+<p>De kan lastes ned her: <a href="/ios101/files/kurl_connection.zip">KURLConnection</a></p>
+
+<b>Eksempel bruk</b>
+
+<p>
+<div class="highlight"><pre><code class="objective-c"><span class="n">NSString</span> <span class="o">*</span><span class="n">urlString</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> 
+	<span class="n">stringWithFormat</span><span class="o">:</span><span class="s">@&quot;http://ws.spotify.com/search/1/track.json?q=%@&quot;</span><span class="p">,</span> 
+		<span class="p">[</span><span class="n">title</span> <span class="n">stringByAddingPercentEscapesUsingEncoding</span><span class="o">:</span><span class="n">NSUTF8StringEncoding</span><span class="p">]];</span>
+
+<span class="p">[</span><span class="n">KURLConnection</span> <span class="n">startWithRequest</span><span class="o">:</span>
+	<span class="p">[</span><span class="n">KURLConnection</span> <span class="n">createGetRequestForUrl</span><span class="o">:</span><span class="p">[</span><span class="n">NSURL</span> <span class="n">URLWithString</span><span class="o">:</span><span class="n">urlString</span><span class="p">]]</span> 
+	
+	<span class="n">successHandler</span><span class="o">:^</span><span class="p">(</span><span class="n">NSData</span> <span class="o">*</span><span class="n">response</span><span class="p">)</span> 
+	<span class="p">{</span>
+    	<span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
+   
+	<span class="p">}</span> 
+	<span class="n">failedHandler</span><span class="o">:^</span><span class="p">(</span><span class="n">NSError</span> <span class="o">*</span><span class="n">requestError</span><span class="p">)</span> 
+	<span class="p">{</span>
+    
+ 		<span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span> <span class="n">requestError</span><span class="p">);</span>
+
+	<span class="p">}</span>
+<span class="p">];</span>
+</code></pre></div>
+</p>
+
+<p>
+	
+Det finnes flere hjelpemetoder i KURLConnection, for å se hvilke kan du åpne opp KURLConnection.h
+
+</p>
 
           </div>
           <nav class="span4">
             <strong>XCode</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
   
 
-  
-    
   
     
   
@@ -90,8 +118,6 @@ KOnvertere til JSON
 
   
 
-  
-    
   
     
   
@@ -193,8 +219,6 @@ KOnvertere til JSON
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/xcode-prosjektinnstillinger.html">Prosjektinnstillinger</a></li>
     
   
@@ -204,8 +228,6 @@ KOnvertere til JSON
 
   
 
-  
-    
   
     
   
@@ -277,8 +299,6 @@ KOnvertere til JSON
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/interface-builder.html">Interface Builder</a></li>
     
   
@@ -318,7 +338,7 @@ KOnvertere til JSON
 
             <strong>Objective-C</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
@@ -350,7 +370,7 @@ KOnvertere til JSON
     
   
     
-  
+      <li class=""><a href="/ios101/pages/objective-c.html">Objective-C</a></li>
     
   
     
@@ -379,8 +399,6 @@ KOnvertere til JSON
 
   
 
-  
-    
   
     
   
@@ -454,9 +472,7 @@ KOnvertere til JSON
     
   
     
-  
-    
-      <li class=""><a href="/ios101/pages/klasser.html">Klasser</a></li>
+      <li class=""><a href="/ios101/pages/klasser.html">Klasser, metoder og arv</a></li>
     
   
     
@@ -493,122 +509,6 @@ KOnvertere til JSON
 
   
 
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-      <li class=""><a href="/ios101/pages/metoder.html">Metoder</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-
-  
-    
-  
-    
-      <li class=""><a href="/ios101/pages/arv.html">Arv</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-
-  
-    
   
     
   
@@ -664,8 +564,6 @@ KOnvertere til JSON
 
   
 
-  
-    
   
     
   
@@ -751,10 +649,6 @@ KOnvertere til JSON
     
   
     
-  
-    
-  
-    
       <li class=""><a href="/ios101/pages/protocols.html">Protocols</a></li>
     
   
@@ -772,14 +666,14 @@ KOnvertere til JSON
   
     
   
-
-
-  
-
-  
-
-  
     
+  
+
+
+  
+
+  
+
   
     
   
@@ -867,7 +761,7 @@ KOnvertere til JSON
     
   
     
-  
+      <li class=""><a href="/ios101/pages/selectors.html">Selectors</a></li>
     
   
     
@@ -890,8 +784,6 @@ KOnvertere til JSON
 
   
 
-  
-    
   
     
   
@@ -959,8 +851,6 @@ KOnvertere til JSON
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/error-handling.html">Error Handling</a></li>
     
   
@@ -1004,14 +894,12 @@ KOnvertere til JSON
 
             <strong>Cocoa Touch</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
   
 
-  
-    
   
     
   
@@ -1101,8 +989,6 @@ KOnvertere til JSON
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/table-view-controllers.html">Table View Controllers</a></li>
     
   
@@ -1148,11 +1034,9 @@ KOnvertere til JSON
     
   
     
-  
+      <li class=""><a href="/ios101/pages/navigation-controllers.html">Navigation Controllers</a></li>
     
   
-    
-      <li class=""><a href="/ios101/pages/navigation-controller.html">Navigation Controller</a></li>
     
   
     
@@ -1181,7 +1065,7 @@ KOnvertere til JSON
 
             <strong>Ressurser</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
@@ -1215,11 +1099,9 @@ KOnvertere til JSON
     
   
     
-  
+      <li class=""><a href="/ios101/pages/oppgaver.html">Oppgaver - Lets code!</a></li>
     
   
-    
-      <li class=""><a href="/ios101/pages/oppgaver.html">Oppgaver</a></li>
     
   
     
@@ -1258,9 +1140,7 @@ KOnvertere til JSON
     
   
     
-  
-    
-      <li class="current"><a href="/ios101/pages/http.html">HTTP</a></li>
+      <li class="active"><a href="/ios101/pages/http.html">HTTP</a></li>
     
   
     
@@ -1301,8 +1181,6 @@ KOnvertere til JSON
 
   
 
-  
-    
   
     
   
@@ -1358,8 +1236,6 @@ KOnvertere til JSON
 
   
 
-  
-    
   
     
   

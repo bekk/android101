@@ -6,35 +6,97 @@
         <title>Table View Controllers</title>
         <meta name="viewport" content="width=device-width">
 
-        <!-- syntax highlighting CSS -->
         <link rel="stylesheet" href="/ios101/css/syntax.css">
-
-        <!-- Custom CSS -->
         <link href="/ios101/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" href="/ios101/css/main.css">
+        <script src="/ios101/js/jquery.min.js"></script>
         <script src="/ios101/js/bootstrap.min.js"></script>
 
     </head>
     <body>
-      <div class="container-fluid">
+      <div class="container-fluid main">
         <div class="row-fluid">
           <div class="span8">
-            <h1>Table View Controllers</h1>
-            <img src="/img/tableviewcontroller.png" />
+            <h1 class="page-header">Table View Controllers</h1>
+            <img src="/ios101/img/tableviewcontroller.png" />
 
-<img src="/img/tableviewcontroller1.png" />
+<p>Et <code>UITableView</code> får dataene og oppførselen sin fra en <code>UITableViewController</code>.</p>
+<p><code>UITableViewController</code> implementerer <a href="protocols.html">protokollene</a> <code>UITableViewDelegate</code> og <code>UITableViewDataSource</code></p>
+
+<div class="highlight"><pre><code class="objective-c"><span class="k">@interface</span> <span class="nc">UITableViewController</span> : <span class="nc">UIViewController</span> <span class="o">&lt;</span><span class="n">UITableViewDelegate</span><span class="p">,</span> <span class="n">UITableViewDataSource</span><span class="o">&gt;</span>
+<span class="p">...</span>
+<span class="k">@end</span>
+</code></pre></div>
+
+<p>Når <code>UITableViewController</code> skal trenger informasjon om hvilke data som skal vises (hvor mange rader? hva er innholdet i cella?) spør den sin <code>UITableViewDataSource</code> om dette. Tilsvarende spør den <code>UITableViewDelegate</code> om oppførsel (kan man trykke på cellen? hvor høy skal raden være?)</p>
+
+<div class="alert alert-block">
+  <h3>Delegate patternet</h3>
+Måten <code>UITableViewController</code> spør <code>UITableViewDelegate</code> og <code>UITableViewDataSource</code> er et eksempel på bruk av <a href="delegates.html">delegate patternet</a>
+</div>
+
+<h2>Eksempel på UITableViewController</h2>
+
+
+<strong>SpotifySearchResultTableViewController.h</strong>
+<div class="highlight"><pre><code class="objective-c"><span class="k">@interface</span> <span class="nc">SpotifySearchResultTableViewController</span> : <span class="nc">UITableViewController</span>
+<span class="k">@end</span>
+</code></pre></div>
+
+<strong>SpotifySearchResultTableViewController.m</strong>
+<div class="alert alert-block">
+I dokumentasjonen til <code>UITableViewDataSource</code> vil du se at vi minimum må implementere to metoder:
+<img src="/ios101/img/uitableviewdatasource_required.png" />
+</div>
+<div class="highlight"><pre><code class="objective-c"><span class="cp">#import &quot;SpotifySearchResultTableViewController.h&quot;</span>
+<span class="cp">#import &quot;SpotifyService.h&quot;</span>
+<span class="cp">#import &quot;SpotifyTrack.h&quot;</span>
+
+<span class="k">@interface</span> <span class="nc">SpotifySearchResultTableViewController</span> <span class="p">()</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSArray</span><span class="o">*</span> <span class="n">tracks</span><span class="p">;</span>
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="nc">SpotifySearchResultTableViewController</span>
+<span class="cp">#pragma mark - Table view data source</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nf">tableView:</span><span class="p">(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">numberOfRowsInSection:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">section</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">tracks</span><span class="p">.</span><span class="n">count</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">UITableViewCell</span> <span class="o">*</span><span class="p">)</span><span class="nf">tableView:</span><span class="p">(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">cellForRowAtIndexPath:</span><span class="p">(</span><span class="n">NSIndexPath</span> <span class="o">*</span><span class="p">)</span><span class="nv">indexPath</span>
+<span class="p">{</span>
+    <span class="k">static</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">CellIdentifier</span> <span class="o">=</span> <span class="s">@&quot;trackCell&quot;</span><span class="p">;</span>
+    <span class="n">UITableViewCell</span> <span class="o">*</span><span class="n">cell</span> <span class="o">=</span> <span class="p">[</span><span class="n">tableView</span> <span class="n">dequeueReusableCellWithIdentifier</span><span class="o">:</span><span class="n">CellIdentifier</span> <span class="n">forIndexPath</span><span class="o">:</span><span class="n">indexPath</span><span class="p">];</span>
+    <span class="n">SpotifyTrack</span> <span class="o">*</span><span class="n">track</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">tracks</span><span class="p">[</span><span class="n">indexPath</span><span class="p">.</span><span class="n">row</span><span class="p">];</span>
+    <span class="n">cell</span><span class="p">.</span><span class="n">textLabel</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">track</span><span class="p">.</span><span class="n">title</span><span class="p">;</span>
+    <span class="n">cell</span><span class="p">.</span><span class="n">detailTextLabel</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">track</span><span class="p">.</span><span class="n">artist</span><span class="p">;</span>
+    
+    <span class="k">return</span> <span class="n">cell</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+</code></pre></div>
+
+<div class="alert alert-block">
+<h3>dequeueReusableCellWithIdentifier?</h3>
+
+<div class="highlight"><pre><code class="objective-c"><span class="k">static</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">CellIdentifier</span> <span class="o">=</span> <span class="s">@&quot;trackCell&quot;</span><span class="p">;</span>
+<span class="n">UITableViewCell</span> <span class="o">*</span><span class="n">cell</span> <span class="o">=</span> <span class="p">[</span><span class="n">tableView</span> <span class="n">dequeueReusableCellWithIdentifier</span><span class="o">:</span><span class="n">CellIdentifier</span> <span class="n">forIndexPath</span><span class="o">:</span><span class="n">indexPath</span><span class="p">];</span>
+</code></pre></div>
+
+<p>Disse linjene ser kanskje kryptiske ut, men er helt geniale! Det som skjer i praksis er at Cocoa Touch prøver å finne en celle som allerede er laget og scrollet ut av skjermen med IDen <code>trackCell</code>. Hvis det finnes en slik celle, blir den den gjenbrukt slik at man slipper å instansiere en ny og holde denne i minnet. Finnes den ikke blir det allokert et nytt UI celle for deg. Dette betyr at selv om du har en array med 1000 elementer, vil det aldri finnes flere UI celler enn man får plass til på skjermen.</p>
+
+</div>
 
           </div>
           <nav class="span4">
             <strong>XCode</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
   
 
-  
-    
   
     
   
@@ -90,8 +152,6 @@
 
   
 
-  
-    
   
     
   
@@ -193,8 +253,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/xcode-prosjektinnstillinger.html">Prosjektinnstillinger</a></li>
     
   
@@ -204,8 +262,6 @@
 
   
 
-  
-    
   
     
   
@@ -277,8 +333,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/interface-builder.html">Interface Builder</a></li>
     
   
@@ -318,7 +372,7 @@
 
             <strong>Objective-C</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
@@ -350,7 +404,7 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/objective-c.html">Objective-C</a></li>
     
   
     
@@ -379,8 +433,6 @@
 
   
 
-  
-    
   
     
   
@@ -454,9 +506,7 @@
     
   
     
-  
-    
-      <li class=""><a href="/ios101/pages/klasser.html">Klasser</a></li>
+      <li class=""><a href="/ios101/pages/klasser.html">Klasser, metoder og arv</a></li>
     
   
     
@@ -493,122 +543,6 @@
 
   
 
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-      <li class=""><a href="/ios101/pages/metoder.html">Metoder</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-
-  
-    
-  
-    
-      <li class=""><a href="/ios101/pages/arv.html">Arv</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-
-  
-    
   
     
   
@@ -664,8 +598,6 @@
 
   
 
-  
-    
   
     
   
@@ -751,10 +683,6 @@
     
   
     
-  
-    
-  
-    
       <li class=""><a href="/ios101/pages/protocols.html">Protocols</a></li>
     
   
@@ -772,14 +700,14 @@
   
     
   
-
-
-  
-
-  
-
-  
     
+  
+
+
+  
+
+  
+
   
     
   
@@ -867,7 +795,7 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/selectors.html">Selectors</a></li>
     
   
     
@@ -890,8 +818,6 @@
 
   
 
-  
-    
   
     
   
@@ -959,8 +885,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/error-handling.html">Error Handling</a></li>
     
   
@@ -1004,14 +928,12 @@
 
             <strong>Cocoa Touch</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
   
 
-  
-    
   
     
   
@@ -1101,9 +1023,7 @@
     
   
     
-  
-    
-      <li class="current"><a href="/ios101/pages/table-view-controllers.html">Table View Controllers</a></li>
+      <li class="active"><a href="/ios101/pages/table-view-controllers.html">Table View Controllers</a></li>
     
   
     
@@ -1148,11 +1068,9 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/navigation-controllers.html">Navigation Controllers</a></li>
     
   
-    
-      <li class=""><a href="/ios101/pages/navigation-controller.html">Navigation Controller</a></li>
     
   
     
@@ -1181,7 +1099,7 @@
 
             <strong>Ressurser</strong>
             
-<ul>
+<ul class="nav nav-pills nav-stacked">
 
   
 
@@ -1215,11 +1133,9 @@
     
   
     
-  
+      <li class=""><a href="/ios101/pages/oppgaver.html">Oppgaver - Lets code!</a></li>
     
   
-    
-      <li class=""><a href="/ios101/pages/oppgaver.html">Oppgaver</a></li>
     
   
     
@@ -1244,8 +1160,6 @@
 
   
 
-  
-    
   
     
   
@@ -1323,8 +1237,6 @@
     
   
     
-  
-    
       <li class=""><a href="/ios101/pages/merinfo.html">Ressurser</a></li>
     
   
@@ -1358,8 +1270,6 @@
 
   
 
-  
-    
   
     
   
