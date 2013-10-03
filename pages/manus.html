@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="nb">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Manus</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <script src="/js/bootstrap.min.js"></script>
+
+    </head>
+    <body>
+      <div class="container-fluid">
+        <div class="row-fluid">
+          <div class="span8">
+            <h1>Manus</h1>
+            <h2>Xcode</h2>
+
+<ol>
+	<li>Starte Xcode</li>
+	<li>Opprette prosjekt</li>
+	<li>Empty application</li>
+	<li>Venstre, høyre og midt i Xcode</li>
+	<li>Prosjekt instillinger</li>
+	<li>Trykke play og vise simulator</li>
+</ol>
+
+<h2>Lage SpotifyPlayerViewController</h2>
+
+<ol>
+	<li>Lage storyboard og sette main interface</li>
+	<li>Dra inn en ViewController, knapp og label</li>
+	<li>Lage og sette tilhørende ViewController klasse (Hva er *.h og *.m filene)</li>
+	<li>Lage IBOutlet's og IBAction's</li>
+	<li>Lage SpotifyTrack (Klasser, Arv, imports, @properties (ivars), Objekter har pekere)
+<div class="highlight"><pre><code class="objective-c"><span class="k">@interface</span> <span class="nc">SpotifyTrack</span> : <span class="nc">NSObject</span>
+	<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="kt">id</span><span class="p">;</span>
+	<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">artist</span><span class="p">;</span>
+	<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">title</span><span class="p">;</span>
+	<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSURL</span> <span class="o">*</span><span class="n">thumbnailUrl</span><span class="p">;</span>
+<span class="k">@end</span>
+</code></pre></div>
+
+	</li>
+	<li>Lage en ny SpotifyTrack i viewDidLoad
+<div class="highlight"><pre><code class="objective-c"><span class="n">SpotifyTrack</span> <span class="o">*</span><span class="n">track</span> <span class="o">=</span> <span class="p">[[</span><span class="n">SpotifyTrack</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+<span class="n">track</span><span class="p">.</span><span class="kt">id</span> <span class="o">=</span> <span class="s">@&quot;&quot;</span><span class="p">;</span>
+<span class="n">track</span><span class="p">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">@&quot;&quot;</span><span class="p">;</span>
+<span class="n">self</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">track</span><span class="p">.</span><span class="n">title</span><span class="p">;</span>
+</code></pre></div>
+	</li>
+	<li>
+	Knytte knapp til IBAction og forklare message passing (metode kall)
+
+<div class="highlight"><pre><code class="objective-c"><span class="k">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span><span class="nf">openInSpotifyButtonTouch:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
+    <span class="p">[[</span><span class="n">UIApplication</span> <span class="n">sharedApplication</span><span class="p">]</span> <span class="n">openURL</span><span class="o">:</span><span class="p">[</span><span class="n">NSURL</span> <span class="n">URLWithString</span><span class="o">:</span><span class="p">[</span><span class="n">NSString</span> <span class="n">stringWithFormat</span><span class="o">:</span><span class="s">@&quot;spotify://%@&quot;</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">track</span><span class="p">.</span><span class="kt">id</span><span class="p">]]];</span>
+<span class="p">}</span>
+</code></pre></div>
+	</li>
+</ol>
+
+<h2>Lage SpotifySearchResultTableViewController</h2>
+
+<ol>
+	<li>Lage TableViewController og NavigationController i Interface Builder</li>
+	<li>Vise og forklare TableViewController med figurer (delegates)</li>
+	<li>Implementere statisk array med SpotifyTracks
+<div class="highlight"><pre><code class="objective-c"><span class="n">SpotifyTrack</span> <span class="n">track1</span> <span class="o">=</span> <span class="p">[</span><span class="n">SpotifyTrack</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+<span class="n">track1</span><span class="p">.</span><span class="kt">id</span> <span class="o">=</span> <span class="s">@&quot;1&quot;</span>
+<span class="n">track1</span><span class="p">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">@&quot;Title&quot;</span><span class="p">;</span>
+<span class="n">track1</span><span class="p">.</span><span class="n">artist</span> <span class="o">=</span> <span class="s">@&quot;Artist&quot;</span><span class="p">;</span>
+
+<span class="n">SpotifyTrack</span> <span class="n">track2</span> <span class="o">=</span> <span class="p">[</span><span class="n">SpotifyTrack</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+<span class="n">track1</span><span class="p">.</span><span class="kt">id</span> <span class="o">=</span> <span class="s">@&quot;1&quot;</span>
+<span class="n">track1</span><span class="p">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">@&quot;Title&quot;</span><span class="p">;</span>
+<span class="n">track1</span><span class="p">.</span><span class="n">artist</span> <span class="o">=</span> <span class="s">@&quot;Artist&quot;</span><span class="p">;</span>
+
+<span class="n">self</span><span class="p">.</span><span class="n">tracks</span> <span class="o">=</span> <span class="err">@</span><span class="p">[</span><span class="n">track1</span><span class="p">,</span> <span class="n">track2</span><span class="p">];</span>
+</code></pre></div>
+	</li>
+	<li>Implementere DataSource metodene til UITableView delegate
+<div class="highlight"><pre><code class="objective-c"><span class="k">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nf">numberOfSectionsInTableView:</span><span class="p">(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nf">tableView:</span><span class="p">(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">numberOfRowsInSection:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">section</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">tracks</span><span class="p">.</span><span class="n">count</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">UITableViewCell</span> <span class="o">*</span><span class="p">)</span><span class="nf">tableView:</span><span class="p">(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">cellForRowAtIndexPath:</span><span class="p">(</span><span class="n">NSIndexPath</span> <span class="o">*</span><span class="p">)</span><span class="nv">indexPath</span>
+<span class="p">{</span>
+    <span class="k">static</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">CellIdentifier</span> <span class="o">=</span> <span class="s">@&quot;trackCell&quot;</span><span class="p">;</span>
+    <span class="n">UITableViewCell</span> <span class="o">*</span><span class="n">cell</span> <span class="o">=</span> <span class="p">[</span><span class="n">tableView</span> <span class="n">dequeueReusableCellWithIdentifier</span><span class="o">:</span><span class="n">CellIdentifier</span> <span class="n">forIndexPath</span><span class="o">:</span><span class="n">indexPath</span><span class="p">];</span>
+    <span class="n">SpotifyTrack</span> <span class="o">*</span><span class="n">track</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">tracks</span><span class="p">[</span><span class="n">indexPath</span><span class="p">.</span><span class="n">row</span><span class="p">];</span>
+    <span class="n">cell</span><span class="p">.</span><span class="n">textLabel</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">track</span><span class="p">.</span><span class="n">title</span><span class="p">;</span>
+    <span class="n">cell</span><span class="p">.</span><span class="n">detailTextLabel</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">track</span><span class="p">.</span><span class="n">artist</span><span class="p">;</span>
+    
+    <span class="k">return</span> <span class="n">cell</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+	</li>
+	<li>Lage property på SpotifyPlayerViewController for track og fjerne fra viewDidLoad</li>
+	<li>Vise hvordan man kan sende data via navigationController seque
+<div class="highlight"><pre><code class="objective-c"><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">prepareForSegue:</span><span class="p">(</span><span class="n">UIStoryboardSegue</span> <span class="o">*</span><span class="p">)</span><span class="nv">segue</span> <span class="nf">sender:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span>
+<span class="p">{</span>
+    <span class="n">SpotifyPlayerViewController</span> <span class="o">*</span><span class="n">viewController</span> <span class="o">=</span> <span class="p">(</span><span class="n">SpotifyPlayerViewController</span> <span class="o">*</span><span class="p">)[</span><span class="n">segue</span> <span class="n">destinationViewController</span><span class="p">];</span>
+    <span class="n">viewController</span><span class="p">.</span><span class="n">track</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">tracks</span><span class="p">[[[</span><span class="n">self</span><span class="p">.</span><span class="n">tableView</span> <span class="n">indexPathForSelectedRow</span><span class="p">]</span> <span class="n">row</span><span class="p">]];</span>
+<span class="p">}</span>
+</code></pre></div>
+	</li>
+</ol>
+
+<h2>Lage SpotifyService</h2>
+
+<ol>
+	<li> Forklare Klasse metoder og Blocks
+<div class="highlight"><pre><code class="objective-c">		
+<span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
+<span class="k">@class</span> <span class="nc">SpotifyTrack</span>;
+
+<span class="k">typedef</span> <span class="nf">void</span><span class="p">(</span><span class="o">^</span><span class="n">KSpotifyTrackSearchResult</span><span class="p">)(</span><span class="n">NSArray</span><span class="o">*</span> <span class="n">tracks</span><span class="p">);</span>
+<span class="k">typedef</span> <span class="nf">void</span><span class="p">(</span><span class="o">^</span><span class="n">KSpotifyServiceError</span><span class="p">)(</span><span class="n">NSError</span><span class="o">*</span> <span class="n">error</span><span class="p">);</span>
+
+<span class="k">@interface</span> <span class="nc">SpotifyService</span> : <span class="nc">NSObject</span>
+<span class="k">+</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">findTracks:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">title</span> <span class="nf">result:</span><span class="p">(</span><span class="n">KSpotifyTrackSearchResult</span><span class="p">)</span><span class="nv">result</span> <span class="nf">error:</span><span class="p">(</span><span class="n">KSpotifyServiceError</span><span class="p">)</span><span class="nv">error</span><span class="p">;</span>
+<span class="k">@end</span>
+
+
+
+<span class="o">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">findTracks</span><span class="o">:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">title</span> <span class="n">result</span><span class="o">:</span><span class="p">(</span><span class="n">KSpotifyTrackSearchResult</span><span class="p">)</span><span class="n">result</span> <span class="n">error</span><span class="o">:</span><span class="p">(</span><span class="n">KSpotifyServiceError</span><span class="p">)</span><span class="n">error</span> <span class="p">{</span>
+    
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">urlString</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="n">stringWithFormat</span><span class="o">:</span><span class="s">@&quot;http://ws.spotify.com/search/1/track.json?q=%@&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">title</span> <span class="n">stringByAddingPercentEscapesUsingEncoding</span><span class="o">:</span><span class="n">NSUTF8StringEncoding</span><span class="p">]];</span>
+    
+    <span class="p">[</span><span class="n">KURLConnection</span> <span class="n">startWithRequest</span><span class="o">:</span><span class="p">[</span><span class="n">NSURLRequest</span> <span class="n">requestWithURL</span><span class="o">:</span><span class="p">[</span><span class="n">NSURL</span> <span class="n">URLWithString</span><span class="o">:</span><span class="n">urlString</span><span class="p">]]</span> <span class="n">successHandler</span><span class="o">:^</span><span class="p">(</span><span class="n">NSData</span> <span class="o">*</span><span class="n">response</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">NSError</span> <span class="o">*</span><span class="n">convertError</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+        <span class="n">NSArray</span> <span class="o">*</span><span class="n">tracks</span> <span class="o">=</span> <span class="p">[</span><span class="n">SpotifyService</span> <span class="n">convertDataResponseToTracks</span><span class="o">:</span><span class="n">response</span> <span class="n">error</span><span class="o">:&amp;</span><span class="n">convertError</span><span class="p">];</span>
+        
+        <span class="k">if</span> <span class="p">(</span><span class="n">convertError</span> <span class="o">!=</span> <span class="nb">nil</span><span class="p">)</span> <span class="p">{</span>
+
+            <span class="n">error</span><span class="p">(</span><span class="n">convertError</span><span class="p">);</span>
+        <span class="p">}</span>
+        
+        <span class="n">result</span><span class="p">(</span><span class="n">tracks</span><span class="p">);</span>
+    <span class="p">}</span> <span class="n">failedHandler</span><span class="o">:^</span><span class="p">(</span><span class="n">NSError</span> <span class="o">*</span><span class="n">requestError</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">error</span><span class="p">(</span><span class="n">requestError</span><span class="p">);</span>
+    <span class="p">}];</span>
+<span class="p">}</span>
+
+<span class="o">+</span> <span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="n">convertDataResponseToTracks</span><span class="o">:</span><span class="p">(</span><span class="n">NSData</span> <span class="o">*</span><span class="p">)</span><span class="n">response</span> <span class="n">error</span><span class="o">:</span><span class="p">(</span><span class="n">NSError</span> <span class="o">**</span><span class="p">)</span><span class="n">error</span> <span class="p">{</span>
+    
+    <span class="n">NSError</span> <span class="n">__autoreleasing</span> <span class="o">*</span><span class="n">jsonError</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+    <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">dictionary</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSJSONSerialization</span> <span class="n">JSONObjectWithData</span><span class="o">:</span><span class="n">response</span> <span class="n">options</span><span class="o">:</span><span class="n">NSJSONReadingAllowFragments</span> <span class="n">error</span><span class="o">:&amp;</span><span class="n">jsonError</span><span class="p">];</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="n">jsonError</span> <span class="o">!=</span> <span class="nb">nil</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;Failed parsing json: %@&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">jsonError</span> <span class="n">localizedDescription</span><span class="p">]);</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">jsonError</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="n">NSMutableArray</span> <span class="o">*</span><span class="n">tracks</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSMutableArray</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="n">track</span> <span class="k">in</span> <span class="n">dictionary</span><span class="p">[</span><span class="s">@&quot;tracks&quot;</span><span class="p">])</span> <span class="p">{</span>
+        <span class="p">[</span><span class="n">tracks</span> <span class="n">addObject</span><span class="o">:</span><span class="p">[</span><span class="n">SpotifyService</span> <span class="n">convertResponseTrackToTrack</span><span class="o">:</span><span class="n">track</span><span class="p">]];</span>
+    <span class="p">}</span>
+    
+    <span class="k">return</span> <span class="n">tracks</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="o">+</span> <span class="p">(</span><span class="n">SpotifyTrack</span> <span class="o">*</span><span class="p">)</span><span class="n">convertResponseTrackToTrack</span><span class="o">:</span><span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="n">trackObject</span> <span class="p">{</span>
+    <span class="n">SpotifyTrack</span> <span class="o">*</span><span class="n">track</span> <span class="o">=</span> <span class="p">[[</span><span class="n">SpotifyTrack</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+    
+    <span class="n">track</span><span class="p">.</span><span class="kt">id</span> <span class="o">=</span> <span class="n">trackObject</span><span class="p">[</span><span class="s">@&quot;href&quot;</span><span class="p">];</span>
+    <span class="n">track</span><span class="p">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">trackObject</span><span class="p">[</span><span class="s">@&quot;name&quot;</span><span class="p">];</span>
+    <span class="n">track</span><span class="p">.</span><span class="n">artist</span> <span class="o">=</span> <span class="n">trackObject</span><span class="p">[</span><span class="s">@&quot;artists&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">@&quot;name&quot;</span><span class="p">];</span>
+    
+    <span class="k">return</span> <span class="n">track</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+	</li>
+	<li>Forklare Error handling</li>
+	<li>Forklare Blocks</li>
+	<li>Forklare KURLConnection med threading</li>
+	<li>Forklare NSJSONSerialization</li>
+	<li>NSDictionary</li>
+	<li>Bytt ut statisk array med service</li>
+	<li>Lag UISearchBar og set opp delegate
+
+<div class="highlight"><pre><code class="objective-c">	
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">searchBarSearchButtonClicked:</span><span class="p">(</span><span class="n">UISearchBar</span> <span class="o">*</span><span class="p">)</span><span class="nv">searchBar</span> <span class="p">{</span>
+    <span class="p">[</span><span class="n">searchBar</span> <span class="n">resignFirstResponder</span><span class="p">];</span>
+    
+    <span class="p">[</span><span class="n">SpotifyService</span> <span class="n">findTracks</span><span class="o">:</span><span class="n">searchBar</span><span class="p">.</span><span class="n">text</span> <span class="n">result</span><span class="o">:^</span><span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="n">tracks</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">tracks</span> <span class="o">=</span> <span class="n">tracks</span><span class="p">;</span>
+        <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">tableView</span> <span class="n">reloadData</span><span class="p">];</span>
+    <span class="p">}</span> <span class="n">error</span><span class="o">:^</span><span class="p">(</span><span class="n">NSError</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">UIAlertView</span> <span class="o">*</span> <span class="n">alertView</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIAlertView</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">initWithTitle</span><span class="o">:</span><span class="s">@&quot;Feilet&quot;</span> <span class="n">message</span><span class="o">:</span><span class="s">@&quot;Feilet skikkelig&quot;</span> <span class="n">delegate</span><span class="o">:</span><span class="nb">nil</span> <span class="n">cancelButtonTitle</span><span class="o">:</span><span class="s">@&quot;OK&quot;</span> <span class="n">otherButtonTitles</span><span class="o">:</span><span class="nb">nil</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];</span>
+        <span class="p">[</span><span class="n">alertView</span> <span class="n">show</span><span class="p">];</span>
+    <span class="p">}];</span>
+<span class="p">}</span>
+</code></pre></div>
+	</li>
+</ol>
+
+
+          </div>
+          <nav class="span4">
+            <strong>XCode</strong>
+            
+<ul>
+
+  
+
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/pages/xcode-introduksjon.html">Introduksjon</a></li>
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/pages/xcode-opprette-prosjekt.html">Opprette prosjekt</a></li>
+    
+  
+    
+  
+
+
+  
+
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/pages/xcode-prosjektinnstillinger.html">Prosjektinnstillinger</a></li>
+    
+  
+
+
+  
+
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/pages/xcode-byggekjore.html">Bygge og kjøre apps</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/pages/interface-builder.html">Interface Builder</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  
+</ul>
+
+            <strong>Objective-C</strong>
+            
+<ul>
+
+  
+
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/pages/datatyper.html">Datatyper</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/pages/klasser.html">Klasser</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/pages/metoder.html">Metoder</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+  
+    
+  
+    
+      <li class=""><a href="/pages/arv.html">Arv</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/pages/blocks.html">Blocks</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/pages/categories.html">Categories</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/pages/protocols.html">Protocols</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/pages/delegates.html">Delegates</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/pages/threading.html">Threading</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/pages/error-handling.html">Error Handling</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  
+</ul>
+
+            <strong>Cocoa Touch</strong>
+            
+<ul>
+
+  
+
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/pages/view-controllers.html">View Controllers</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/pages/table-view-controllers.html">Table View Controllers</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/pages/navigation-controller.html">Navigation Controller</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  
+</ul>
+
+            <strong>Ressurser</strong>
+            
+<ul>
+
+  
+
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/pages/oppgaver.html">Oppgaver</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/pages/http.html">HTTP</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/pages/merinfo.html">Ressurser</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class="current"><a href="/pages/manus.html">Manus</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  
+</ul>
+          </nav>
+        </div>
+      </div>
+
+    </body>
+</html>
