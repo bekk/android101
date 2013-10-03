@@ -57,7 +57,7 @@ title: Manus
 
 <ol>
 	<li>Lage <a href="table-view-controllers.html">TableViewController</a> og <a href="navigation-controllers.html">NavigationController</a> i Interface Builder</li>
-	<li>Forklare Delegates</li>
+	<li><a href="delegates.html">Forklare Delegates</a></li>
 	<li>Implementere <a href="datatyper.html">statisk array</a> med SpotifyTracks
 {% highlight objective-c %}
 SpotifyTrack track1 = [SpotifyTrack alloc] init];
@@ -73,13 +73,8 @@ track1.artist = @"Artist";
 self.tracks = @[track1, track2];
 {% endhighlight %}
 	</li>
-	<li>Implementere DataSource metodene til UITableView delegate
+	<li><a href="table-view-controllers.html">Implementere DataSource metodene til UITableView delegate</a>
 {% highlight objective-c %}
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.tracks.count;
@@ -98,7 +93,7 @@ self.tracks = @[track1, track2];
 {% endhighlight %}
 	</li>
 	<li>Lage property på SpotifyPlayerViewController for track og fjerne fra viewDidLoad</li>
-	<li>Vise hvordan man kan sende data via navigationController seque
+	<li>Vise hvordan man kan sende data via <a href="navigation-controllers.html">navigationController</a> seque
 {% highlight objective-c %}
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
