@@ -3,33 +3,38 @@ layout: default
 title: Oppgaver
 ---
 
-.middle.center
-# Lets code!
-## Twitter aktig app
 
-Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)
+<h2>Lets code!</h1>
+<h3>Twitter aktig app</h2>
 
----
-
-# Twitter aktig app - hint
-
-* Serveren ligger på [http://ios-course.herokuapp.com](http://ios-course.herokuapp.com)
-* Rest endepunktene leverer JSON og fungerer på følgende måte:
-	* [http://ios-course.herokuapp.com/message](http://ios-course.herokuapp.com/message) (GET) <- alle beskjeder
-	* [http://ios-course.herokuapp.com/message](http://ios-course.herokuapp.com/message) (POST) <- JSON i body
-	* [http://ios-course.herokuapp.com/message/{id}](http://ios-course.herokuapp.com/message/{id}) (DELETE) <- Slette
-	* [http://ios-course.herokuapp.com/message/{id}](http://ios-course.herokuapp.com/message/{id}) (PUT) <- Oppdatere
+<ul><li>Hjelpeklasser for å snakke med serveren: [library](http://goo.gl/hDEMX)</li></ul>
 
 
-	.javascript
-	{
-		"from":"hinderberg",
-		"message":"Denne funker fint!:)",
-		"date":"2012-10-18T17:43:48.011Z" //date må man ikke ha med
-	}
+<h2>Hint</h2>
+
+<ul>
+	<li>Serveren ligger på [http://ios-course.herokuapp.com](http://ios-course.herokuapp.com)</li>
+	<li>Rest endepunktene leverer JSON og fungerer på følgende måte:
+	<ol>
+		<li>[http://ios-course.herokuapp.com/message](http://ios-course.herokuapp.com/message) (GET) <- alle beskjeder</li>
+		<li>[http://ios-course.herokuapp.com/message](http://ios-course.herokuapp.com/message) (POST) <- JSON i body</li>
+		<li>[http://ios-course.herokuapp.com/message/{id}](http://ios-course.herokuapp.com/message/{id}) (DELETE) <- Slette</li>
+		<li>[http://ios-course.herokuapp.com/message/{id}](http://ios-course.herokuapp.com/message/{id}) (PUT) <- Oppdatere</li>
+	</ol>
+	</li>
+</ul>
+
+{% highlight javascript %}	
+{
+	"from":"hinderberg",
+	"message":"Denne funker fint!:)",
+	"date":"2012-10-18T17:43:48.011Z" //date må man ikke ha med
+}
+{% endhighlight %}
 
 <p />
 
-	.objective-c
-	NSJSONSerialization //Kan brukes til å parse JSON til Objective-C 
-	#import <library/library.h> //Hjelpe klassene importeres
+{% highlight objective-c %}
+NSJSONSerialization //Kan brukes til å parse JSON til Objective-C 
+#import <library/library.h> //Hjelpe klassene importeres
+{% endhighlight %}

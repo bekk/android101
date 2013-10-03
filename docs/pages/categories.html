@@ -3,31 +3,31 @@ layout: default
 title: Categories
 ---
 
-* Categories brukes for å legge nye funksjoner til eksisterende klasser, og er et alternativ til arv.
-* En category vil kjøre som en del av klassen, og ha tilgang til self.
+<ol>
+	<li>Categories brukes for å legge nye funksjoner til eksisterende klasser, og er et alternativ til arv</li>
+	<li>En category vil kjøre som en del av klassen, og ha tilgang til self</li>
+</ol>
 
 
+{% highlight objective-c %}
+@interface NSString (MyCategory)
 
-.objective-c
-	@interface NSString (MyCategory)
+- (BOOL)isEmptyString;
 
-	- (BOOL)isEmptyString;
+@end
 
-	@end
+@implementation NSString (MyCategory)
 
-	@implementation NSString (MyCategory)
+- (BOOL)isEmptyString {
+	/* implementation.. */
+}
 
-	- (BOOL)isEmptyString {
-		/* implementation.. */
-	}
+@end
+{% endhighlight %}
 
-	@end
+<ol><li> NB: Bruk med forsiktighet (..monkey patching)</li></ol>
 
-
-* NB: Bruk med forsiktighet (..monkey patching)
-
-
-
-.objective-c
+{% highlight objective-c %}
 	BOOL empty = [@"" isEmptyString];
 	/* YES */
+{% endhighlight %}

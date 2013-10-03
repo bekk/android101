@@ -3,31 +3,34 @@ layout: default
 title: Protocols
 ---
 
-* Kan brukes til blant annet
-	* Lage en kontrakt for en klasse, og skjule selve implementasjonen (kalles interface i java)
-	* Spesifisere funksjoner man forventer at et delegat skal implementere
+<ul>
+<li>Kan brukes til blant annet
+	<li>Lage en kontrakt for en klasse, og skjule selve implementasjonen (kalles interface i java)</li>
+	<li>Spesifisere funksjoner man forventer at et delegat skal implementere</li>
+	</li>
+</ul>
 
 
+{% highlight objective-c %}
+@protocol KUrlConnectionDelegate
 
-.objective-c
-	@protocol KUrlConnectionDelegate
+	@required
+	- (void)didFinishWithData:(NSData *)data;
 
-		@required
-		- (void)didFinishWithData:(NSData *)data;
+	@optional
+	- (void)didFinishWithError:(NSError *)error;
 
-		@optional
-		- (void)didFinishWithError:(NSError *)error;
+@end
 
-	@end
+/* MyClass må implementere didFinishWithData: og kan implementere didFinishWithError: */
+@interface MyClass : NSObject <KUrlConnectionDelegate> {}
 
-	/* MyClass må implementere didFinishWithData: og kan implementere didFinishWithError: */
-	@interface MyClass : NSObject <KUrlConnectionDelegate> {}
+@end
 
-	@end
-
-	/* Hvilken som helst klasse som implementerer KUrlConnectionDelegate 
-	kan settes som delegate */
-	@interface MyOtherClass : NSObject {
-		id<KUrlConnectionDelegate> delegate;
-	}
-	@end
+/* Hvilken som helst klasse som implementerer KUrlConnectionDelegate 
+kan settes som delegate */
+@interface MyOtherClass : NSObject {
+	id<KUrlConnectionDelegate> delegate;
+}
+@end
+{% endhighlight %}	

@@ -3,12 +3,13 @@ layout: default
 title: Delegates
 ---
 
-* "Design pattern" for å få et objekt til å delegere deler av sine oppgaver til et annet objekt.
-* Ikke originalt GoF pattern.
+<ol>
+	<li>"Design pattern" for å få et objekt til å delegere deler av sine oppgaver til et annet objekt</li>
+	<li>Ikke originalt GoF pattern</li>
+</ol>
 
 
-
-.objective-c
+{% highlight objective-c %}
 	@implementation Car
 		- (id) init
 		{
@@ -25,83 +26,68 @@ title: Delegates
 			[self.engine start];
 		}
 	@end
+{% endhighlight %}
+
+<ol>
+	<li>Du kaller start på en `Car`, men bilen kaller start på `Engine`</li>
+	<li>Negativt: Skaper knytning mellom `Car` og `Engine`. (High coupling)</li>
+</ol>
 
 
 
+<h2>Delegate med Inversion of control (IoC) med constructor injection</h2>
 
-* Du kaller start på en `Car`, men bilen kaller start på `Engine`.
-* Negativt: Skaper knytning mellom `Car` og `Engine`. (High coupling)
+{% highlight objective-c %}
+@implementation Car
+	- (id) initWithEngine:(Engine)engine
+	{
+		self = [super init];
 
+		if(self != nil)
 
----
-
-
-
-# Delegates #2
-
-* Delegate med Inversion of control (IoC) med constructor injection
-
-
-
-.objective-c
-	@implementation Car
-		- (id) initWithEngine:(Engine)engine
 		{
-			self = [super init];
-
-			if(self != nil)
-
-			{
-				self.engine = engine;
-			}
-			return self;
+			self.engine = engine;
 		}
-		- (void) start
-		{
-			[self.engine start];
+		return self;
+	}
+	- (void) start
+	{
+		[self.engine start];
+	}
+@end
+{% endhighlight %}
+
+<ol><li>Low coupling</li></ol>
+
+
+<h2>Eksempel med UIAlertView</h2>
+<h3>Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på oss ved hjelp av en selector</h3>
+
+{% highlight objective-c %}
+@implementation MinViewController
+	- (void)showAlertView {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Advarsel"
+			message:@"Beskjed"
+			delegate:self /* Setter oss selv som delegate på UIAlertViewet */
+			cancelButtonTitle:@"Ok"
+			otherButtonTitles:nil];
+		[alert show];
+	}
+
+	- (void)alertView:(UIAlertView *)alertView 
+		clickedButtonAtIndex:(NSInteger)buttonIndex {
+		NSLog(@"Trykket på en knapp!");
+	}
+@end
+
+
+@implementation UIAlertView
+	//[...show...]
+		/* UIAlertView vises, og kjører følgende kode når man trykker på en knapp */
+		if ([_delegate respondsToSelector:@selector(alertView:clickedButtonAtIndex:)]) {
+			/* Kaller funksjonen alertView:clickedButtonAtIndex: på delegatet */
+			[_delegate alertView:self clickedButtonAtIndex:buttonIndex];
 		}
-	@end
-
-
-* Low coupling
-
-
----
-
-
-# Delegates #3
-
-
-
-.objective-c
-	@implementation MinViewController
-		- (void)showAlertView {
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Advarsel"
-				message:@"Beskjed"
-				delegate:self /* Setter oss selv som delegate på UIAlertViewet */
-				cancelButtonTitle:@"Ok"
-				otherButtonTitles:nil];
-			[alert show];
-		}
-
-		- (void)alertView:(UIAlertView *)alertView 
-			clickedButtonAtIndex:(NSInteger)buttonIndex {
-			NSLog(@"Trykket på en knapp!");
-		}
-	@end
-<p/>
-
-
-.objective-c
-	@implementation UIAlertView
-		//[...show...]
-			/* UIAlertView vises, og kjører følgende kode når man trykker på en knapp */
-			if ([_delegate respondsToSelector:@selector(alertView:clickedButtonAtIndex:)]) {
-				/* Kaller funksjonen alertView:clickedButtonAtIndex: på delegatet */
-				[_delegate alertView:self clickedButtonAtIndex:buttonIndex];
-			}
-		//[...]
-	@end
-
-
-Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på oss ved hjelp av en selector
+	//[...]
+@end
+{% endhighlight %}

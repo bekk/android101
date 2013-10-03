@@ -7,57 +7,52 @@ TODO: datatyper, objekter, pekere, datatyper, id vs statisk dynamisk
 
 TODO: itereringseksempler
 
-* Noen som husker `@` for å lage `NSString`?
-* Nylig utvidet for å kunne lage `NSNumber`, `NSArray` og `NSDictionary`.
+<h2>Objective-C Literals</h2>
 
----
+<ul>
+	<li> Noen som husker `@` for å lage `NSString`?</li>
+	<li> Nylig utvidet for å kunne lage `NSNumber`, `NSArray` og `NSDictionary`.</li>
+</ul>
 
-# Objective-C Literals #2
+<h3>NSNumber</h3>
 
-### NSNumber
-
-
-
-.objective-c
-	@12      /* [NSNumber numberWithInt:12] */
-	@'Z'     /* [NSNumber numberWithChar:'Z'] */
-	@YES     /* [NSNumber numberWithBool:YES] */
-
-
-### Boxed Expression Literals (C kall)
+{% highlight objective-c %}
+@12      /* [NSNumber numberWithInt:12] */
+@'Z'     /* [NSNumber numberWithChar:'Z'] */
+@YES     /* [NSNumber numberWithBool:YES] */
+{% endhighlight %}
 
 
+<h3>Boxed Expression Literals (C kall)</h3>
 
-.objective-c
-	@(M_PI/16) /* [NSNumber numberWithDouble:(M_PI / 16)] */
+{% highlight objective-c %}
+@(M_PI/16) /* [NSNumber numberWithDouble:(M_PI / 16)] */
+{% endhighlight %}
 
----
+<h3>NSArray</h3>
 
-# Objective-C Literals #3
+{% highlight objective-c %}
+NSArray *array = @[ @"Hello", @"Wellow", @"Cool" ]; 
 
-### NSArray
+/*
+NSArray arrayWithObjects:@"Hello", @"Wellow", @"Cool", nil];
+*/
 
-.objective-c
-	NSArray *array = @[ @"Hello", @"Wellow", @"Cool" ]; 
+NSLog(@"Første element: %@", array[0]);
+{% endhighlight %}
 
-	/*
-	NSArray arrayWithObjects:@"Hello", @"Wellow", @"Cool", nil];
-	*/
+<h3>NSDictionary</h3>
 
-	NSLog(@"Første element: %@", array[0]);
+{% highlight objective-c %}
+NSDictionary *dictionary = @{
+	@"firstname" : @"Foo",
+	@"lastname" : @"Bar",
+};
 
-### NSDictionary
+/* 
+NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+	@"value1", @"key1", @"value2", @"key2", nil];
+*/
 
-.objective-c	
-	NSDictionary *dictionary = @{
-		@"firstname" : @"Foo",
-		@"lastname" : @"Bar",
-	};
-
-	/* 
-	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-		@"value1", @"key1", @"value2", @"key2", nil];
-	*/
-
-	NSLog(@"Første element: %@", dictionary["firstname"]);
-
+NSLog(@"Første element: %@", dictionary["firstname"]);
+{% endhighlight %}

@@ -3,32 +3,32 @@ layout: default
 title: Error Handling
 ---
 
-* Gjøres likt som i mange andre programmeringsspråk, men brukes sjelden
+<h2>Exceptions</h2>
+
+<ol><li>Likt som i mange andre programmeringsspråk, men brukes sjelden</li></ol>
+
+{% highlight objective-c %}
+Venn *venn = [[Venn alloc] init];
+
+@try 
+{
+    [venn sladre];
+}
+@catch (NSException *exception) 
+{
+    NSLog(@"Feilet %@: %@", [exception name], [exception reason]);
+}
+{% endhighlight %}
 
 
+<ol><li> De fleste (og Apple) bruker heller `NSError`</li></ol>
 
-.objective-c
-	Venn *venn = [[Venn alloc] init];
- 
-	@try 
-	{
-	    [venn sladre];
-	}
-	@catch (NSException *exception) 
-	{
-	    NSLog(@"Feilet %@: %@", [exception name], [exception reason]);
-	}
-
-
-* De fleste (og Apple) bruker heller `NSError`
-
-
-
-.objective-c
-	NSError *myError = nil;
-	NSString *fileContent = [NSString stringWithContentsOfFile:@"minfil.txt"
-													 encoding:NSUTF8StringEncoding
-													    error:&myError];
-	if (myError != nil) {
-		// Noe feilet
-	}
+{% highlight objective-c %}
+NSError *myError = nil;
+NSString *fileContent = [NSString stringWithContentsOfFile:@"minfil.txt"
+												 encoding:NSUTF8StringEncoding
+												    error:&myError];
+if (myError != nil) {
+	// Noe feilet
+}
+{% endhighlight %}

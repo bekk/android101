@@ -3,25 +3,33 @@ layout: default
 title: Blocks
 ---
 
-* Minner mye om closures, og brukes ofte for å
-	* kunne kjøre små kodeblokker samtidig
-	* iterere over objekter i et array
-	* kjøre kode som et callback
-* Man definerer en block med `.objective-c ^{ /*min fine block*/ }`
-	* Alt inne i blocken kan lese variabler på utsiden
-	* Variabler på utsiden må defineres med `__block` for å være skrivbare
+<ol>
+	<li>Minner mye om closures, og brukes ofte for å
+		<ol>
+			<li>kunne kjøre små kodeblokker samtidig</li>
+			<li>iterere over objekter i et array</li>
+			<li>kjøre kode som et callback</li>
+		</ol>
+	</li>
+	<li>Man definerer en block med `.objective-c ^{ /*min fine block*/ }`
+		<ol>
+			<li>Alt inne i blocken kan lese variabler på utsiden</li>
+			<li>Variabler på utsiden må defineres med `__block` for å være skrivbare</li>
+		</ol>
+	</li>
+</ol>
 
+{% highlight objective-c %}
 
+/* En block-definisjon */
+typedef void(^KURLConnectionSuccessHandler)(NSData *data);
 
-.objective-c
-	/* En block-definisjon */
-	typedef void(^KURLConnectionSuccessHandler)(NSData *data);
+/* metodedefinisjon med block som input */
++ (void)startWithSuccessHandler:(KURLConnectionSuccessHandler)successHandler;
 
-	/* metodedefinisjon med block som input */
-	+ (void)startWithSuccessHandler:(KURLConnectionSuccessHandler)successHandler;
-
-	/* Kall på metode med block lik block-definisjonen */
-	[KURLConnection startWithSuccessHandler:^(NSData *data)
-    {
-		[self cancelTouch:nil];
-    }];
+/* Kall på metode med block lik block-definisjonen */
+[KURLConnection startWithSuccessHandler:^(NSData *data)
+{
+	[self cancelTouch:nil];
+}];
+{% endhighlight %}
