@@ -14,12 +14,16 @@ task :publish => [:generate] do
   Dir.mktmpdir do |tmp|
 	system "mv _docs/* #{tmp}"
 	system "git checkout gh-pages"
-	sleep 1
-	branch = `git rev-parse --abbrev-ref HEAD`
-	branch.strip!
-	if branch != "gh-pages" then
-		abort "on #{branch} - not on gh-pages. Aborting."
+
+	branch = `git rev-parse --abbrev-ref HEAD`.strip
+	required_branch = "gh-pages"
+	destination = `git config --get remote.origin.url`.strip
+	required_destination = "git@github.com:hinderberg/ios101.git"
+
+	unless branch == required_branch && destination == required_destination then
+		abort "Must be on #{required_branch} with #{required_destination} as the remote/origin. Aborting."
 	end
+	
 	system "rm -rf *"
 	system "mv #{tmp}/* ."
 	message = "Site updated #{Time.now.utc}"
