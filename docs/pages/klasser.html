@@ -1,0 +1,138 @@
+---
+layout: default
+title: Klasser
+---
+
+<ul>
+	<li><a href="#lage">Lage klasser</a></li>
+	<li><a href="#definere">Definere og benytte klasser</a>
+		<ul>
+			<li><a href="#instansiere">Instansiere</a></li>
+			<li><a href="#instansvariabler">Instansvariabler</a></li>
+			<li><a href="#properties">Properties</a></li>
+			<li><a href="#metoder">Metoder</a></li>
+		</ul>
+	</li>
+	<li>Arv</li>
+</ul>
+
+TODO importering av filer
+
+<h2 id="lage">Lage nye klasser</h2>
+<ol>
+	<li>File -> New file...</li>
+</ol>
+<img src="/img/new-class1.png" />
+<img src="/img/new-class2.png" />
+
+<div class="alert alert-block">
+  <h3>Navnekonvensjon</h3>
+<ul>
+	<li>CamelCase på klasse- og filnavn</li>
+	<li>snakeCase for instanser av klassen</li>
+</ul>
+</div>
+
+<h2 id="definere">Definere og benytte klasser</h2>
+<strong>Eksempel: SpotifyTrack.h</strong>
+{% highlight objective-c %}
+@interface SpotifyTrack : NSObject
+@property (nonatomic, strong) NSString *id;
+@property (nonatomic, strong) NSString *artist;
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSURL *thumbnailUrl;
+@end
+
+/* Det blir nå automagisk laget settere og gettere */
+{% endhighlight %}
+
+<strong>Eksempel: SpotifyTrack.m</strong>
+{% highlight objective-c %}
+#import "SpotifyTrack.h"
+
+@implementation SpotifyTrack
+@end
+{% endhighlight %}
+
+<div class="alert alert-block">
+  	<strong>.h og .m-filer?</strong>
+	<ul>
+		<li>h.-filen definerer som regel instansvariablene og public metoder</li>
+		<li>m.-filen inneholder implementasjonen av metodene</li>
+	</ul>
+</div>
+
+<h3 id="instansiere">Instansiere klasser</h3>
+{% highlight objective-c %}
+SpotifyTrack *track = [[SpotifyTrack alloc] init];
+{% endhighlight %}
+
+<h3 id="instansvariabler">Instansvariabler</h3>
+<ul>
+<li>Alle instansvariabler deklarert i .h-filen er automatisk interne (@protected)</li>
+<li>Kan overstyres ved hjelp av 'scope directives'</li>
+</ul>
+
+{% highlight objective-c %}
+@interface MyObject : NSObject
+/* Instans variabelen er bare tilgjengelig inne i klassen som deklarerer den */
+@private
+NSString * ettObjekt;
+
+/* Instans variabelen er tilgjengelig i klassen som
+deklarer den og for klasser som arver av den klassen */
+@protected
+NSString * ettObjekt;
+
+/* Instans variabelen er tilgjengelig for alle */
+@public
+NSString * ettObjekt;
+
+/* Kun tilgjengelig for klasser som ligger i ett og samme image. */
+@package
+NSString * ettObjekt;
+@end
+{% endhighlight %}
+
+
+<h3 id="properties">Properties</h3>
+<ul>
+<li>Properties er en effektiv måte og lage en get og set metode for instansvariabler (ivars)</li>
+<li>I nyere Objective-C trenger man ikke definere ivars om man definerer properties, da de blir automatisk laget om det ikke finnes en matchende ivars til property navnet</li>
+</ul>
+
+{% highlight objective-c %}
+@interface SpotifyTrack : NSObject
+@property (nonatomic, strong) NSString *id;
+@property (nonatomic, strong) NSString *artist;
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSURL *thumbnailUrl;
+@end
+
+/* Det automagisk laget settere og gettere som kan brukes slik: */
+SpotifyTrack *track = [[SpotifyTrack alloc] init];
+track.artist = @"The Killers"; // kaller setter
+NSLog(@"Artist: %@", track.artist); // kaller getter
+{% endhighlight %}
+
+
+<h4>Styre oppførslen til properties</h4>
+<div class="alert alert-error">TODO: oppdater</div>
+
+* Tilgjengelighet
+	- `readonly` - kun getter
+	- `readwrite` - både getter og setter (default)
+* Hvordan setteren skal fungere
+	- `strong` - denne klassen eier propertien, og styrer minnehåndtering
+	- `weak` - denne klassen eier _ikke_ propertien, og styrer derfor _ikke_ minnehåndteringen
+	- `copy` - en kopi av objektet vil bli brukt ved assignment
+	- `assign` - setter verdien direkte. Brukes ofte på primitiver
+* Trådsikkerhet
+	- `atomic` - Default, men bør brukes sjelden da den er tregere. Har tilleggsfunksjonalitet som gjør at man alltid returnerer ett helt objekt når flere tråder snakker med setter og getter
+	- `nonatomic` - sier seg kanskje selv, motsatte av atomic
+
+<h3 id="metoder">Metoder</h3>
+TODO
+
+<h2 id="arv">Arv</h2>
+TODO

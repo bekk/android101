@@ -1,0 +1,200 @@
+---
+layout: default
+title: Manus
+---
+
+<h2>Xcode</h2>
+
+<ol>
+	<li>Starte Xcode</li>
+	<li>Opprette prosjekt</li>
+	<li>Empty application</li>
+	<li>Venstre, høyre og midt i Xcode</li>
+	<li>Prosjekt instillinger</li>
+	<li>Trykke play og vise simulator</li>
+</ol>
+
+<h2>Lage SpotifyPlayerViewController</h2>
+
+<ol>
+	<li>Lage storyboard og sette main interface</li>
+	<li>Dra inn en ViewController, knapp og label</li>
+	<li>Lage og sette tilhørende ViewController klasse (Hva er *.h og *.m filene)</li>
+	<li>Lage IBOutlet's og IBAction's</li>
+	<li>Lage SpotifyTrack (Klasser, Arv, imports, @properties (ivars), Objekter har pekere)
+{% highlight objective-c %}
+@interface SpotifyTrack : NSObject
+	@property (nonatomic, strong) NSString *id;
+	@property (nonatomic, strong) NSString *artist;
+	@property (nonatomic, strong) NSString *title;
+	@property (nonatomic, strong) NSURL *thumbnailUrl;
+@end
+{% endhighlight %}
+
+	</li>
+	<li>Lage en ny SpotifyTrack i viewDidLoad
+{% highlight objective-c %}
+SpotifyTrack *track = [[SpotifyTrack alloc] init];
+track.id = @"";
+track.title = @"";
+self.titleLabel.text = track.title;
+{% endhighlight %}
+	</li>
+	<li>
+	Knytte knapp til IBAction og forklare message passing (metode kall)
+
+{% highlight objective-c %}
+- (IBAction)openInSpotifyButtonTouch:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"spotify://%@", self.track.id]]];
+}
+{% endhighlight %}
+	</li>
+</ol>
+
+<h2>Lage SpotifySearchResultTableViewController</h2>
+
+<ol>
+	<li>Lage TableViewController og NavigationController i Interface Builder</li>
+	<li>Vise og forklare TableViewController med figurer (delegates)</li>
+	<li>Implementere statisk array med SpotifyTracks
+{% highlight objective-c %}
+SpotifyTrack track1 = [SpotifyTrack alloc] init];
+track1.id = @"1"
+track1.title = @"Title";
+track1.artist = @"Artist";
+
+SpotifyTrack track2 = [SpotifyTrack alloc] init];
+track1.id = @"1"
+track1.title = @"Title";
+track1.artist = @"Artist";
+
+self.tracks = @[track1, track2];
+{% endhighlight %}
+	</li>
+	<li>Implementere DataSource metodene til UITableView delegate
+{% highlight objective-c %}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.tracks.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"trackCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    SpotifyTrack *track = self.tracks[indexPath.row];
+    cell.textLabel.text = track.title;
+    cell.detailTextLabel.text = track.artist;
+    
+    return cell;
+}
+{% endhighlight %}
+	</li>
+	<li>Lage property på SpotifyPlayerViewController for track og fjerne fra viewDidLoad</li>
+	<li>Vise hvordan man kan sende data via navigationController seque
+{% highlight objective-c %}
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    SpotifyPlayerViewController *viewController = (SpotifyPlayerViewController *)[segue destinationViewController];
+    viewController.track = self.tracks[[[self.tableView indexPathForSelectedRow] row]];
+}
+{% endhighlight %}
+	</li>
+</ol>
+
+<h2>Lage SpotifyService</h2>
+
+<ol>
+	<li> Forklare Klasse metoder og Blocks
+{% highlight objective-c %}		
+#import <Foundation/Foundation.h>
+@class SpotifyTrack;
+
+typedef void(^KSpotifyTrackSearchResult)(NSArray* tracks);
+typedef void(^KSpotifyServiceError)(NSError* error);
+
+@interface SpotifyService : NSObject
++(void)findTracks:(NSString *)title result:(KSpotifyTrackSearchResult)result error:(KSpotifyServiceError)error;
+@end
+
+
+
++ (void)findTracks:(NSString *)title result:(KSpotifyTrackSearchResult)result error:(KSpotifyServiceError)error {
+    
+    NSString *urlString = [NSString stringWithFormat:@"http://ws.spotify.com/search/1/track.json?q=%@", [title stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    
+    [KURLConnection startWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]] successHandler:^(NSData *response) {
+        NSError *convertError = nil;
+        NSArray *tracks = [SpotifyService convertDataResponseToTracks:response error:&convertError];
+        
+        if (convertError != nil) {
+
+            error(convertError);
+        }
+        
+        result(tracks);
+    } failedHandler:^(NSError *requestError) {
+        error(requestError);
+    }];
+}
+
++ (NSArray *)convertDataResponseToTracks:(NSData *)response error:(NSError **)error {
+    
+    NSError __autoreleasing *jsonError = nil;
+    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingAllowFragments error:&jsonError];
+    
+    if (jsonError != nil) {
+        NSLog(@"Failed parsing json: %@", [jsonError localizedDescription]);
+        error = &jsonError;
+    }
+    
+    NSMutableArray *tracks = [[NSMutableArray alloc] init];
+    for (NSDictionary *track in dictionary[@"tracks"]) {
+        [tracks addObject:[SpotifyService convertResponseTrackToTrack:track]];
+    }
+    
+    return tracks;
+}
+
++ (SpotifyTrack *)convertResponseTrackToTrack:(NSDictionary *)trackObject {
+    SpotifyTrack *track = [[SpotifyTrack alloc] init];
+    
+    track.id = trackObject[@"href"];
+    track.title = trackObject[@"name"];
+    track.artist = trackObject[@"artists"][0][@"name"];
+    
+    return track;
+}
+
+
+{% endhighlight %}
+
+	</li>
+	<li>Forklare Error handling</li>
+	<li>Forklare Blocks</li>
+	<li>Forklare KURLConnection med threading</li>
+	<li>Forklare NSJSONSerialization</li>
+	<li>NSDictionary</li>
+	<li>Bytt ut statisk array med service</li>
+	<li>Lag UISearchBar og set opp delegate
+
+{% highlight objective-c %}	
+- (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder];
+    
+    [SpotifyService findTracks:searchBar.text result:^(NSArray *tracks) {
+        self.tracks = tracks;
+        [self.tableView reloadData];
+    } error:^(NSError *data) {
+        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Feilet" message:@"Feilet skikkelig" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+    }];
+}
+{% endhighlight %}
+	</li>
+</ol>

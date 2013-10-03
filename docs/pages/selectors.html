@@ -1,0 +1,22 @@
+# Selectors
+
+* Referere til en metode med et unikt navn.
+* Ligner på funksjonspekere, som for eksempel brukes i javascript
+* De er av typen SEL, og den kan brukes til å invoke en metode på et objekt. 
+* @selector() brukes til å lage en SEL
+
+
+
+.objective-c
+	SEL enMetode;
+	enMetode = @selector(enMetode:medMer:);
+
+
+
+.objective-c
+	[venn performSelector:@selector(sladre:) withObject:enNabo];
+
+    /* er omtrent det samme som */
+    [venn sladre:enNabo];
+
+* Kan sende metodekall rundt i programmet ditt!
