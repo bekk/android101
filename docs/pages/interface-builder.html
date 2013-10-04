@@ -18,6 +18,14 @@ title: Interface Builder
 
 <img src="{{ site.baseurl }}/img/xcode_set_storyboard.png" />
     </li>
+    <li>Gå i AppDelegate.m og slett innholdet i <code>(BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions</code>, slik at det ser ut slik: 
+{% highlight objective-c %}
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    return YES;
+}
+{% endhighlight %}
+    </li>
 </ol>
 
 <h2 id="leggetilelementer">Legge til elementer på storyboard</h2>
