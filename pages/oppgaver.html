@@ -29,13 +29,37 @@
 
 <p>
 Rest endepunktene leverer JSON og fungerer på følgende måte:
-	<ul>
-		<li><a href="http://ios-course.herokuapp.com/message">http://ios-course.herokuapp.com/message</a> (GET) <- alle beskjeder</li>
-		<li><a href="http://ios-course.herokuapp.com/message">http://ios-course.herokuapp.com/message</a> (POST) <- JSON i body</li>
-		<li><a href="http://ios-course.herokuapp.com/message/{id}">http://ios-course.herokuapp.com/message/{id}</a> (DELETE) <- Slette</li>
-		<li><a href="http://ios-course.herokuapp.com/message/{id}">http://ios-course.herokuapp.com/message/{id}</a> (PUT) <- Oppdatere</li>
-	</ul>
-<p>
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>URL</th>
+			<th>HTTP verb</th>
+			<th>Beskrivelse</th>
+		</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td><a href="http://ios-course.herokuapp.com/message">http://ios-course.herokuapp.com/message</a></td>
+		<td>GET</td>
+		<td>Henter alle beskjeder</td>
+	</tr>
+	<tr>
+		<td><a href="http://ios-course.herokuapp.com/message">http://ios-course.herokuapp.com/message</a></td>
+		<td>POST</td>
+		<td>Oppretter beskjed (se eksempel på JSON i body under)</td>
+	</tr>
+	<tr>
+		<td><a href="http://ios-course.herokuapp.com/message/:id">http://ios-course.herokuapp.com/message/:id</a></td>
+		<td>PUT</td>
+		<td>Oppdaterer en beskjed med angitt id</td>
+	</tr>
+	<tr>
+		<td><a href="http://ios-course.herokuapp.com/message/:id">http://ios-course.herokuapp.com/message/:id</a></td>
+		<td>DELETE</td>
+		<td>Sletter en beskjed med angitt id</td>
+	</tr>
+	</tbody>
+</table>
 
 <h3>Eksempel POST</h3>
 
