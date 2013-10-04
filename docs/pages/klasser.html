@@ -86,7 +86,7 @@ Objective-C har ikke egne konstruktører, men det er en konvensjon at alle metod
 </ul>
 
 {% highlight objective-c %}
-@interface MyObject : NSObject
+@interface MyObject : NSObject {
 /* Instans variabelen er bare tilgjengelig inne i klassen som deklarerer den */
 @private
 NSString * ettObjekt;
@@ -103,6 +103,10 @@ NSString * ettObjekt;
 /* Kun tilgjengelig for klasser som ligger i ett og samme image. */
 @package
 NSString * ettObjekt;
+}
+
+//Metoder og properties puttes inn her
+
 @end
 {% endhighlight %}
 
