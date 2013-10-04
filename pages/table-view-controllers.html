@@ -85,7 +85,28 @@ I dokumentasjonen til <code>UITableViewDataSource</code> vil du se at vi minimum
 
 <p>Disse linjene ser kanskje kryptiske ut, men er helt geniale! Det som skjer i praksis er at Cocoa Touch prøver å finne en celle som allerede er laget og scrollet ut av skjermen med IDen <code>trackCell</code>. Hvis det finnes en slik celle, blir den den gjenbrukt slik at man slipper å instansiere en ny og holde denne i minnet. Finnes den ikke blir det allokert et nytt UI celle for deg. Dette betyr at selv om du har en array med 1000 elementer, vil det aldri finnes flere UI celler enn man får plass til på skjermen.</p>
 
+<h3>Linke opp cell identifier mot Storyboard</h3>
+Dersom du har et storyboard med et UITableView må du sette cellen til å ha samme cell identifier som du har i koden din (eks. <code>trackCell</code> som vist over). Dette gjør du ved å:
+<ol>
+	<li>Klikke på cellen i Document Outline</li>
+	<li>Bytte til Attribute inspectoren (se rød sirkel rundt knapp)</li>
+	<li>Skrive inn identifier</li>
+</ol>
+
+<img src="/ios101/img/xcode_ib_tableviewcellid.png" />
+
+
 </div>
+
+<h3>Sette seg selv til delegate i Interface builder</h3>
+For at delegatefunksjonene til <code>UITableViewDelegate</code> og <code>UITableViewDataSource</code> skal bli kalt (og tabellen din fungere), må <code>UITableView</code>et sette seg som delegate. Dette gjør du slik:
+<ol>
+	<li>Klikke på table viewet i Document Outline</li>
+	<li>Bytte til Connections inspectoren</li>
+	<li>Klikk i sirklen for <code>delegate</code> ved siden av datasource og dra en linje som du slipper på viewcontrolleren (se bilde). Gjenta for dataSource delegatet.</li>
+</ol>
+
+<img src="/ios101/img/xcode_ib_tableviewdelegate.png" />
 
           </div>
           <nav class="span4">

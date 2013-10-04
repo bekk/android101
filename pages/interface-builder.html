@@ -33,6 +33,13 @@
 
 <img src="/ios101/img/xcode_set_storyboard.png" />
     </li>
+    <li>Gå i AppDelegate.m og slett innholdet i <code>(BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions</code>, slik at det ser ut slik: 
+<div class="highlight"><pre><code class="objective-c"><span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">application:</span><span class="p">(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span> <span class="nf">didFinishLaunchingWithOptions:</span><span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">launchOptions</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="nb">YES</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+    </li>
 </ol>
 
 <h2 id="leggetilelementer">Legge til elementer på storyboard</h2>

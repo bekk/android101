@@ -97,7 +97,7 @@ Objective-C har ikke egne konstruktører, men det er en konvensjon at alle metod
 <li>Kan overstyres ved hjelp av 'scope directives'</li>
 </ul>
 
-<div class="highlight"><pre><code class="objective-c"><span class="k">@interface</span> <span class="nc">MyObject</span> : <span class="nc">NSObject</span>
+<div class="highlight"><pre><code class="objective-c"><span class="k">@interface</span> <span class="nc">MyObject</span> : <span class="nc">NSObject</span> <span class="p">{</span>
 <span class="cm">/* Instans variabelen er bare tilgjengelig inne i klassen som deklarerer den */</span>
 <span class="k">@private</span>
 <span class="n">NSString</span> <span class="o">*</span> <span class="n">ettObjekt</span><span class="p">;</span>
@@ -114,6 +114,10 @@ Objective-C har ikke egne konstruktører, men det er en konvensjon at alle metod
 <span class="cm">/* Kun tilgjengelig for klasser som ligger i ett og samme image. */</span>
 <span class="err">@</span><span class="n">package</span>
 <span class="n">NSString</span> <span class="o">*</span> <span class="n">ettObjekt</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">//Metoder og properties puttes inn her</span>
+
 <span class="k">@end</span>
 </code></pre></div>
 
