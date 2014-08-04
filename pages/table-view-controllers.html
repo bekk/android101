@@ -6,11 +6,11 @@
         <title>Table View Controllers</title>
         <meta name="viewport" content="width=device-width">
 
-        <link rel="stylesheet" href="/ios101/css/syntax.css">
-        <link href="/ios101/css/bootstrap.min.css" rel="stylesheet" media="screen">
-        <link rel="stylesheet" href="/ios101/css/main.css">
-        <script src="/ios101/js/jquery.min.js"></script>
-        <script src="/ios101/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="/Android101/css/syntax.css">
+        <link href="/Android101/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" href="/Android101/css/main.css">
+        <script src="/Android101/js/jquery.min.js"></script>
+        <script src="/Android101/js/bootstrap.min.js"></script>
 
     </head>
     <body>
@@ -18,7 +18,7 @@
         <div class="row-fluid">
           <div class="span8">
             <h1 class="page-header">Table View Controllers</h1>
-            <img src="/ios101/img/tableviewcontroller.png" />
+            <img src="/Android101/img/tableviewcontroller.png" />
 
 <p>Et <code>UITableView</code> får dataene og oppførselen sin fra en <code>UITableViewController</code>.</p>
 <p><code>UITableViewController</code> implementerer <a href="protocols.html">protokollene</a> <code>UITableViewDelegate</code> og <code>UITableViewDataSource</code></p>
@@ -44,7 +44,7 @@ Måten <code>UITableViewController</code> spør <code>UITableViewDelegate</code>
 <strong>SpotifySearchResultTableViewController.m</strong>
 <div class="alert alert-block">
 I dokumentasjonen til <code>UITableViewDataSource</code> vil du se at vi minimum må implementere to metoder:
-<img src="/ios101/img/uitableviewdatasource_required.png" />
+<img src="/Android101/img/uitableviewdatasource_required.png" />
 </div>
 <div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="cp">#import &quot;SpotifySearchResultTableViewController.h&quot;</span>
 <span class="cp">#import &quot;SpotifyService.h&quot;</span>
@@ -89,7 +89,7 @@ Dersom du har et storyboard med et UITableView må du sette cellen til å ha sam
 	<li>Skrive inn identifier</li>
 </ol>
 
-<img src="/ios101/img/xcode_ib_tableviewcellid.png" />
+<img src="/Android101/img/xcode_ib_tableviewcellid.png" />
 
 
 </div>
@@ -102,7 +102,7 @@ For at delegatefunksjonene til <code>UITableViewDelegate</code> og <code>UITable
 	<li>Klikk i sirklen for <code>delegate</code> ved siden av datasource og dra en linje som du slipper på viewcontrolleren (se bilde). Gjenta for dataSource delegatet.</li>
 </ol>
 
-<img src="/ios101/img/xcode_ib_tableviewdelegate.png" />
+<img src="/Android101/img/xcode_ib_tableviewdelegate.png" />
 
           </div>
           <nav class="span4">
@@ -158,7 +158,7 @@ For at delegatefunksjonene til <code>UITableViewDelegate</code> og <code>UITable
     
   
     
-      <li class=""><a href="/ios101/pages/xcode-introduksjon.html">Introduksjon</a></li>
+      <li class=""><a href="/Android101/pages/xcode-introduksjon.html">Introduksjon</a></li>
     
   
     
@@ -217,7 +217,7 @@ For at delegatefunksjonene til <code>UITableViewDelegate</code> og <code>UITable
     
   
     
-      <li class=""><a href="/ios101/pages/xcode-opprette-prosjekt.html">Opprette prosjekt</a></li>
+      <li class=""><a href="/Android101/pages/xcode-opprette-prosjekt.html">Opprette prosjekt</a></li>
     
   
     
@@ -276,7 +276,7 @@ For at delegatefunksjonene til <code>UITableViewDelegate</code> og <code>UITable
     
   
     
-      <li class=""><a href="/ios101/pages/xcode-prosjektinnstillinger.html">Prosjektinnstillinger</a></li>
+      <li class=""><a href="/Android101/pages/xcode-prosjektinnstillinger.html">Prosjektinnstillinger</a></li>
     
   
 
@@ -327,7 +327,7 @@ For at delegatefunksjonene til <code>UITableViewDelegate</code> og <code>UITable
     
   
     
-      <li class=""><a href="/ios101/pages/xcode-byggekjore.html">Bygge og kjøre apps</a></li>
+      <li class=""><a href="/Android101/pages/xcode-byggekjore.html">Bygge og kjøre apps</a></li>
     
   
     
@@ -360,7 +360,7 @@ For at delegatefunksjonene til <code>UITableViewDelegate</code> og <code>UITable
     
   
     
-      <li class=""><a href="/ios101/pages/interface-builder.html">Interface Builder</a></li>
+      <li class=""><a href="/Android101/pages/interface-builder.html">Interface Builder</a></li>
     
   
     
@@ -433,7 +433,7 @@ For at delegatefunksjonene til <code>UITableViewDelegate</code> og <code>UITable
     
   
     
-      <li class=""><a href="/ios101/pages/objective-c.html">Objective-C</a></li>
+      <li class=""><a href="/Android101/pages/objective-c.html">Objective-C</a></li>
     
   
     
@@ -470,178 +470,7 @@ For at delegatefunksjonene til <code>UITableViewDelegate</code> og <code>UITable
     
   
     
-      <li class=""><a href="/ios101/pages/datatyper.html">Datatyper</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-    
-  
-
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-      <li class=""><a href="/ios101/pages/klasser.html">Klasser, metoder og arv</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-    
-  
-
-  
-    
-      <li class=""><a href="/ios101/pages/blocks.html">Blocks</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-    
-  
-
-  
-    
-  
-    
-      <li class=""><a href="/ios101/pages/categories.html">Categories</a></li>
-    
-  
+      <li class=""><a href="/Android101/pages/datatyper.html">Datatyper</a></li>
     
   
     
@@ -710,6 +539,18 @@ For at delegatefunksjonene til <code>UITableViewDelegate</code> og <code>UITable
     
   
     
+      <li class=""><a href="/Android101/pages/klasser.html">Klasser, metoder og arv</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
   
     
   
@@ -722,7 +563,52 @@ For at delegatefunksjonene til <code>UITableViewDelegate</code> og <code>UITable
     
   
     
-      <li class=""><a href="/ios101/pages/protocols.html">Protocols</a></li>
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+      <li class=""><a href="/Android101/pages/blocks.html">Blocks</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
     
   
     
@@ -753,11 +639,11 @@ For at delegatefunksjonene til <code>UITableViewDelegate</code> og <code>UITable
     
   
     
-  
+      <li class=""><a href="/Android101/pages/categories.html">Categories</a></li>
     
   
     
-      <li class=""><a href="/ios101/pages/delegates.html">Delegates</a></li>
+  
     
   
     
@@ -836,9 +722,123 @@ For at delegatefunksjonene til <code>UITableViewDelegate</code> og <code>UITable
     
   
     
+      <li class=""><a href="/Android101/pages/protocols.html">Protocols</a></li>
+    
   
     
-      <li class=""><a href="/ios101/pages/selectors.html">Selectors</a></li>
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/Android101/pages/delegates.html">Delegates</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/Android101/pages/selectors.html">Selectors</a></li>
     
   
     
@@ -899,7 +899,7 @@ For at delegatefunksjonene til <code>UITableViewDelegate</code> og <code>UITable
     
   
     
-      <li class=""><a href="/ios101/pages/threading.html">Threading</a></li>
+      <li class=""><a href="/Android101/pages/threading.html">Threading</a></li>
     
   
     
@@ -930,7 +930,7 @@ For at delegatefunksjonene til <code>UITableViewDelegate</code> og <code>UITable
     
   
     
-      <li class=""><a href="/ios101/pages/error-handling.html">Error Handling</a></li>
+      <li class=""><a href="/Android101/pages/error-handling.html">Error Handling</a></li>
     
   
     
@@ -1021,7 +1021,7 @@ For at delegatefunksjonene til <code>UITableViewDelegate</code> og <code>UITable
     
   
     
-      <li class=""><a href="/ios101/pages/view-controllers.html">View Controllers</a></li>
+      <li class=""><a href="/Android101/pages/view-controllers.html">View Controllers</a></li>
     
   
     
@@ -1074,7 +1074,7 @@ For at delegatefunksjonene til <code>UITableViewDelegate</code> og <code>UITable
     
   
     
-      <li class="active"><a href="/ios101/pages/table-view-controllers.html">Table View Controllers</a></li>
+      <li class="active"><a href="/Android101/pages/table-view-controllers.html">Table View Controllers</a></li>
     
   
     
@@ -1121,7 +1121,7 @@ For at delegatefunksjonene til <code>UITableViewDelegate</code> og <code>UITable
     
   
     
-      <li class=""><a href="/ios101/pages/navigation-controllers.html">Navigation Controllers</a></li>
+      <li class=""><a href="/Android101/pages/navigation-controllers.html">Navigation Controllers</a></li>
     
   
     
@@ -1188,7 +1188,7 @@ For at delegatefunksjonene til <code>UITableViewDelegate</code> og <code>UITable
     
   
     
-      <li class=""><a href="/ios101/pages/oppgaver.html">Oppgaver - Lets code!</a></li>
+      <li class=""><a href="/Android101/pages/oppgaver.html">Oppgaver - Lets code!</a></li>
     
   
     
@@ -1229,7 +1229,7 @@ For at delegatefunksjonene til <code>UITableViewDelegate</code> og <code>UITable
     
   
     
-      <li class=""><a href="/ios101/pages/http.html">HTTP</a></li>
+      <li class=""><a href="/Android101/pages/http.html">HTTP</a></li>
     
   
     
@@ -1240,63 +1240,6 @@ For at delegatefunksjonene til <code>UITableViewDelegate</code> og <code>UITable
   
     
   
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-    
-  
-
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-      <li class=""><a href="/ios101/pages/merinfo.html">Ressurser</a></li>
     
   
     
@@ -1351,7 +1294,64 @@ For at delegatefunksjonene til <code>UITableViewDelegate</code> og <code>UITable
     
   
     
-      <li class=""><a href="/ios101/pages/manus.html">Manus</a></li>
+  
+    
+      <li class=""><a href="/Android101/pages/merinfo.html">Ressurser</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/Android101/pages/manus.html">Manus</a></li>
     
   
     
