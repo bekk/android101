@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Artistsøk</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="which_song">Hvilken sang leter du etter?</string>
+    <string name="hint_artists">Frank Sinatra, Emma James...</string>
+    <string name="search">Søk</string>
+    <string name="hint_dots">...</string>
+    <string name="title_activity_result">ResultActivity</string>
+    <string name="app_name_lower">artistsøk</string>
+
+</resources>
