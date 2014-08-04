@@ -22,31 +22,29 @@
 
 <ol><li>Likt som i mange andre programmeringsspråk, men brukes sjelden</li></ol>
 
-<div class="highlight"><pre><code class="objective-c"><span class="n">Venn</span> <span class="o">*</span><span class="n">venn</span> <span class="o">=</span> <span class="p">[[</span><span class="n">Venn</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="n">Venn</span> <span class="o">*</span><span class="n">venn</span> <span class="o">=</span> <span class="p">[[</span><span class="n">Venn</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
 
 <span class="k">@try</span> 
 <span class="p">{</span>
     <span class="p">[</span><span class="n">venn</span> <span class="n">sladre</span><span class="p">];</span>
 <span class="p">}</span>
-<span class="k">@catch</span> <span class="p">(</span><span class="n">NSException</span> <span class="o">*</span><span class="n">exception</span><span class="p">)</span> 
+<span class="k">@catch</span> <span class="p">(</span><span class="bp">NSException</span> <span class="o">*</span><span class="n">exception</span><span class="p">)</span> 
 <span class="p">{</span>
     <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;Feilet %@: %@&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">exception</span> <span class="n">name</span><span class="p">],</span> <span class="p">[</span><span class="n">exception</span> <span class="n">reason</span><span class="p">]);</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 
 <h2>NSError</h2>
 
 <ol><li> De fleste (og Apple) bruker <code>NSError</code></li></ol>
 
-<div class="highlight"><pre><code class="objective-c"><span class="n">NSError</span> <span class="o">*</span><span class="n">myError</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
-<span class="n">NSString</span> <span class="o">*</span><span class="n">fileContent</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="n">stringWithContentsOfFile</span><span class="o">:</span><span class="s">@&quot;minfil.txt&quot;</span>
-							 <span class="nl">encoding:</span><span class="n">NSUTF8StringEncoding</span>
-						    	<span class="nl">error:</span><span class="err">\</span><span class="o">&amp;</span><span class="n">myError</span><span class="p">];</span>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="bp">NSError</span> <span class="o">*</span><span class="n">myError</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+<span class="bp">NSString</span> <span class="o">*</span><span class="n">fileContent</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSString</span> <span class="nl">stringWithContentsOfFile</span><span class="p">:</span><span class="s">@&quot;minfil.txt&quot;</span>
+							 <span class="nl">encoding</span><span class="p">:</span><span class="n">NSUTF8StringEncoding</span>
+						    	<span class="nl">error</span><span class="p">:</span><span class="err">\</span><span class="o">&amp;</span><span class="n">myError</span><span class="p">];</span>
 <span class="k">if</span> <span class="p">(</span><span class="n">myError</span> <span class="o">!=</span> <span class="nb">nil</span><span class="p">)</span> <span class="p">{</span>
 	<span class="c1">// Noe feilet</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
           </div>
           <nav class="span4">
@@ -56,6 +54,8 @@
 
   
 
+  
+    
   
 
   
@@ -112,6 +112,8 @@
   
 
   
+    
+  
 
   
     
@@ -166,6 +168,8 @@
 
   
 
+  
+    
   
 
   
@@ -222,6 +226,8 @@
   
 
   
+    
+  
 
   
     
@@ -276,6 +282,8 @@
 
   
 
+  
+    
   
 
   
@@ -338,6 +346,8 @@
   
 
   
+    
+  
 
   
     
@@ -393,9 +403,9 @@
   
 
   
-
-  
     
+  
+
   
     
   
@@ -443,10 +453,14 @@
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -503,9 +517,9 @@
   
 
   
-
-  
     
+  
+
   
     
       <li class=""><a href="/ios101/pages/blocks.html">Blocks</a></li>
@@ -553,14 +567,16 @@
   
     
   
-
-
+    
   
+
 
   
 
   
     
+  
+
   
     
   
@@ -608,10 +624,14 @@
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -668,9 +688,9 @@
   
 
   
-
-  
     
+  
+
   
     
   
@@ -718,10 +738,14 @@
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -778,6 +802,8 @@
   
 
   
+    
+  
 
   
     
@@ -833,9 +859,9 @@
   
 
   
-
-  
     
+  
+
   
     
   
@@ -883,6 +909,8 @@
   
     
   
+    
+  
 
   
 </ul>
@@ -893,6 +921,8 @@
 
   
 
+  
+    
   
 
   
@@ -949,6 +979,8 @@
   
 
   
+    
+  
 
   
     
@@ -1003,6 +1035,8 @@
 
   
 
+  
+    
   
 
   
@@ -1065,6 +1099,8 @@
   
 
   
+    
+  
 
   
     
@@ -1120,9 +1156,9 @@
   
 
   
-
-  
     
+  
+
   
     
   
@@ -1170,10 +1206,14 @@
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -1229,6 +1269,8 @@
 
   
 
+  
+    
   
 
   

@@ -26,33 +26,32 @@
 <h2>Eksempel med UIAlertView</h2>
 <p>Vi setter oss selv som delegate i UIAlertView. UIAlertView kaller tilbake på oss ved hjelp av en selector</p>
 
-<div class="highlight"><pre><code class="objective-c"><span class="k">@implementation</span> <span class="nc">MinViewController</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">showAlertView</span> <span class="p">{</span>
-	<span class="n">UIAlertView</span> <span class="o">*</span><span class="n">alert</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIAlertView</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">initWithTitle</span><span class="o">:</span><span class="s">@&quot;Advarsel&quot;</span>
-		<span class="nl">message:</span><span class="s">@&quot;Beskjed&quot;</span>
-		<span class="nl">delegate:</span><span class="n">self</span> <span class="cm">/* Setter oss selv som delegate på UIAlertViewet */</span>
-		<span class="nl">cancelButtonTitle:</span><span class="s">@&quot;Ok&quot;</span>
-		<span class="nl">otherButtonTitles:</span><span class="nb">nil</span><span class="p">];</span>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="k">@implementation</span> <span class="nc">MinViewController</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">showAlertView</span> <span class="p">{</span>
+	<span class="bp">UIAlertView</span> <span class="o">*</span><span class="n">alert</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">UIAlertView</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithTitle</span><span class="p">:</span><span class="s">@&quot;Advarsel&quot;</span>
+		<span class="nl">message</span><span class="p">:</span><span class="s">@&quot;Beskjed&quot;</span>
+		<span class="nl">delegate</span><span class="p">:</span><span class="nb">self</span> <span class="cm">/* Setter oss selv som delegate på UIAlertViewet */</span>
+		<span class="nl">cancelButtonTitle</span><span class="p">:</span><span class="s">@&quot;Ok&quot;</span>
+		<span class="nl">otherButtonTitles</span><span class="p">:</span><span class="nb">nil</span><span class="p">];</span>
 	<span class="p">[</span><span class="n">alert</span> <span class="n">show</span><span class="p">];</span>
 <span class="p">}</span>
 
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">alertView:</span><span class="p">(</span><span class="n">UIAlertView</span> <span class="o">*</span><span class="p">)</span><span class="nv">alertView</span> 
-	<span class="nf">clickedButtonAtIndex:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">buttonIndex</span> <span class="p">{</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">alertView:</span><span class="p">(</span><span class="bp">UIAlertView</span> <span class="o">*</span><span class="p">)</span><span class="nv">alertView</span> 
+	<span class="nf">clickedButtonAtIndex:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nv">buttonIndex</span> <span class="p">{</span>
 	<span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;Trykket på en knapp!&quot;</span><span class="p">);</span>
 <span class="p">}</span>
 <span class="k">@end</span>
 
 <span class="c1">// Mulig implementasjon av UIAlertView</span>
-<span class="k">@implementation</span> <span class="nc">UIAlertView</span>
+<span class="k">@implementation</span> <span class="bp">UIAlertView</span>
 <span class="c1">//[...show...]</span>
 	<span class="cm">/* UIAlertView vises, og kjører følgende kode når man trykker på en knapp */</span>
-	<span class="k">if</span> <span class="p">([</span><span class="n">_delegate</span> <span class="n">respondsToSelector</span><span class="o">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">alertView</span><span class="o">:</span><span class="n">clickedButtonAtIndex</span><span class="o">:</span><span class="p">)])</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="p">([</span><span class="n">_delegate</span> <span class="nl">respondsToSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="nl">alertView</span><span class="p">:</span><span class="nl">clickedButtonAtIndex</span><span class="p">:)])</span> <span class="p">{</span>
 		<span class="cm">/* Kaller funksjonen alertView:clickedButtonAtIndex: på delegatet */</span>
-		<span class="p">[</span><span class="n">_delegate</span> <span class="n">alertView</span><span class="o">:</span><span class="n">self</span> <span class="n">clickedButtonAtIndex</span><span class="o">:</span><span class="n">buttonIndex</span><span class="p">];</span>
+		<span class="p">[</span><span class="n">_delegate</span> <span class="nl">alertView</span><span class="p">:</span><span class="nb">self</span> <span class="nl">clickedButtonAtIndex</span><span class="p">:</span><span class="n">buttonIndex</span><span class="p">];</span>
 	<span class="p">}</span>
 <span class="c1">//[...]</span>
-<span class="k">@end</span>
-</code></pre></div>
+<span class="k">@end</span></code></pre></div>
 
 
           </div>
@@ -63,6 +62,8 @@
 
   
 
+  
+    
   
 
   
@@ -119,6 +120,8 @@
   
 
   
+    
+  
 
   
     
@@ -173,6 +176,8 @@
 
   
 
+  
+    
   
 
   
@@ -229,6 +234,8 @@
   
 
   
+    
+  
 
   
     
@@ -283,6 +290,8 @@
 
   
 
+  
+    
   
 
   
@@ -345,6 +354,8 @@
   
 
   
+    
+  
 
   
     
@@ -400,9 +411,9 @@
   
 
   
-
-  
     
+  
+
   
     
   
@@ -450,10 +461,14 @@
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -510,9 +525,9 @@
   
 
   
-
-  
     
+  
+
   
     
       <li class=""><a href="/ios101/pages/blocks.html">Blocks</a></li>
@@ -560,14 +575,16 @@
   
     
   
-
-
+    
   
+
 
   
 
   
     
+  
+
   
     
   
@@ -615,10 +632,14 @@
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -675,9 +696,9 @@
   
 
   
-
-  
     
+  
+
   
     
   
@@ -725,10 +746,14 @@
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -785,6 +810,8 @@
   
 
   
+    
+  
 
   
     
@@ -840,9 +867,9 @@
   
 
   
-
-  
     
+  
+
   
     
   
@@ -890,6 +917,8 @@
   
     
   
+    
+  
 
   
 </ul>
@@ -900,6 +929,8 @@
 
   
 
+  
+    
   
 
   
@@ -956,6 +987,8 @@
   
 
   
+    
+  
 
   
     
@@ -1010,6 +1043,8 @@
 
   
 
+  
+    
   
 
   
@@ -1072,6 +1107,8 @@
   
 
   
+    
+  
 
   
     
@@ -1127,9 +1164,9 @@
   
 
   
-
-  
     
+  
+
   
     
   
@@ -1177,10 +1214,14 @@
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -1236,6 +1277,8 @@
 
   
 
+  
+    
   
 
   

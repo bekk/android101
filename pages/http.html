@@ -25,26 +25,25 @@
 <b>Eksempel bruk</b>
 
 <p>
-<div class="highlight"><pre><code class="objective-c"><span class="n">NSString</span> <span class="o">*</span><span class="n">urlString</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> 
-	<span class="n">stringWithFormat</span><span class="o">:</span><span class="s">@&quot;http://ws.spotify.com/search/1/track.json?q=%@&quot;</span><span class="p">,</span> 
-		<span class="p">[</span><span class="n">title</span> <span class="n">stringByAddingPercentEscapesUsingEncoding</span><span class="o">:</span><span class="n">NSUTF8StringEncoding</span><span class="p">]];</span>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="bp">NSString</span> <span class="o">*</span><span class="n">urlString</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSString</span> 
+	<span class="nl">stringWithFormat</span><span class="p">:</span><span class="s">@&quot;http://ws.spotify.com/search/1/track.json?q=%@&quot;</span><span class="p">,</span> 
+		<span class="p">[</span><span class="n">title</span> <span class="nl">stringByAddingPercentEscapesUsingEncoding</span><span class="p">:</span><span class="n">NSUTF8StringEncoding</span><span class="p">]];</span>
 
-<span class="p">[</span><span class="n">KURLConnection</span> <span class="n">startWithRequest</span><span class="o">:</span>
-	<span class="p">[</span><span class="n">KURLConnection</span> <span class="n">createGetRequestForUrl</span><span class="o">:</span><span class="p">[</span><span class="n">NSURL</span> <span class="n">URLWithString</span><span class="o">:</span><span class="n">urlString</span><span class="p">]]</span> 
+<span class="p">[</span><span class="n">KURLConnection</span> <span class="nl">startWithRequest</span><span class="p">:</span>
+	<span class="p">[</span><span class="n">KURLConnection</span> <span class="nl">createGetRequestForUrl</span><span class="p">:[</span><span class="bp">NSURL</span> <span class="nl">URLWithString</span><span class="p">:</span><span class="n">urlString</span><span class="p">]]</span> 
 	
-	<span class="n">successHandler</span><span class="o">:^</span><span class="p">(</span><span class="n">NSData</span> <span class="o">*</span><span class="n">response</span><span class="p">)</span> 
+	<span class="nl">successHandler</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="bp">NSData</span> <span class="o">*</span><span class="n">response</span><span class="p">)</span> 
 	<span class="p">{</span>
     	<span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
    
 	<span class="p">}</span> 
-	<span class="n">failedHandler</span><span class="o">:^</span><span class="p">(</span><span class="n">NSError</span> <span class="o">*</span><span class="n">requestError</span><span class="p">)</span> 
+	<span class="nl">failedHandler</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="bp">NSError</span> <span class="o">*</span><span class="n">requestError</span><span class="p">)</span> 
 	<span class="p">{</span>
     
  		<span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span> <span class="n">requestError</span><span class="p">);</span>
 
 	<span class="p">}</span>
-<span class="p">];</span>
-</code></pre></div>
+<span class="p">];</span></code></pre></div>
 </p>
 
 <p>
@@ -61,6 +60,8 @@ Det finnes flere hjelpemetoder i KURLConnection, for å se hvilke kan du åpne o
 
   
 
+  
+    
   
 
   
@@ -117,6 +118,8 @@ Det finnes flere hjelpemetoder i KURLConnection, for å se hvilke kan du åpne o
   
 
   
+    
+  
 
   
     
@@ -171,6 +174,8 @@ Det finnes flere hjelpemetoder i KURLConnection, for å se hvilke kan du åpne o
 
   
 
+  
+    
   
 
   
@@ -227,6 +232,8 @@ Det finnes flere hjelpemetoder i KURLConnection, for å se hvilke kan du åpne o
   
 
   
+    
+  
 
   
     
@@ -281,6 +288,8 @@ Det finnes flere hjelpemetoder i KURLConnection, for å se hvilke kan du åpne o
 
   
 
+  
+    
   
 
   
@@ -343,6 +352,8 @@ Det finnes flere hjelpemetoder i KURLConnection, for å se hvilke kan du åpne o
   
 
   
+    
+  
 
   
     
@@ -398,9 +409,9 @@ Det finnes flere hjelpemetoder i KURLConnection, for å se hvilke kan du åpne o
   
 
   
-
-  
     
+  
+
   
     
   
@@ -448,10 +459,14 @@ Det finnes flere hjelpemetoder i KURLConnection, for å se hvilke kan du åpne o
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -508,9 +523,9 @@ Det finnes flere hjelpemetoder i KURLConnection, for å se hvilke kan du åpne o
   
 
   
-
-  
     
+  
+
   
     
       <li class=""><a href="/ios101/pages/blocks.html">Blocks</a></li>
@@ -558,14 +573,16 @@ Det finnes flere hjelpemetoder i KURLConnection, for å se hvilke kan du åpne o
   
     
   
-
-
+    
   
+
 
   
 
   
     
+  
+
   
     
   
@@ -613,10 +630,14 @@ Det finnes flere hjelpemetoder i KURLConnection, for å se hvilke kan du åpne o
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -673,9 +694,9 @@ Det finnes flere hjelpemetoder i KURLConnection, for å se hvilke kan du åpne o
   
 
   
-
-  
     
+  
+
   
     
   
@@ -723,10 +744,14 @@ Det finnes flere hjelpemetoder i KURLConnection, for å se hvilke kan du åpne o
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -783,6 +808,8 @@ Det finnes flere hjelpemetoder i KURLConnection, for å se hvilke kan du åpne o
   
 
   
+    
+  
 
   
     
@@ -838,9 +865,9 @@ Det finnes flere hjelpemetoder i KURLConnection, for å se hvilke kan du åpne o
   
 
   
-
-  
     
+  
+
   
     
   
@@ -888,6 +915,8 @@ Det finnes flere hjelpemetoder i KURLConnection, for å se hvilke kan du åpne o
   
     
   
+    
+  
 
   
 </ul>
@@ -898,6 +927,8 @@ Det finnes flere hjelpemetoder i KURLConnection, for å se hvilke kan du åpne o
 
   
 
+  
+    
   
 
   
@@ -954,6 +985,8 @@ Det finnes flere hjelpemetoder i KURLConnection, for å se hvilke kan du åpne o
   
 
   
+    
+  
 
   
     
@@ -1008,6 +1041,8 @@ Det finnes flere hjelpemetoder i KURLConnection, for å se hvilke kan du åpne o
 
   
 
+  
+    
   
 
   
@@ -1070,6 +1105,8 @@ Det finnes flere hjelpemetoder i KURLConnection, for å se hvilke kan du åpne o
   
 
   
+    
+  
 
   
     
@@ -1125,9 +1162,9 @@ Det finnes flere hjelpemetoder i KURLConnection, for å se hvilke kan du åpne o
   
 
   
-
-  
     
+  
+
   
     
   
@@ -1175,10 +1212,14 @@ Det finnes flere hjelpemetoder i KURLConnection, for å se hvilke kan du åpne o
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -1234,6 +1275,8 @@ Det finnes flere hjelpemetoder i KURLConnection, for å se hvilke kan du åpne o
 
   
 
+  
+    
   
 
   

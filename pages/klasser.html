@@ -47,22 +47,20 @@
 
 <h2 id="definere">Definere og benytte klasser</h2>
 <strong>Eksempel: SpotifyTrack.h</strong>
-<div class="highlight"><pre><code class="objective-c"><span class="k">@interface</span> <span class="nc">SpotifyTrack</span> : <span class="nc">NSObject</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="kt">id</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">artist</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">title</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSURL</span> <span class="o">*</span><span class="n">thumbnailUrl</span><span class="p">;</span>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="k">@interface</span> <span class="nc">SpotifyTrack</span> : <span class="bp">NSObject</span>
+<span class="k">@property</span> <span class="p">(</span><span class="k">nonatomic</span><span class="p">,</span> <span class="k">strong</span><span class="p">)</span> <span class="bp">NSString</span> <span class="o">*</span><span class="kt">id</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="k">nonatomic</span><span class="p">,</span> <span class="k">strong</span><span class="p">)</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">artist</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="k">nonatomic</span><span class="p">,</span> <span class="k">strong</span><span class="p">)</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">title</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="k">nonatomic</span><span class="p">,</span> <span class="k">strong</span><span class="p">)</span> <span class="bp">NSURL</span> <span class="o">*</span><span class="n">thumbnailUrl</span><span class="p">;</span>
 <span class="k">@end</span>
 
-<span class="cm">/* Det blir nå automagisk laget settere og gettere */</span>
-</code></pre></div>
+<span class="cm">/* Det blir nå automagisk laget settere og gettere */</span></code></pre></div>
 
 <strong>Eksempel: SpotifyTrack.m</strong>
-<div class="highlight"><pre><code class="objective-c"><span class="cp">#import &quot;SpotifyTrack.h&quot;</span>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="cp">#import &quot;SpotifyTrack.h&quot;</span>
 
 <span class="k">@implementation</span> <span class="nc">SpotifyTrack</span>
-<span class="k">@end</span>
-</code></pre></div>
+<span class="k">@end</span></code></pre></div>
 
 <div class="alert alert-block">
   	<strong>.h og .m-filer?</strong>
@@ -76,8 +74,7 @@
 </div>
 
 <h3 id="instansiere">Instansiere klasser</h3>
-<div class="highlight"><pre><code class="objective-c"><span class="n">SpotifyTrack</span> <span class="o">*</span><span class="n">track</span> <span class="o">=</span> <span class="p">[[</span><span class="n">SpotifyTrack</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="n">SpotifyTrack</span> <span class="o">*</span><span class="n">track</span> <span class="o">=</span> <span class="p">[[</span><span class="n">SpotifyTrack</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span></code></pre></div>
 
 <div class="alert alert-block">
 <h4>Konstruktører?</h4>
@@ -97,29 +94,28 @@ Objective-C har ikke egne konstruktører, men det er en konvensjon at alle metod
 <li>Kan overstyres ved hjelp av 'scope directives'</li>
 </ul>
 
-<div class="highlight"><pre><code class="objective-c"><span class="k">@interface</span> <span class="nc">MyObject</span> : <span class="nc">NSObject</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="k">@interface</span> <span class="nc">MyObject</span> : <span class="bp">NSObject</span> <span class="p">{</span>
 <span class="cm">/* Instans variabelen er bare tilgjengelig inne i klassen som deklarerer den */</span>
 <span class="k">@private</span>
-<span class="n">NSString</span> <span class="o">*</span> <span class="n">ettObjekt</span><span class="p">;</span>
+<span class="bp">NSString</span> <span class="o">*</span> <span class="n">ettObjekt</span><span class="p">;</span>
 
 <span class="cm">/* Instans variabelen er tilgjengelig i klassen som</span>
 <span class="cm">deklarer den og for klasser som arver av den klassen */</span>
 <span class="k">@protected</span>
-<span class="n">NSString</span> <span class="o">*</span> <span class="n">ettObjekt</span><span class="p">;</span>
+<span class="bp">NSString</span> <span class="o">*</span> <span class="n">ettObjekt</span><span class="p">;</span>
 
 <span class="cm">/* Instans variabelen er tilgjengelig for alle */</span>
 <span class="k">@public</span>
-<span class="n">NSString</span> <span class="o">*</span> <span class="n">ettObjekt</span><span class="p">;</span>
+<span class="bp">NSString</span> <span class="o">*</span> <span class="n">ettObjekt</span><span class="p">;</span>
 
 <span class="cm">/* Kun tilgjengelig for klasser som ligger i ett og samme image. */</span>
-<span class="err">@</span><span class="n">package</span>
-<span class="n">NSString</span> <span class="o">*</span> <span class="n">ettObjekt</span><span class="p">;</span>
+<span class="p">@</span><span class="n">package</span>
+<span class="bp">NSString</span> <span class="o">*</span> <span class="n">ettObjekt</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="c1">//Metoder og properties puttes inn her</span>
 
-<span class="k">@end</span>
-</code></pre></div>
+<span class="k">@end</span></code></pre></div>
 
 
 <h3 id="properties">Properties</h3>
@@ -128,18 +124,17 @@ Objective-C har ikke egne konstruktører, men det er en konvensjon at alle metod
 <li>I nyere Objective-C trenger man ikke definere ivars om man definerer properties, da de blir automatisk laget om det ikke finnes en matchende ivars til property navnet</li>
 </ul>
 
-<div class="highlight"><pre><code class="objective-c"><span class="k">@interface</span> <span class="nc">SpotifyTrack</span> : <span class="nc">NSObject</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="kt">id</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">artist</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">title</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSURL</span> <span class="o">*</span><span class="n">thumbnailUrl</span><span class="p">;</span>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="k">@interface</span> <span class="nc">SpotifyTrack</span> : <span class="bp">NSObject</span>
+<span class="k">@property</span> <span class="p">(</span><span class="k">nonatomic</span><span class="p">,</span> <span class="k">strong</span><span class="p">)</span> <span class="bp">NSString</span> <span class="o">*</span><span class="kt">id</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="k">nonatomic</span><span class="p">,</span> <span class="k">strong</span><span class="p">)</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">artist</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="k">nonatomic</span><span class="p">,</span> <span class="k">strong</span><span class="p">)</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">title</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="k">nonatomic</span><span class="p">,</span> <span class="k">strong</span><span class="p">)</span> <span class="bp">NSURL</span> <span class="o">*</span><span class="n">thumbnailUrl</span><span class="p">;</span>
 <span class="k">@end</span>
 
 <span class="cm">/* Det automagisk laget settere og gettere som kan brukes slik: */</span>
 <span class="n">SpotifyTrack</span> <span class="o">*</span><span class="n">track</span> <span class="o">=</span> <span class="p">[[</span><span class="n">SpotifyTrack</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
 <span class="n">track</span><span class="p">.</span><span class="n">artist</span> <span class="o">=</span> <span class="s">@&quot;The Killers&quot;</span><span class="p">;</span> <span class="c1">// kaller setter</span>
-<span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;Artist: %@&quot;</span><span class="p">,</span> <span class="n">track</span><span class="p">.</span><span class="n">artist</span><span class="p">);</span> <span class="c1">// kaller getter</span>
-</code></pre></div>
+<span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;Artist: %@&quot;</span><span class="p">,</span> <span class="n">track</span><span class="p">.</span><span class="n">artist</span><span class="p">);</span> <span class="c1">// kaller getter</span></code></pre></div>
 
 
 <h4>Styre oppførslen til properties</h4>
@@ -168,16 +163,13 @@ Objective-C har ikke egne konstruktører, men det er en konvensjon at alle metod
 
 <h3 id="metoder">Metoder</h3>
 <h4>Definere klassemetoder (statiske metoder, + foran)</h4>
-<div class="highlight"><pre><code class="objective-c"><span class="k">+</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">alloc</span> <span class="cm">/* Allokerer en plass i minne til objektet */</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="p">+</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">alloc</span> <span class="cm">/* Allokerer en plass i minne til objektet */</span></code></pre></div>
 
 <h4>Definere instansmetoder (- foran)</h4>
-<div class="highlight"><pre><code class="objective-c"><span class="k">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">init</span> <span class="cm">/* Gjør initialiseringen som kreves av et objekt for å bli klart */</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="p">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">init</span> <span class="cm">/* Gjør initialiseringen som kreves av et objekt for å bli klart */</span></code></pre></div>
 
 Ofte bruker man en kombinasjon av klasse og instansmetoder, som vist under. <code>alloc</code> kalles først som en klassemetode slik at man allokerer plass til et objekt. Deretter kalles instansmetoden <code>init</code>.
-<div class="highlight"><pre><code class="objective-c"><span class="p">[[</span><span class="n">MyObject</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">]</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="p">[[</span><span class="n">MyObject</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">]</span></code></pre></div>
 
 
 <h4>Objective-C Message Passing</h4>
@@ -189,102 +181,91 @@ Ofte bruker man en kombinasjon av klasse og instansmetoder, som vist under. <cod
 
 
 <strong>Definere metoder</strong>
-<div class="highlight"><pre><code class="objective-c"><span class="c1">// Med to parametere</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">initWithId:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">id</span> <span class="nf">andTitle:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">title</span><span class="p">;</span>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="c1">// Med to parametere</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">initWithId:</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">id</span> <span class="nf">andTitle:</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">title</span><span class="p">;</span>
 
 <span class="c1">// Setter med et parameter</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setTitle:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">title</span><span class="p">;</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setTitle:</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">title</span><span class="p">;</span>
 
 <span class="c1">// Getter</span>
-<span class="k">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nf">title</span><span class="p">;</span>
-</code></pre></div>
+<span class="p">-</span> <span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nf">title</span><span class="p">;</span></code></pre></div>
 
 <strong>Java eksempel</strong>
-<div class="highlight"><pre><code class="java"><span class="n">SpotifyTrack</span> <span class="n">track</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SpotifyTrack</span><span class="o">(</span><span class="s">&quot;id&quot;</span><span class="o">,</span> <span class="s">&quot;I&#39;m awsome!&quot;</span><span class="o">);</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">SpotifyTrack</span> <span class="n">track</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">SpotifyTrack</span><span class="o">(</span><span class="s">&quot;id&quot;</span><span class="o">,</span> <span class="s">&quot;I&#39;m awsome!&quot;</span><span class="o">);</span>
 
 <span class="n">person</span><span class="o">.</span><span class="na">setTitle</span><span class="o">(</span><span class="s">&quot;I&#39;m awsome!&quot;</span><span class="o">);</span>
 
-<span class="n">String</span> <span class="n">title</span> <span class="o">=</span> <span class="n">track</span><span class="o">.</span><span class="na">getTitle</span><span class="o">();</span>
-</code></pre></div>
+<span class="n">String</span> <span class="n">title</span> <span class="o">=</span> <span class="n">track</span><span class="o">.</span><span class="na">getTitle</span><span class="o">();</span></code></pre></div>
 
 <strong>Objective-C ekvivalent</strong>
-<div class="highlight"><pre><code class="objective-c"><span class="n">SpotifyTrack</span> <span class="o">*</span><span class="n">track</span> <span class="o">=</span> <span class="p">[[</span><span class="n">SpotifyTrack</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">initWithId</span><span class="o">:</span><span class="s">@&quot;id&quot;</span> <span class="n">andTitle</span><span class="o">:</span><span class="s">@&quot;I&#39;m awsome!&quot;</span><span class="p">];</span>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="n">SpotifyTrack</span> <span class="o">*</span><span class="n">track</span> <span class="o">=</span> <span class="p">[[</span><span class="n">SpotifyTrack</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithId</span><span class="p">:</span><span class="s">@&quot;id&quot;</span> <span class="nl">andTitle</span><span class="p">:</span><span class="s">@&quot;I&#39;m awsome!&quot;</span><span class="p">];</span>
 
-<span class="p">[</span><span class="n">track</span> <span class="n">setTitle</span><span class="o">:</span><span class="s">@&quot;I&#39;m awsome!&quot;</span><span class="p">];</span>
+<span class="p">[</span><span class="n">track</span> <span class="nl">setTitle</span><span class="p">:</span><span class="s">@&quot;I&#39;m awsome!&quot;</span><span class="p">];</span>
 
-<span class="n">NSString</span> <span class="o">*</span><span class="n">title</span> <span class="o">=</span> <span class="p">[</span><span class="n">track</span> <span class="n">title</span><span class="p">];</span>
-</code></pre></div>
+<span class="bp">NSString</span> <span class="o">*</span><span class="n">title</span> <span class="o">=</span> <span class="p">[</span><span class="n">track</span> <span class="n">title</span><span class="p">];</span></code></pre></div>
 
 <div class="alert alert-block">
 <h4>Navnekonvensjon</h4>
 <p>Objective-C er rimelig verbost når det kommer til metodenavn. Navnene blir en del av metodesignaturen og må brukes når man kaller på metoden senere.</p>
 <strong>Metodesignatur (worst case?):</strong>
 
-<div class="highlight"><pre><code class="objective-c"><span class="k">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">initWithBitmapDataPlanes:</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">**</span><span class="p">)</span><span class="nv">planes</span> 
-                    <span class="nf">pixelsWide:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">width</span> 
-                    <span class="nf">pixelsHigh:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">height</span> 
-                 <span class="nf">bitsPerSample:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">bps</span> 
-               <span class="nf">samplesPerPixel:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">spp</span> 
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="p">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">initWithBitmapDataPlanes:</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">**</span><span class="p">)</span><span class="nv">planes</span> 
+                    <span class="nf">pixelsWide:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nv">width</span> 
+                    <span class="nf">pixelsHigh:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nv">height</span> 
+                 <span class="nf">bitsPerSample:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nv">bps</span> 
+               <span class="nf">samplesPerPixel:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nv">spp</span> 
                       <span class="nf">hasAlpha:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">alpha</span>
-                      <span class="nl">isPlanar:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">isPlanar</span> 
-                <span class="nf">colorSpaceName:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">colorSpaceName</span>
-                  <span class="nl">bitmapFormat:</span><span class="p">(</span><span class="n">NSBitmapFormat</span><span class="p">)</span><span class="nv">bitmapFormat</span> 
-                   <span class="nf">bytesPerRow:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">rowBytes</span>
-                  <span class="nl">bitsPerPixel:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">pixelBits</span>
-</code></pre></div>
+                      <span class="nf">isPlanar:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">isPlanar</span> 
+                <span class="nf">colorSpaceName:</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">colorSpaceName</span>
+                  <span class="nf">bitmapFormat:</span><span class="p">(</span><span class="n">NSBitmapFormat</span><span class="p">)</span><span class="nv">bitmapFormat</span> 
+                   <span class="nf">bytesPerRow:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nv">rowBytes</span>
+                  <span class="nf">bitsPerPixel:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nv">pixelBits</span></code></pre></div>
 
 <strong>Sende melding til metoden:</strong>
-<div class="highlight"><pre><code class="objective-c"><span class="p">[[</span><span class="n">NSBitmapImageRep</span> <span class="n">alloc</span><span class="p">]</span>
-                     <span class="nl">initWithBitmapDataPlanes:</span><span class="nb">NULL</span>
-                     <span class="nl">pixelsWide:</span><span class="n">nsRectFrameRect</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span> 
-                     <span class="n">pixelsHigh</span><span class="o">:</span><span class="n">nsRectFrameRect</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span>
-                     <span class="nl">bitsPerSample:</span><span class="mi">8</span> 
-                     <span class="n">samplesPerPixel</span><span class="o">:</span><span class="mi">3</span> 
-                     <span class="n">hasAlpha</span><span class="o">:</span><span class="nb">NO</span> 
-                     <span class="n">isPlanar</span><span class="o">:</span><span class="nb">NO</span> 
-                     <span class="n">colorSpaceName</span><span class="o">:</span><span class="s">@&quot;NSCalibratedRGBColorSpace&quot;</span> 
-                     <span class="n">bytesPerRow</span><span class="o">:</span><span class="mi">0</span> 
-                     <span class="n">bitsPerPixel</span><span class="o">:</span><span class="mi">0</span><span class="p">];</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="p">[[</span><span class="n">NSBitmapImageRep</span> <span class="n">alloc</span><span class="p">]</span>
+                     <span class="nl">initWithBitmapDataPlanes</span><span class="p">:</span><span class="nb">NULL</span>
+                     <span class="nl">pixelsWide</span><span class="p">:</span><span class="n">nsRectFrameRect</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span> 
+                     <span class="nl">pixelsHigh</span><span class="p">:</span><span class="n">nsRectFrameRect</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span>
+                     <span class="nl">bitsPerSample</span><span class="p">:</span><span class="mi">8</span> 
+                     <span class="nl">samplesPerPixel</span><span class="p">:</span><span class="mi">3</span> 
+                     <span class="nl">hasAlpha</span><span class="p">:</span><span class="nb">NO</span> 
+                     <span class="nl">isPlanar</span><span class="p">:</span><span class="nb">NO</span> 
+                     <span class="nl">colorSpaceName</span><span class="p">:</span><span class="s">@&quot;NSCalibratedRGBColorSpace&quot;</span> 
+                     <span class="nl">bytesPerRow</span><span class="p">:</span><span class="mi">0</span> 
+                     <span class="nl">bitsPerPixel</span><span class="p">:</span><span class="mi">0</span><span class="p">];</span></code></pre></div>
 </div>
 
 <h4>Kalle metoder på samme klasse</h4>
-<div class="highlight"><pre><code class="objective-c"><span class="p">[</span><span class="n">self</span> <span class="n">enInstansmetode</span><span class="p">];</span>
-<span class="p">[</span><span class="n">MinKlasse</span> <span class="n">enKlasseMetode</span><span class="p">];</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="p">[</span><span class="nb">self</span> <span class="n">enInstansmetode</span><span class="p">];</span>
+<span class="p">[</span><span class="n">MinKlasse</span> <span class="n">enKlasseMetode</span><span class="p">];</span></code></pre></div>
 
 <h4>Kalle på metoder med dot syntax</h4>
 <p>En alternativ måte å kalle tilgangsmetoder (accessor methods, get, set):</p>
 
-<div class="highlight"><pre><code class="objective-c"><span class="n">NSString</span> <span class="o">*</span><span class="n">artist</span> <span class="o">=</span> <span class="n">track</span><span class="p">.</span><span class="n">artist</span><span class="p">;</span>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="bp">NSString</span> <span class="o">*</span><span class="n">artist</span> <span class="o">=</span> <span class="n">track</span><span class="p">.</span><span class="n">artist</span><span class="p">;</span>
 <span class="n">track</span><span class="p">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">@&quot;I&#39;m awsome!&quot;</span><span class="p">;</span>
-<span class="n">track</span><span class="p">.</span><span class="n">artist</span><span class="p">.</span><span class="n">firstname</span> <span class="o">=</span> <span class="s">@&quot;Superman&quot;</span><span class="p">;</span>
-</code></pre></div>
+<span class="n">track</span><span class="p">.</span><span class="n">artist</span><span class="p">.</span><span class="n">firstname</span> <span class="o">=</span> <span class="s">@&quot;Superman&quot;</span><span class="p">;</span></code></pre></div>
 
-<div class="highlight"><pre><code class="objective-c"><span class="n">NSString</span> <span class="o">*</span><span class="n">artist</span> <span class="o">=</span> <span class="p">[</span><span class="n">track</span> <span class="n">artist</span><span class="p">];</span> 
-<span class="p">[</span><span class="n">track</span> <span class="n">setTitle</span><span class="o">:</span><span class="s">@&quot;I&#39;m awsome!&quot;</span><span class="p">];</span>
-<span class="p">[[</span><span class="n">track</span> <span class="n">artist</span><span class="p">]</span> <span class="n">setFirstname</span><span class="o">:</span><span class="s">@&quot;Superman&quot;</span><span class="p">];</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="bp">NSString</span> <span class="o">*</span><span class="n">artist</span> <span class="o">=</span> <span class="p">[</span><span class="n">track</span> <span class="n">artist</span><span class="p">];</span> 
+<span class="p">[</span><span class="n">track</span> <span class="nl">setTitle</span><span class="p">:</span><span class="s">@&quot;I&#39;m awsome!&quot;</span><span class="p">];</span>
+<span class="p">[[</span><span class="n">track</span> <span class="n">artist</span><span class="p">]</span> <span class="nl">setFirstname</span><span class="p">:</span><span class="s">@&quot;Superman&quot;</span><span class="p">];</span></code></pre></div>
 
 <h3>Terminologi</h3>
 
 <dl>
 <dt>Message expression</dt>
 <dd>
-<div class="highlight"><pre><code class="objective-c">	<span class="p">[</span><span class="n">person</span> <span class="n">setAge</span><span class="o">:</span><span class="mi">25</span><span class="p">];</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="p">[</span><span class="n">person</span> <span class="nl">setAge</span><span class="p">:</span><span class="mi">25</span><span class="p">];</span></code></pre></div>
 </dd>
 
 <dt>Message</dt>
 <dd>
-<div class="highlight"><pre><code class="objective-c">	<span class="nl">setAge:</span><span class="mi">25</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="nl">setAge</span><span class="p">:</span><span class="mi">25</span></code></pre></div>
 </dd>
 
 <dt>Selector</dt>
 <dd>
-<div class="highlight"><pre><code class="objective-c">	<span class="nl">setAge:</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="nl">setAge</span><span class="p">:</span></code></pre></div>
 </dd>
 </dl>
 
@@ -292,10 +273,9 @@ Ofte bruker man en kombinasjon av klasse og instansmetoder, som vist under. <cod
 <h2 id="arv">Arv</h2>
 Arv defineres i interface med <code>Subclass : Superclass</code> syntaks. 
 
-<div class="highlight"><pre><code class="objective-c"><span class="c1">// i SpotifyTrack.h. Får SpotifyTrack til å arve fra NSObject</span>
-<span class="k">@interface</span> <span class="nc">SpotifyTrack</span> : <span class="nc">NSObject</span>
-<span class="k">@end</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="c1">// i SpotifyTrack.h. Får SpotifyTrack til å arve fra NSObject</span>
+<span class="k">@interface</span> <span class="nc">SpotifyTrack</span> : <span class="bp">NSObject</span>
+<span class="k">@end</span></code></pre></div>
 <ul>
 	<li>Rotklassen i Objective-C kalles <code>NSObject</code></li>
 	<li>Arv spesifiseres i headerfilen (.h)</li>
@@ -311,6 +291,8 @@ Arv defineres i interface med <code>Subclass : Superclass</code> syntaks.
 
   
 
+  
+    
   
 
   
@@ -367,6 +349,8 @@ Arv defineres i interface med <code>Subclass : Superclass</code> syntaks.
   
 
   
+    
+  
 
   
     
@@ -421,6 +405,8 @@ Arv defineres i interface med <code>Subclass : Superclass</code> syntaks.
 
   
 
+  
+    
   
 
   
@@ -477,6 +463,8 @@ Arv defineres i interface med <code>Subclass : Superclass</code> syntaks.
   
 
   
+    
+  
 
   
     
@@ -531,6 +519,8 @@ Arv defineres i interface med <code>Subclass : Superclass</code> syntaks.
 
   
 
+  
+    
   
 
   
@@ -593,6 +583,8 @@ Arv defineres i interface med <code>Subclass : Superclass</code> syntaks.
   
 
   
+    
+  
 
   
     
@@ -648,9 +640,9 @@ Arv defineres i interface med <code>Subclass : Superclass</code> syntaks.
   
 
   
-
-  
     
+  
+
   
     
   
@@ -698,10 +690,14 @@ Arv defineres i interface med <code>Subclass : Superclass</code> syntaks.
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -758,9 +754,9 @@ Arv defineres i interface med <code>Subclass : Superclass</code> syntaks.
   
 
   
-
-  
     
+  
+
   
     
       <li class=""><a href="/ios101/pages/blocks.html">Blocks</a></li>
@@ -808,14 +804,16 @@ Arv defineres i interface med <code>Subclass : Superclass</code> syntaks.
   
     
   
-
-
+    
   
+
 
   
 
   
     
+  
+
   
     
   
@@ -863,10 +861,14 @@ Arv defineres i interface med <code>Subclass : Superclass</code> syntaks.
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -923,9 +925,9 @@ Arv defineres i interface med <code>Subclass : Superclass</code> syntaks.
   
 
   
-
-  
     
+  
+
   
     
   
@@ -973,10 +975,14 @@ Arv defineres i interface med <code>Subclass : Superclass</code> syntaks.
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -1033,6 +1039,8 @@ Arv defineres i interface med <code>Subclass : Superclass</code> syntaks.
   
 
   
+    
+  
 
   
     
@@ -1088,9 +1096,9 @@ Arv defineres i interface med <code>Subclass : Superclass</code> syntaks.
   
 
   
-
-  
     
+  
+
   
     
   
@@ -1138,6 +1146,8 @@ Arv defineres i interface med <code>Subclass : Superclass</code> syntaks.
   
     
   
+    
+  
 
   
 </ul>
@@ -1148,6 +1158,8 @@ Arv defineres i interface med <code>Subclass : Superclass</code> syntaks.
 
   
 
+  
+    
   
 
   
@@ -1204,6 +1216,8 @@ Arv defineres i interface med <code>Subclass : Superclass</code> syntaks.
   
 
   
+    
+  
 
   
     
@@ -1258,6 +1272,8 @@ Arv defineres i interface med <code>Subclass : Superclass</code> syntaks.
 
   
 
+  
+    
   
 
   
@@ -1320,6 +1336,8 @@ Arv defineres i interface med <code>Subclass : Superclass</code> syntaks.
   
 
   
+    
+  
 
   
     
@@ -1375,9 +1393,9 @@ Arv defineres i interface med <code>Subclass : Superclass</code> syntaks.
   
 
   
-
-  
     
+  
+
   
     
   
@@ -1425,10 +1443,14 @@ Arv defineres i interface med <code>Subclass : Superclass</code> syntaks.
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -1484,6 +1506,8 @@ Arv defineres i interface med <code>Subclass : Superclass</code> syntaks.
 
   
 
+  
+    
   
 
   

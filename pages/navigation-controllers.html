@@ -22,15 +22,14 @@
 
 <h2>Storyboard: Sende data mellom ViewControllers i et NavigationView</h2>
 
-<div class="highlight"><pre><code class="objective-c"><span class="c1">// I &quot;MasterViewController&quot;</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">prepareForSegue:</span><span class="p">(</span><span class="n">UIStoryboardSegue</span> <span class="o">*</span><span class="p">)</span><span class="nv">segue</span> <span class="nf">sender:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="c1">// I &quot;MasterViewController&quot;</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">prepareForSegue:</span><span class="p">(</span><span class="bp">UIStoryboardSegue</span> <span class="o">*</span><span class="p">)</span><span class="nv">segue</span> <span class="nf">sender:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span>
 <span class="p">{</span>
 	<span class="c1">// Få tak i destinasjonen og sett data på den før vi navigerer.</span>
 	<span class="c1">// Krever at &quot;track&quot; er en property på destinasjonskontrolleren</span>
     <span class="n">SpotifyPlayerViewController</span> <span class="o">*</span><span class="n">viewController</span> <span class="o">=</span> <span class="p">(</span><span class="n">SpotifyPlayerViewController</span> <span class="o">*</span><span class="p">)[</span><span class="n">segue</span> <span class="n">destinationViewController</span><span class="p">];</span>
-    <span class="n">viewController</span><span class="p">.</span><span class="n">track</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">tracks</span><span class="p">[[[</span><span class="n">self</span><span class="p">.</span><span class="n">tableView</span> <span class="n">indexPathForSelectedRow</span><span class="p">]</span> <span class="n">row</span><span class="p">]];</span>
-<span class="p">}</span>
-</code></pre></div>
+    <span class="n">viewController</span><span class="p">.</span><span class="n">track</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="n">tracks</span><span class="p">[[[</span><span class="nb">self</span><span class="p">.</span><span class="n">tableView</span> <span class="n">indexPathForSelectedRow</span><span class="p">]</span> <span class="n">row</span><span class="p">]];</span>
+<span class="p">}</span></code></pre></div>
 
 
           </div>
@@ -41,6 +40,8 @@
 
   
 
+  
+    
   
 
   
@@ -97,6 +98,8 @@
   
 
   
+    
+  
 
   
     
@@ -151,6 +154,8 @@
 
   
 
+  
+    
   
 
   
@@ -207,6 +212,8 @@
   
 
   
+    
+  
 
   
     
@@ -261,6 +268,8 @@
 
   
 
+  
+    
   
 
   
@@ -323,6 +332,8 @@
   
 
   
+    
+  
 
   
     
@@ -378,9 +389,9 @@
   
 
   
-
-  
     
+  
+
   
     
   
@@ -428,10 +439,14 @@
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -488,9 +503,9 @@
   
 
   
-
-  
     
+  
+
   
     
       <li class=""><a href="/ios101/pages/blocks.html">Blocks</a></li>
@@ -538,14 +553,16 @@
   
     
   
-
-
+    
   
+
 
   
 
   
     
+  
+
   
     
   
@@ -593,10 +610,14 @@
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -653,9 +674,9 @@
   
 
   
-
-  
     
+  
+
   
     
   
@@ -703,10 +724,14 @@
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -763,6 +788,8 @@
   
 
   
+    
+  
 
   
     
@@ -818,9 +845,9 @@
   
 
   
-
-  
     
+  
+
   
     
   
@@ -868,6 +895,8 @@
   
     
   
+    
+  
 
   
 </ul>
@@ -878,6 +907,8 @@
 
   
 
+  
+    
   
 
   
@@ -934,6 +965,8 @@
   
 
   
+    
+  
 
   
     
@@ -988,6 +1021,8 @@
 
   
 
+  
+    
   
 
   
@@ -1050,6 +1085,8 @@
   
 
   
+    
+  
 
   
     
@@ -1105,9 +1142,9 @@
   
 
   
-
-  
     
+  
+
   
     
   
@@ -1155,10 +1192,14 @@
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -1214,6 +1255,8 @@
 
   
 
+  
+    
   
 
   

@@ -34,18 +34,17 @@
 	</li>
 </ol>
 
-<div class="highlight"><pre><code class="objective-c"><span class="cm">/* En block-definisjon */</span>
-<span class="k">typedef</span> <span class="nf">void</span><span class="p">(</span><span class="o">^</span><span class="n">KURLConnectionSuccessHandler</span><span class="p">)(</span><span class="n">NSData</span> <span class="o">*</span><span class="n">data</span><span class="p">);</span>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="cm">/* En block-definisjon */</span>
+<span class="k">typedef</span> <span class="nf">void</span><span class="p">(</span><span class="o">^</span><span class="n">KURLConnectionSuccessHandler</span><span class="p">)(</span><span class="bp">NSData</span> <span class="o">*</span><span class="n">data</span><span class="p">);</span>
 
 <span class="cm">/* metodedefinisjon med block som input */</span>
-<span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">startWithSuccessHandler:</span><span class="p">(</span><span class="n">KURLConnectionSuccessHandler</span><span class="p">)</span><span class="nv">successHandler</span><span class="p">;</span>
+<span class="p">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">startWithSuccessHandler:</span><span class="p">(</span><span class="n">KURLConnectionSuccessHandler</span><span class="p">)</span><span class="nv">successHandler</span><span class="p">;</span>
 
 <span class="cm">/* Kall på metode med block lik block-definisjonen */</span>
-<span class="p">[</span><span class="n">KURLConnection</span> <span class="n">startWithSuccessHandler</span><span class="o">:^</span><span class="p">(</span><span class="n">NSData</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span>
+<span class="p">[</span><span class="n">KURLConnection</span> <span class="nl">startWithSuccessHandler</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="bp">NSData</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span>
 <span class="p">{</span>
-	<span class="p">[</span><span class="n">self</span> <span class="n">cancelTouch</span><span class="o">:</span><span class="nb">nil</span><span class="p">];</span>
-<span class="p">}];</span>
-</code></pre></div>
+	<span class="p">[</span><span class="nb">self</span> <span class="nl">cancelTouch</span><span class="p">:</span><span class="nb">nil</span><span class="p">];</span>
+<span class="p">}];</span></code></pre></div>
 
           </div>
           <nav class="span4">
@@ -55,6 +54,8 @@
 
   
 
+  
+    
   
 
   
@@ -111,6 +112,8 @@
   
 
   
+    
+  
 
   
     
@@ -165,6 +168,8 @@
 
   
 
+  
+    
   
 
   
@@ -221,6 +226,8 @@
   
 
   
+    
+  
 
   
     
@@ -275,6 +282,8 @@
 
   
 
+  
+    
   
 
   
@@ -337,6 +346,8 @@
   
 
   
+    
+  
 
   
     
@@ -392,9 +403,9 @@
   
 
   
-
-  
     
+  
+
   
     
   
@@ -442,10 +453,14 @@
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -502,9 +517,9 @@
   
 
   
-
-  
     
+  
+
   
     
       <li class="active"><a href="/ios101/pages/blocks.html">Blocks</a></li>
@@ -552,14 +567,16 @@
   
     
   
-
-
+    
   
+
 
   
 
   
     
+  
+
   
     
   
@@ -607,10 +624,14 @@
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -667,9 +688,9 @@
   
 
   
-
-  
     
+  
+
   
     
   
@@ -717,10 +738,14 @@
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -777,6 +802,8 @@
   
 
   
+    
+  
 
   
     
@@ -832,9 +859,9 @@
   
 
   
-
-  
     
+  
+
   
     
   
@@ -882,6 +909,8 @@
   
     
   
+    
+  
 
   
 </ul>
@@ -892,6 +921,8 @@
 
   
 
+  
+    
   
 
   
@@ -948,6 +979,8 @@
   
 
   
+    
+  
 
   
     
@@ -1002,6 +1035,8 @@
 
   
 
+  
+    
   
 
   
@@ -1064,6 +1099,8 @@
   
 
   
+    
+  
 
   
     
@@ -1119,9 +1156,9 @@
   
 
   
-
-  
     
+  
+
   
     
   
@@ -1169,10 +1206,14 @@
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -1228,6 +1269,8 @@
 
   
 
+  
+    
   
 
   

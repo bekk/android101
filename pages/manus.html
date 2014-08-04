@@ -35,33 +35,30 @@
 	<li><a href="interface-builder.html#knytteviewcontroller">Lage og sette tilhørende ViewController klasse</a> (<a href="klasser.html#lage">Hva er *.h og *.m filene</a>)</li>
 	<li><a href="interface-builder.html#outlet">Knytte interface-elementer til underliggende ViewController</a>, slik at de kan refereres fra kode</li>
 	<li>Lag SpotifyTrack (<a href="klasser.html">Klasser, Arv, imports, @properties (ivars), Objekter har pekere</a>)
-<div class="highlight"><pre><code class="objective-c"><span class="k">@interface</span> <span class="nc">SpotifyTrack</span> : <span class="nc">NSObject</span>
-	<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="kt">id</span><span class="p">;</span>
-	<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">artist</span><span class="p">;</span>
-	<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">title</span><span class="p">;</span>
-	<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSURL</span> <span class="o">*</span><span class="n">thumbnailUrl</span><span class="p">;</span>
-<span class="k">@end</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="k">@interface</span> <span class="nc">SpotifyTrack</span> : <span class="bp">NSObject</span>
+	<span class="k">@property</span> <span class="p">(</span><span class="k">nonatomic</span><span class="p">,</span> <span class="k">strong</span><span class="p">)</span> <span class="bp">NSString</span> <span class="o">*</span><span class="kt">id</span><span class="p">;</span>
+	<span class="k">@property</span> <span class="p">(</span><span class="k">nonatomic</span><span class="p">,</span> <span class="k">strong</span><span class="p">)</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">artist</span><span class="p">;</span>
+	<span class="k">@property</span> <span class="p">(</span><span class="k">nonatomic</span><span class="p">,</span> <span class="k">strong</span><span class="p">)</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">title</span><span class="p">;</span>
+	<span class="k">@property</span> <span class="p">(</span><span class="k">nonatomic</span><span class="p">,</span> <span class="k">strong</span><span class="p">)</span> <span class="bp">NSURL</span> <span class="o">*</span><span class="n">thumbnailUrl</span><span class="p">;</span>
+<span class="k">@end</span></code></pre></div>
 
 	</li>
 	<li><a href="klasser.html">Opprett en ny SpotifyTrack</a> i SpotifyPlayerViewController sin viewDidLoad
-<div class="highlight"><pre><code class="objective-c"><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewDidLoad</span>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewDidLoad</span>
 <span class="p">{</span>
-    <span class="p">[</span><span class="n">super</span> <span class="n">viewDidLoad</span><span class="p">];</span>
+    <span class="p">[</span><span class="nb">super</span> <span class="n">viewDidLoad</span><span class="p">];</span>
     <span class="n">SpotifyTrack</span> <span class="o">*</span><span class="n">track</span> <span class="o">=</span> <span class="p">[[</span><span class="n">SpotifyTrack</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
     <span class="n">track</span><span class="p">.</span><span class="kt">id</span> <span class="o">=</span> <span class="s">@&quot;&quot;</span><span class="p">;</span>
     <span class="n">track</span><span class="p">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">@&quot;&quot;</span><span class="p">;</span>
-    <span class="n">self</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">track</span><span class="p">.</span><span class="n">title</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
+    <span class="nb">self</span><span class="p">.</span><span class="n">titleLabel</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">track</span><span class="p">.</span><span class="n">title</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
 	</li>
 	<li>
 	<a href="interface-builder.html#outlet">Knytte knapp til IBAction</a> og forklare <a href="klasser.html#metoder">message passing (metode kall)</a>
 
-<div class="highlight"><pre><code class="objective-c"><span class="k">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span><span class="nf">openInSpotifyButtonTouch:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
-    <span class="p">[[</span><span class="n">UIApplication</span> <span class="n">sharedApplication</span><span class="p">]</span> <span class="n">openURL</span><span class="o">:</span><span class="p">[</span><span class="n">NSURL</span> <span class="n">URLWithString</span><span class="o">:</span><span class="p">[</span><span class="n">NSString</span> <span class="n">stringWithFormat</span><span class="o">:</span><span class="s">@&quot;spotify://%@&quot;</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">track</span><span class="p">.</span><span class="kt">id</span><span class="p">]]];</span>
-<span class="p">}</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="p">-</span> <span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span><span class="nf">openInSpotifyButtonTouch:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span> <span class="p">{</span>
+    <span class="p">[[</span><span class="bp">UIApplication</span> <span class="n">sharedApplication</span><span class="p">]</span> <span class="nl">openURL</span><span class="p">:[</span><span class="bp">NSURL</span> <span class="nl">URLWithString</span><span class="p">:[</span><span class="bp">NSString</span> <span class="nl">stringWithFormat</span><span class="p">:</span><span class="s">@&quot;spotify://%@&quot;</span><span class="p">,</span> <span class="nb">self</span><span class="p">.</span><span class="n">track</span><span class="p">.</span><span class="kt">id</span><span class="p">]]];</span>
+<span class="p">}</span></code></pre></div>
 	</li>
 </ol>
 
@@ -71,7 +68,7 @@
 	<li>Lage <a href="table-view-controllers.html">TableViewController</a> og <a href="navigation-controllers.html">NavigationController</a> i Interface Builder</li>
 	<li><a href="delegates.html">Forklare Delegates</a></li>
 	<li>Implementere <a href="datatyper.html">statisk array</a> med SpotifyTracks
-<div class="highlight"><pre><code class="objective-c"><span class="n">SpotifyTrack</span> <span class="n">track1</span> <span class="o">=</span> <span class="p">[</span><span class="n">SpotifyTrack</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="n">SpotifyTrack</span> <span class="n">track1</span> <span class="o">=</span> <span class="p">[</span><span class="n">SpotifyTrack</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
 <span class="n">track1</span><span class="p">.</span><span class="kt">id</span> <span class="o">=</span> <span class="s">@&quot;1&quot;</span>
 <span class="n">track1</span><span class="p">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">@&quot;Title&quot;</span><span class="p">;</span>
 <span class="n">track1</span><span class="p">.</span><span class="n">artist</span> <span class="o">=</span> <span class="s">@&quot;Artist&quot;</span><span class="p">;</span>
@@ -81,35 +78,32 @@
 <span class="n">track1</span><span class="p">.</span><span class="n">title</span> <span class="o">=</span> <span class="s">@&quot;Title&quot;</span><span class="p">;</span>
 <span class="n">track1</span><span class="p">.</span><span class="n">artist</span> <span class="o">=</span> <span class="s">@&quot;Artist&quot;</span><span class="p">;</span>
 
-<span class="n">self</span><span class="p">.</span><span class="n">tracks</span> <span class="o">=</span> <span class="err">@</span><span class="p">[</span><span class="n">track1</span><span class="p">,</span> <span class="n">track2</span><span class="p">];</span>
-</code></pre></div>
+<span class="nb">self</span><span class="p">.</span><span class="n">tracks</span> <span class="o">=</span> <span class="l">@[</span><span class="n">track1</span><span class="p">,</span> <span class="n">track2</span><span class="l">]</span><span class="p">;</span></code></pre></div>
 	</li>
 	<li><a href="table-view-controllers.html">Implementere DataSource metodene til UITableView delegate</a>
-<div class="highlight"><pre><code class="objective-c"><span class="k">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nf">tableView:</span><span class="p">(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">numberOfRowsInSection:</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">section</span>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="p">-</span> <span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nf">tableView:</span><span class="p">(</span><span class="bp">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">numberOfRowsInSection:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nv">section</span>
 <span class="p">{</span>
-    <span class="k">return</span> <span class="n">self</span><span class="p">.</span><span class="n">tracks</span><span class="p">.</span><span class="n">count</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nb">self</span><span class="p">.</span><span class="n">tracks</span><span class="p">.</span><span class="n">count</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="k">-</span> <span class="p">(</span><span class="n">UITableViewCell</span> <span class="o">*</span><span class="p">)</span><span class="nf">tableView:</span><span class="p">(</span><span class="n">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">cellForRowAtIndexPath:</span><span class="p">(</span><span class="n">NSIndexPath</span> <span class="o">*</span><span class="p">)</span><span class="nv">indexPath</span>
+<span class="p">-</span> <span class="p">(</span><span class="bp">UITableViewCell</span> <span class="o">*</span><span class="p">)</span><span class="nf">tableView:</span><span class="p">(</span><span class="bp">UITableView</span> <span class="o">*</span><span class="p">)</span><span class="nv">tableView</span> <span class="nf">cellForRowAtIndexPath:</span><span class="p">(</span><span class="bp">NSIndexPath</span> <span class="o">*</span><span class="p">)</span><span class="nv">indexPath</span>
 <span class="p">{</span>
-    <span class="k">static</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">CellIdentifier</span> <span class="o">=</span> <span class="s">@&quot;trackCell&quot;</span><span class="p">;</span>
-    <span class="n">UITableViewCell</span> <span class="o">*</span><span class="n">cell</span> <span class="o">=</span> <span class="p">[</span><span class="n">tableView</span> <span class="n">dequeueReusableCellWithIdentifier</span><span class="o">:</span><span class="n">CellIdentifier</span> <span class="n">forIndexPath</span><span class="o">:</span><span class="n">indexPath</span><span class="p">];</span>
-    <span class="n">SpotifyTrack</span> <span class="o">*</span><span class="n">track</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">tracks</span><span class="p">[</span><span class="n">indexPath</span><span class="p">.</span><span class="n">row</span><span class="p">];</span>
+    <span class="k">static</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">CellIdentifier</span> <span class="o">=</span> <span class="s">@&quot;trackCell&quot;</span><span class="p">;</span>
+    <span class="bp">UITableViewCell</span> <span class="o">*</span><span class="n">cell</span> <span class="o">=</span> <span class="p">[</span><span class="n">tableView</span> <span class="nl">dequeueReusableCellWithIdentifier</span><span class="p">:</span><span class="n">CellIdentifier</span> <span class="nl">forIndexPath</span><span class="p">:</span><span class="n">indexPath</span><span class="p">];</span>
+    <span class="n">SpotifyTrack</span> <span class="o">*</span><span class="n">track</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="n">tracks</span><span class="p">[</span><span class="n">indexPath</span><span class="p">.</span><span class="n">row</span><span class="p">];</span>
     <span class="n">cell</span><span class="p">.</span><span class="n">textLabel</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">track</span><span class="p">.</span><span class="n">title</span><span class="p">;</span>
     <span class="n">cell</span><span class="p">.</span><span class="n">detailTextLabel</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">track</span><span class="p">.</span><span class="n">artist</span><span class="p">;</span>
     
     <span class="k">return</span> <span class="n">cell</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 	</li>
 	<li>Lage property på SpotifyPlayerViewController for track og fjerne fra viewDidLoad</li>
 	<li>Vise hvordan man kan sende data via <a href="navigation-controllers.html">navigationController</a> seque
-<div class="highlight"><pre><code class="objective-c"><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">prepareForSegue:</span><span class="p">(</span><span class="n">UIStoryboardSegue</span> <span class="o">*</span><span class="p">)</span><span class="nv">segue</span> <span class="nf">sender:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">prepareForSegue:</span><span class="p">(</span><span class="bp">UIStoryboardSegue</span> <span class="o">*</span><span class="p">)</span><span class="nv">segue</span> <span class="nf">sender:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span>
 <span class="p">{</span>
     <span class="n">SpotifyPlayerViewController</span> <span class="o">*</span><span class="n">viewController</span> <span class="o">=</span> <span class="p">(</span><span class="n">SpotifyPlayerViewController</span> <span class="o">*</span><span class="p">)[</span><span class="n">segue</span> <span class="n">destinationViewController</span><span class="p">];</span>
-    <span class="n">viewController</span><span class="p">.</span><span class="n">track</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span><span class="n">tracks</span><span class="p">[[[</span><span class="n">self</span><span class="p">.</span><span class="n">tableView</span> <span class="n">indexPathForSelectedRow</span><span class="p">]</span> <span class="n">row</span><span class="p">]];</span>
-<span class="p">}</span>
-</code></pre></div>
+    <span class="n">viewController</span><span class="p">.</span><span class="n">track</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="n">tracks</span><span class="p">[[[</span><span class="nb">self</span><span class="p">.</span><span class="n">tableView</span> <span class="n">indexPathForSelectedRow</span><span class="p">]</span> <span class="n">row</span><span class="p">]];</span>
+<span class="p">}</span></code></pre></div>
 	</li>
 </ol>
 
@@ -121,26 +115,25 @@
 </div>
 <ol>
 	<li>Forklare <a href="klasser.html">Klasse metoder</a> og <a href="blocks.html">Blocks</a>
-<div class="highlight"><pre><code class="objective-c">		
-<span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
 <span class="k">@class</span> <span class="nc">SpotifyTrack</span>;
 
-<span class="k">typedef</span> <span class="nf">void</span><span class="p">(</span><span class="o">^</span><span class="n">KSpotifyTrackSearchResult</span><span class="p">)(</span><span class="n">NSArray</span><span class="o">*</span> <span class="n">tracks</span><span class="p">);</span>
-<span class="k">typedef</span> <span class="nf">void</span><span class="p">(</span><span class="o">^</span><span class="n">KSpotifyServiceError</span><span class="p">)(</span><span class="n">NSError</span><span class="o">*</span> <span class="n">error</span><span class="p">);</span>
+<span class="k">typedef</span> <span class="nf">void</span><span class="p">(</span><span class="o">^</span><span class="n">KSpotifyTrackSearchResult</span><span class="p">)(</span><span class="bp">NSArray</span><span class="o">*</span> <span class="n">tracks</span><span class="p">);</span>
+<span class="k">typedef</span> <span class="nf">void</span><span class="p">(</span><span class="o">^</span><span class="n">KSpotifyServiceError</span><span class="p">)(</span><span class="bp">NSError</span><span class="o">*</span> <span class="n">error</span><span class="p">);</span>
 
-<span class="k">@interface</span> <span class="nc">SpotifyService</span> : <span class="nc">NSObject</span>
-<span class="k">+</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">findTracks:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">title</span> <span class="nf">result:</span><span class="p">(</span><span class="n">KSpotifyTrackSearchResult</span><span class="p">)</span><span class="nv">result</span> <span class="nf">error:</span><span class="p">(</span><span class="n">KSpotifyServiceError</span><span class="p">)</span><span class="nv">error</span><span class="p">;</span>
+<span class="k">@interface</span> <span class="nc">SpotifyService</span> : <span class="bp">NSObject</span>
+<span class="p">+(</span><span class="kt">void</span><span class="p">)</span><span class="nf">findTracks:</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">title</span> <span class="nf">result:</span><span class="p">(</span><span class="n">KSpotifyTrackSearchResult</span><span class="p">)</span><span class="nv">result</span> <span class="nf">error:</span><span class="p">(</span><span class="n">KSpotifyServiceError</span><span class="p">)</span><span class="nv">error</span><span class="p">;</span>
 <span class="k">@end</span>
 
 
 
-<span class="o">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">findTracks</span><span class="o">:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">title</span> <span class="n">result</span><span class="o">:</span><span class="p">(</span><span class="n">KSpotifyTrackSearchResult</span><span class="p">)</span><span class="n">result</span> <span class="n">error</span><span class="o">:</span><span class="p">(</span><span class="n">KSpotifyServiceError</span><span class="p">)</span><span class="n">error</span> <span class="p">{</span>
+<span class="o">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">findTracks</span><span class="p">:(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">title</span> <span class="nl">result</span><span class="p">:(</span><span class="n">KSpotifyTrackSearchResult</span><span class="p">)</span><span class="n">result</span> <span class="nl">error</span><span class="p">:(</span><span class="n">KSpotifyServiceError</span><span class="p">)</span><span class="n">error</span> <span class="p">{</span>
     
-    <span class="n">NSString</span> <span class="o">*</span><span class="n">urlString</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="n">stringWithFormat</span><span class="o">:</span><span class="s">@&quot;http://ws.spotify.com/search/1/track.json?q=%@&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">title</span> <span class="n">stringByAddingPercentEscapesUsingEncoding</span><span class="o">:</span><span class="n">NSUTF8StringEncoding</span><span class="p">]];</span>
+    <span class="bp">NSString</span> <span class="o">*</span><span class="n">urlString</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSString</span> <span class="nl">stringWithFormat</span><span class="p">:</span><span class="s">@&quot;http://ws.spotify.com/search/1/track.json?q=%@&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">title</span> <span class="nl">stringByAddingPercentEscapesUsingEncoding</span><span class="p">:</span><span class="n">NSUTF8StringEncoding</span><span class="p">]];</span>
     
-    <span class="p">[</span><span class="n">KURLConnection</span> <span class="n">startWithRequest</span><span class="o">:</span><span class="p">[</span><span class="n">NSURLRequest</span> <span class="n">requestWithURL</span><span class="o">:</span><span class="p">[</span><span class="n">NSURL</span> <span class="n">URLWithString</span><span class="o">:</span><span class="n">urlString</span><span class="p">]]</span> <span class="n">successHandler</span><span class="o">:^</span><span class="p">(</span><span class="n">NSData</span> <span class="o">*</span><span class="n">response</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">NSError</span> <span class="o">*</span><span class="n">convertError</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
-        <span class="n">NSArray</span> <span class="o">*</span><span class="n">tracks</span> <span class="o">=</span> <span class="p">[</span><span class="n">SpotifyService</span> <span class="n">convertDataResponseToTracks</span><span class="o">:</span><span class="n">response</span> <span class="n">error</span><span class="o">:&amp;</span><span class="n">convertError</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">KURLConnection</span> <span class="nl">startWithRequest</span><span class="p">:[</span><span class="bp">NSURLRequest</span> <span class="nl">requestWithURL</span><span class="p">:[</span><span class="bp">NSURL</span> <span class="nl">URLWithString</span><span class="p">:</span><span class="n">urlString</span><span class="p">]]</span> <span class="nl">successHandler</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="bp">NSData</span> <span class="o">*</span><span class="n">response</span><span class="p">)</span> <span class="p">{</span>
+        <span class="bp">NSError</span> <span class="o">*</span><span class="n">convertError</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+        <span class="bp">NSArray</span> <span class="o">*</span><span class="n">tracks</span> <span class="o">=</span> <span class="p">[</span><span class="n">SpotifyService</span> <span class="nl">convertDataResponseToTracks</span><span class="p">:</span><span class="n">response</span> <span class="nl">error</span><span class="p">:</span><span class="o">&amp;</span><span class="n">convertError</span><span class="p">];</span>
         
         <span class="k">if</span> <span class="p">(</span><span class="n">convertError</span> <span class="o">!=</span> <span class="nb">nil</span><span class="p">)</span> <span class="p">{</span>
 
@@ -148,30 +141,30 @@
         <span class="p">}</span>
         
         <span class="n">result</span><span class="p">(</span><span class="n">tracks</span><span class="p">);</span>
-    <span class="p">}</span> <span class="n">failedHandler</span><span class="o">:^</span><span class="p">(</span><span class="n">NSError</span> <span class="o">*</span><span class="n">requestError</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">}</span> <span class="nl">failedHandler</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="bp">NSError</span> <span class="o">*</span><span class="n">requestError</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">error</span><span class="p">(</span><span class="n">requestError</span><span class="p">);</span>
     <span class="p">}];</span>
 <span class="p">}</span>
 
-<span class="o">+</span> <span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="n">convertDataResponseToTracks</span><span class="o">:</span><span class="p">(</span><span class="n">NSData</span> <span class="o">*</span><span class="p">)</span><span class="n">response</span> <span class="n">error</span><span class="o">:</span><span class="p">(</span><span class="n">NSError</span> <span class="o">**</span><span class="p">)</span><span class="n">error</span> <span class="p">{</span>
+<span class="o">+</span> <span class="p">(</span><span class="bp">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nl">convertDataResponseToTracks</span><span class="p">:(</span><span class="bp">NSData</span> <span class="o">*</span><span class="p">)</span><span class="n">response</span> <span class="nl">error</span><span class="p">:(</span><span class="bp">NSError</span> <span class="o">**</span><span class="p">)</span><span class="n">error</span> <span class="p">{</span>
     
-    <span class="n">NSError</span> <span class="n">__autoreleasing</span> <span class="o">*</span><span class="n">jsonError</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
-    <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">dictionary</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSJSONSerialization</span> <span class="n">JSONObjectWithData</span><span class="o">:</span><span class="n">response</span> <span class="n">options</span><span class="o">:</span><span class="n">NSJSONReadingAllowFragments</span> <span class="n">error</span><span class="o">:&amp;</span><span class="n">jsonError</span><span class="p">];</span>
+    <span class="bp">NSError</span> <span class="k">__autoreleasing</span> <span class="o">*</span><span class="n">jsonError</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+    <span class="bp">NSDictionary</span> <span class="o">*</span><span class="n">dictionary</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSJSONSerialization</span> <span class="nl">JSONObjectWithData</span><span class="p">:</span><span class="n">response</span> <span class="nl">options</span><span class="p">:</span><span class="n">NSJSONReadingAllowFragments</span> <span class="nl">error</span><span class="p">:</span><span class="o">&amp;</span><span class="n">jsonError</span><span class="p">];</span>
     
     <span class="k">if</span> <span class="p">(</span><span class="n">jsonError</span> <span class="o">!=</span> <span class="nb">nil</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;Failed parsing json: %@&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">jsonError</span> <span class="n">localizedDescription</span><span class="p">]);</span>
         <span class="n">error</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">jsonError</span><span class="p">;</span>
     <span class="p">}</span>
     
-    <span class="n">NSMutableArray</span> <span class="o">*</span><span class="n">tracks</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSMutableArray</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
-    <span class="k">for</span> <span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="n">track</span> <span class="k">in</span> <span class="n">dictionary</span><span class="p">[</span><span class="s">@&quot;tracks&quot;</span><span class="p">])</span> <span class="p">{</span>
-        <span class="p">[</span><span class="n">tracks</span> <span class="n">addObject</span><span class="o">:</span><span class="p">[</span><span class="n">SpotifyService</span> <span class="n">convertResponseTrackToTrack</span><span class="o">:</span><span class="n">track</span><span class="p">]];</span>
+    <span class="bp">NSMutableArray</span> <span class="o">*</span><span class="n">tracks</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">NSMutableArray</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="bp">NSDictionary</span> <span class="o">*</span><span class="n">track</span> <span class="k">in</span> <span class="n">dictionary</span><span class="p">[</span><span class="s">@&quot;tracks&quot;</span><span class="p">])</span> <span class="p">{</span>
+        <span class="p">[</span><span class="n">tracks</span> <span class="nl">addObject</span><span class="p">:[</span><span class="n">SpotifyService</span> <span class="nl">convertResponseTrackToTrack</span><span class="p">:</span><span class="n">track</span><span class="p">]];</span>
     <span class="p">}</span>
     
     <span class="k">return</span> <span class="n">tracks</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="o">+</span> <span class="p">(</span><span class="n">SpotifyTrack</span> <span class="o">*</span><span class="p">)</span><span class="n">convertResponseTrackToTrack</span><span class="o">:</span><span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="n">trackObject</span> <span class="p">{</span>
+<span class="o">+</span> <span class="p">(</span><span class="n">SpotifyTrack</span> <span class="o">*</span><span class="p">)</span><span class="nl">convertResponseTrackToTrack</span><span class="p">:(</span><span class="bp">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="n">trackObject</span> <span class="p">{</span>
     <span class="n">SpotifyTrack</span> <span class="o">*</span><span class="n">track</span> <span class="o">=</span> <span class="p">[[</span><span class="n">SpotifyTrack</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
     
     <span class="n">track</span><span class="p">.</span><span class="kt">id</span> <span class="o">=</span> <span class="n">trackObject</span><span class="p">[</span><span class="s">@&quot;href&quot;</span><span class="p">];</span>
@@ -179,8 +172,7 @@
     <span class="n">track</span><span class="p">.</span><span class="n">artist</span> <span class="o">=</span> <span class="n">trackObject</span><span class="p">[</span><span class="s">@&quot;artists&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">@&quot;name&quot;</span><span class="p">];</span>
     
     <span class="k">return</span> <span class="n">track</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 	</li>
 	<li>Forklare <a href="error-handling.html">Error handling</a></li>
@@ -190,19 +182,17 @@
 	<li>Bytt ut statisk array med service</li>
 	<li>Lag UISearchBar og set opp <a href="delegates.html">delegate</a>
 
-<div class="highlight"><pre><code class="objective-c">	
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">searchBarSearchButtonClicked:</span><span class="p">(</span><span class="n">UISearchBar</span> <span class="o">*</span><span class="p">)</span><span class="nv">searchBar</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="nf">searchBarSearchButtonClicked:</span><span class="p">(</span><span class="bp">UISearchBar</span> <span class="o">*</span><span class="p">)</span><span class="nv">searchBar</span> <span class="p">{</span>
     <span class="p">[</span><span class="n">searchBar</span> <span class="n">resignFirstResponder</span><span class="p">];</span>
     
-    <span class="p">[</span><span class="n">SpotifyService</span> <span class="n">findTracks</span><span class="o">:</span><span class="n">searchBar</span><span class="p">.</span><span class="n">text</span> <span class="n">result</span><span class="o">:^</span><span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="n">tracks</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">self</span><span class="p">.</span><span class="n">tracks</span> <span class="o">=</span> <span class="n">tracks</span><span class="p">;</span>
-        <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">tableView</span> <span class="n">reloadData</span><span class="p">];</span>
-    <span class="p">}</span> <span class="n">error</span><span class="o">:^</span><span class="p">(</span><span class="n">NSError</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">UIAlertView</span> <span class="o">*</span> <span class="n">alertView</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIAlertView</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">initWithTitle</span><span class="o">:</span><span class="s">@&quot;Feilet&quot;</span> <span class="n">message</span><span class="o">:</span><span class="s">@&quot;Feilet skikkelig&quot;</span> <span class="n">delegate</span><span class="o">:</span><span class="nb">nil</span> <span class="n">cancelButtonTitle</span><span class="o">:</span><span class="s">@&quot;OK&quot;</span> <span class="n">otherButtonTitles</span><span class="o">:</span><span class="nb">nil</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">SpotifyService</span> <span class="nl">findTracks</span><span class="p">:</span><span class="n">searchBar</span><span class="p">.</span><span class="n">text</span> <span class="nl">result</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="bp">NSArray</span> <span class="o">*</span><span class="n">tracks</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nb">self</span><span class="p">.</span><span class="n">tracks</span> <span class="o">=</span> <span class="n">tracks</span><span class="p">;</span>
+        <span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">tableView</span> <span class="n">reloadData</span><span class="p">];</span>
+    <span class="p">}</span> <span class="nl">error</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="bp">NSError</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+        <span class="bp">UIAlertView</span> <span class="o">*</span> <span class="n">alertView</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">UIAlertView</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithTitle</span><span class="p">:</span><span class="s">@&quot;Feilet&quot;</span> <span class="nl">message</span><span class="p">:</span><span class="s">@&quot;Feilet skikkelig&quot;</span> <span class="nl">delegate</span><span class="p">:</span><span class="nb">nil</span> <span class="nl">cancelButtonTitle</span><span class="p">:</span><span class="s">@&quot;OK&quot;</span> <span class="nl">otherButtonTitles</span><span class="p">:</span><span class="nb">nil</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];</span>
         <span class="p">[</span><span class="n">alertView</span> <span class="n">show</span><span class="p">];</span>
     <span class="p">}];</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 	</li>
 </ol>
 
@@ -215,6 +205,8 @@
 
   
 
+  
+    
   
 
   
@@ -271,6 +263,8 @@
   
 
   
+    
+  
 
   
     
@@ -325,6 +319,8 @@
 
   
 
+  
+    
   
 
   
@@ -381,6 +377,8 @@
   
 
   
+    
+  
 
   
     
@@ -435,6 +433,8 @@
 
   
 
+  
+    
   
 
   
@@ -497,6 +497,8 @@
   
 
   
+    
+  
 
   
     
@@ -552,9 +554,9 @@
   
 
   
-
-  
     
+  
+
   
     
   
@@ -602,10 +604,14 @@
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -662,9 +668,9 @@
   
 
   
-
-  
     
+  
+
   
     
       <li class=""><a href="/ios101/pages/blocks.html">Blocks</a></li>
@@ -712,14 +718,16 @@
   
     
   
-
-
+    
   
+
 
   
 
   
     
+  
+
   
     
   
@@ -767,10 +775,14 @@
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -827,9 +839,9 @@
   
 
   
-
-  
     
+  
+
   
     
   
@@ -877,10 +889,14 @@
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -937,6 +953,8 @@
   
 
   
+    
+  
 
   
     
@@ -992,9 +1010,9 @@
   
 
   
-
-  
     
+  
+
   
     
   
@@ -1042,6 +1060,8 @@
   
     
   
+    
+  
 
   
 </ul>
@@ -1052,6 +1072,8 @@
 
   
 
+  
+    
   
 
   
@@ -1108,6 +1130,8 @@
   
 
   
+    
+  
 
   
     
@@ -1162,6 +1186,8 @@
 
   
 
+  
+    
   
 
   
@@ -1224,6 +1250,8 @@
   
 
   
+    
+  
 
   
     
@@ -1279,9 +1307,9 @@
   
 
   
-
-  
     
+  
+
   
     
   
@@ -1329,10 +1357,14 @@
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -1388,6 +1420,8 @@
 
   
 
+  
+    
   
 
   

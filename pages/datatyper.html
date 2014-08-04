@@ -27,64 +27,58 @@
 
 <h3>NSNumber</h3>
 
-<div class="highlight"><pre><code class="objective-c"><span class="mi">@12</span>      <span class="cm">/* [NSNumber numberWithInt:12] */</span>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="mi">@12</span>      <span class="cm">/* [NSNumber numberWithInt:12] */</span>
 <span class="sc">@&#39;Z&#39;</span>     <span class="cm">/* [NSNumber numberWithChar:&#39;Z&#39;] */</span>
-<span class="err">@</span><span class="nb">YES</span>     <span class="cm">/* [NSNumber numberWithBool:YES] */</span>
-</code></pre></div>
+<span class="m">@YES</span>     <span class="cm">/* [NSNumber numberWithBool:YES] */</span></code></pre></div>
 
 
 <h3>Boxed Expression Literals (C kall)</h3>
 
-<div class="highlight"><pre><code class="objective-c"><span class="err">@</span><span class="p">(</span><span class="n">M_PI</span><span class="o">/</span><span class="mi">16</span><span class="p">)</span> <span class="cm">/* [NSNumber numberWithDouble:(M_PI / 16)] */</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="l">@(</span><span class="n">M_PI</span><span class="o">/</span><span class="mi">16</span><span class="l">)</span> <span class="cm">/* [NSNumber numberWithDouble:(M_PI / 16)] */</span></code></pre></div>
 
 <h3>NSArray</h3>
 
-<div class="highlight"><pre><code class="objective-c"><span class="n">NSArray</span> <span class="o">*</span><span class="n">array</span> <span class="o">=</span> <span class="err">@</span><span class="p">[</span> <span class="s">@&quot;Hello&quot;</span><span class="p">,</span> <span class="s">@&quot;Wellow&quot;</span><span class="p">,</span> <span class="s">@&quot;Cool&quot;</span> <span class="p">];</span> 
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="bp">NSArray</span> <span class="o">*</span><span class="n">array</span> <span class="o">=</span> <span class="l">@[</span> <span class="s">@&quot;Hello&quot;</span><span class="p">,</span> <span class="s">@&quot;Wellow&quot;</span><span class="p">,</span> <span class="s">@&quot;Cool&quot;</span> <span class="l">]</span><span class="p">;</span> 
 
 <span class="cm">/*</span>
 <span class="cm">NSArray arrayWithObjects:@&quot;Hello&quot;, @&quot;Wellow&quot;, @&quot;Cool&quot;, nil];</span>
 <span class="cm">*/</span>
 
-<span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;Første element: %@&quot;</span><span class="p">,</span> <span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-</code></pre></div>
+<span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;Første element: %@&quot;</span><span class="p">,</span> <span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span></code></pre></div>
 
 <h3>NSDictionary</h3>
 
-<div class="highlight"><pre><code class="objective-c"><span class="n">NSDictionary</span> <span class="o">*</span><span class="n">dictionary</span> <span class="o">=</span> <span class="err">@</span><span class="p">{</span>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="bp">NSDictionary</span> <span class="o">*</span><span class="n">dictionary</span> <span class="o">=</span> <span class="l">@{</span>
 	<span class="s">@&quot;firstname&quot;</span> <span class="o">:</span> <span class="s">@&quot;Foo&quot;</span><span class="p">,</span>
 	<span class="s">@&quot;lastname&quot;</span> <span class="o">:</span> <span class="s">@&quot;Bar&quot;</span><span class="p">,</span>
-<span class="p">};</span>
+<span class="l">}</span><span class="p">;</span>
 
 <span class="cm">/* </span>
 <span class="cm">NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:</span>
 <span class="cm">	@&quot;value1&quot;, @&quot;key1&quot;, @&quot;value2&quot;, @&quot;key2&quot;, nil];</span>
 <span class="cm">*/</span>
 
-<span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;Første element: %@&quot;</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">[</span><span class="s">&quot;firstname&quot;</span><span class="p">]);</span>
-</code></pre></div>
+<span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;Første element: %@&quot;</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">[</span><span class="s">&quot;firstname&quot;</span><span class="p">]);</span></code></pre></div>
 
 <h2>Iterering</h2>
 
 <h3>For-loop</h3>
 
-<div class="highlight"><pre><code class="objective-c"><span class="n">NSArray</span> <span class="n">songs</span> <span class="o">=</span> <span class="p">[</span><span class="s">@&quot;Hello&quot;</span><span class="p">,</span> <span class="s">@&quot;Someday&quot;</span><span class="p">,</span> <span class="s">@&quot;Help&quot;</span><span class="p">];</span>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="bp">NSArray</span> <span class="n">songs</span> <span class="o">=</span> <span class="p">[</span><span class="s">@&quot;Hello&quot;</span><span class="p">,</span> <span class="s">@&quot;Someday&quot;</span><span class="p">,</span> <span class="s">@&quot;Help&quot;</span><span class="p">];</span>
 
-<span class="k">for</span> <span class="p">(</span><span class="n">NSUInteger</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="n">songs</span><span class="p">.</span><span class="n">count</span><span class="p">;</span> <span class="n">index</span><span class="o">++</span><span class="p">)</span>
+<span class="k">for</span> <span class="p">(</span><span class="bp">NSUInteger</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="n">songs</span><span class="p">.</span><span class="n">count</span><span class="p">;</span> <span class="n">index</span><span class="o">++</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">loop</span><span class="o">-</span><span class="n">body</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <h3>For-in-loop</h3>
 
-<div class="highlight"><pre><code class="objective-c"><span class="n">NSArray</span> <span class="n">songs</span> <span class="o">=</span> <span class="p">[</span><span class="s">@&quot;Hello&quot;</span><span class="p">,</span> <span class="s">@&quot;Someday&quot;</span><span class="p">,</span> <span class="s">@&quot;Help&quot;</span><span class="p">];</span>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="bp">NSArray</span> <span class="n">songs</span> <span class="o">=</span> <span class="p">[</span><span class="s">@&quot;Hello&quot;</span><span class="p">,</span> <span class="s">@&quot;Someday&quot;</span><span class="p">,</span> <span class="s">@&quot;Help&quot;</span><span class="p">];</span>
 
-<span class="k">for</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="n">string</span> <span class="k">in</span> <span class="n">songs</span><span class="p">)</span>
+<span class="k">for</span> <span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="n">string</span> <span class="k">in</span> <span class="n">songs</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="c1">// do stuff...</span>
-<span class="p">}</span>
-</code></pre></div>
+<span class="p">}</span></code></pre></div>
 
 <h2>Pekere</h2>
 
@@ -106,10 +100,9 @@ Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske t
 
 <h4>Eksempel</h4>
 
-<div class="highlight"><pre><code class="objective-c"><span class="kt">id</span> <span class="n">track</span> <span class="o">=</span> <span class="p">[[</span><span class="n">SpotifyTrack</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span> <span class="cm">/* dynamisk typet */</span>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="kt">id</span> <span class="n">track</span> <span class="o">=</span> <span class="p">[[</span><span class="n">SpotifyTrack</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span> <span class="cm">/* dynamisk typet */</span>
 <span class="n">SpotifyTrack</span> <span class="o">*</span><span class="n">track</span> <span class="o">=</span> <span class="p">[[</span><span class="n">SpotifyTrack</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span> <span class="cm">/* statisk typet */</span>
-<span class="kt">int</span> <span class="n">songCount</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="cm">/* primitiv */</span>
-</code></pre></div>
+<span class="kt">int</span> <span class="n">songCount</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="cm">/* primitiv */</span></code></pre></div>
 
 <ol>
 	<li><code>id</code> er definert som en pointer til hva som helst</li>
@@ -123,20 +116,18 @@ Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske t
 	<li>Om man kaller en metode på nil får man bare nil tilbake, ingen exception!</li>
 </ul>
 
-<div class="highlight"><pre><code class="objective-c"><span class="n">NSString</span> <span class="o">*</span><span class="n">string</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
-<span class="n">NSString</span> <span class="o">*</span><span class="n">low</span> <span class="o">=</span> <span class="p">[</span><span class="n">string</span> <span class="n">lowercaseString</span><span class="p">];</span>
-<span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span> <span class="n">low</span><span class="p">);</span> <span class="c1">// =&gt; null</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="bp">NSString</span> <span class="o">*</span><span class="n">string</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+<span class="bp">NSString</span> <span class="o">*</span><span class="n">low</span> <span class="o">=</span> <span class="p">[</span><span class="n">string</span> <span class="n">lowercaseString</span><span class="p">];</span>
+<span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span> <span class="n">low</span><span class="p">);</span> <span class="c1">// =&gt; null</span></code></pre></div>
 
 <ul>
 <li>Dette vil logge (null) uten å krœsje</li>
 <li><code>NULL</code> og <code>nil</code> kompileres begge til tallet <code>0</code>, så dette er også lov:</li>
 </ul>
 
-<div class="highlight"><pre><code class="objective-c"><span class="n">NSString</span> <span class="o">*</span><span class="n">string</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="n">NSString</span> <span class="o">*</span><span class="n">low</span> <span class="o">=</span> <span class="p">[</span><span class="n">string</span> <span class="n">lowercaseString</span><span class="p">];</span>
-<span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span> <span class="n">low</span><span class="p">);</span> <span class="c1">// =&gt; null</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="bp">NSString</span> <span class="o">*</span><span class="n">string</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="bp">NSString</span> <span class="o">*</span><span class="n">low</span> <span class="o">=</span> <span class="p">[</span><span class="n">string</span> <span class="n">lowercaseString</span><span class="p">];</span>
+<span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;%@&quot;</span><span class="p">,</span> <span class="n">low</span><span class="p">);</span> <span class="c1">// =&gt; null</span></code></pre></div>
 
 
           </div>
@@ -147,6 +138,8 @@ Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske t
 
   
 
+  
+    
   
 
   
@@ -203,6 +196,8 @@ Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske t
   
 
   
+    
+  
 
   
     
@@ -257,6 +252,8 @@ Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske t
 
   
 
+  
+    
   
 
   
@@ -313,6 +310,8 @@ Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske t
   
 
   
+    
+  
 
   
     
@@ -367,6 +366,8 @@ Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske t
 
   
 
+  
+    
   
 
   
@@ -429,6 +430,8 @@ Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske t
   
 
   
+    
+  
 
   
     
@@ -484,9 +487,9 @@ Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske t
   
 
   
-
-  
     
+  
+
   
     
   
@@ -534,10 +537,14 @@ Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske t
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -594,9 +601,9 @@ Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske t
   
 
   
-
-  
     
+  
+
   
     
       <li class=""><a href="/ios101/pages/blocks.html">Blocks</a></li>
@@ -644,14 +651,16 @@ Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske t
   
     
   
-
-
+    
   
+
 
   
 
   
     
+  
+
   
     
   
@@ -699,10 +708,14 @@ Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske t
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -759,9 +772,9 @@ Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske t
   
 
   
-
-  
     
+  
+
   
     
   
@@ -809,10 +822,14 @@ Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske t
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -869,6 +886,8 @@ Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske t
   
 
   
+    
+  
 
   
     
@@ -924,9 +943,9 @@ Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske t
   
 
   
-
-  
     
+  
+
   
     
   
@@ -974,6 +993,8 @@ Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske t
   
     
   
+    
+  
 
   
 </ul>
@@ -984,6 +1005,8 @@ Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske t
 
   
 
+  
+    
   
 
   
@@ -1040,6 +1063,8 @@ Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske t
   
 
   
+    
+  
 
   
     
@@ -1094,6 +1119,8 @@ Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske t
 
   
 
+  
+    
   
 
   
@@ -1156,6 +1183,8 @@ Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske t
   
 
   
+    
+  
 
   
     
@@ -1211,9 +1240,9 @@ Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske t
   
 
   
-
-  
     
+  
+
   
     
   
@@ -1261,10 +1290,14 @@ Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske t
   
     
   
+    
+  
 
 
   
 
+  
+    
   
 
   
@@ -1320,6 +1353,8 @@ Objective-C har en dynamisk typet runtime, men man kan velge å bruke statiske t
 
   
 
+  
+    
   
 
   
