@@ -18,7 +18,7 @@ task :publish => [:generate] do
 	branch = `git rev-parse --abbrev-ref HEAD`.strip
 	required_branch = "gh-pages"
 	destination = `git config --get remote.origin.url`.strip
-	required_destination = "git@github.com:hinderberg/ios101.git"
+	required_destination = "git@github.com:bekk/Android101.git"
 
 	unless branch == required_branch && destination == required_destination then
 		abort "Must be on #{required_branch} with #{required_destination} as the remote/origin. Aborting."
