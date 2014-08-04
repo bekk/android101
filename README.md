@@ -1,6 +1,4 @@
-iOS 101
+Android 101
 =======
 
-iOS 101 er for deg som er nysgjerrig på iOS plattformen og ikke har kommet helt i gang enda. Vi gir deg en kickstart på Objective-C, Cocoa Touch og XCode, slik at du kan komme i gang med å lage iOS applikasjoner på egenhånd.
-
-Se [presentasjon og oppgaver](http://hinderberg.github.io/ios101/)
+Welcome to Android 101! This course draws inspiration from the comprehensive wiki found at https://github.com/thecodepath/android_guides/wiki. So if you need more explanation or advanced concepts, go check it out.
