@@ -6,11 +6,11 @@
         <title>Interface Builder</title>
         <meta name="viewport" content="width=device-width">
 
-        <link rel="stylesheet" href="/Android101/css/syntax.css">
-        <link href="/Android101/css/bootstrap.min.css" rel="stylesheet" media="screen">
-        <link rel="stylesheet" href="/Android101/css/main.css">
-        <script src="/Android101/js/jquery.min.js"></script>
-        <script src="/Android101/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="/android101/css/syntax.css">
+        <link href="/android101/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" href="/android101/css/main.css">
+        <script src="/android101/js/jquery.min.js"></script>
+        <script src="/android101/js/bootstrap.min.js"></script>
 
     </head>
     <body>
@@ -31,7 +31,7 @@
     <li>Opprett med File -> New file. Velg User Inferface -> Storyboard. Next. Next. Create</li>
     <li>Få applikasjonen til å benytte dette storyboardet som default:
 
-<img src="/Android101/img/xcode_set_storyboard.png" />
+<img src="/android101/img/xcode_set_storyboard.png" />
     </li>
     <li>Gå i AppDelegate.m og slett innholdet i <code>(BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions</code>, slik at det ser ut slik: 
 <div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="p">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">application:</span><span class="p">(</span><span class="bp">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span> <span class="nf">didFinishLaunchingWithOptions:</span><span class="p">(</span><span class="bp">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">launchOptions</span>
@@ -43,7 +43,7 @@
 
 <h2 id="leggetilelementer">Legge til elementer på storyboard</h2>
 Finn "Object library" knappen og dra inn elementer som viewcontroller, labels, textfelt m.m:
-<img src="/Android101/img/xcode_add_elements.png" />
+<img src="/android101/img/xcode_add_elements.png" />
 
 <h2 id="knytteviewcontroller">Knytte ViewController klasse til ViewController i Interface builder</h2>
 
@@ -53,7 +53,7 @@ Finn "Object library" knappen og dra inn elementer som viewcontroller, labels, t
 	<li>Gå til storyboard, velg ViewControlleren (se bildet) og trykk i "Custom Class". Sett dette til navnet på klassen du laget. Dette vil "linke sammen" interface builder og ViewController-klassen.</li>
 </ol>
 
-<img src="/Android101/img/xcode_knyttevc.png" />
+<img src="/android101/img/xcode_knyttevc.png" />
 
 <h2 id="outlet">Knytte interface-elementer til underliggende ViewController</h2>
 <ol>
@@ -62,22 +62,22 @@ Finn "Object library" knappen og dra inn elementer som viewcontroller, labels, t
 	<li>Marker elementet (labelen i dette filfellet). Hold inne CTRL og dra fra elementet og slipp i inne i interfacet (slik bildet viser)
 	</li>
 </ol>
-<img src="/Android101/img/xcode_ib_assistant.png" />
+<img src="/android101/img/xcode_ib_assistant.png" />
 
 Skriv inn et navn og connect. 
-<img src="/Android101/img/xcode_outlet.png" />
+<img src="/android101/img/xcode_outlet.png" />
 
 Property og GUI-elementet er nå knyttet sammen:
-<img src="/Android101/img/xcode_outlet_done.png" />
+<img src="/android101/img/xcode_outlet_done.png" />
 
 <p>For å knytte en knapp til en metode, CTRL-dra fra knappen og inn i implementasjonsfila:</p>
-<img src="/Android101/img/xcode_ibaction.png" />
+<img src="/android101/img/xcode_ibaction.png" />
 
 <p>Knapp er nå linket opp! Do your magic:</p>
-<img src="/Android101/img/xcode_ibaction_done.png" />
+<img src="/android101/img/xcode_ibaction_done.png" />
 
 <h2 id="inspisereconnections">Inspisere og endre connections til View Controller</h2>
-<img src="/Android101/img/xcode_connections.png" />
+<img src="/android101/img/xcode_connections.png" />
 
           </div>
           <nav class="span4">
@@ -133,7 +133,7 @@ Property og GUI-elementet er nå knyttet sammen:
     
   
     
-      <li class=""><a href="/Android101/pages/xcode-introduksjon.html">Introduksjon</a></li>
+      <li class=""><a href="/android101/pages/xcode-introduksjon.html">Introduksjon</a></li>
     
   
     
@@ -192,7 +192,7 @@ Property og GUI-elementet er nå knyttet sammen:
     
   
     
-      <li class=""><a href="/Android101/pages/xcode-opprette-prosjekt.html">Opprette prosjekt</a></li>
+      <li class=""><a href="/android101/pages/xcode-opprette-prosjekt.html">Opprette prosjekt</a></li>
     
   
     
@@ -251,7 +251,7 @@ Property og GUI-elementet er nå knyttet sammen:
     
   
     
-      <li class=""><a href="/Android101/pages/xcode-prosjektinnstillinger.html">Prosjektinnstillinger</a></li>
+      <li class=""><a href="/android101/pages/xcode-prosjektinnstillinger.html">Prosjektinnstillinger</a></li>
     
   
 
@@ -302,7 +302,7 @@ Property og GUI-elementet er nå knyttet sammen:
     
   
     
-      <li class=""><a href="/Android101/pages/xcode-byggekjore.html">Bygge og kjøre apps</a></li>
+      <li class=""><a href="/android101/pages/xcode-byggekjore.html">Bygge og kjøre apps</a></li>
     
   
     
@@ -335,7 +335,7 @@ Property og GUI-elementet er nå knyttet sammen:
     
   
     
-      <li class="active"><a href="/Android101/pages/interface-builder.html">Interface Builder</a></li>
+      <li class="active"><a href="/android101/pages/interface-builder.html">Interface Builder</a></li>
     
   
     
@@ -408,7 +408,7 @@ Property og GUI-elementet er nå knyttet sammen:
     
   
     
-      <li class=""><a href="/Android101/pages/objective-c.html">Objective-C</a></li>
+      <li class=""><a href="/android101/pages/objective-c.html">Objective-C</a></li>
     
   
     
@@ -445,178 +445,7 @@ Property og GUI-elementet er nå knyttet sammen:
     
   
     
-      <li class=""><a href="/Android101/pages/datatyper.html">Datatyper</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-    
-  
-
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-      <li class=""><a href="/Android101/pages/klasser.html">Klasser, metoder og arv</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-    
-  
-
-  
-    
-      <li class=""><a href="/Android101/pages/blocks.html">Blocks</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-    
-  
-
-  
-    
-  
-    
-      <li class=""><a href="/Android101/pages/categories.html">Categories</a></li>
-    
-  
+      <li class=""><a href="/android101/pages/datatyper.html">Datatyper</a></li>
     
   
     
@@ -685,6 +514,18 @@ Property og GUI-elementet er nå knyttet sammen:
     
   
     
+      <li class=""><a href="/android101/pages/klasser.html">Klasser, metoder og arv</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
   
     
   
@@ -697,7 +538,52 @@ Property og GUI-elementet er nå knyttet sammen:
     
   
     
-      <li class=""><a href="/Android101/pages/protocols.html">Protocols</a></li>
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+      <li class=""><a href="/android101/pages/blocks.html">Blocks</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
     
   
     
@@ -728,11 +614,11 @@ Property og GUI-elementet er nå knyttet sammen:
     
   
     
-  
+      <li class=""><a href="/android101/pages/categories.html">Categories</a></li>
     
   
     
-      <li class=""><a href="/Android101/pages/delegates.html">Delegates</a></li>
+  
     
   
     
@@ -811,9 +697,123 @@ Property og GUI-elementet er nå knyttet sammen:
     
   
     
+      <li class=""><a href="/android101/pages/protocols.html">Protocols</a></li>
+    
   
     
-      <li class=""><a href="/Android101/pages/selectors.html">Selectors</a></li>
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/delegates.html">Delegates</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/selectors.html">Selectors</a></li>
     
   
     
@@ -874,7 +874,7 @@ Property og GUI-elementet er nå knyttet sammen:
     
   
     
-      <li class=""><a href="/Android101/pages/threading.html">Threading</a></li>
+      <li class=""><a href="/android101/pages/threading.html">Threading</a></li>
     
   
     
@@ -905,7 +905,7 @@ Property og GUI-elementet er nå knyttet sammen:
     
   
     
-      <li class=""><a href="/Android101/pages/error-handling.html">Error Handling</a></li>
+      <li class=""><a href="/android101/pages/error-handling.html">Error Handling</a></li>
     
   
     
@@ -996,7 +996,7 @@ Property og GUI-elementet er nå knyttet sammen:
     
   
     
-      <li class=""><a href="/Android101/pages/view-controllers.html">View Controllers</a></li>
+      <li class=""><a href="/android101/pages/view-controllers.html">View Controllers</a></li>
     
   
     
@@ -1049,7 +1049,7 @@ Property og GUI-elementet er nå knyttet sammen:
     
   
     
-      <li class=""><a href="/Android101/pages/table-view-controllers.html">Table View Controllers</a></li>
+      <li class=""><a href="/android101/pages/table-view-controllers.html">Table View Controllers</a></li>
     
   
     
@@ -1096,7 +1096,7 @@ Property og GUI-elementet er nå knyttet sammen:
     
   
     
-      <li class=""><a href="/Android101/pages/navigation-controllers.html">Navigation Controllers</a></li>
+      <li class=""><a href="/android101/pages/navigation-controllers.html">Navigation Controllers</a></li>
     
   
     
@@ -1163,7 +1163,7 @@ Property og GUI-elementet er nå knyttet sammen:
     
   
     
-      <li class=""><a href="/Android101/pages/oppgaver.html">Oppgaver - Lets code!</a></li>
+      <li class=""><a href="/android101/pages/oppgaver.html">Oppgaver - Lets code!</a></li>
     
   
     
@@ -1204,7 +1204,7 @@ Property og GUI-elementet er nå knyttet sammen:
     
   
     
-      <li class=""><a href="/Android101/pages/http.html">HTTP</a></li>
+      <li class=""><a href="/android101/pages/http.html">HTTP</a></li>
     
   
     
@@ -1215,63 +1215,6 @@ Property og GUI-elementet er nå knyttet sammen:
   
     
   
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-
-  
-
-  
-    
-  
-
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-      <li class=""><a href="/Android101/pages/merinfo.html">Ressurser</a></li>
     
   
     
@@ -1326,7 +1269,64 @@ Property og GUI-elementet er nå knyttet sammen:
     
   
     
-      <li class=""><a href="/Android101/pages/manus.html">Manus</a></li>
+  
+    
+      <li class=""><a href="/android101/pages/merinfo.html">Ressurser</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/manus.html">Manus</a></li>
     
   
     
