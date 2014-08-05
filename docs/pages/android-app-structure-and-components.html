@@ -1,0 +1,76 @@
+---
+layout: default
+title: App structure and components
+---
+
+<h2>Activity</h2>
+You will most likely have an object extending Activity for each screen in your app. The Activity is responsible for creating a view and coordinate interaction and state. If you are familiar with the MVC pattern, you can think of an Activity as a controller. It displays some model state in one or more views and updates the model from events from the views. You can override methods in Activity to be notified when your activity is created, stopped, resumed, and destroyed.
+
+An example is <code>onCreate()</code>: Here you should create all the components for your activity and call <code>setContentView()</code> to define layout for the user interface.
+
+<h3> Declare activities in the manifest</h3>
+You must declare all your activities in the AndroidManifest.xml file.
+
+{% highlight xml %}
+<manifest ... >
+  <application ... >
+      <activity android:name=".ExampleActivity" />
+      ...
+  </application ... >
+  ...
+</manifest >
+{% endhighlight %}
+
+<h2> Intents</h2>
+Intents are Android's way of communicating between both activities belonging to other applications and an application's own activities.
+
+In order for other applications to activate your activity, you must list up which intents the activity listens for using intent filters.
+{% highlight xml %}
+<intent-filter>
+  <action android:name="android.intent.action.MAIN" />
+  <category android:name="android.intent.category.LAUNCHER" />
+</intent-filter>
+{% endhighlight %}
+The above intent filter exists for most applications, as it describes for the system which activity will be launched when the user first opens the application.
+
+Taking a picture is a task which is delegated to the native camera application by using intens.
+{% highlight java %}
+// create Intent to take a picture and return control to the calling application
+Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+intent.putExtra(MediaStore.EXTRA_OUTPUT, someExistingFileUri); // set the image file name
+// start the image capture Intent
+startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE); // you determine your own request code, which is later 
+used in onActivityResult() in order to know which action was performed by the external activity
+{% endhighlight %}
+
+You switch between in-app activitivities by using intents in the following way:
+
+{% highlight java %}
+Intent intent = new Intent(this, OtherActivitiy.class);
+startActivity(intent);
+{% endhighlight %}
+
+<h2> View Event Listeners </h2>
+
+To listen to user interaction, you register listeners to the clickable view elements. You can do this in one of two ways, either by attaching the handler manually in code, or by pointing to the handler method from the layout file.
+
+Programmatically:
+{% highlight java %}
+Button btnExample = (Button) findViewById(R.id.btnExample);
+btnExample.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        // Do something here    
+    }
+});
+{% endhighlight %}
+
+Or in the layout file:
+{% highlight xml %}
+<?xml version="1.0" encoding="utf-8"?>
+<Button xmlns:android="http://schemas.android.com/apk/res/android"
+    android:onClick="sendMessage" 
+    ... />
+{% endhighlight %}
+
+Implement <code>public void sendMessage(View view) {}</code> in the activity to handle the button click.
