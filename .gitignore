@@ -13,3 +13,4 @@ results
 _docs
 docs/_site/
 npm-debug.log
+.DS_Store
