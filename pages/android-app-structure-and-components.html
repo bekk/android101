@@ -19,9 +19,9 @@
           <div class="span8">
             <h1 class="page-header">Android app structure and components</h1>
             <h2>Activity</h2>
-You will most likely have an object extending `Activity` for each screen in your app. The Activity is responsible for creating a view and coordinate interaction and state. If you are familiar with the MVC pattern, you can think of an Activity as a controller. It displays some model state in one or more views and updates the model from events from the views. You can override methods in `Activity` to be notified when your activity is created, stopped, resumed, and destroyed.
+You will most likely have an object extending Activity for each screen in your app. The Activity is responsible for creating a view and coordinate interaction and state. If you are familiar with the MVC pattern, you can think of an Activity as a controller. It displays some model state in one or more views and updates the model from events from the views. You can override methods in Activity to be notified when your activity is created, stopped, resumed, and destroyed.
 
-`onCreate()`: Here you should create all the components for your activity and call `setContentView()` to define layout for the user interface.
+<code>onCreate()</code>: Here you should create all the components for your activity and call <code>setContentView()</code> to define layout for the user interface.
 
 <h3> Declare activities in the manifest</h3>
 You must declare all your activities in the AndroidManifest.xml file.
@@ -81,36 +81,7 @@ Implement `public void sendMessage(View view) {}` in the activity to handle the 
 
           </div>
           <nav class="span4">
-            <strong>App structure and components</strong>
-            
-<ul class="nav nav-pills nav-stacked">
-
-  
-
-  
-    
-  
-
-  
-    
-      <li class="active"><a href="/android101/pages/android-app-structure-and-components.html">Android app structure and components</a></li>
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-
-  
-</ul>
-
-            <strong>Objective-C</strong>
+            <strong>Android Studio</strong>
             
 <ul class="nav nav-pills nav-stacked">
 
@@ -139,7 +110,36 @@ Implement `public void sendMessage(View view) {}` in the activity to handle the 
   
 </ul>
 
-            <strong>Cocoa Touch</strong>
+            <strong>Android</strong>
+            
+<ul class="nav nav-pills nav-stacked">
+
+  
+
+  
+    
+  
+
+  
+    
+      <li class="active"><a href="/android101/pages/android-app-structure-and-components.html">Android app structure and components</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  
+</ul>
+            
+            <strong>Network Communication</strong>
             
 <ul class="nav nav-pills nav-stacked">
 
@@ -168,7 +168,7 @@ Implement `public void sendMessage(View view) {}` in the activity to handle the 
   
 </ul>
 
-            <strong>Ressurser</strong>
+            <strong>Resources</strong>
             
 <ul class="nav nav-pills nav-stacked">
 
