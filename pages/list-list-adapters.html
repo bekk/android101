@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="nb">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Lists and List Adapters</title>
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="/android101/css/syntax.css">
+        <link href="/android101/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" href="/android101/css/main.css">
+        <script src="/android101/js/jquery.min.js"></script>
+        <script src="/android101/js/bootstrap.min.js"></script>
+
+    </head>
+    <body>
+      <div class="container-fluid main">
+        <div class="row-fluid">
+          <div class="span8">
+            <h1 class="page-header">Lists and List Adapters</h1>
+            When working with lists in Android, we first create a model to hold the data we want to display:
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Message</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">user</span><span class="o">,</span> <span class="n">text</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Message</span><span class="o">(</span><span class="n">String</span> <span class="n">user</span><span class="o">,</span> <span class="n">String</span> <span class="n">text</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">user</span> <span class="o">=</span> <span class="n">user</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+Then we create a layout xml file used for each message in the list. We place this file in
+<code>res/layout/item_message.xml</code>.
+
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+
+<span class="nt">&lt;LinearLayout</span> <span class="na">xmlns:android=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    <span class="na">android:orientation=</span><span class="s">&quot;vertical&quot;</span> <span class="na">android:layout_width=</span><span class="s">&quot;match_parent&quot;</span>
+    <span class="na">android:layout_height=</span><span class="s">&quot;match_parent&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;TextView</span>
+        <span class="na">android:id=</span><span class="s">&quot;@+id/tvUser&quot;</span>
+        <span class="na">android:layout_width=</span><span class="s">&quot;wrap_content&quot;</span>
+        <span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>
+        <span class="na">android:text=</span><span class="s">&quot;User&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;TextView</span>
+        <span class="na">android:id=</span><span class="s">&quot;@+id/tvText&quot;</span>
+        <span class="na">android:layout_width=</span><span class="s">&quot;wrap_content&quot;</span>
+        <span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>
+        <span class="na">android:text=</span><span class="s">&quot;Message&quot;</span> <span class="nt">/&gt;</span>
+
+<span class="nt">&lt;/LinearLayout&gt;</span></code></pre></div>
+We use an <code>ArrayAdapter</code> supply the <code>ListView</code> with messages and render a View for each message. <code>View getView(int position, View convertView, ViewGroup parent)</code> will be invoked for each position in the list, fetching the view for that position. The "ViewHolder pattern" is used to cache layout elements to increase performance.
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MessagesAdapter</span> <span class="kd">extends</span> <span class="n">ArrayAdapter</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">ViewHolder</span> <span class="o">{</span>
+        <span class="n">TextView</span> <span class="n">user</span><span class="o">,</span> <span class="n">text</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="nf">MessagesAdapter</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="n">messages</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">item_message</span><span class="o">,</span> <span class="n">messages</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">View</span> <span class="nf">getView</span><span class="o">(</span><span class="kt">int</span> <span class="n">position</span><span class="o">,</span> <span class="n">View</span> <span class="n">convertView</span><span class="o">,</span> <span class="n">ViewGroup</span> <span class="n">parent</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Message</span> <span class="n">message</span> <span class="o">=</span> <span class="n">getItem</span><span class="o">(</span><span class="n">position</span><span class="o">);</span>
+        <span class="n">ViewHolder</span> <span class="n">viewHolder</span><span class="o">;</span>
+        <span class="c1">// Check if we are reusing a view</span>
+        <span class="c1">// If not, inflate layout</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">convertView</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">viewHolder</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ViewHolder</span><span class="o">();</span>
+            <span class="n">LayoutInflater</span> <span class="n">inflater</span> <span class="o">=</span> <span class="n">LayoutInflater</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="n">getContext</span><span class="o">());</span>
+            <span class="n">convertView</span> <span class="o">=</span> <span class="n">inflater</span><span class="o">.</span><span class="na">inflate</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">item_message</span><span class="o">,</span> <span class="n">parent</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+            <span class="n">viewHolder</span><span class="o">.</span><span class="na">user</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">convertView</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">tvUser</span><span class="o">);</span>
+            <span class="n">viewHolder</span><span class="o">.</span><span class="na">text</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">convertView</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">tvText</span><span class="o">);</span>
+            <span class="n">convertView</span><span class="o">.</span><span class="na">setTag</span><span class="o">(</span><span class="n">viewHolder</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">viewHolder</span> <span class="o">=</span> <span class="o">(</span><span class="n">ViewHolder</span><span class="o">)</span> <span class="n">convertView</span><span class="o">.</span><span class="na">getTag</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="n">viewHolder</span><span class="o">.</span><span class="na">user</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">user</span><span class="o">);</span>
+        <span class="n">viewHolder</span><span class="o">.</span><span class="na">text</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">text</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">convertView</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+In the activity that displays the list, we get the <code>ListView</code> from the activity layout using the id <code>R.id.lvMessages</code> and set it to use our adapter. All changes made to the messages list via the adapter will now be reflected in the GUI.
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="n">messages</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;();</span>
+<span class="n">MessageAdapter</span> <span class="n">adapter</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">MessageAdapter</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">messages</span><span class="o">);</span>
+<span class="n">ListView</span> <span class="n">listView</span> <span class="o">=</span> <span class="o">(</span><span class="n">ListView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">lvMessages</span><span class="o">);</span>
+<span class="n">listView</span><span class="o">.</span><span class="na">setAdapter</span><span class="o">(</span><span class="n">adapter</span><span class="o">);</span></code></pre></div>
+
+          </div>
+          <nav class="span4">
+            <strong>Android Studio</strong>
+            
+<ul class="nav nav-pills nav-stacked">
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/blocks.html">Blocks</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  
+</ul>
+
+            <strong>Android</strong>
+            
+<ul class="nav nav-pills nav-stacked">
+
+  
+
+  
+    
+  
+
+  
+    
+      <li class=""><a href="/android101/pages/android-app-structure-and-components.html">App Structure and Components</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/common-view-controls.html">Common View Controls</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class="active"><a href="/android101/pages/list-list-adapters.html">Lists and List Adapters</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+
+  
+</ul>
+            
+            <strong>Network Communication</strong>
+            
+<ul class="nav nav-pills nav-stacked">
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/retrofit.html">Consume REST APIs with Retrofit</a></li>
+    
+  
+    
+  
+
+  
+</ul>
+
+            <strong>Resources</strong>
+            
+<ul class="nav nav-pills nav-stacked">
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/assignments.html">Assignments</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/manus.html">Manus</a></li>
+    
+  
+    
+  
+    
+  
+
+  
+</ul>
+          </nav>
+        </div>
+      </div>
+
+    </body>
+</html>
