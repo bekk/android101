@@ -1,8 +1,84 @@
 ---
 layout: default
-title: Common view controls
+title: Common View Controls
 ---
 
-<h2>Common view controls</h2>
+<h3>TextView</h3>
+A TextView is used to display text.
 
-.....
+{% highlight xml %}
+<TextView
+android:id="@+id/tvText"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Message" />
+{% endhighlight %}
+
+We use the id of the view to get the view in e.g. an activity that needs to update the text.
+
+{% highlight java %}
+TextView tv = (TextView) parentView.findViewById(R.id.tvText);
+tv.setText("New text");
+{% endhighlight %}
+
+If the text is not dynamic, you should define the text in <code>res/values/strings.xml</code> so that it can be internationalized.
+
+<h3>EditText</h3>
+When you need text input from the user, you can use the EditText control.
+
+{% highlight xml %}
+<EditText
+    android:id="@+id/search"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:hint="@string/search_hint"
+    android:inputType="text"
+    android:imeOptions="actionSend" />
+{% endhighlight %}
+
+{% highlight java %}
+EditText editText = (EditText) findViewById(R.id.search);
+editText.setOnEditorActionListener(new OnEditorActionListener() {
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        boolean handled = false;
+        if (actionId == EditorInfo.IME_ACTION_SEND) {
+            sendMessage();
+            handled = true;
+        }
+        return handled;
+    }
+});
+{% endhighlight %}
+
+<h3>Button</h3>
+
+{% highlight xml %}
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/button_text"
+    ... />
+{% endhighlight %}
+
+{% highlight java %}
+Button button = (Button) findViewById(R.id.button_send);
+button.setOnClickListener(new View.OnClickListener() {
+    public void onClick(View v) {
+        // Do something in response to button click
+    }
+});
+{% endhighlight %}
+
+<h3>ImageView</h3>
+
+Images files are referred to as drawables. They are put in folders for each device resolution inside the res directory, e.g. <code>res/drawable-xxhdpi</code>. The runtime chooses which image to use on each device. <code>@drawable/my_image</code> refers to the image <code>my_image.png</code> located in all the drawable folders you are providing.
+
+{% highlight xml %}
+<ImageView
+    android:id="@+id/image"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:scaleType="center"
+    android:src="@drawable/my_image" />
+{% endhighlight %}
