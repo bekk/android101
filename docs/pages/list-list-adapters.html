@@ -1,0 +1,80 @@
+---
+layout: default
+title: Lists and List Adapters
+---
+
+When we work with lists in Android, we first create a model to hold the data we want to display:
+{% highlight java %}
+public class Message {
+    public final String user, text;
+
+    public Message(String user, String text) {
+        this.user = user;
+        this.text = text;
+    }
+}
+{% endhighlight %}
+Then, we create a layout xml file used for each message in the list. We place this file in
+<code>res/layout/item_message.xml</code>.
+
+{% highlight xml %}
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User" />
+    <TextView
+        android:id="@+id/tvText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Message" />
+
+</LinearLayout>
+{% endhighlight %}
+We use an <code>ArrayAdapter</code> supply the <code>ListView</code> with messages and render a View for each message. <code>View getView(int position, View convertView, ViewGroup parent)</code> will be invoked for each position in the list, fetching the view for that position. The "ViewHolder pattern" is used to cache layout elements to increase performance.
+
+{% highlight java %}
+public class MessagesAdapter extends ArrayAdapter<Message> {
+    private static class ViewHolder {
+        TextView user, text;
+    }
+    public MessagesAdapter(Context context, List<Message> messages) {
+        super(context, R.layout.item_message, messages);
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        Message message = getItem(position);
+        ViewHolder viewHolder;
+        // Check if we are reusing a view
+        // If not, inflate layout
+        if (convertView == null) {
+            viewHolder = new ViewHolder();
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            convertView = inflater.inflate(R.layout.item_message, parent, false);
+            viewHolder.user = (TextView) convertView.findViewById(R.id.tvUser);
+            viewHolder.text = (TextView) convertView.findViewById(R.id.tvText);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+        viewHolder.user.setText(message.user);
+        viewHolder.text.setText(message.text);
+        return convertView;
+    }
+}
+{% endhighlight %}
+In the activity that displays the list, we get the <code>ListView</code> from the activity layout using the id <code>R.id.lvMessages</code> and set it to use our adapter. All changes made to the messages list via the adapter will now be reflected in the GUI.
+
+{% highlight java %}
+ArrayList<Message> messages = new ArrayList<Message>();
+MessageAdapter adapter = new MessageAdapter(this, messages);
+ListView listView = (ListView) findViewById(R.id.lvMessages);
+listView.setAdapter(adapter);
+{% endhighlight %}
