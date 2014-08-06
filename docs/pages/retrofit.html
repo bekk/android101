@@ -1,0 +1,37 @@
+---
+layout: default
+title: Consume REST APIs with Retrofit
+---
+Retrofit is a third-party library by Square for communicating with REST APIs over HTTP. Similarly to <code>AsyncTasks</code>, work is done in a background thread, and upon completion it returns the result to the main UI thread. 
+
+To use Retrofit, declare a service using a simple interface using annotations. Then, use the built-in RestAdapter to create an object which can be used for REST calls. When Retrofit returns the result of the network call to the main UI thread, it automatically maps JSON to Java domain objects when using getters and setters with the same name as the JSON object keys.
+
+As Retrofit handles the communication between the main UI thread and a background thread, in addition to JSON parsing, it can greatly simply the workflow by reducing the amount of overhead.
+
+<br/>
+<p>Below is an example of the <code>MessageService.java</code> interface.</p>
+
+{% highlight java %}
+public interface MessageService {
+    @GET("/messages")
+    List<Message> listMessages();
+
+    @GET("/messages/{id}")
+    List<Message> getMessage(@Path("id") String id);
+
+    @POST("/message")
+    void send(@Body Message message);
+}
+{% endhighlight %}
+
+Usage in an activity that displays the messages:
+
+{% highlight java %}
+RestAdapter restAdapter = new RestAdapter.Builder()
+                    .setEndpoint("https://messages.com")
+                    .build();
+MessageService msgs = restAdapter.create(MessageService.class);
+List<Message> messages = msgs.listMessages();
+Message message = msgs.getMessage("123");
+{% endhighlight %}
+
