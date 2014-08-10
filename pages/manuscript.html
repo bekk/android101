@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="nb">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Manuscript</title>
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="/android101/css/syntax.css">
+        <link href="/android101/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" href="/android101/css/main.css">
+        <script src="/android101/js/jquery.min.js"></script>
+        <script src="/android101/js/bootstrap.min.js"></script>
+
+    </head>
+    <body>
+      <div class="container-fluid main">
+        <div class="row-fluid">
+          <div class="span8">
+            <h1 class="page-header">Manuscript</h1>
+            <h3>Introduction</h3>
+In this session we will create an app where the user can search for a Spotify track, and play the found track on a device.
+
+<h3>Open Android Studio</h3>
+1. Open Android Studio, create an empty project and add classes for network communication. We use the Apache HTTP client. Skip live coding this part.
+2. Add Gradle dependencies
+
+<h3> Set up the application</h3>
+<ul>
+    <li>Explain Activities (<a href="pages/android-app-structure-and-components.html"> App Structure And Components</a>)</li>
+    <li>Explain the Android Manifest</li>
+    <li>Explain layouts and layout controls ([Common view controls](Common-view-controls))</li>
+    <li>Explain the UI builder</li>
+</ul>
+
+<ol>
+    <li>Create the MainActivity and the ResultActivity for the Spotify app. MainActivity will display an input text field and a button. ResultActivity will display a list containing the search results. Add entries to the Android Manifest</li>
+    <li>Create the layout files and controls for the activites.</li>
+    <li>Create the button listener and start the ResultActivity from the MainActivity using Intents.</li>
+</ol>
+
+<h3> Create domain objects</h3>
+Create the Track domain object
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@JsonIgnoreProperties</span><span class="o">(</span><span class="n">ignoreUnknown</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Track</span> <span class="o">{</span>
+<span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+<span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Artist</span><span class="o">&gt;</span> <span class="n">artists</span><span class="o">;</span>
+<span class="kd">private</span> <span class="n">String</span> <span class="n">href</span><span class="o">;</span>
+
+<span class="c1">// Jackson needs an empty constructor</span>
+<span class="kd">public</span> <span class="nf">Track</span><span class="o">()</span> <span class="o">{</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="nf">Track</span><span class="o">(</span><span class="n">Parcel</span> <span class="n">in</span><span class="o">)</span> <span class="o">{</span>
+<span class="n">name</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">readString</span><span class="o">();</span>
+<span class="n">href</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">readString</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="n">String</span> <span class="nf">getHref</span><span class="o">()</span> <span class="o">{</span>
+<span class="k">return</span> <span class="n">href</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setHref</span><span class="o">(</span><span class="n">String</span> <span class="n">href</span><span class="o">)</span> <span class="o">{</span>
+<span class="k">this</span><span class="o">.</span><span class="na">href</span> <span class="o">=</span> <span class="n">href</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Artist</span><span class="o">&gt;</span> <span class="nf">getArtists</span><span class="o">()</span> <span class="o">{</span>
+<span class="k">return</span> <span class="n">artists</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setArtists</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Artist</span><span class="o">&gt;</span> <span class="n">artists</span><span class="o">)</span> <span class="o">{</span>
+<span class="k">this</span><span class="o">.</span><span class="na">artists</span> <span class="o">=</span> <span class="n">artists</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+<span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+Create the Artist domain object
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@JsonIgnoreProperties</span><span class="o">(</span><span class="n">ignoreUnknown</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Artist</span> <span class="o">{</span>
+<span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+
+<span class="c1">// Jackson needs an empty constructor</span>
+<span class="kd">public</span> <span class="nf">Artist</span><span class="o">()</span> <span class="o">{</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="nf">Artist</span><span class="o">(</span><span class="n">Parcel</span> <span class="n">in</span><span class="o">)</span> <span class="o">{</span>
+<span class="n">name</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">readString</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+<span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<h3>Use the Spotify Api</h3>
+* Explain AsyncTasks ([Working in the background](Working-in-the-background))
+* Explain ListAdapters ([Lists and ListAdapters](Lists-and-ListAdapters))
+
+1. Create the TrackSearchResult object, which will contain a list of tracks
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@JsonIgnoreProperties</span><span class="o">(</span><span class="n">ignoreUnknown</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TrackSearchResult</span> <span class="o">{</span>
+
+<span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="nf">getTracks</span><span class="o">()</span> <span class="o">{</span>
+<span class="k">return</span> <span class="n">tracks</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setTracks</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">)</span> <span class="o">{</span>
+<span class="k">this</span><span class="o">.</span><span class="na">tracks</span> <span class="o">=</span> <span class="n">tracks</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+2. Create an AsyncTask for performing the web request
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">class</span> <span class="nc">TrackSearchAsyncTask</span> <span class="kd">extends</span> <span class="n">AsyncTask</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Void</span><span class="o">,</span> <span class="n">TrackSearchResult</span><span class="o">&gt;</span> <span class="o">{</span>
+<span class="kd">private</span> <span class="n">SearchService</span> <span class="n">searchService</span><span class="o">;</span>
+
+<span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onPreExecute</span><span class="o">()</span> <span class="o">{</span>
+<span class="n">searchService</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">SearchService</span><span class="o">();</span>
+<span class="kd">super</span><span class="o">.</span><span class="na">onPreExecute</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="n">TrackSearchResult</span> <span class="nf">doInBackground</span><span class="o">(</span><span class="n">String</span> <span class="o">...</span><span class="na">params</span><span class="o">)</span> <span class="o">{</span>
+<span class="c1">// Perform search for tracks in Spotify</span>
+<span class="k">return</span> <span class="n">searchService</span><span class="o">.</span><span class="na">searchForTrack</span><span class="o">(</span><span class="n">params</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+<span class="o">}</span>
+
+<span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onPostExecute</span><span class="o">(</span><span class="n">TrackSearchResult</span> <span class="n">result</span><span class="o">)</span> <span class="o">{</span>
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;();</span>
+<span class="n">tracks</span><span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">getTracks</span><span class="o">());</span>
+
+<span class="c1">// Start result activity which displays the result.</span>
+<span class="n">Intent</span> <span class="n">resultActivity</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">getApplicationContext</span><span class="o">(),</span> <span class="n">ResultActivity</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="c1">// Add the search result as a String</span>
+<span class="n">ObjectMapper</span> <span class="n">mapper</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ObjectMapper</span><span class="o">();</span>
+<span class="k">try</span> <span class="o">{</span>
+<span class="n">String</span> <span class="n">listAsString</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="na">writeValueAsString</span><span class="o">(</span><span class="n">tracks</span><span class="o">);</span>
+<span class="n">resultActivity</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="s">&quot;tracks&quot;</span><span class="o">,</span> <span class="n">listAsString</span><span class="o">);</span>
+<span class="n">startActivity</span><span class="o">(</span><span class="n">resultActivity</span><span class="o">);</span>
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">JsonProcessingException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+<span class="c1">// Do nothing</span>
+<span class="o">}</span>
+<span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+## Finish up the app
+1. Create list adapter for displaying the search results
+``` java
+
+ublic class TrackAdapter extends ArrayAdapter {
+
+private LayoutInflater inflater;
+
+public TrackAdapter(Context context, int resource, List<Track> tracks) {
+super(context, resource, tracks);
+
+inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+}
+
+@Override
+public View getView(int position, View convertView, ViewGroup parent) {
+View view = convertView == null ? inflater.inflate(R.layout.result_list_item, null) : convertView;
+// Get the track information
+Track track = (Track) getItem(position);
+String name = track.getName();
+Artist artist = track.getArtists().get(0);
+
+// Bind UI elements
+TextView songTextView = (TextView) view.findViewById(R.id.song_text);
+TextView artistTextView = (TextView) view.findViewById(R.id.artist_text);
+
+// Update values
+songTextView.setText(name);
+artistTextView.setText(artist.getName());
+
+return view;
+}
+}
+
+```
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+xmlns:android="http://schemas.android.com/apk/res/android">
+
+<RelativeLayout
+android:layout_width="fill_parent"
+android:layout_height="wrap_content">
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:textAppearance="?android:attr/textAppearanceLarge"
+android:text="Midnatt"
+android:id="@+id/song_text"/>
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:textAppearance="?android:attr/textAppearanceMedium"
+android:text="Oslo ess"
+android:id="@+id/artist_text"
+android:layout_below="@id/song_text"
+/>
+</RelativeLayout>
+</LinearLayout>
+```
+2. Create the ResultActivity with a list item listener that will start the Spotify application and play the chosen song
+``` java
+public class ResultActivity extends ListActivity {
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState);
+setContentView(R.layout.activity_result);
+
+try {
+// Get the track list from the MainActivity
+Bundle data = getIntent().getExtras();
+ObjectMapper mapper = new ObjectMapper();
+List<Track> tracks = Arrays.asList(mapper.readValue(data.getString("tracks"), Track[].class));
+
+setListAdapter(new TrackAdapter(this, R.layout.result_list_item, tracks));
+} catch (IOException e) {
+// Do nothing
+}
+}
+
+@Override
+protected void onListItemClick(ListView l, View v, int position, long id) {
+// Get the clicked track
+Track track = (Track) getListAdapter().getItem(position);
+// Start playback in Spotify
+Intent appPlayBackIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(track.getHref()));
+// Verify that the device has Spotify and can play the track
+if (appPlayBackIntent.resolveActivity(getPackageManager()) != null) {
+startActivity(appPlayBackIntent);
+}
+else {
+// Open play store so that the user can download Spotify
+String packageName = "com.spotify.mobile.android.ui";
+try {
+startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
+}
+catch (android.content.ActivityNotFoundException anfe) {
+startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + packageName)));
+}
+}
+}
+}
+```
+``` xml
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:paddingLeft="@dimen/activity_horizontal_margin"
+android:paddingRight="@dimen/activity_horizontal_margin"
+android:paddingTop="@dimen/activity_vertical_margin"
+android:paddingBottom="@dimen/activity_vertical_margin"
+android:background="@color/dark_gray"
+tools:context="no.bekk.spotifyapieksempel.ResultActivity">
+
+<ListView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:id="@android:id/list"/>
+</RelativeLayout>
+
+```
+
+
+          </div>
+          <nav class="span4">
+            <strong>Android Studio</strong>
+            
+<ul class="nav nav-pills nav-stacked">
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  
+</ul>
+
+            <strong>Android</strong>
+            
+<ul class="nav nav-pills nav-stacked">
+
+  
+
+  
+    
+  
+
+  
+    
+      <li class=""><a href="/android101/pages/android-app-structure-and-components.html">App Structure and Components</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/view-layout.html">View Layout</a></li>
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/common-view-controls.html">Common View Controls</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/list-list-adapters.html">Lists and List Adapters</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  
+</ul>
+            
+            <strong>Network Communication</strong>
+            
+<ul class="nav nav-pills nav-stacked">
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/working-in-the-background.html">Working In the Background</a></li>
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/retrofit.html">Consume REST APIs with Retrofit</a></li>
+    
+  
+    
+  
+    
+  
+
+  
+</ul>
+
+            <strong>Resources</strong>
+            
+<ul class="nav nav-pills nav-stacked">
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/assignments.html">Assignments</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/prerequisites.html">Prerequisites</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class="active"><a href="/android101/pages/manuscript.html">Manuscript</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  
+</ul>
+          </nav>
+        </div>
+      </div>
+
+    </body>
+</html>

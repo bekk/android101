@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="nb">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>View Layout</title>
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="/android101/css/syntax.css">
+        <link href="/android101/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" href="/android101/css/main.css">
+        <script src="/android101/js/jquery.min.js"></script>
+        <script src="/android101/js/bootstrap.min.js"></script>
+
+    </head>
+    <body>
+      <div class="container-fluid main">
+        <div class="row-fluid">
+          <div class="span8">
+            <h1 class="page-header">View Layout</h1>
+            View layouts are used to control positioning and grouping of other child view controls. Think of them as div's in HTML. The most used ones are <b>LinearLayout</b>, <b>FrameLayout</b> and <b>RelativeLayout</b>.
+
+### LinearLayout
+
+All subviews of a LinearLayout are positioned after each other either horizontally or vertically, controlled by the layout attribute <code>android:orientation</code>. <a href="http://developer.android.com/guide/topics/ui/layout/linear.html">LinearLayout docs</a>.
+
+Common attributes used in a LinearLayout:
+<ul>
+    <li><code>android:gravity</code>: Controls alignment (similar to text-align in CSS).</li>
+    <li> <code>android:layout_gravity</code>: Controls alignment in relation to the parent container (similar to float in CSS).</li>
+    <li> <code>android:layout_weight</code>: Controls how much space a view takes up in the layout. A higher weight means the view will take up more space. Different combinations of layout_width, layout_height and layout_weight can e.g. be used to make all the subviews take up equal space.</li>
+</ul>
+
+Example LinearLayout:
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+<span class="c">&lt;!-- Parent linear layout with vertical orientation --&gt;</span>
+<span class="nt">&lt;LinearLayout</span>
+<span class="na">xmlns:android=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+<span class="na">android:orientation=</span><span class="s">&quot;vertical&quot;</span>
+<span class="na">android:layout_width=</span><span class="s">&quot;match_parent&quot;</span>
+<span class="na">android:layout_height=</span><span class="s">&quot;match_parent&quot;</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;TextView</span> <span class="na">android:layout_width=</span><span class="s">&quot;fill_parent&quot;</span> <span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>
+<span class="na">android:text=</span><span class="s">&quot;Email:&quot;</span> <span class="na">android:padding=</span><span class="s">&quot;5dp&quot;</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;EditText</span> <span class="na">android:layout_width=</span><span class="s">&quot;fill_parent&quot;</span> <span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>
+<span class="na">android:layout_marginBottom=</span><span class="s">&quot;10dp&quot;</span><span class="nt">/&gt;</span>            
+<span class="nt">&lt;/LinearLayout&gt;</span></code></pre></div>
+
+<h3>RelativeLayout</h3>
+
+In a RelativeLayout views are positioned and aligned relative to other views or the parent container. This is controlled via directional attributes:
+
+<ul>
+    <li> Position based on siblings: layout_above, layout_below, layout_toLeftOf, layout_toRightOf</li>
+    <li>Position based on parent: layout_alignParentTop, layout_alignParentBottom, layout_alignParentLeft, layout_alignParentRight, android:layout_centerHorizontal, android:layout_centerVertical</li>
+    <li>Alignment based on siblings: layout_alignTop, layout_alignBottom, layout_alignLeft, layout_alignRight, layout_alignBaseline</li>
+</ul>
+Example RelativeLayout:
+
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+<span class="nt">&lt;RelativeLayout</span> <span class="na">xmlns:android=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+<span class="na">android:layout_width=</span><span class="s">&quot;fill_parent&quot;</span>
+<span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;TextView</span> <span class="na">android:id=</span><span class="s">&quot;@+id/label&quot;</span> <span class="na">android:layout_width=</span><span class="s">&quot;fill_parent&quot;</span>
+<span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span> <span class="na">android:text=</span><span class="s">&quot;Email&quot;</span> <span class="nt">/&gt;</span>
+
+<span class="nt">&lt;EditText</span> <span class="na">android:id=</span><span class="s">&quot;@+id/inputEmail&quot;</span> <span class="na">android:layout_width=</span><span class="s">&quot;fill_parent&quot;</span>
+<span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span> <span class="na">android:layout_below=</span><span class="s">&quot;@id/label&quot;</span> <span class="nt">/&gt;</span>
+
+<span class="nt">&lt;Button</span> <span class="na">android:id=</span><span class="s">&quot;@+id/btnLogin&quot;</span> <span class="na">android:layout_width=</span><span class="s">&quot;wrap_content&quot;</span>
+<span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span> <span class="na">android:layout_below=</span><span class="s">&quot;@id/inputEmail&quot;</span>
+<span class="na">android:layout_alignParentLeft=</span><span class="s">&quot;true&quot;</span> <span class="na">android:layout_marginRight=</span><span class="s">&quot;5dp&quot;</span>
+<span class="na">android:text=</span><span class="s">&quot;Login&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/RelativeLayout&gt;</span></code></pre></div>
+
+<h3>FrameLayout</h3>
+
+The FrameLayout is useful for drawing views on top of each other. The views are drawn in the order they appear in the layout XML. <code>android:layout_gravity</code> can be used to position the views. Use margins and paddings as you see fit.
+
+Example FrameLayout:
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;FrameLayout</span>
+<span class="na">android:id=</span><span class="s">&quot;@+id/frame_layout&quot;</span>
+<span class="na">android:layout_width=</span><span class="s">&quot;match_parent&quot;</span>
+<span class="na">android:layout_height=</span><span class="s">&quot;match_parent&quot;</span><span class="nt">&gt;</span>
+<span class="c">&lt;!-- Child1 is drawn first --&gt;</span>
+<span class="nt">&lt;ImageView</span>
+<span class="na">android:id=</span><span class="s">&quot;@+id/child1&quot;</span>
+<span class="na">android:layout_width=</span><span class="s">&quot;match_parent&quot;</span>
+<span class="na">android:layout_height=</span><span class="s">&quot;match_parent&quot;</span>
+<span class="na">android:contentDescription=</span><span class="s">&quot;Image&quot;</span>
+<span class="na">android:src=</span><span class="s">&quot;@drawable/icon&quot;</span> <span class="nt">/&gt;</span>
+<span class="c">&lt;!-- Child2 is drawn over Child1 --&gt;</span>
+<span class="nt">&lt;TextView</span>
+<span class="na">android:id=</span><span class="s">&quot;@+id/child2&quot;</span>
+<span class="na">android:layout_width=</span><span class="s">&quot;wrap_content&quot;</span>
+<span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>
+<span class="na">android:text=</span><span class="s">&quot;Child 2&quot;</span>
+<span class="na">android:layout_gravity=</span><span class="s">&quot;top|left&quot;</span> <span class="nt">/&gt;</span>
+<span class="c">&lt;!-- Child3 is drawn over Child1 and Child2 --&gt;</span>
+<span class="nt">&lt;TextView</span>
+<span class="na">android:id=</span><span class="s">&quot;@+id/child3&quot;</span>
+<span class="na">android:layout_width=</span><span class="s">&quot;wrap_content&quot;</span>
+<span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>
+<span class="na">android:text=</span><span class="s">&quot;Child 3&quot;</span>
+<span class="na">android:layout_gravity=</span><span class="s">&quot;top|right&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/FrameLayout&gt;</span></code></pre></div>
+
+          </div>
+          <nav class="span4">
+            <strong>Android Studio</strong>
+            
+<ul class="nav nav-pills nav-stacked">
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  
+</ul>
+
+            <strong>Android</strong>
+            
+<ul class="nav nav-pills nav-stacked">
+
+  
+
+  
+    
+  
+
+  
+    
+      <li class=""><a href="/android101/pages/android-app-structure-and-components.html">App Structure and Components</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class="active"><a href="/android101/pages/view-layout.html">View Layout</a></li>
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/common-view-controls.html">Common View Controls</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/list-list-adapters.html">Lists and List Adapters</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  
+</ul>
+            
+            <strong>Network Communication</strong>
+            
+<ul class="nav nav-pills nav-stacked">
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/working-in-the-background.html">Working In the Background</a></li>
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/retrofit.html">Consume REST APIs with Retrofit</a></li>
+    
+  
+    
+  
+    
+  
+
+  
+</ul>
+
+            <strong>Resources</strong>
+            
+<ul class="nav nav-pills nav-stacked">
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/assignments.html">Assignments</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/prerequisites.html">Prerequisites</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/manuscript.html">Manuscript</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  
+</ul>
+          </nav>
+        </div>
+      </div>
+
+    </body>
+</html>

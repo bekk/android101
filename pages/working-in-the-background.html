@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="nb">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Working In the Background</title>
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="/android101/css/syntax.css">
+        <link href="/android101/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" href="/android101/css/main.css">
+        <script src="/android101/js/jquery.min.js"></script>
+        <script src="/android101/js/bootstrap.min.js"></script>
+
+    </head>
+    <body>
+      <div class="container-fluid main">
+        <div class="row-fluid">
+          <div class="span8">
+            <h1 class="page-header">Working In the Background</h1>
+            Network calls and heavy operations cannot be performed in the main UI thread, as they will make the application unresponsive. These have to be executed in a background thread, and one of the mechanisms to achieve this is called AsyncTask. AsyncTask is an Android component for handling thread creation and execution and is well suitable for tasks such as communication with REST APIs. Alternatives to AsyncTask can be to use Threads, Runnables or third-party frameworks such as Retrofit (<a href="pages/retrofit">Consume REST APIs with Retrofit</a>).
+
+The code snippet below shows how to create an AsyncTask for searching for a Spotify track. The TrackSearchAsyncTask is created by extending AsyncTask and using three parameters:
+<ul>
+    <li><code>AsyncTask<Params, Progress, Result></code></li>
+    <li><code>Params</code> - the input value to the execute() method, in this case a String value for song name.</li>
+    <li><code>Progress</code> - a value that can be used to update progress. In this case a Void value.</li>
+    <li><code>Result</code> - The result returned to the main UI thread, in this case a TrackSearchResult with the found songs.</li>
+</ul>
+
+
+TrackSearchAsyncTask overrides three methods:
+<ul>
+<li><code> onPreExecute</code> - runs in the main UI thread. Used for setup of the SearchService.</li>
+<li><code>doInBackground</code> - runs in a background thread, and performs the search for tracks.</li>
+<li><code>onPostExecute</code> - runs in the main UI thread. Gets the result from doInBackground and sends these to a new activity</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">class</span> <span class="nc">TrackSearchAsyncTask</span> <span class="kd">extends</span> <span class="n">AsyncTask</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Void</span><span class="o">,</span> <span class="n">TrackSearchResult</span><span class="o">&gt;</span> <span class="o">{</span>
+<span class="kd">private</span> <span class="n">SearchService</span> <span class="n">searchService</span><span class="o">;</span>
+
+<span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onPreExecute</span><span class="o">()</span> <span class="o">{</span>
+<span class="kd">super</span><span class="o">.</span><span class="na">onPreExecute</span><span class="o">();</span>
+<span class="n">searchService</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">SearchService</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="n">TrackSearchResult</span> <span class="nf">doInBackground</span><span class="o">(</span><span class="n">String</span> <span class="o">...</span><span class="na">params</span><span class="o">)</span> <span class="o">{</span>
+<span class="c1">// Perform search for tracks in Spotify</span>
+<span class="k">return</span> <span class="n">searchService</span><span class="o">.</span><span class="na">searchForTrack</span><span class="o">(</span><span class="n">params</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+<span class="o">}</span>
+
+<span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onPostExecute</span><span class="o">(</span><span class="n">TrackSearchResult</span> <span class="n">result</span><span class="o">)</span> <span class="o">{</span>
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;();</span>
+<span class="n">tracks</span><span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">getTracks</span><span class="o">());</span>
+
+<span class="c1">// Start result activity which displays the result.</span>
+<span class="n">Intent</span> <span class="n">resultActivity</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">getApplicationContext</span><span class="o">(),</span> <span class="n">ResultActivity</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="c1">// Add the search result as a parcelable extra</span>
+<span class="n">resultActivity</span><span class="o">.</span><span class="na">putParcelableArrayListExtra</span><span class="o">(</span><span class="s">&quot;tracks&quot;</span><span class="o">,</span> <span class="n">tracks</span><span class="o">);</span>
+<span class="n">startActivity</span><span class="o">(</span><span class="n">resultActivity</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+          </div>
+          <nav class="span4">
+            <strong>Android Studio</strong>
+            
+<ul class="nav nav-pills nav-stacked">
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  
+</ul>
+
+            <strong>Android</strong>
+            
+<ul class="nav nav-pills nav-stacked">
+
+  
+
+  
+    
+  
+
+  
+    
+      <li class=""><a href="/android101/pages/android-app-structure-and-components.html">App Structure and Components</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/view-layout.html">View Layout</a></li>
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/common-view-controls.html">Common View Controls</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/list-list-adapters.html">Lists and List Adapters</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  
+</ul>
+            
+            <strong>Network Communication</strong>
+            
+<ul class="nav nav-pills nav-stacked">
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class="active"><a href="/android101/pages/working-in-the-background.html">Working In the Background</a></li>
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/retrofit.html">Consume REST APIs with Retrofit</a></li>
+    
+  
+    
+  
+    
+  
+
+  
+</ul>
+
+            <strong>Resources</strong>
+            
+<ul class="nav nav-pills nav-stacked">
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/assignments.html">Assignments</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/prerequisites.html">Prerequisites</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+  
+
+  
+    
+  
+
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <li class=""><a href="/android101/pages/manuscript.html">Manuscript</a></li>
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+  
+</ul>
+          </nav>
+        </div>
+      </div>
+
+    </body>
+</html>
