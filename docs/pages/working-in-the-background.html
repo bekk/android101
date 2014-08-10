@@ -1,0 +1,51 @@
+---
+layout: default
+title: Working In the Background
+---
+Network calls and heavy operations cannot be performed in the main UI thread, as they will make the application unresponsive. These have to be executed in a background thread, and one of the mechanisms to achieve this is called AsyncTask. AsyncTask is an Android component for handling thread creation and execution and is well suitable for tasks such as communication with REST APIs. Alternatives to AsyncTask can be to use Threads, Runnables or third-party frameworks such as Retrofit (<a href="pages/retrofit">Consume REST APIs with Retrofit</a>).
+
+The code snippet below shows how to create an AsyncTask for searching for a Spotify track. The TrackSearchAsyncTask is created by extending AsyncTask and using three parameters:
+<ul>
+    <li><code>AsyncTask<Params, Progress, Result></code></li>
+    <li><code>Params</code> - the input value to the execute() method, in this case a String value for song name.</li>
+    <li><code>Progress</code> - a value that can be used to update progress. In this case a Void value.</li>
+    <li><code>Result</code> - The result returned to the main UI thread, in this case a TrackSearchResult with the found songs.</li>
+</ul>
+
+
+TrackSearchAsyncTask overrides three methods:
+<ul>
+<li><code> onPreExecute</code> - runs in the main UI thread. Used for setup of the SearchService.</li>
+<li><code>doInBackground</code> - runs in a background thread, and performs the search for tracks.</li>
+<li><code>onPostExecute</code> - runs in the main UI thread. Gets the result from doInBackground and sends these to a new activity</li>
+</ul>
+
+{% highlight java %}
+private class TrackSearchAsyncTask extends AsyncTask<String, Void, TrackSearchResult> {
+private SearchService searchService;
+
+@Override
+protected void onPreExecute() {
+super.onPreExecute();
+searchService = new SearchService();
+}
+
+@Override
+protected TrackSearchResult doInBackground(String ...params) {
+// Perform search for tracks in Spotify
+return searchService.searchForTrack(params[0]);
+}
+
+@Override
+protected void onPostExecute(TrackSearchResult result) {
+ArrayList<Track> tracks = new ArrayList<Track>();
+tracks.addAll(result.getTracks());
+
+// Start result activity which displays the result.
+Intent resultActivity = new Intent(getApplicationContext(), ResultActivity.class);
+// Add the search result as a parcelable extra
+resultActivity.putParcelableArrayListExtra("tracks", tracks);
+startActivity(resultActivity);
+}
+}
+{% endhighlight %}
