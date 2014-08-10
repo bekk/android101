@@ -1,0 +1,99 @@
+---
+layout: default
+title: App Structure and Components
+---
+View layouts are used to control positioning and grouping of other child view controls. Think of them as div's in HTML. The most used ones are <b>LinearLayout</b>, <b>FrameLayout</b> and <b>RelativeLayout</b>.
+
+### LinearLayout
+
+All subviews of a LinearLayout are positioned after each other either horizontally or vertically, controlled by the layout attribute <code>android:orientation</code>. <a href="http://developer.android.com/guide/topics/ui/layout/linear.html">LinearLayout docs</a>.
+
+Common attributes used in a LinearLayout:
+<ul>
+    <li><code>android:gravity</code>: Controls alignment (similar to text-align in CSS).</li>
+    <li> <code>android:layout_gravity</code>: Controls alignment in relation to the parent container (similar to float in CSS).</li>
+    <li> <code>android:layout_weight</code>: Controls how much space a view takes up in the layout. A higher weight means the view will take up more space. Different combinations of layout_width, layout_height and layout_weight can e.g. be used to make all the subviews take up equal space.</li>
+</ul>
+
+Example LinearLayout:
+{% highlight xml %}
+
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Parent linear layout with vertical orientation -->
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="vertical"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+
+<TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+android:text="Email:" android:padding="5dp"/>
+
+<EditText android:layout_width="fill_parent" android:layout_height="wrap_content"
+android:layout_marginBottom="10dp"/>            
+</LinearLayout>
+{% endhighlight %}
+
+<h3>RelativeLayout</h3>
+
+In a RelativeLayout views are positioned and aligned relative to other views or the parent container. This is controlled via directional attributes:
+
+<ul>
+<li> Position based on siblings: layout_above, layout_below, layout_toLeftOf, layout_toRightOf</li>
+<li>Position based on parent: layout_alignParentTop, layout_alignParentBottom, layout_alignParentLeft, layout_alignParentRight, android:layout_centerHorizontal, android:layout_centerVertical</li>
+<li>Alignment based on siblings: layout_alignTop, layout_alignBottom, layout_alignLeft, layout_alignRight, layout_alignBaseline</li>
+</ul>
+Example RelativeLayout:
+
+{% highlight xml %}
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="fill_parent"
+android:layout_height="wrap_content">
+
+<TextView android:id="@+id/label" android:layout_width="fill_parent"
+android:layout_height="wrap_content" android:text="Email" />
+
+<EditText android:id="@+id/inputEmail" android:layout_width="fill_parent"
+android:layout_height="wrap_content" android:layout_below="@id/label" />
+
+<Button android:id="@+id/btnLogin" android:layout_width="wrap_content"
+android:layout_height="wrap_content" android:layout_below="@id/inputEmail"
+android:layout_alignParentLeft="true" android:layout_marginRight="5dp"
+android:text="Login" />
+</RelativeLayout>
+{% endhighlight %}
+
+<h3>FrameLayout</h3>
+
+The FrameLayout is useful for drawing views on top of each other. The views are drawn in the order they appear in the layout XML. <code>android:layout_gravity</code> can be used to position the views. Use margins and paddings as you see fit.
+
+Example FrameLayout:
+{% highlight xml %}
+<FrameLayout
+android:id="@+id/frame_layout"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+<!-- Child1 is drawn first -->
+<ImageView
+android:id="@+id/child1"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:contentDescription="Image"
+android:src="@drawable/icon" />
+<!-- Child2 is drawn over Child1 -->
+<TextView
+android:id="@+id/child2"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Child 2"
+android:layout_gravity="top|left" />
+<!-- Child3 is drawn over Child1 and Child2 -->
+<TextView
+android:id="@+id/child3"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Child 3"
+android:layout_gravity="top|right" />
+</FrameLayout>
+{% endhighlight %}
