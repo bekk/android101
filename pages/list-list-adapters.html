@@ -18,7 +18,7 @@
         <div class="row-fluid">
           <div class="span8">
             <h1 class="page-header">Lists and List Adapters</h1>
-            When working with lists in Android, we first create a model to hold the data we want to display:
+            When we work with lists in Android, we first create a model to hold the data we want to display:
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Message</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">user</span><span class="o">,</span> <span class="n">text</span><span class="o">;</span>
 
@@ -27,7 +27,7 @@
         <span class="k">this</span><span class="o">.</span><span class="na">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
-Then we create a layout xml file used for each message in the list. We place this file in
+Then, we create a layout xml file used for each message in the list. We place this file in
 <code>res/layout/item_message.xml</code>.
 
 <div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
