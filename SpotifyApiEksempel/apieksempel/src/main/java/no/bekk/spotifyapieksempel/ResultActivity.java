@@ -7,7 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import no.bekk.spotifyapieksempel.adapters.TrackAdapter;
 import no.bekk.spotifyapieksempel.domain.Track;
@@ -20,11 +25,16 @@ public class ResultActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        // Get the track list from the MainActivity
-        Bundle data = getIntent().getExtras();
-        ArrayList<Track> tracks = data.getParcelableArrayList("tracks");
+        try {
+            // Get the track list from the MainActivity
+            Bundle data = getIntent().getExtras();
+            ObjectMapper mapper = new ObjectMapper();
+            List<Track> tracks = Arrays.asList(mapper.readValue(data.getString("tracks"), Track[].class));
 
-        setListAdapter(new TrackAdapter(this, R.layout.result_list_item, tracks));
+            setListAdapter(new TrackAdapter(this, R.layout.result_list_item, tracks));
+        } catch (IOException e) {
+            // Do nothing
+        }
     }
 
     @Override

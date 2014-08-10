@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.util.ArrayList;
 
 import no.bekk.spotifyapieksempel.domain.Track;
@@ -80,9 +83,15 @@ public class MainActivity extends Activity {
 
             // Start result activity which displays the result.
             Intent resultActivity = new Intent(getApplicationContext(), ResultActivity.class);
-            // Add the search result as a parcelable extra
-            resultActivity.putParcelableArrayListExtra("tracks", tracks);
-            startActivity(resultActivity);
+            // Add the search result as a String
+            ObjectMapper mapper = new ObjectMapper();
+            try {
+                String listAsString = mapper.writeValueAsString(tracks);
+                resultActivity.putExtra("tracks", listAsString);
+                startActivity(resultActivity);
+            } catch (JsonProcessingException e) {
+                // Do nothing
+            }
         }
     }
 }
