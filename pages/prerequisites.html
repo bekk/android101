@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Blocks</title>
+        <title>Prerequisites</title>
         <meta name="viewport" content="width=device-width">
 
         <link rel="stylesheet" href="/android101/css/syntax.css">
@@ -17,34 +17,14 @@
       <div class="container-fluid main">
         <div class="row-fluid">
           <div class="span8">
-            <h1 class="page-header">Blocks</h1>
+            <h1 class="page-header">Prerequisites</h1>
             <ol>
-	<li>Minner mye om closures, og brukes ofte for å
-		<ol>
-			<li>kunne kjøre små kodeblokker samtidig</li>
-			<li>iterere over objekter i et array</li>
-			<li>kjøre kode som et callback</li>
-		</ol>
+	<li> Basic or preferably intermediate skills in Java programming (e.g. have used some third-party libraries or frameworks, created something with at least five classes, used an IDE like IntelliJ or Eclipse). But don't worry, you will be able to follow along even if you don't understand everything.</li>
+	<li>PC (Windows or Linux) or Mac with the latest Android Studio installed, <a href="http://developer.android.com/sdk/installing/studio.html"> Download Android Studio</a>
 	</li>
-	<li>Man definerer en block med <code>^{ /*min fine block*/ }</code>
-		<ol>
-			<li>Alt inne i blocken kan lese variabler på utsiden</li>
-			<li>Variabler på utsiden må defineres med <code>__block</code> for å være skrivbare</li>
-		</ol>
-	</li>
+	<li><a href="http://developer.android.com/sdk/index.html?hl=sk"> Install the Android SDK</a></li>
 </ol>
 
-<div class="highlight"><pre><code class="language-objective-c" data-lang="objective-c"><span class="cm">/* En block-definisjon */</span>
-<span class="k">typedef</span> <span class="nf">void</span><span class="p">(</span><span class="o">^</span><span class="n">KURLConnectionSuccessHandler</span><span class="p">)(</span><span class="bp">NSData</span> <span class="o">*</span><span class="n">data</span><span class="p">);</span>
-
-<span class="cm">/* metodedefinisjon med block som input */</span>
-<span class="p">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">startWithSuccessHandler:</span><span class="p">(</span><span class="n">KURLConnectionSuccessHandler</span><span class="p">)</span><span class="nv">successHandler</span><span class="p">;</span>
-
-<span class="cm">/* Kall på metode med block lik block-definisjonen */</span>
-<span class="p">[</span><span class="n">KURLConnection</span> <span class="nl">startWithSuccessHandler</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="bp">NSData</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span>
-<span class="p">{</span>
-	<span class="p">[</span><span class="nb">self</span> <span class="nl">cancelTouch</span><span class="p">:</span><span class="nb">nil</span><span class="p">];</span>
-<span class="p">}];</span></code></pre></div>
 
           </div>
           <nav class="span4">
@@ -64,7 +44,7 @@
     
   
     
-      <li class="active"><a href="/android101/pages/blocks.html">Blocks</a></li>
+      <li class=""><a href="/android101/pages/blocks.html">Blocks</a></li>
     
   
     
@@ -309,7 +289,7 @@
     
   
     
-      <li class=""><a href="/android101/pages/prerequisites.html">Prerequisites</a></li>
+      <li class="active"><a href="/android101/pages/prerequisites.html">Prerequisites</a></li>
     
   
     
