@@ -46,64 +46,55 @@ Create the Track domain object
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@JsonIgnoreProperties</span><span class="o">(</span><span class="n">ignoreUnknown</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Track</span> <span class="o">{</span>
-<span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
-<span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Artist</span><span class="o">&gt;</span> <span class="n">artists</span><span class="o">;</span>
-<span class="kd">private</span> <span class="n">String</span> <span class="n">href</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Artist</span><span class="o">&gt;</span> <span class="n">artists</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">String</span> <span class="n">href</span><span class="o">;</span>
 
-<span class="c1">// Jackson needs an empty constructor</span>
-<span class="kd">public</span> <span class="nf">Track</span><span class="o">()</span> <span class="o">{</span>
-<span class="o">}</span>
+	<span class="c1">// Jackson needs an empty constructor</span>
+	<span class="kd">public</span> <span class="nf">Track</span><span class="o">()</span> <span class="o">{</span>
+	<span class="o">}</span>
 
-<span class="kd">public</span> <span class="nf">Track</span><span class="o">(</span><span class="n">Parcel</span> <span class="n">in</span><span class="o">)</span> <span class="o">{</span>
-<span class="n">name</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">readString</span><span class="o">();</span>
-<span class="n">href</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">readString</span><span class="o">();</span>
-<span class="o">}</span>
+	<span class="kd">public</span> <span class="n">String</span> <span class="nf">getHref</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">href</span><span class="o">;</span>
+	<span class="o">}</span>
 
-<span class="kd">public</span> <span class="n">String</span> <span class="nf">getHref</span><span class="o">()</span> <span class="o">{</span>
-<span class="k">return</span> <span class="n">href</span><span class="o">;</span>
-<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setHref</span><span class="o">(</span><span class="n">String</span> <span class="n">href</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">href</span> <span class="o">=</span> <span class="n">href</span><span class="o">;</span>
+	<span class="o">}</span>
 
-<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setHref</span><span class="o">(</span><span class="n">String</span> <span class="n">href</span><span class="o">)</span> <span class="o">{</span>
-<span class="k">this</span><span class="o">.</span><span class="na">href</span> <span class="o">=</span> <span class="n">href</span><span class="o">;</span>
-<span class="o">}</span>
+	<span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Artist</span><span class="o">&gt;</span> <span class="nf">getArtists</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">artists</span><span class="o">;</span>
+	<span class="o">}</span>
 
-<span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Artist</span><span class="o">&gt;</span> <span class="nf">getArtists</span><span class="o">()</span> <span class="o">{</span>
-<span class="k">return</span> <span class="n">artists</span><span class="o">;</span>
-<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setArtists</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Artist</span><span class="o">&gt;</span> <span class="n">artists</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">artists</span> <span class="o">=</span> <span class="n">artists</span><span class="o">;</span>
+	<span class="o">}</span>
 
-<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setArtists</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Artist</span><span class="o">&gt;</span> <span class="n">artists</span><span class="o">)</span> <span class="o">{</span>
-<span class="k">this</span><span class="o">.</span><span class="na">artists</span> <span class="o">=</span> <span class="n">artists</span><span class="o">;</span>
-<span class="o">}</span>
+	<span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+	<span class="o">}</span>
 
-<span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
-<span class="k">return</span> <span class="n">name</span><span class="o">;</span>
-<span class="o">}</span>
-
-<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
-<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
-<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+	<span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
 Create the Artist domain object
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@JsonIgnoreProperties</span><span class="o">(</span><span class="n">ignoreUnknown</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Artist</span> <span class="o">{</span>
-<span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
 
-<span class="c1">// Jackson needs an empty constructor</span>
-<span class="kd">public</span> <span class="nf">Artist</span><span class="o">()</span> <span class="o">{</span>
-<span class="o">}</span>
+	<span class="c1">// Jackson needs an empty constructor</span>
+	<span class="kd">public</span> <span class="nf">Artist</span><span class="o">()</span> <span class="o">{</span>
+	<span class="o">}</span>
 
-<span class="kd">public</span> <span class="nf">Artist</span><span class="o">(</span><span class="n">Parcel</span> <span class="n">in</span><span class="o">)</span> <span class="o">{</span>
-<span class="n">name</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">readString</span><span class="o">();</span>
-<span class="o">}</span>
+	<span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+	<span class="o">}</span>
 
-<span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
-<span class="k">return</span> <span class="n">name</span><span class="o">;</span>
-<span class="o">}</span>
-
-<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
-<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
-<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+	<span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
 <h3>Use the Spotify Api</h3>
@@ -116,82 +107,82 @@ Create the TrackSearchResult object, which will contain a list of tracks
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@JsonIgnoreProperties</span><span class="o">(</span><span class="n">ignoreUnknown</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">TrackSearchResult</span> <span class="o">{</span>
 
-<span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">;</span>
+	<span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">;</span>
 
-<span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="nf">getTracks</span><span class="o">()</span> <span class="o">{</span>
-<span class="k">return</span> <span class="n">tracks</span><span class="o">;</span>
-<span class="o">}</span>
+	<span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="nf">getTracks</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="n">tracks</span><span class="o">;</span>
+	<span class="o">}</span>
 
-<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setTracks</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">)</span> <span class="o">{</span>
-<span class="k">this</span><span class="o">.</span><span class="na">tracks</span> <span class="o">=</span> <span class="n">tracks</span><span class="o">;</span>
-<span class="o">}</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setTracks</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">tracks</span> <span class="o">=</span> <span class="n">tracks</span><span class="o">;</span>
+	<span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
-Create an AsyncTask for performing the web request
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">class</span> <span class="nc">TrackSearchAsyncTask</span> <span class="kd">extends</span> <span class="n">AsyncTask</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Void</span><span class="o">,</span> <span class="n">TrackSearchResult</span><span class="o">&gt;</span> <span class="o">{</span>
-<span class="kd">private</span> <span class="n">SearchService</span> <span class="n">searchService</span><span class="o">;</span>
+	Create an AsyncTask for performing the web request
+	<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">class</span> <span class="nc">TrackSearchAsyncTask</span> <span class="kd">extends</span> <span class="n">AsyncTask</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Void</span><span class="o">,</span> <span class="n">TrackSearchResult</span><span class="o">&gt;</span> <span class="o">{</span>
+	<span class="kd">private</span> <span class="n">SearchService</span> <span class="n">searchService</span><span class="o">;</span>
 
-<span class="nd">@Override</span>
-<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onPreExecute</span><span class="o">()</span> <span class="o">{</span>
-<span class="n">searchService</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">SearchService</span><span class="o">();</span>
-<span class="kd">super</span><span class="o">.</span><span class="na">onPreExecute</span><span class="o">();</span>
-<span class="o">}</span>
+	<span class="nd">@Override</span>
+	<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onPreExecute</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">searchService</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">SearchService</span><span class="o">();</span>
+		<span class="kd">super</span><span class="o">.</span><span class="na">onPreExecute</span><span class="o">();</span>
+	<span class="o">}</span>
 
-<span class="nd">@Override</span>
-<span class="kd">protected</span> <span class="n">TrackSearchResult</span> <span class="nf">doInBackground</span><span class="o">(</span><span class="n">String</span> <span class="o">...</span><span class="na">params</span><span class="o">)</span> <span class="o">{</span>
-<span class="c1">// Perform search for tracks in Spotify</span>
-<span class="k">return</span> <span class="n">searchService</span><span class="o">.</span><span class="na">searchForTrack</span><span class="o">(</span><span class="n">params</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
-<span class="o">}</span>
+	<span class="nd">@Override</span>
+	<span class="kd">protected</span> <span class="n">TrackSearchResult</span> <span class="nf">doInBackground</span><span class="o">(</span><span class="n">String</span> <span class="o">...</span><span class="na">params</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// Perform search for tracks in Spotify</span>
+		<span class="k">return</span> <span class="n">searchService</span><span class="o">.</span><span class="na">searchForTrack</span><span class="o">(</span><span class="n">params</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+	<span class="o">}</span>
 
-<span class="nd">@Override</span>
-<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onPostExecute</span><span class="o">(</span><span class="n">TrackSearchResult</span> <span class="n">result</span><span class="o">)</span> <span class="o">{</span>
-<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;();</span>
-<span class="n">tracks</span><span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">getTracks</span><span class="o">());</span>
+	<span class="nd">@Override</span>
+	<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onPostExecute</span><span class="o">(</span><span class="n">TrackSearchResult</span> <span class="n">result</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;();</span>
+		<span class="n">tracks</span><span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">getTracks</span><span class="o">());</span>
 
-<span class="c1">// Start result activity which displays the result.</span>
-<span class="n">Intent</span> <span class="n">resultActivity</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">getApplicationContext</span><span class="o">(),</span> <span class="n">ResultActivity</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-<span class="c1">// Add the search result as a String</span>
-<span class="n">ObjectMapper</span> <span class="n">mapper</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ObjectMapper</span><span class="o">();</span>
-<span class="k">try</span> <span class="o">{</span>
-<span class="n">String</span> <span class="n">listAsString</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="na">writeValueAsString</span><span class="o">(</span><span class="n">tracks</span><span class="o">);</span>
-<span class="n">resultActivity</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="s">&quot;tracks&quot;</span><span class="o">,</span> <span class="n">listAsString</span><span class="o">);</span>
-<span class="n">startActivity</span><span class="o">(</span><span class="n">resultActivity</span><span class="o">);</span>
-<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">JsonProcessingException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-<span class="c1">// Do nothing</span>
-<span class="o">}</span>
-<span class="o">}</span>
+		<span class="c1">// Start result activity which displays the result.</span>
+		<span class="n">Intent</span> <span class="n">resultActivity</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">getApplicationContext</span><span class="o">(),</span> <span class="n">ResultActivity</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+		<span class="c1">// Add the search result as a String</span>
+		<span class="n">ObjectMapper</span> <span class="n">mapper</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ObjectMapper</span><span class="o">();</span>
+		<span class="k">try</span> <span class="o">{</span>
+		<span class="n">String</span> <span class="n">listAsString</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="na">writeValueAsString</span><span class="o">(</span><span class="n">tracks</span><span class="o">);</span>
+		<span class="n">resultActivity</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="s">&quot;tracks&quot;</span><span class="o">,</span> <span class="n">listAsString</span><span class="o">);</span>
+		<span class="n">startActivity</span><span class="o">(</span><span class="n">resultActivity</span><span class="o">);</span>
+		<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">JsonProcessingException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// Do nothing</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
 <h3>Finish up the app</h3>
 Create list adapter for displaying the search results
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">ublic</span> <span class="kd">class</span> <span class="nc">TrackAdapter</span> <span class="kd">extends</span> <span class="n">ArrayAdapter</span> <span class="o">{</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TrackAdapter</span> <span class="kd">extends</span> <span class="n">ArrayAdapter</span> <span class="o">{</span>
+	
+	<span class="kd">private</span> <span class="n">LayoutInflater</span> <span class="n">inflater</span><span class="o">;</span>
 
-<span class="kd">private</span> <span class="n">LayoutInflater</span> <span class="n">inflater</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="nf">TrackAdapter</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="kt">int</span> <span class="n">resource</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kd">super</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">resource</span><span class="o">,</span> <span class="n">tracks</span><span class="o">);</span>
 
-<span class="kd">public</span> <span class="nf">TrackAdapter</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="kt">int</span> <span class="n">resource</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">)</span> <span class="o">{</span>
-<span class="kd">super</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">resource</span><span class="o">,</span> <span class="n">tracks</span><span class="o">);</span>
+		<span class="n">inflater</span> <span class="o">=</span> <span class="o">(</span><span class="n">LayoutInflater</span><span class="o">)</span><span class="n">context</span><span class="o">.</span><span class="na">getSystemService</span><span class="o">(</span><span class="n">Context</span><span class="o">.</span><span class="na">LAYOUT_INFLATER_SERVICE</span><span class="o">);</span>
+	<span class="o">}</span>
 
-<span class="n">inflater</span> <span class="o">=</span> <span class="o">(</span><span class="n">LayoutInflater</span><span class="o">)</span><span class="n">context</span><span class="o">.</span><span class="na">getSystemService</span><span class="o">(</span><span class="n">Context</span><span class="o">.</span><span class="na">LAYOUT_INFLATER_SERVICE</span><span class="o">);</span>
-<span class="o">}</span>
+	<span class="nd">@Override</span>
+	<span class="kd">public</span> <span class="n">View</span> <span class="nf">getView</span><span class="o">(</span><span class="kt">int</span> <span class="n">position</span><span class="o">,</span> <span class="n">View</span> <span class="n">convertView</span><span class="o">,</span> <span class="n">ViewGroup</span> <span class="n">parent</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">View</span> <span class="n">view</span> <span class="o">=</span> <span class="n">convertView</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">?</span> <span class="n">inflater</span><span class="o">.</span><span class="na">inflate</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">result_list_item</span><span class="o">,</span> <span class="kc">null</span><span class="o">)</span> <span class="o">:</span> <span class="n">convertView</span><span class="o">;</span>
+		<span class="c1">// Get the track information</span>
+		<span class="n">Track</span> <span class="n">track</span> <span class="o">=</span> <span class="o">(</span><span class="n">Track</span><span class="o">)</span> <span class="n">getItem</span><span class="o">(</span><span class="n">position</span><span class="o">);</span>
+		<span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">track</span><span class="o">.</span><span class="na">getName</span><span class="o">();</span>
+		<span class="n">Artist</span> <span class="n">artist</span> <span class="o">=</span> <span class="n">track</span><span class="o">.</span><span class="na">getArtists</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
 
-<span class="nd">@Override</span>
-<span class="kd">public</span> <span class="n">View</span> <span class="nf">getView</span><span class="o">(</span><span class="kt">int</span> <span class="n">position</span><span class="o">,</span> <span class="n">View</span> <span class="n">convertView</span><span class="o">,</span> <span class="n">ViewGroup</span> <span class="n">parent</span><span class="o">)</span> <span class="o">{</span>
-<span class="n">View</span> <span class="n">view</span> <span class="o">=</span> <span class="n">convertView</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">?</span> <span class="n">inflater</span><span class="o">.</span><span class="na">inflate</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">result_list_item</span><span class="o">,</span> <span class="kc">null</span><span class="o">)</span> <span class="o">:</span> <span class="n">convertView</span><span class="o">;</span>
-<span class="c1">// Get the track information</span>
-<span class="n">Track</span> <span class="n">track</span> <span class="o">=</span> <span class="o">(</span><span class="n">Track</span><span class="o">)</span> <span class="n">getItem</span><span class="o">(</span><span class="n">position</span><span class="o">);</span>
-<span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">track</span><span class="o">.</span><span class="na">getName</span><span class="o">();</span>
-<span class="n">Artist</span> <span class="n">artist</span> <span class="o">=</span> <span class="n">track</span><span class="o">.</span><span class="na">getArtists</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+		<span class="c1">// Bind UI elements</span>
+		<span class="n">TextView</span> <span class="n">songTextView</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">view</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">song_text</span><span class="o">);</span>
+		<span class="n">TextView</span> <span class="n">artistTextView</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">view</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">artist_text</span><span class="o">);</span>
 
-<span class="c1">// Bind UI elements</span>
-<span class="n">TextView</span> <span class="n">songTextView</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">view</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">song_text</span><span class="o">);</span>
-<span class="n">TextView</span> <span class="n">artistTextView</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">view</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">artist_text</span><span class="o">);</span>
+		<span class="c1">// Update values</span>
+		<span class="n">songTextView</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+		<span class="n">artistTextView</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">artist</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
 
-<span class="c1">// Update values</span>
-<span class="n">songTextView</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
-<span class="n">artistTextView</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">artist</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
-
-<span class="k">return</span> <span class="n">view</span><span class="o">;</span>
-<span class="o">}</span>
+		<span class="k">return</span> <span class="n">view</span><span class="o">;</span>
+	<span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 <div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
 
@@ -223,44 +214,44 @@ Create list adapter for displaying the search results
 Create the ResultActivity with a list item listener that will start the Spotify application and play the chosen song
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ResultActivity</span> <span class="kd">extends</span> <span class="n">ListActivity</span> <span class="o">{</span>
 
-<span class="nd">@Override</span>
-<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
-<span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">);</span>
-<span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">activity_result</span><span class="o">);</span>
+	<span class="nd">@Override</span>
+	<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">);</span>
+		<span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">activity_result</span><span class="o">);</span>
 
-<span class="k">try</span> <span class="o">{</span>
-<span class="c1">// Get the track list from the MainActivity</span>
-<span class="n">Bundle</span> <span class="n">data</span> <span class="o">=</span> <span class="n">getIntent</span><span class="o">().</span><span class="na">getExtras</span><span class="o">();</span>
-<span class="n">ObjectMapper</span> <span class="n">mapper</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ObjectMapper</span><span class="o">();</span>
-<span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span> <span class="o">=</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="n">mapper</span><span class="o">.</span><span class="na">readValue</span><span class="o">(</span><span class="n">data</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&quot;tracks&quot;</span><span class="o">),</span> <span class="n">Track</span><span class="o">[].</span><span class="na">class</span><span class="o">));</span>
+		<span class="k">try</span> <span class="o">{</span>
+		<span class="c1">// Get the track list from the MainActivity</span>
+		<span class="n">Bundle</span> <span class="n">data</span> <span class="o">=</span> <span class="n">getIntent</span><span class="o">().</span><span class="na">getExtras</span><span class="o">();</span>
+		<span class="n">ObjectMapper</span> <span class="n">mapper</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ObjectMapper</span><span class="o">();</span>
+		<span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span> <span class="o">=</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="n">mapper</span><span class="o">.</span><span class="na">readValue</span><span class="o">(</span><span class="n">data</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&quot;tracks&quot;</span><span class="o">),</span> <span class="n">Track</span><span class="o">[].</span><span class="na">class</span><span class="o">));</span>
 
-<span class="n">setListAdapter</span><span class="o">(</span><span class="k">new</span> <span class="nf">TrackAdapter</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">result_list_item</span><span class="o">,</span> <span class="n">tracks</span><span class="o">));</span>
-<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-<span class="c1">// Do nothing</span>
-<span class="o">}</span>
-<span class="o">}</span>
+		<span class="n">setListAdapter</span><span class="o">(</span><span class="k">new</span> <span class="nf">TrackAdapter</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">result_list_item</span><span class="o">,</span> <span class="n">tracks</span><span class="o">));</span>
+		<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="c1">// Do nothing</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
 
-<span class="nd">@Override</span>
-<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onListItemClick</span><span class="o">(</span><span class="n">ListView</span> <span class="n">l</span><span class="o">,</span> <span class="n">View</span> <span class="n">v</span><span class="o">,</span> <span class="kt">int</span> <span class="n">position</span><span class="o">,</span> <span class="kt">long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
-<span class="c1">// Get the clicked track</span>
-<span class="n">Track</span> <span class="n">track</span> <span class="o">=</span> <span class="o">(</span><span class="n">Track</span><span class="o">)</span> <span class="n">getListAdapter</span><span class="o">().</span><span class="na">getItem</span><span class="o">(</span><span class="n">position</span><span class="o">);</span>
-<span class="c1">// Start playback in Spotify</span>
-<span class="n">Intent</span> <span class="n">appPlayBackIntent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_VIEW</span><span class="o">,</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">track</span><span class="o">.</span><span class="na">getHref</span><span class="o">()));</span>
-<span class="c1">// Verify that the device has Spotify and can play the track</span>
-<span class="k">if</span> <span class="o">(</span><span class="n">appPlayBackIntent</span><span class="o">.</span><span class="na">resolveActivity</span><span class="o">(</span><span class="n">getPackageManager</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-<span class="n">startActivity</span><span class="o">(</span><span class="n">appPlayBackIntent</span><span class="o">);</span>
-<span class="o">}</span>
-<span class="k">else</span> <span class="o">{</span>
-<span class="c1">// Open play store so that the user can download Spotify</span>
-<span class="n">String</span> <span class="n">packageName</span> <span class="o">=</span> <span class="s">&quot;com.spotify.mobile.android.ui&quot;</span><span class="o">;</span>
-<span class="k">try</span> <span class="o">{</span>
-<span class="n">startActivity</span><span class="o">(</span><span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_VIEW</span><span class="o">,</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;market://details?id=&quot;</span> <span class="o">+</span> <span class="n">packageName</span><span class="o">)));</span>
-<span class="o">}</span>
-<span class="k">catch</span> <span class="o">(</span><span class="n">android</span><span class="o">.</span><span class="na">content</span><span class="o">.</span><span class="na">ActivityNotFoundException</span> <span class="n">anfe</span><span class="o">)</span> <span class="o">{</span>
-<span class="n">startActivity</span><span class="o">(</span><span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_VIEW</span><span class="o">,</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;http://play.google.com/store/apps/details?id=&quot;</span> <span class="o">+</span> <span class="n">packageName</span><span class="o">)));</span>
-<span class="o">}</span>
-<span class="o">}</span>
-<span class="o">}</span>
+	<span class="nd">@Override</span>
+	<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onListItemClick</span><span class="o">(</span><span class="n">ListView</span> <span class="n">l</span><span class="o">,</span> <span class="n">View</span> <span class="n">v</span><span class="o">,</span> <span class="kt">int</span> <span class="n">position</span><span class="o">,</span> <span class="kt">long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// Get the clicked track</span>
+		<span class="n">Track</span> <span class="n">track</span> <span class="o">=</span> <span class="o">(</span><span class="n">Track</span><span class="o">)</span> <span class="n">getListAdapter</span><span class="o">().</span><span class="na">getItem</span><span class="o">(</span><span class="n">position</span><span class="o">);</span>
+		<span class="c1">// Start playback in Spotify</span>
+		<span class="n">Intent</span> <span class="n">appPlayBackIntent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_VIEW</span><span class="o">,</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">track</span><span class="o">.</span><span class="na">getHref</span><span class="o">()));</span>
+		<span class="c1">// Verify that the device has Spotify and can play the track</span>
+		<span class="k">if</span> <span class="o">(</span><span class="n">appPlayBackIntent</span><span class="o">.</span><span class="na">resolveActivity</span><span class="o">(</span><span class="n">getPackageManager</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">startActivity</span><span class="o">(</span><span class="n">appPlayBackIntent</span><span class="o">);</span>
+		<span class="o">}</span>
+		<span class="k">else</span> <span class="o">{</span>
+			<span class="c1">// Open play store so that the user can download Spotify</span>
+			<span class="n">String</span> <span class="n">packageName</span> <span class="o">=</span> <span class="s">&quot;com.spotify.mobile.android.ui&quot;</span><span class="o">;</span>
+			<span class="k">try</span> <span class="o">{</span>
+				<span class="n">startActivity</span><span class="o">(</span><span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_VIEW</span><span class="o">,</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;market://details?id=&quot;</span> <span class="o">+</span> <span class="n">packageName</span><span class="o">)));</span>
+			<span class="o">}</span>
+			<span class="k">catch</span> <span class="o">(</span><span class="n">android</span><span class="o">.</span><span class="na">content</span><span class="o">.</span><span class="na">ActivityNotFoundException</span> <span class="n">anfe</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">startActivity</span><span class="o">(</span><span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_VIEW</span><span class="o">,</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;http://play.google.com/store/apps/details?id=&quot;</span> <span class="o">+</span> <span class="n">packageName</span><span class="o">)));</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="o">&lt;</span><span class="n">RelativeLayout</span> <span class="nl">xmlns:</span><span class="n">android</span><span class="o">=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
 <span class="nl">xmlns:</span><span class="n">tools</span><span class="o">=</span><span class="s">&quot;http://schemas.android.com/tools&quot;</span>
