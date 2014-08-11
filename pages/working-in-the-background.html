@@ -18,7 +18,7 @@
         <div class="row-fluid">
           <div class="span8">
             <h1 class="page-header">Working In the Background</h1>
-            Network calls and heavy operations cannot be performed in the main UI thread, as they will make the application unresponsive. These have to be executed in a background thread, and one of the mechanisms to achieve this is called AsyncTask. AsyncTask is an Android component for handling thread creation and execution and is well suitable for tasks such as communication with REST APIs. Alternatives to AsyncTask can be to use Threads, Runnables or third-party frameworks such as Retrofit (<a href="pages/retrofit">Consume REST APIs with Retrofit</a>).
+            Network calls and heavy operations cannot be performed in the main UI thread, as they will make the application unresponsive. These have to be executed in a background thread, and one of the mechanisms to achieve this is called AsyncTask. AsyncTask is an Android component for handling thread creation and execution and is well suitable for tasks such as communication with REST APIs. Alternatives to AsyncTask can be to use Threads, Runnables or third-party frameworks such as Retrofit (<a href="retrofit">Consume REST APIs with Retrofit</a>).
 
 The code snippet below shows how to create an AsyncTask for searching for a Spotify track. The TrackSearchAsyncTask is created by extending AsyncTask and using three parameters:
 <ul>
