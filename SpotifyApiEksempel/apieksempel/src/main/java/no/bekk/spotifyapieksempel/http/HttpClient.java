@@ -11,16 +11,14 @@ import java.io.InputStreamReader;
 import java.net.URI;
 
 public class HttpClient {
-    private static final String GET_URL = "http://ws.spotify.com/search/1/";
-    private static final String TRACK_SEARCH = GET_URL + "track.json?";
-    private static final String TRACK_SEARCH_QUERY = TRACK_SEARCH + "q=";
+    private static final String TRACK_SEARCH_URL = "http://ws.spotify.com/search/1/track.json?q=";
 
     /*
         Method which uses the built-in Apache HTTP client
      */
     public String getTracks(String trackName) {
         trackName = trackName.replace(" ", "%20");
-        String trackSearchQueryWithArg = TRACK_SEARCH_QUERY + trackName;
+        String trackSearchQueryWithArg = TRACK_SEARCH_URL + trackName;
         DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
         String result = "";
         InputStream data = null;

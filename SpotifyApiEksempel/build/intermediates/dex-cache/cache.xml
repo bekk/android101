@@ -8,12 +8,6 @@
         revision="19.1.0"
         sha1="0527fece4f23a457070a36c371a26d6c0208e1c3"/>
     <item
-        dex="/Users/chris/Dev/Fagting/android101/SpotifyApiEksempel/apieksempel/build/intermediates/pre-dexed/debug/classes-843fe62552ccdba3d5747806410e7d2f299eeb8c.jar"
-        jar="/Users/chris/Dev/Fagting/android101/SpotifyApiEksempel/apieksempel/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
-    <item
         dex="/Users/chris/Dev/Fagting/android101/SpotifyApiEksempel/apieksempel/build/intermediates/pre-dexed/debug/jackson-databind-2.2.3-48a03de68c465103dfb6ea071e768715d90b38aa.jar"
         jar="/Users/chris/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-databind/2.2.3/3ae380888029daefb91d3ecdca3a37d8cb92bc9/jackson-databind-2.2.3.jar"
         jumboMode="false"
@@ -31,5 +25,11 @@
         jumboMode="false"
         revision="19.1.0"
         sha1="1a0113da2cab5f4c216b4e5e7c1dbfaa67087e14"/>
+    <item
+        dex="/Users/chris/Dev/Fagting/android101/SpotifyApiEksempel/apieksempel/build/intermediates/pre-dexed/debug/classes-843fe62552ccdba3d5747806410e7d2f299eeb8c.jar"
+        jar="/Users/chris/Dev/Fagting/android101/SpotifyApiEksempel/apieksempel/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
 
 </pre-dex-items>
