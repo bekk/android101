@@ -24,7 +24,52 @@ In this session we will create an app where the user can search for a Spotify tr
 <h3>Open Android Studio</h3>
 <ol>
 	<li>Open Android Studio, create an empty project and add classes for network communication. We use the Apache HTTP client. Skip live coding this part.</li>
-	<li>Add Gradle dependencies.</li>
+	<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HttpClient</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">TRACK_SEARCH_URL</span> <span class="o">=</span> <span class="s">&quot;http://ws.spotify.com/search/1/track.json?q=&quot;</span><span class="o">;</span>
+
+    <span class="cm">/*</span>
+<span class="cm">        Method which uses the built-in Apache HTTP client</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getTracks</span><span class="o">(</span><span class="n">String</span> <span class="n">trackName</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">trackName</span> <span class="o">=</span> <span class="n">trackName</span><span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="s">&quot; &quot;</span><span class="o">,</span> <span class="s">&quot;%20&quot;</span><span class="o">);</span>
+        <span class="n">String</span> <span class="n">trackSearchQueryWithArg</span> <span class="o">=</span> <span class="n">TRACK_SEARCH_URL</span> <span class="o">+</span> <span class="n">trackName</span><span class="o">;</span>
+        <span class="n">DefaultHttpClient</span> <span class="n">defaultHttpClient</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">DefaultHttpClient</span><span class="o">();</span>
+        <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+        <span class="n">InputStream</span> <span class="n">data</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="n">BufferedReader</span> <span class="n">reader</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">HttpGet</span> <span class="n">method</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">HttpGet</span><span class="o">(</span><span class="k">new</span> <span class="nf">URI</span><span class="o">(</span><span class="n">trackSearchQueryWithArg</span><span class="o">));</span>
+            <span class="n">HttpResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">defaultHttpClient</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">method</span><span class="o">);</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="na">getEntity</span><span class="o">().</span><span class="na">getContent</span><span class="o">();</span>
+            <span class="n">reader</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="nf">InputStreamReader</span><span class="o">(</span><span class="n">data</span><span class="o">,</span> <span class="s">&quot;UTF-8&quot;</span><span class="o">));</span>
+            <span class="n">StringBuilder</span> <span class="n">builder</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">StringBuilder</span><span class="o">();</span>
+            <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">line</span><span class="o">;</span> <span class="o">(</span><span class="n">line</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="na">readLine</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">;)</span> <span class="o">{</span>
+                <span class="n">builder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">line</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;\n&quot;</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">finally</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">data</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">data</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+                <span class="o">}</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">reader</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">reader</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+                <span class="o">}</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+	<li>Add Gradle dependencies:
+		<p><code>compile 'com.fasterxml.jackson.core:jackson-core:2.2.3'<code></p>
+   		<p><code>compile 'com.fasterxml.jackson.core:jackson-databind:2.2.3'</code> </p>
+	</li>
 </ol>
 
 <h3> Set up the application</h3>
