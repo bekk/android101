@@ -8,7 +8,54 @@ In this session we will create an app where the user can search for a Spotify tr
 <h3>Open Android Studio</h3>
 <ol>
 	<li>Open Android Studio, create an empty project and add classes for network communication. We use the Apache HTTP client. Skip live coding this part.</li>
-	<li>Add Gradle dependencies.</li>
+	{% highlight java %}
+	public class HttpClient {
+    private static final String TRACK_SEARCH_URL = "http://ws.spotify.com/search/1/track.json?q=";
+
+    /*
+        Method which uses the built-in Apache HTTP client
+     */
+    public String getTracks(String trackName) {
+        trackName = trackName.replace(" ", "%20");
+        String trackSearchQueryWithArg = TRACK_SEARCH_URL + trackName;
+        DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
+        String result = "";
+        InputStream data = null;
+        BufferedReader reader = null;
+        try {
+            HttpGet method = new HttpGet(new URI(trackSearchQueryWithArg));
+            HttpResponse response = defaultHttpClient.execute(method);
+            data = response.getEntity().getContent();
+            reader = new BufferedReader(new InputStreamReader(data, "UTF-8"));
+            StringBuilder builder = new StringBuilder();
+            for (String line; (line = reader.readLine()) != null;) {
+                builder.append(line).append("\n");
+            }
+            result = builder.toString();
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+        finally {
+            try {
+                if (data != null) {
+                    data.close();
+                }
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+}
+ 	{% endhighlight %}
+	<li>Add Gradle dependencies:
+		<p><code>compile 'com.fasterxml.jackson.core:jackson-core:2.2.3'<code></p>
+   		<p><code>compile 'com.fasterxml.jackson.core:jackson-databind:2.2.3'</code> </p>
+	</li>
 </ol>
 
 <h3> Set up the application</h3>
