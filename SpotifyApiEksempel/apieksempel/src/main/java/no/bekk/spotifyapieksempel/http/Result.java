@@ -7,7 +7,7 @@ import java.util.List;
 import no.bekk.spotifyapieksempel.domain.Track;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TrackSearchResult {
+public class Result {
 
     private List<Track> tracks;
 

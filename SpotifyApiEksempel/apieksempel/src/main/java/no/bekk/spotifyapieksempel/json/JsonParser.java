@@ -4,11 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 
-import no.bekk.spotifyapieksempel.http.TrackSearchResult;
+import no.bekk.spotifyapieksempel.http.Result;
 
 public class JsonParser {
-    public TrackSearchResult parseTrackResponse(String jsonString) throws IOException {
+    public Result parseTrackResponse(String jsonString) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(jsonString, TrackSearchResult.class);
+        return mapper.readValue(jsonString, Result.class);
     }
 }

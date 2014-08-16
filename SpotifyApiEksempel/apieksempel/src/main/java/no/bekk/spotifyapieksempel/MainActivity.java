@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 
 import no.bekk.spotifyapieksempel.domain.Track;
-import no.bekk.spotifyapieksempel.http.TrackSearchResult;
+import no.bekk.spotifyapieksempel.http.Result;
 import no.bekk.spotifyapieksempel.service.SearchService;
 
 
@@ -61,7 +61,7 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class TrackSearchAsyncTask extends AsyncTask<String, Void, TrackSearchResult> {
+    private class TrackSearchAsyncTask extends AsyncTask<String, Void, Result> {
         private SearchService searchService;
 
         @Override
@@ -71,13 +71,13 @@ public class MainActivity extends Activity {
         }
 
         @Override
-        protected TrackSearchResult doInBackground(String ...params) {
+        protected Result doInBackground(String ...params) {
             // Perform search for tracks in Spotify
             return searchService.searchForTrack(params[0]);
         }
 
         @Override
-        protected void onPostExecute(TrackSearchResult result) {
+        protected void onPostExecute(Result result) {
             ArrayList<Track> tracks = new ArrayList<Track>();
             tracks.addAll(result.getTracks());
 

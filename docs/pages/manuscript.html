@@ -141,20 +141,19 @@ public class Artist {
 	<li>Explain ListAdapters ([Lists and ListAdapters](Lists-and-ListAdapters))</li>
 </ul>
 
-Create the TrackSearchResult object, which will contain a list of tracks
+Create the Result object, which will contain a list of tracks
 {% highlight java %}
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TrackSearchResult {
+public class Result {
+    private List<Track> tracks;
 
-	private List<Track> tracks;
+    public List<Track> getTracks() {
+        return tracks;
+    }
 
-	public List<Track> getTracks() {
-		return tracks;
-	}
-
-	public void setTracks(List<Track> tracks) {
-		this.tracks = tracks;
-	}
+    public void setTracks(List<Track> tracks) {
+        this.tracks = tracks;
+    }
 }
 
 	{% endhighlight %}
