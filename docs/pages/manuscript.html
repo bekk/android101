@@ -14,11 +14,8 @@ an updated version of Android Studio
 	<li>Explain layouts and layout controls (<a href="common-view-controls.html"> Common View Controls)</a>)</li>
 	<li>Explain the UI builder</li>
 	<li>Create the MainActivity for the Spotify app. MainActivity will display an input text field and a button. </li>
-	<li>Create the ResultActivity and a ListAdapter. ResultActivity will display a list containing the search results. Add entries to the Android Manifest</li>
-    <li>Create the layout files and controls for the activities.</li>
-    <li>Explain AsyncTasks (<a href="working-in-the-background.html"> Working In the Background)</a></li>
-	<li>Explain ListAdapters (<a href="list-list-adapters.html"> Lists and List Adapters)</a></li>
-	<li>Create the button listener and start the ResultActivity from the MainActivity using Intents.</li>
+    <li>Create the layout files and controls for the activity.</li>
+    <li>Setup search and explain AsyncTasks (<a href="working-in-the-background.html"> Working In the Background)</a></li>
 	<li>Add classes for network communication. We use the Apache HTTP client. Skip live coding this part.</li>
 	{% highlight java %}
 	public class HttpClient {
@@ -72,7 +69,9 @@ an updated version of Android Studio
 	{% highlight xml %}
 	    <uses-permission android:name="android.permission.INTERNET" />
 	{% endhighlight %}
-
+	<li>Create the ResultActivity. ResultActivity will display a list containing the search results. Add entries to the Android Manifest</li>
+    <li>Add and explain ListAdapters (<a href="list-list-adapters.html"> Lists and List Adapters)</a></li>
+    <li>Create the button listener and start the ResultActivity from the MainActivity using Intents.</li>
 </ol>
 
 
