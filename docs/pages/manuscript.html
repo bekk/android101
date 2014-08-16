@@ -33,6 +33,84 @@ an updated version of Android Studio
 </ol>
 
 
+<h3> Result Dto, AsyncTask and SearchService</h3>
+
+Create the Result object, which will contain a list of tracks
+{% highlight java %}
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Result {
+    private List<Track> tracks;
+
+    public List<Track> getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(List<Track> tracks) {
+        this.tracks = tracks;
+    }
+}
+
+	{% endhighlight %}
+
+	Create an AsyncTask for performing the web request
+	{% highlight java %}
+private class TrackSearchAsyncTask extends AsyncTask<String, Void, Result> {
+	private SearchService searchService;
+
+	@Override
+	protected void onPreExecute() {
+		searchService = new SearchService();
+		super.onPreExecute();
+	}
+
+	@Override
+	protected Result doInBackground(String ...params) {
+		// Perform search for tracks in Spotify
+		return searchService.searchForTrack(params[0]);
+	}
+
+	@Override
+	protected void onPostExecute(Result result) {
+		ArrayList<Track> tracks = new ArrayList<Track>();
+		tracks.addAll(result.getTracks());
+
+		// Start result activity which displays the result.
+		Intent resultActivity = new Intent(getApplicationContext(), ResultActivity.class);
+		// Add the search result as a String
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+		String listAsString = mapper.writeValueAsString(tracks);
+		resultActivity.putExtra("tracks", listAsString);
+		startActivity(resultActivity);
+		} catch (JsonProcessingException e) {
+		// Do nothing
+		}
+	}
+}
+{% endhighlight %}
+
+
+SearchService to be used in AsyncTask
+{% highlight java %}
+public class SearchService {
+    private static final String TAG = "SearchService";
+
+    public Result searchForTrack(String trackName) {
+        HttpClient httpClient = new HttpClient();
+        JsonParser jsonParser = new JsonParser();
+        Result result = new Result();
+        try {
+            result = jsonParser.parseTrackResponse(httpClient.getTracks(trackName));
+        } catch (IOException e) {
+            Log.e(TAG, "Could not parse json");
+            e.printStackTrace();
+        }
+        return result;
+    }
+}
+{% endhighlight %}
+
+
 <h3> Classes and Services</h3>
 HttpClient
 {% highlight java %}
@@ -140,82 +218,6 @@ public class Artist {
 }
 {% endhighlight %}
 
-<h3> Result Dto AsyncTask and SearchService</h3>
-
-Create the Result object, which will contain a list of tracks
-{% highlight java %}
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Result {
-    private List<Track> tracks;
-
-    public List<Track> getTracks() {
-        return tracks;
-    }
-
-    public void setTracks(List<Track> tracks) {
-        this.tracks = tracks;
-    }
-}
-
-	{% endhighlight %}
-
-	Create an AsyncTask for performing the web request
-	{% highlight java %}
-private class TrackSearchAsyncTask extends AsyncTask<String, Void, Result> {
-	private SearchService searchService;
-
-	@Override
-	protected void onPreExecute() {
-		searchService = new SearchService();
-		super.onPreExecute();
-	}
-
-	@Override
-	protected Result doInBackground(String ...params) {
-		// Perform search for tracks in Spotify
-		return searchService.searchForTrack(params[0]);
-	}
-
-	@Override
-	protected void onPostExecute(Result result) {
-		ArrayList<Track> tracks = new ArrayList<Track>();
-		tracks.addAll(result.getTracks());
-
-		// Start result activity which displays the result.
-		Intent resultActivity = new Intent(getApplicationContext(), ResultActivity.class);
-		// Add the search result as a String
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-		String listAsString = mapper.writeValueAsString(tracks);
-		resultActivity.putExtra("tracks", listAsString);
-		startActivity(resultActivity);
-		} catch (JsonProcessingException e) {
-		// Do nothing
-		}
-	}
-}
-{% endhighlight %}
-
-
-SearchService to be used in AsyncTask
-{% highlight java %}
-public class SearchService {
-    private static final String TAG = "SearchService";
-
-    public Result searchForTrack(String trackName) {
-        HttpClient httpClient = new HttpClient();
-        JsonParser jsonParser = new JsonParser();
-        Result result = new Result();
-        try {
-            result = jsonParser.parseTrackResponse(httpClient.getTracks(trackName));
-        } catch (IOException e) {
-            Log.e(TAG, "Could not parse json");
-            e.printStackTrace();
-        }
-        return result;
-    }
-}
-{% endhighlight %}
 
 <h3>ListAdapter</h3>
 List adapter for displaying the search results
