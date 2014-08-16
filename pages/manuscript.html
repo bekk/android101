@@ -67,15 +67,18 @@ In this session we will create an app where the user can search for a Spotify tr
     <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 	<li>Add Gradle dependencies:
-		<p><code>compile 'com.fasterxml.jackson.core:jackson-core:2.2.3'</code></p>
-   		<p><code>compile 'com.fasterxml.jackson.core:jackson-databind:2.2.3'</code> </p>
+		<p><code>compile 'com.fasterxml.jackson.core:jackson-core:2.4.1.3'</code></p>
+   		<p><code>compile 'com.fasterxml.jackson.core:jackson-databind:2.4.1.3'</code> </p>
 	</li>
 </ol>
 
 <h3> Set up the application</h3>
 <ul>
 	<li>Explain Activities (<a href="android-app-structure-and-components.html"> App Structure And Components</a>)</li>
-	<li>Explain the Android Manifest</li>
+	<li>Explain the Android Manifest and add internet permission</li> 
+	<code> 
+	    <uses-permission android:name="android.permission.INTERNET" />
+	</code>
 	<li>Explain layouts and layout controls (<a href="common-view-controls.html"> Common-view-controls)</a>)</li>
 	<li>Explain the UI builder</li>
 </ul>
