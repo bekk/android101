@@ -164,7 +164,7 @@ Create the Result object, which will contain a list of tracks
 <span class="o">}</span></code></pre></div>
 
 	Create an AsyncTask for performing the web request
-	<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">class</span> <span class="nc">TrackSearchAsyncTask</span> <span class="kd">extends</span> <span class="n">AsyncTask</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Void</span><span class="o">,</span> <span class="n">TrackSearchResult</span><span class="o">&gt;</span> <span class="o">{</span>
+	<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">class</span> <span class="nc">TrackSearchAsyncTask</span> <span class="kd">extends</span> <span class="n">AsyncTask</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Void</span><span class="o">,</span> <span class="n">Result</span><span class="o">&gt;</span> <span class="o">{</span>
 	<span class="kd">private</span> <span class="n">SearchService</span> <span class="n">searchService</span><span class="o">;</span>
 
 	<span class="nd">@Override</span>
@@ -174,13 +174,13 @@ Create the Result object, which will contain a list of tracks
 	<span class="o">}</span>
 
 	<span class="nd">@Override</span>
-	<span class="kd">protected</span> <span class="n">TrackSearchResult</span> <span class="nf">doInBackground</span><span class="o">(</span><span class="n">String</span> <span class="o">...</span><span class="na">params</span><span class="o">)</span> <span class="o">{</span>
+	<span class="kd">protected</span> <span class="n">Result</span> <span class="nf">doInBackground</span><span class="o">(</span><span class="n">String</span> <span class="o">...</span><span class="na">params</span><span class="o">)</span> <span class="o">{</span>
 		<span class="c1">// Perform search for tracks in Spotify</span>
 		<span class="k">return</span> <span class="n">searchService</span><span class="o">.</span><span class="na">searchForTrack</span><span class="o">(</span><span class="n">params</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
 	<span class="o">}</span>
 
 	<span class="nd">@Override</span>
-	<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onPostExecute</span><span class="o">(</span><span class="n">TrackSearchResult</span> <span class="n">result</span><span class="o">)</span> <span class="o">{</span>
+	<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onPostExecute</span><span class="o">(</span><span class="n">Result</span> <span class="n">result</span><span class="o">)</span> <span class="o">{</span>
 		<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;();</span>
 		<span class="n">tracks</span><span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">getTracks</span><span class="o">());</span>
 
