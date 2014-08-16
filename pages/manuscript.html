@@ -149,19 +149,18 @@ Create the Artist domain object
 	<li>Explain ListAdapters ([Lists and ListAdapters](Lists-and-ListAdapters))</li>
 </ul>
 
-Create the TrackSearchResult object, which will contain a list of tracks
+Create the Result object, which will contain a list of tracks
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@JsonIgnoreProperties</span><span class="o">(</span><span class="n">ignoreUnknown</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TrackSearchResult</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Result</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">;</span>
 
-	<span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="nf">getTracks</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">tracks</span><span class="o">;</span>
+    <span class="o">}</span>
 
-	<span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="nf">getTracks</span><span class="o">()</span> <span class="o">{</span>
-		<span class="k">return</span> <span class="n">tracks</span><span class="o">;</span>
-	<span class="o">}</span>
-
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setTracks</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">)</span> <span class="o">{</span>
-		<span class="k">this</span><span class="o">.</span><span class="na">tracks</span> <span class="o">=</span> <span class="n">tracks</span><span class="o">;</span>
-	<span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setTracks</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">tracks</span> <span class="o">=</span> <span class="n">tracks</span><span class="o">;</span>
+    <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
 	Create an AsyncTask for performing the web request
