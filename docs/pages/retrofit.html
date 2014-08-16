@@ -14,24 +14,31 @@ As Retrofit handles the communication between the main UI thread and a backgroun
 {% highlight java %}
 public interface MessageService {
     @GET("/messages")
-    List<Message> listMessages();
-
-    @GET("/messages/{id}")
-    List<Message> getMessage(@Path("id") String id);
+    List<Message> listMessages(Callback<List<Message>> callback));
 
     @POST("/message")
-    void send(@Body Message message);
+    void send(@Body Message message, Callback<Message> callback);
 }
 {% endhighlight %}
 
-Usage in an activity that displays the messages:
+The example below shows usage in an activity that displays the messages. Notice the Callback parameter that returns a success handler and a failure handler.
+These will be run depending on the success of the request.
 
 {% highlight java %}
 RestAdapter restAdapter = new RestAdapter.Builder()
                     .setEndpoint("https://messages.com")
                     .build();
 MessageService msgs = restAdapter.create(MessageService.class);
-List<Message> messages = msgs.listMessages();
-Message message = msgs.getMessage("123");
+List<Message> messages = msgs.listMessages(new Callback<List<Message>>() {
+    @Override
+    public void success(List<Message> messages, Response response) {
+        // Successfull request, do something with the retrieved messages
+    }
+
+    @Override
+    public void failure(RetrofitError retrofitError) {
+        // Failed request
+    }
+});
 {% endhighlight %}
 
