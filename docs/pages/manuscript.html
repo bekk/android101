@@ -7,7 +7,19 @@ In this session we will create an app where the user can search for a Spotify tr
 
 <h3>Open Android Studio</h3>
 <ol>
-	<li>Open Android Studio, create an empty project and add classes for network communication. We use the Apache HTTP client. Skip live coding this part.</li>
+	<li>Open Android Studio, create an empty project.</li>
+	<li>Explain Activities (<a href="android-app-structure-and-components.html"> App Structure And Components</a>)</li>
+	<li>Explain the Android Manifest and add internet permission</li> 
+	{% highlight xml %}
+	    <uses-permission android:name="android.permission.INTERNET" />
+	{% endhighlight %}
+	<li>Explain layouts and layout controls (<a href="common-view-controls.html"> Common-view-controls)</a>)</li>
+	<li>Explain the UI builder</li>
+
+	<li>Create the MainActivity and the ResultActivity for the Spotify app. MainActivity will display an input text field and a button. ResultActivity will display a list containing the search results. Add entries to the Android Manifest</li>
+	<li>Create the layout files and controls for the activites.</li>
+	<li>Create the button listener and start the ResultActivity from the MainActivity using Intents.</li>
+	<li>Add classes for network communication. We use the Apache HTTP client. Skip live coding this part.</li>
 	{% highlight java %}
 	public class HttpClient {
     private static final String TRACK_SEARCH_URL = "http://ws.spotify.com/search/1/track.json?q=";
@@ -58,22 +70,6 @@ In this session we will create an app where the user can search for a Spotify tr
 	</li>
 </ol>
 
-<h3> Set up the application</h3>
-<ul>
-	<li>Explain Activities (<a href="android-app-structure-and-components.html"> App Structure And Components</a>)</li>
-	<li>Explain the Android Manifest and add internet permission</li> 
-	{% highlight xml %}
-	    <uses-permission android:name="android.permission.INTERNET" />
-	{% endhighlight %}
-	<li>Explain layouts and layout controls (<a href="common-view-controls.html"> Common-view-controls)</a>)</li>
-	<li>Explain the UI builder</li>
-</ul>
-
-<ol>
-	<li>Create the MainActivity and the ResultActivity for the Spotify app. MainActivity will display an input text field and a button. ResultActivity will display a list containing the search results. Add entries to the Android Manifest</li>
-	<li>Create the layout files and controls for the activites.</li>
-	<li>Create the button listener and start the ResultActivity from the MainActivity using Intents.</li>
-</ol>
 
 <h3> Create domain objects</h3>
 Create the Track domain object
