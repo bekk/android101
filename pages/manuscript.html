@@ -38,7 +38,7 @@ an updated version of Android Studio
 		<p><code>compile 'com.fasterxml.jackson.core:jackson-core:2.4.1.3'</code></p>
    		<p><code>compile 'com.fasterxml.jackson.core:jackson-databind:2.4.1.3'</code> </p>
 	</li>
-	<li>Replace content in <code>doInBackground()</code> with method/service that starts the search</li>
+	<li>Replace content in <code>doInBackground()</code> with search method from SearchService</li>
 	<li>Do not add internet permission until app has run and failed. Explain the Android Manifest and the need for permissions</li> 
 	<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&quot;android.permission.INTERNET&quot;</span> <span class="nt">/&gt;</span></code></pre></div>
 	<li>Create the ResultActivity. ResultActivity will display a list containing the search results. Add entries to the Android Manifest</li>
@@ -47,7 +47,7 @@ an updated version of Android Studio
 </ol>
 
 
-<h3> Domain objects</h3>
+<h3> Classes and Services</h3>
 HttpClient
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HttpClient</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">TRACK_SEARCH_URL</span> <span class="o">=</span> <span class="s">&quot;http://ws.spotify.com/search/1/track.json?q=&quot;</span><span class="o">;</span>
@@ -148,7 +148,7 @@ Artist domain object
 	<span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
-<h3> Result Dto and AsyncTask</h3>
+<h3> Result Dto AsyncTask and SearchService</h3>
 
 Create the Result object, which will contain a list of tracks
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@JsonIgnoreProperties</span><span class="o">(</span><span class="n">ignoreUnknown</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
@@ -197,6 +197,25 @@ Create the Result object, which will contain a list of tracks
 		<span class="c1">// Do nothing</span>
 		<span class="o">}</span>
 	<span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+
+SearchService to be used in AsyncTask
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SearchService</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">TAG</span> <span class="o">=</span> <span class="s">&quot;SearchService&quot;</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="n">Result</span> <span class="nf">searchForTrack</span><span class="o">(</span><span class="n">String</span> <span class="n">trackName</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">HttpClient</span> <span class="n">httpClient</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">HttpClient</span><span class="o">();</span>
+        <span class="n">JsonParser</span> <span class="n">jsonParser</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">JsonParser</span><span class="o">();</span>
+        <span class="n">Result</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Result</span><span class="o">();</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">jsonParser</span><span class="o">.</span><span class="na">parseTrackResponse</span><span class="o">(</span><span class="n">httpClient</span><span class="o">.</span><span class="na">getTracks</span><span class="o">(</span><span class="n">trackName</span><span class="o">));</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">Log</span><span class="o">.</span><span class="na">e</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;Could not parse json&quot;</span><span class="o">);</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+    <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
 <h3>ListAdapter</h3>
