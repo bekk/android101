@@ -15,9 +15,27 @@ an updated version of Android Studio
 	<li>Explain the UI builder</li>
 	<li>Create the MainActivity for the Spotify app. MainActivity will display an input text field and a button. </li>
     <li>Create the layout files and controls for the activity.</li>
-    <li>Setup search and explain AsyncTasks (<a href="working-in-the-background.html"> Working In the Background)</a></li>
+    <li>Setup search and explain AsyncTasks (<a href="working-in-the-background.html"> Working In the Background).</a>
+    	Print a simple text in <code>doInBackground()</code> to illustrate background work</li>
 	<li>Add classes for network communication. We use the Apache HTTP client. Skip live coding this part.</li>
-	{% highlight java %}
+	<li>Add Gradle dependencies for JSON parsing and explain why we need this:
+		<p><code>compile 'com.fasterxml.jackson.core:jackson-core:2.4.1.3'</code></p>
+   		<p><code>compile 'com.fasterxml.jackson.core:jackson-databind:2.4.1.3'</code> </p>
+	</li>
+	<li>Replace content in <code>doInBackground()</code> with method/service that starts the search</li>
+	<li>Do not add internet permission until app has run and failed. Explain the Android Manifest and the need for permissions</li> 
+	{% highlight xml %}
+	    <uses-permission android:name="android.permission.INTERNET" />
+	{% endhighlight %}
+	<li>Create the ResultActivity. ResultActivity will display a list containing the search results. Add entries to the Android Manifest</li>
+    <li>Add and explain ListAdapters (<a href="list-list-adapters.html"> Lists and List Adapters)</a></li>
+    <li>Create the button listener and start the ResultActivity from the MainActivity using Intents.</li>
+</ol>
+
+
+<h3> Domain objects</h3>
+HttpClient
+{% highlight java %}
 	public class HttpClient {
     private static final String TRACK_SEARCH_URL = "http://ws.spotify.com/search/1/track.json?q=";
 
@@ -61,21 +79,8 @@ an updated version of Android Studio
     }
 }
  	{% endhighlight %}
-	<li>Add Gradle dependencies for JSON parsing and explain why we need this:
-		<p><code>compile 'com.fasterxml.jackson.core:jackson-core:2.4.1.3'</code></p>
-   		<p><code>compile 'com.fasterxml.jackson.core:jackson-databind:2.4.1.3'</code> </p>
-	</li>
-	<li>Do not add internet permission until app has run and failed. Explain the Android Manifest and the need for permissions</li> 
-	{% highlight xml %}
-	    <uses-permission android:name="android.permission.INTERNET" />
-	{% endhighlight %}
-	<li>Create the ResultActivity. ResultActivity will display a list containing the search results. Add entries to the Android Manifest</li>
-    <li>Add and explain ListAdapters (<a href="list-list-adapters.html"> Lists and List Adapters)</a></li>
-    <li>Create the button listener and start the ResultActivity from the MainActivity using Intents.</li>
-</ol>
 
 
-<h3> Domain objects</h3>
 Track domain object
 
 {% highlight java %}
