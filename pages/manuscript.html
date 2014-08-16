@@ -30,11 +30,8 @@ an updated version of Android Studio
 	<li>Explain layouts and layout controls (<a href="common-view-controls.html"> Common View Controls)</a>)</li>
 	<li>Explain the UI builder</li>
 	<li>Create the MainActivity for the Spotify app. MainActivity will display an input text field and a button. </li>
-	<li>Create the ResultActivity and a ListAdapter. ResultActivity will display a list containing the search results. Add entries to the Android Manifest</li>
-    <li>Create the layout files and controls for the activities.</li>
-    <li>Explain AsyncTasks (<a href="working-in-the-background.html"> Working In the Background)</a></li>
-	<li>Explain ListAdapters (<a href="list-list-adapters.html"> Lists and List Adapters)</a></li>
-	<li>Create the button listener and start the ResultActivity from the MainActivity using Intents.</li>
+    <li>Create the layout files and controls for the activity.</li>
+    <li>Setup search and explain AsyncTasks (<a href="working-in-the-background.html"> Working In the Background)</a></li>
 	<li>Add classes for network communication. We use the Apache HTTP client. Skip live coding this part.</li>
 	<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HttpClient</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">TRACK_SEARCH_URL</span> <span class="o">=</span> <span class="s">&quot;http://ws.spotify.com/search/1/track.json?q=&quot;</span><span class="o">;</span>
@@ -84,7 +81,9 @@ an updated version of Android Studio
 	</li>
 	<li>Do not add internet permission until app has run and failed. Explain the Android Manifest and the need for permissions</li> 
 	<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&quot;android.permission.INTERNET&quot;</span> <span class="nt">/&gt;</span></code></pre></div>
-
+	<li>Create the ResultActivity. ResultActivity will display a list containing the search results. Add entries to the Android Manifest</li>
+    <li>Add and explain ListAdapters (<a href="list-list-adapters.html"> Lists and List Adapters)</a></li>
+    <li>Create the button listener and start the ResultActivity from the MainActivity using Intents.</li>
 </ol>
 
 
