@@ -49,19 +49,23 @@ public class ResultActivity extends Activity {
                         startActivity(appPlayBackIntent);
                     }
                     else {
-                        // Open play store so that the user can download Spotify
-                        String packageName = "com.spotify.mobile.android.ui";
-                        try {
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
-                        }
-                        catch (android.content.ActivityNotFoundException anfe) {
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + packageName)));
-                        }
+                        handleMissingSpotifyApp();
                     }
                 }
             });
         } catch (IOException e) {
             // Do nothing
+        }
+
+    }
+    public void handleMissingSpotifyApp() {
+        // Open play store so that the user can download Spotify
+        String packageName = "com.spotify.mobile.android.ui";
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
+        }
+        catch (android.content.ActivityNotFoundException anfe) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + packageName)));
         }
     }
 }
