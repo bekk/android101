@@ -51,7 +51,7 @@ an updated version of Android Studio
 
 <h3> Result Dto, AsyncTask and SearchService</h3>
 
-Create the Result object, which will contain a list of tracks
+Create the <b>Result</b> Dto object, which will contain a list of tracks
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@JsonIgnoreProperties</span><span class="o">(</span><span class="n">ignoreUnknown</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Result</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">;</span>
@@ -65,7 +65,7 @@ Create the Result object, which will contain a list of tracks
     <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
-	Create an AsyncTask for performing the web request
+	Create an <b>AsyncTask</b> for performing the web request
 	<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">class</span> <span class="nc">TrackSearchAsyncTask</span> <span class="kd">extends</span> <span class="n">AsyncTask</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Void</span><span class="o">,</span> <span class="n">Result</span><span class="o">&gt;</span> <span class="o">{</span>
 	<span class="kd">private</span> <span class="n">SearchService</span> <span class="n">searchService</span><span class="o">;</span>
 
@@ -101,7 +101,7 @@ Create the Result object, which will contain a list of tracks
 <span class="o">}</span></code></pre></div>
 
 
-SearchService to be used in AsyncTask
+<b>SearchService</b> to be used in AsyncTask
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SearchService</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">TAG</span> <span class="o">=</span> <span class="s">&quot;SearchService&quot;</span><span class="o">;</span>
 
@@ -121,7 +121,7 @@ SearchService to be used in AsyncTask
 
 
 <h3> Classes and Services</h3>
-HttpClient
+<b>HttpClient</b>
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HttpClient</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">TRACK_SEARCH_URL</span> <span class="o">=</span> <span class="s">&quot;http://ws.spotify.com/search/1/track.json?q=&quot;</span><span class="o">;</span>
 
@@ -166,7 +166,7 @@ HttpClient
 <span class="o">}</span></code></pre></div>
 
 
-Track domain object
+<b>Track</b> domain object
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@JsonIgnoreProperties</span><span class="o">(</span><span class="n">ignoreUnknown</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Track</span> <span class="o">{</span>
@@ -203,7 +203,7 @@ Track domain object
 	<span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
-Artist domain object
+<b>Artist</b> domain object
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@JsonIgnoreProperties</span><span class="o">(</span><span class="n">ignoreUnknown</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Artist</span> <span class="o">{</span>
 	<span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
