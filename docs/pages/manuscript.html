@@ -30,11 +30,12 @@ an updated version of Android Studio
 	{% endhighlight %}
 	<li>Run app again and see that the <code>Toast</code> pops up.</li>
 	<li>Create the ResultActivity. ResultActivity will display a list containing the search results. Add entries to the Android Manifest</li>
+	<li>
     <li>Remove <code>Toast</code> and start the ResultActivity from the <code>onPostExecute()</code>using Intents. Explain that there are several ways to pass
     	objects between activities, for instance Parcelable. For simplicity, we use Jackson to serialize the search result as a String and pass this as a <code>
     	stringExtra</code></li>
     <li>In the ResultActivity, parse the String as Track domain objects using Jackson</li>
-    <li>Add and explain ListAdapters (<a href="list-list-adapters.html"> Lists and List Adapters)</a></li>
+    <li>Add and explain custom ListAdapters (<a href="list-list-adapters.html"> Lists and List Adapters)</a></li>
     <li>Populate the ListAdapter fields with properties from the Track domain objects</li>
     <li>Add a click handler for each list element, where clicks will start Spotify and play song</li>
 </ol>
@@ -293,65 +294,68 @@ android:layout_below="@id/song_text"
 
 <h3> ResultActivity</h3>
 {% highlight java %}
-public class ResultActivity extends ListActivity {
+public class ResultActivity extends Activity {
+    ListView listView;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_result);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_result);
 
-		try {
-		// Get the track list from the MainActivity
-		Bundle data = getIntent().getExtras();
-		ObjectMapper mapper = new ObjectMapper();
-		List<Track> tracks = Arrays.asList(mapper.readValue(data.getString("tracks"), Track[].class));
+        listView = (ListView) findViewById(R.id.listView);
 
-		setListAdapter(new TrackAdapter(this, R.layout.result_list_item, tracks));
-		} catch (IOException e) {
-			// Do nothing
-		}
-	}
+        try {
+            // Get the track list from the MainActivity
+            Bundle data = getIntent().getExtras();
+            ObjectMapper mapper = new ObjectMapper();
+            List<Track> tracks = Arrays.asList(mapper.readValue(data.getString("tracks"), Track[].class));
 
-	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
-		// Get the clicked track
-		Track track = (Track) getListAdapter().getItem(position);
-		// Start playback in Spotify
-		Intent appPlayBackIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(track.getHref()));
-		// Verify that the device has Spotify and can play the track
-		if (appPlayBackIntent.resolveActivity(getPackageManager()) != null) {
-			startActivity(appPlayBackIntent);
-		}
-		else {
-			// Open play store so that the user can download Spotify
-			String packageName = "com.spotify.mobile.android.ui";
-			try {
-				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
-			}
-			catch (android.content.ActivityNotFoundException anfe) {
-				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + 
-				packageName)));
-			}
-		}
-	}
+            listView.setAdapter(new TrackAdapter(this, R.layout.result_list_item, tracks));
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    // Get the clicked track
+                    Track track = (Track) parent.getItemAtPosition(position);
+                    // Start playback in Spotify
+                    Intent appPlayBackIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(track.getHref()));
+                    // Verify that the device has Spotify and can play the track
+                    if (appPlayBackIntent.resolveActivity(getPackageManager()) != null) {
+                        startActivity(appPlayBackIntent);
+                    }
+                    else {
+                        // Open play store so that the user can download Spotify
+                        String packageName = "com.spotify.mobile.android.ui";
+                        try {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
+                        }
+                        catch (android.content.ActivityNotFoundException anfe) {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + packageName)));
+                        }
+                    }
+                }
+            });
+        } catch (IOException e) {
+            // Do nothing
+        }
+    }
 }
 {% endhighlight %}
 {% highlight java %}
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:paddingLeft="@dimen/activity_horizontal_margin"
-android:paddingRight="@dimen/activity_horizontal_margin"
-android:paddingTop="@dimen/activity_vertical_margin"
-android:paddingBottom="@dimen/activity_vertical_margin"
-android:background="@color/dark_gray"
-tools:context="no.bekk.spotifyapieksempel.ResultActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@color/dark_gray"
+    tools:context="no.bekk.spotifyapieksempel.ResultActivity">
 
-<ListView
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:id="@android:id/list"/>
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"/>
 </RelativeLayout>
 
 {% endhighlight %}
