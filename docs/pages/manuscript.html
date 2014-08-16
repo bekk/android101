@@ -22,11 +22,13 @@ an updated version of Android Studio
 		<p><code>compile 'com.fasterxml.jackson.core:jackson-core:2.4.1.3'</code></p>
    		<p><code>compile 'com.fasterxml.jackson.core:jackson-databind:2.4.1.3'</code> </p>
 	</li>
-	<li>Replace content in <code>doInBackground()</code> with search method from SearchService</li>
+	<li>Replace content in <code>doInBackground()</code> with search method from SearchService. Add a <code>Toast</code> in <code>onPostExecute()</code>
+		which will display the first track result. This illustrates that a network call actually was performed</li>
 	<li>Do not add internet permission until app has run and failed. Explain the Android Manifest and the need for permissions</li> 
 	{% highlight xml %}
 	    <uses-permission android:name="android.permission.INTERNET" />
 	{% endhighlight %}
+	<li>Run app again and see that the <code>Toast</code> pops up.</li>
 	<li>Create the ResultActivity. ResultActivity will display a list containing the search results. Add entries to the Android Manifest</li>
     <li>Add and explain ListAdapters (<a href="list-list-adapters.html"> Lists and List Adapters)</a></li>
     <li>Create the button listener and start the ResultActivity from the MainActivity using Intents.</li>
