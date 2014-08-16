@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -41,6 +45,56 @@ public class MessagesActivity extends Activity {
 
         final MessagesAdapter msgAdapter = new MessagesAdapter(this, messages);
         lvMessages.setAdapter(msgAdapter);
+
+        lvMessages.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
+            private int selectedCount;
+            @Override
+            public void onItemCheckedStateChanged(ActionMode actionMode, int position, long id, boolean checked) {
+                selectedCount = checked ? selectedCount + 1 : selectedCount;
+                getAdapter().setSelection(position, checked);
+                actionMode.setTitle(selectedCount + " selected");
+            }
+
+            @Override
+            public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+                getMenuInflater().inflate(R.menu.contextual_menu, menu);
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.item_delete:
+                        selectedCount = 0;
+                        getAdapter().clearSelection();
+                        actionMode.finish();
+                }
+                return false;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode actionMode) {
+                selectedCount = 0;
+                getAdapter().clearSelection();
+            }
+        });
+
+        lvMessages.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                lvMessages.setItemChecked(i, !getAdapter().isSelected(i));
+                return false;
+            }
+        });
+    }
+
+    private MessagesAdapter getAdapter() {
+        return (MessagesAdapter) lvMessages.getAdapter();
     }
 
     private void fetchMessagesAsync() {
@@ -63,10 +117,6 @@ public class MessagesActivity extends Activity {
                 }
             }
         });
-    }
-
-    private ArrayAdapter<Message> getAdapter() {
-        return (ArrayAdapter<Message>) lvMessages.getAdapter();
     }
 
     @Override

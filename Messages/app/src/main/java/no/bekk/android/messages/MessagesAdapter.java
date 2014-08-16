@@ -1,6 +1,7 @@
 package no.bekk.android.messages;
 
 import android.content.Context;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,25 @@ public class MessagesAdapter extends ArrayAdapter<Message> {
     private static class ViewHolder {
         TextView from, message, date;
     }
+
+    private SparseBooleanArray selections = new SparseBooleanArray();
+
     public MessagesAdapter(Context context, List<Message> objects) {
         super(context, R.layout.item_message, objects);
         inflater = LayoutInflater.from(getContext());
+    }
+
+    public void setSelection(int position, boolean selected) {
+        selections.put(position, selected);
+        notifyDataSetChanged();
+    }
+
+    public boolean isSelected(int position) {
+        return selections.get(position);
+    }
+
+    public void clearSelection() {
+        selections.clear();
     }
 
     @Override
