@@ -160,7 +160,7 @@ public class Result {
 
 	Create an AsyncTask for performing the web request
 	{% highlight java %}
-private class TrackSearchAsyncTask extends AsyncTask<String, Void, TrackSearchResult> {
+private class TrackSearchAsyncTask extends AsyncTask<String, Void, Result> {
 	private SearchService searchService;
 
 	@Override
@@ -170,13 +170,13 @@ private class TrackSearchAsyncTask extends AsyncTask<String, Void, TrackSearchRe
 	}
 
 	@Override
-	protected TrackSearchResult doInBackground(String ...params) {
+	protected Result doInBackground(String ...params) {
 		// Perform search for tracks in Spotify
 		return searchService.searchForTrack(params[0]);
 	}
 
 	@Override
-	protected void onPostExecute(TrackSearchResult result) {
+	protected void onPostExecute(Result result) {
 		ArrayList<Track> tracks = new ArrayList<Track>();
 		tracks.addAll(result.getTracks());
 
