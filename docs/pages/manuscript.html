@@ -37,7 +37,7 @@ an updated version of Android Studio
 
 <h3> Result Dto, AsyncTask and SearchService</h3>
 
-Create the Result object, which will contain a list of tracks
+Create the <b>Result</b> Dto object, which will contain a list of tracks
 {% highlight java %}
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Result {
@@ -54,7 +54,7 @@ public class Result {
 
 	{% endhighlight %}
 
-	Create an AsyncTask for performing the web request
+	Create an <b>AsyncTask</b> for performing the web request
 	{% highlight java %}
 private class TrackSearchAsyncTask extends AsyncTask<String, Void, Result> {
 	private SearchService searchService;
@@ -92,7 +92,7 @@ private class TrackSearchAsyncTask extends AsyncTask<String, Void, Result> {
 {% endhighlight %}
 
 
-SearchService to be used in AsyncTask
+<b>SearchService</b> to be used in AsyncTask
 {% highlight java %}
 public class SearchService {
     private static final String TAG = "SearchService";
@@ -114,7 +114,7 @@ public class SearchService {
 
 
 <h3> Classes and Services</h3>
-HttpClient
+<b>HttpClient</b>
 {% highlight java %}
 	public class HttpClient {
     private static final String TRACK_SEARCH_URL = "http://ws.spotify.com/search/1/track.json?q=";
@@ -161,7 +161,7 @@ HttpClient
  	{% endhighlight %}
 
 
-Track domain object
+<b>Track</b> domain object
 
 {% highlight java %}
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -200,7 +200,7 @@ public class Track {
 }
 {% endhighlight %}
 
-Artist domain object
+<b>Artist</b> domain object
 {% highlight java %}
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Artist {
