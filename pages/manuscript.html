@@ -44,11 +44,12 @@ an updated version of Android Studio
 	<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&quot;android.permission.INTERNET&quot;</span> <span class="nt">/&gt;</span></code></pre></div>
 	<li>Run app again and see that the <code>Toast</code> pops up.</li>
 	<li>Create the ResultActivity. ResultActivity will display a list containing the search results. Add entries to the Android Manifest</li>
+	<li>
     <li>Remove <code>Toast</code> and start the ResultActivity from the <code>onPostExecute()</code>using Intents. Explain that there are several ways to pass
     	objects between activities, for instance Parcelable. For simplicity, we use Jackson to serialize the search result as a String and pass this as a <code>
     	stringExtra</code></li>
     <li>In the ResultActivity, parse the String as Track domain objects using Jackson</li>
-    <li>Add and explain ListAdapters (<a href="list-list-adapters.html"> Lists and List Adapters)</a></li>
+    <li>Add and explain custom ListAdapters (<a href="list-list-adapters.html"> Lists and List Adapters)</a></li>
     <li>Populate the ListAdapter fields with properties from the Track domain objects</li>
     <li>Add a click handler for each list element, where clicks will start Spotify and play song</li>
 </ol>
@@ -287,63 +288,66 @@ List adapter for displaying the search results
 <span class="nt">&lt;/LinearLayout&gt;</span></code></pre></div>
 
 <h3> ResultActivity</h3>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ResultActivity</span> <span class="kd">extends</span> <span class="n">ListActivity</span> <span class="o">{</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ResultActivity</span> <span class="kd">extends</span> <span class="n">Activity</span> <span class="o">{</span>
+    <span class="n">ListView</span> <span class="n">listView</span><span class="o">;</span>
 
-	<span class="nd">@Override</span>
-	<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
-		<span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">);</span>
-		<span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">activity_result</span><span class="o">);</span>
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">);</span>
+        <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">activity_result</span><span class="o">);</span>
 
-		<span class="k">try</span> <span class="o">{</span>
-		<span class="c1">// Get the track list from the MainActivity</span>
-		<span class="n">Bundle</span> <span class="n">data</span> <span class="o">=</span> <span class="n">getIntent</span><span class="o">().</span><span class="na">getExtras</span><span class="o">();</span>
-		<span class="n">ObjectMapper</span> <span class="n">mapper</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ObjectMapper</span><span class="o">();</span>
-		<span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span> <span class="o">=</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="n">mapper</span><span class="o">.</span><span class="na">readValue</span><span class="o">(</span><span class="n">data</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&quot;tracks&quot;</span><span class="o">),</span> <span class="n">Track</span><span class="o">[].</span><span class="na">class</span><span class="o">));</span>
+        <span class="n">listView</span> <span class="o">=</span> <span class="o">(</span><span class="n">ListView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">listView</span><span class="o">);</span>
 
-		<span class="n">setListAdapter</span><span class="o">(</span><span class="k">new</span> <span class="nf">TrackAdapter</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">result_list_item</span><span class="o">,</span> <span class="n">tracks</span><span class="o">));</span>
-		<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-			<span class="c1">// Do nothing</span>
-		<span class="o">}</span>
-	<span class="o">}</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="c1">// Get the track list from the MainActivity</span>
+            <span class="n">Bundle</span> <span class="n">data</span> <span class="o">=</span> <span class="n">getIntent</span><span class="o">().</span><span class="na">getExtras</span><span class="o">();</span>
+            <span class="n">ObjectMapper</span> <span class="n">mapper</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ObjectMapper</span><span class="o">();</span>
+            <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span> <span class="o">=</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="n">mapper</span><span class="o">.</span><span class="na">readValue</span><span class="o">(</span><span class="n">data</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&quot;tracks&quot;</span><span class="o">),</span> <span class="n">Track</span><span class="o">[].</span><span class="na">class</span><span class="o">));</span>
 
-	<span class="nd">@Override</span>
-	<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onListItemClick</span><span class="o">(</span><span class="n">ListView</span> <span class="n">l</span><span class="o">,</span> <span class="n">View</span> <span class="n">v</span><span class="o">,</span> <span class="kt">int</span> <span class="n">position</span><span class="o">,</span> <span class="kt">long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
-		<span class="c1">// Get the clicked track</span>
-		<span class="n">Track</span> <span class="n">track</span> <span class="o">=</span> <span class="o">(</span><span class="n">Track</span><span class="o">)</span> <span class="n">getListAdapter</span><span class="o">().</span><span class="na">getItem</span><span class="o">(</span><span class="n">position</span><span class="o">);</span>
-		<span class="c1">// Start playback in Spotify</span>
-		<span class="n">Intent</span> <span class="n">appPlayBackIntent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_VIEW</span><span class="o">,</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">track</span><span class="o">.</span><span class="na">getHref</span><span class="o">()));</span>
-		<span class="c1">// Verify that the device has Spotify and can play the track</span>
-		<span class="k">if</span> <span class="o">(</span><span class="n">appPlayBackIntent</span><span class="o">.</span><span class="na">resolveActivity</span><span class="o">(</span><span class="n">getPackageManager</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-			<span class="n">startActivity</span><span class="o">(</span><span class="n">appPlayBackIntent</span><span class="o">);</span>
-		<span class="o">}</span>
-		<span class="k">else</span> <span class="o">{</span>
-			<span class="c1">// Open play store so that the user can download Spotify</span>
-			<span class="n">String</span> <span class="n">packageName</span> <span class="o">=</span> <span class="s">&quot;com.spotify.mobile.android.ui&quot;</span><span class="o">;</span>
-			<span class="k">try</span> <span class="o">{</span>
-				<span class="n">startActivity</span><span class="o">(</span><span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_VIEW</span><span class="o">,</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;market://details?id=&quot;</span> <span class="o">+</span> <span class="n">packageName</span><span class="o">)));</span>
-			<span class="o">}</span>
-			<span class="k">catch</span> <span class="o">(</span><span class="n">android</span><span class="o">.</span><span class="na">content</span><span class="o">.</span><span class="na">ActivityNotFoundException</span> <span class="n">anfe</span><span class="o">)</span> <span class="o">{</span>
-				<span class="n">startActivity</span><span class="o">(</span><span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_VIEW</span><span class="o">,</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;http://play.google.com/store/apps/details?id=&quot;</span> <span class="o">+</span> 
-				<span class="n">packageName</span><span class="o">)));</span>
-			<span class="o">}</span>
-		<span class="o">}</span>
-	<span class="o">}</span>
+            <span class="n">listView</span><span class="o">.</span><span class="na">setAdapter</span><span class="o">(</span><span class="k">new</span> <span class="nf">TrackAdapter</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">result_list_item</span><span class="o">,</span> <span class="n">tracks</span><span class="o">));</span>
+            <span class="n">listView</span><span class="o">.</span><span class="na">setOnItemClickListener</span><span class="o">(</span><span class="k">new</span> <span class="n">AdapterView</span><span class="o">.</span><span class="na">OnItemClickListener</span><span class="o">()</span> <span class="o">{</span>
+                <span class="nd">@Override</span>
+                <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onItemClick</span><span class="o">(</span><span class="n">AdapterView</span><span class="o">&lt;?&gt;</span> <span class="n">parent</span><span class="o">,</span> <span class="n">View</span> <span class="n">view</span><span class="o">,</span> <span class="kt">int</span> <span class="n">position</span><span class="o">,</span> <span class="kt">long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="c1">// Get the clicked track</span>
+                    <span class="n">Track</span> <span class="n">track</span> <span class="o">=</span> <span class="o">(</span><span class="n">Track</span><span class="o">)</span> <span class="n">parent</span><span class="o">.</span><span class="na">getItemAtPosition</span><span class="o">(</span><span class="n">position</span><span class="o">);</span>
+                    <span class="c1">// Start playback in Spotify</span>
+                    <span class="n">Intent</span> <span class="n">appPlayBackIntent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_VIEW</span><span class="o">,</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">track</span><span class="o">.</span><span class="na">getHref</span><span class="o">()));</span>
+                    <span class="c1">// Verify that the device has Spotify and can play the track</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">appPlayBackIntent</span><span class="o">.</span><span class="na">resolveActivity</span><span class="o">(</span><span class="n">getPackageManager</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">startActivity</span><span class="o">(</span><span class="n">appPlayBackIntent</span><span class="o">);</span>
+                    <span class="o">}</span>
+                    <span class="k">else</span> <span class="o">{</span>
+                        <span class="c1">// Open play store so that the user can download Spotify</span>
+                        <span class="n">String</span> <span class="n">packageName</span> <span class="o">=</span> <span class="s">&quot;com.spotify.mobile.android.ui&quot;</span><span class="o">;</span>
+                        <span class="k">try</span> <span class="o">{</span>
+                            <span class="n">startActivity</span><span class="o">(</span><span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_VIEW</span><span class="o">,</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;market://details?id=&quot;</span> <span class="o">+</span> <span class="n">packageName</span><span class="o">)));</span>
+                        <span class="o">}</span>
+                        <span class="k">catch</span> <span class="o">(</span><span class="n">android</span><span class="o">.</span><span class="na">content</span><span class="o">.</span><span class="na">ActivityNotFoundException</span> <span class="n">anfe</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="n">startActivity</span><span class="o">(</span><span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_VIEW</span><span class="o">,</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;http://play.google.com/store/apps/details?id=&quot;</span> <span class="o">+</span> <span class="n">packageName</span><span class="o">)));</span>
+                        <span class="o">}</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">});</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// Do nothing</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="o">&lt;</span><span class="n">RelativeLayout</span> <span class="nl">xmlns:</span><span class="n">android</span><span class="o">=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
-<span class="nl">xmlns:</span><span class="n">tools</span><span class="o">=</span><span class="s">&quot;http://schemas.android.com/tools&quot;</span>
-<span class="nl">android:</span><span class="n">layout_width</span><span class="o">=</span><span class="s">&quot;match_parent&quot;</span>
-<span class="nl">android:</span><span class="n">layout_height</span><span class="o">=</span><span class="s">&quot;match_parent&quot;</span>
-<span class="nl">android:</span><span class="n">paddingLeft</span><span class="o">=</span><span class="s">&quot;@dimen/activity_horizontal_margin&quot;</span>
-<span class="nl">android:</span><span class="n">paddingRight</span><span class="o">=</span><span class="s">&quot;@dimen/activity_horizontal_margin&quot;</span>
-<span class="nl">android:</span><span class="n">paddingTop</span><span class="o">=</span><span class="s">&quot;@dimen/activity_vertical_margin&quot;</span>
-<span class="nl">android:</span><span class="n">paddingBottom</span><span class="o">=</span><span class="s">&quot;@dimen/activity_vertical_margin&quot;</span>
-<span class="nl">android:</span><span class="n">background</span><span class="o">=</span><span class="s">&quot;@color/dark_gray&quot;</span>
-<span class="nl">tools:</span><span class="n">context</span><span class="o">=</span><span class="s">&quot;no.bekk.spotifyapieksempel.ResultActivity&quot;</span><span class="o">&gt;</span>
+    <span class="nl">xmlns:</span><span class="n">tools</span><span class="o">=</span><span class="s">&quot;http://schemas.android.com/tools&quot;</span>
+    <span class="nl">android:</span><span class="n">layout_width</span><span class="o">=</span><span class="s">&quot;match_parent&quot;</span>
+    <span class="nl">android:</span><span class="n">layout_height</span><span class="o">=</span><span class="s">&quot;match_parent&quot;</span>
+    <span class="nl">android:</span><span class="n">paddingLeft</span><span class="o">=</span><span class="s">&quot;@dimen/activity_horizontal_margin&quot;</span>
+    <span class="nl">android:</span><span class="n">paddingRight</span><span class="o">=</span><span class="s">&quot;@dimen/activity_horizontal_margin&quot;</span>
+    <span class="nl">android:</span><span class="n">paddingTop</span><span class="o">=</span><span class="s">&quot;@dimen/activity_vertical_margin&quot;</span>
+    <span class="nl">android:</span><span class="n">paddingBottom</span><span class="o">=</span><span class="s">&quot;@dimen/activity_vertical_margin&quot;</span>
+    <span class="nl">android:</span><span class="n">background</span><span class="o">=</span><span class="s">&quot;@color/dark_gray&quot;</span>
+    <span class="nl">tools:</span><span class="n">context</span><span class="o">=</span><span class="s">&quot;no.bekk.spotifyapieksempel.ResultActivity&quot;</span><span class="o">&gt;</span>
 
-<span class="o">&lt;</span><span class="n">ListView</span>
-<span class="nl">android:</span><span class="n">layout_width</span><span class="o">=</span><span class="s">&quot;wrap_content&quot;</span>
-<span class="nl">android:</span><span class="n">layout_height</span><span class="o">=</span><span class="s">&quot;wrap_content&quot;</span>
-<span class="nl">android:</span><span class="n">id</span><span class="o">=</span><span class="s">&quot;@android:id/list&quot;</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">ListView</span>
+        <span class="nl">android:</span><span class="n">layout_width</span><span class="o">=</span><span class="s">&quot;wrap_content&quot;</span>
+        <span class="nl">android:</span><span class="n">layout_height</span><span class="o">=</span><span class="s">&quot;wrap_content&quot;</span>
+        <span class="nl">android:</span><span class="n">id</span><span class="o">=</span><span class="s">&quot;@+id/listView&quot;</span><span class="o">/&gt;</span>
 <span class="o">&lt;/</span><span class="n">RelativeLayout</span><span class="o">&gt;</span></code></pre></div>
 
 
