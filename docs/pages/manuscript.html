@@ -24,6 +24,7 @@ an updated version of Android Studio
 	</li>
 	<li>Replace content in <code>doInBackground()</code> with search method from SearchService. Add a <code>Toast</code> in <code>onPostExecute()</code>
 		which will display the first track result. This illustrates that a network call actually was performed</li>
+    <li> Create Result object and explain its connection to the JSON structure returned by the Spotify API</li>
 	<li>Do not add internet permission until app has run and failed. Explain the Android Manifest and the need for permissions</li> 
 	{% highlight xml %}
 	    <uses-permission android:name="android.permission.INTERNET" />
@@ -360,3 +361,44 @@ public class ResultActivity extends Activity {
 </RelativeLayout>
 
 {% endhighlight %}
+{% highlight json %}
+{
+  "info": {
+    "num_results": 1,
+    "limit": 100,
+    "offset": 0,
+    "query": "\"godset fra drammen\"",
+    "type": "track",
+    "page": 1
+  },
+  "tracks": [
+    {
+      "album": {
+        "released": "2008",
+        "href": "spotify:album:7nrjbBpy8yrueDbKCBY6Ef",
+        "name": "2 x femogførr",
+        "availability": {
+          "territories": "AD AR AT AU BE BG BO BR CA CH CL CO CR CY CZ DE DK DO EC EE ES FI FR GB GR GT HK HN HR HU IE IS IT LI LT LU LV MC MT MX MY NI NL NO NZ PA PE PH PL PT PY RO SE SG SI SK SV TR TW US UY"
+        }
+      },
+      "name": "Godset fra Drammen",
+      "popularity": "0.36",
+      "external-ids": [
+        {
+          "type": "isrc",
+          "id": "NOFFM0897080"
+        }
+      ],
+      "length": 258.786,
+      "href": "spotify:track:67jdp9WXPR3ihTic9WXwmG",
+      "artists": [
+        {
+          "href": "spotify:artist:4AiqdizfguNQoWQ5N6Aaza",
+          "name": "C-laget"
+        }
+      ],
+      "track-number": "8"
+    }
+  ]
+}
+{% highlight java %}
