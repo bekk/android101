@@ -40,6 +40,7 @@ an updated version of Android Studio
 	</li>
 	<li>Replace content in <code>doInBackground()</code> with search method from SearchService. Add a <code>Toast</code> in <code>onPostExecute()</code>
 		which will display the first track result. This illustrates that a network call actually was performed</li>
+    <li> Create Result object and explain its connection to the JSON structure returned by the Spotify API</li>
 	<li>Do not add internet permission until app has run and failed. Explain the Android Manifest and the need for permissions</li> 
 	<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&quot;android.permission.INTERNET&quot;</span> <span class="nt">/&gt;</span></code></pre></div>
 	<li>Run app again and see that the <code>Toast</code> pops up.</li>
@@ -350,6 +351,46 @@ List adapter for displaying the search results
         <span class="nl">android:</span><span class="n">layout_height</span><span class="o">=</span><span class="s">&quot;wrap_content&quot;</span>
         <span class="nl">android:</span><span class="n">id</span><span class="o">=</span><span class="s">&quot;@+id/listView&quot;</span><span class="o">/&gt;</span>
 <span class="o">&lt;/</span><span class="n">RelativeLayout</span><span class="o">&gt;</span></code></pre></div>
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&quot;info&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;num_results&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nt">&quot;limit&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="nt">&quot;offset&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&quot;query&quot;</span><span class="p">:</span> <span class="s2">&quot;\&quot;godset fra drammen\&quot;&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;track&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;page&quot;</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;tracks&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nt">&quot;album&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;released&quot;</span><span class="p">:</span> <span class="s2">&quot;2008&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;spotify:album:7nrjbBpy8yrueDbKCBY6Ef&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;2 x femogførr&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;availability&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;territories&quot;</span><span class="p">:</span> <span class="s2">&quot;AD AR AT AU BE BG BO BR CA CH CL CO CR CY CZ DE DK DO EC EE ES FI FR GB GR GT HK HN HR HU IE IS IT LI LT LU LV MC MT MX MY NI NL NO NZ PA PE PH PL PT PY RO SE SG SI SK SV TR TW US UY&quot;</span>
+        <span class="p">}</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Godset fra Drammen&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;popularity&quot;</span><span class="p">:</span> <span class="s2">&quot;0.36&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;external-ids&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;isrc&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;NOFFM0897080&quot;</span>
+        <span class="p">}</span>
+      <span class="p">],</span>
+      <span class="nt">&quot;length&quot;</span><span class="p">:</span> <span class="mf">258.786</span><span class="p">,</span>
+      <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;spotify:track:67jdp9WXPR3ihTic9WXwmG&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;artists&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;spotify:artist:4AiqdizfguNQoWQ5N6Aaza&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;C-laget&quot;</span>
+        <span class="p">}</span>
+      <span class="p">],</span>
+      <span class="nt">&quot;track-number&quot;</span><span class="p">:</span> <span class="s2">&quot;8&quot;</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span></code></pre></div>
+
 
 
           </div>
