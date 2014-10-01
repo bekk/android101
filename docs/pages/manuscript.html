@@ -22,19 +22,18 @@ an updated version of Android Studio
 		<p><code>compile 'com.fasterxml.jackson.core:jackson-core:2.2.3'</code></p>
    		<p><code>compile 'com.fasterxml.jackson.core:jackson-databind:2.2.3'</code> </p>
 	</li>
-	<li>Replace content in <code>doInBackground()</code> with search method from SearchService. Add a <code>Toast</code> in <code>onPostExecute()</code>
-		which will display the first track result. This illustrates that a network call actually was performed</li>
-    <li> Create Result object and explain its connection to the JSON structure returned by the Spotify API</li>
+	<li>Replace content in <code>doInBackground()</code> with search method HTTPClient. Add a log statement which prints the received json.</li>
 	<li>Do not add internet permission until app has run and failed. Explain the Android Manifest and the need for permissions</li> 
 	{% highlight xml %}
 	    <uses-permission android:name="android.permission.INTERNET" />
 	{% endhighlight %}
-	<li>Run app again and see that the <code>Toast</code> pops up.</li>
+	<li>Run app again and view the log statement</li>
 	<li>Create the ResultActivity. ResultActivity will display a list containing the search results. Add entries to the Android Manifest</li>
     <li>Remove <code>Toast</code> and start the ResultActivity from the <code>onPostExecute()</code>using Intents. Explain that there are several ways to pass
-    	objects between activities, for instance Parcelable. For simplicity, we use Jackson to serialize the search result as a String and pass this as a <code>
+    	objects between activities, for instance Parcelable. For simplicity, we pass the json as a <code>
     	stringExtra</code></li>
-    <li>In the ResultActivity, parse the String as Track domain objects using Jackson</li>
+    <li> Create the Result dto object and explain its connection to the JSON structure returned by the Spotify API. It will hold a list of tracks</li>
+    <li>In the ResultActivity, parse the String as the Result dto domain objects using Jacksons ObjectMapper and readValue()</li>
     <li> Explain that a <code>SimpleListAdapter</code> can be used, but for more complex stuff, we want to create our own adapter</code></li>
     <li>Add and explain custom ListAdapters (<a href="list-list-adapters.html"> Lists and List Adapters).</a> Mention reuse of views by checking if view is null</li>
     <li>Populate the ListAdapter fields with properties from the Track domain objects</li>
@@ -64,62 +63,21 @@ public class Result {
 
 	Create an <b>AsyncTask</b> for performing the web request
 	{% highlight java %}
-private class TrackSearchAsyncTask extends AsyncTask<String, Void, Result> {
-	private SearchService searchService;
-
-	@Override
-	protected void onPreExecute() {
-		searchService = new SearchService();
-		super.onPreExecute();
-	}
-
-	@Override
-	protected Result doInBackground(String ...params) {
-		// Perform search for tracks in Spotify
-		return searchService.searchForTrack(params[0]);
-	}
-
-	@Override
-	protected void onPostExecute(Result result) {
-		ArrayList<Track> tracks = new ArrayList<Track>();
-		tracks.addAll(result.getTracks());
-
-		// Start result activity which displays the result.
-		Intent resultActivity = new Intent(getApplicationContext(), ResultActivity.class);
-		// Add the search result as a String
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-		String listAsString = mapper.writeValueAsString(tracks);
-		resultActivity.putExtra("tracks", listAsString);
-		startActivity(resultActivity);
-		} catch (JsonProcessingException e) {
-		// Do nothing
-		}
-	}
-}
-{% endhighlight %}
-
-
-<b>SearchService</b> to be used in AsyncTask
-{% highlight java %}
-public class SearchService {
-    private static final String TAG = "SearchService";
-
-    public Result searchForTrack(String trackName) {
-        HttpClient httpClient = new HttpClient();
-        JsonParser jsonParser = new JsonParser();
-        Result result = new Result();
-        try {
-            result = jsonParser.parseTrackResponse(httpClient.getTracks(trackName));
-        } catch (IOException e) {
-            Log.e(TAG, "Could not parse json");
-            e.printStackTrace();
+private class SearchAsyncTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            String tracks = client.getTracks(params[0]);
+            return tracks;
         }
-        return result;
-    }
-}
-{% endhighlight %}
 
+        @Override
+        protected void onPostExecute(String resultJson) {
+            Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
+            intent.putExtra("resultJson", resultJson);
+            startActivity(intent);
+        }
+    }
+{% endhighlight %}
 
 <h3> Classes and Services</h3>
 <b>HttpClient</b>
