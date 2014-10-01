@@ -46,6 +46,7 @@ an updated version of Android Studio
     <li>Remove <code>Toast</code> and start the ResultActivity from the <code>onPostExecute()</code>using Intents. Explain that there are several ways to pass
     	objects between activities, for instance Parcelable. For simplicity, we pass the json as a <code>
     	stringExtra</code></li>
+    <li> Create the Artist and Track domain objects. Copy these</li>
     <li> Create the Result dto object and explain its connection to the JSON structure returned by the Spotify API. It will hold a list of tracks</li>
     <li>In the ResultActivity, parse the String as the Result dto domain objects using Jacksons ObjectMapper and readValue()</li>
     <li> Explain that a <code>SimpleListAdapter</code> can be used, but for more complex stuff, we want to create our own adapter</code></li>
