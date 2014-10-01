@@ -35,8 +35,7 @@ an updated version of Android Studio
     	Print a simple text in <code>doInBackground()</code> to illustrate background work</li>
 	<li>Add classes for network communication. We use the Apache HTTP client. Skip live coding this part.</li>
 	<li>Add Gradle dependencies for JSON parsing and explain why we need this:
-		<p><code>compile 'com.fasterxml.jackson.core:jackson-core:2.2.3'</code></p>
-   		<p><code>compile 'com.fasterxml.jackson.core:jackson-databind:2.2.3'</code> </p>
+		<p><code> compile 'com.google.code.gson:gson:1.7.2'</code></p>
 	</li>
 	<li>Replace content in <code>doInBackground()</code> with search method HTTPClient. Add a log statement which prints the received json.</li>
 	<li>Do not add internet permission until app has run and failed. Explain the Android Manifest and the need for permissions</li> 
@@ -48,7 +47,7 @@ an updated version of Android Studio
     	stringExtra</code></li>
     <li> Create the Artist and Track domain objects. Copy these</li>
     <li> Create the Result dto object and explain its connection to the JSON structure returned by the Spotify API. It will hold a list of tracks</li>
-    <li>In the ResultActivity, parse the String as the Result dto domain objects using Jacksons ObjectMapper and readValue()</li>
+    <li>In the ResultActivity, parse the String as the Result dto domain objects using gson</li>
     <li> Explain that a <code>SimpleListAdapter</code> can be used, but for more complex stuff, we want to create our own adapter</code></li>
     <li>Add and explain custom ListAdapters (<a href="list-list-adapters.html"> Lists and List Adapters).</a> Mention reuse of views by checking if view is null</li>
     <li>Populate the ListAdapter fields with properties from the Track domain objects</li>
@@ -59,9 +58,8 @@ an updated version of Android Studio
 
 <h3> Result Dto, AsyncTask and SearchService</h3>
 
-Create the <b>Result</b> Dto object, which will contain a list of tracks
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@JsonIgnoreProperties</span><span class="o">(</span><span class="n">ignoreUnknown</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Result</span> <span class="o">{</span>
+Create the <b>ResultDto</b> Dto object, which will contain a list of tracks
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ResultDto</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">;</span>
 
     <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="nf">getTracks</span><span class="o">()</span> <span class="o">{</span>
@@ -137,15 +135,10 @@ Create the <b>Result</b> Dto object, which will contain a list of tracks
 
 <b>Track</b> domain object
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@JsonIgnoreProperties</span><span class="o">(</span><span class="n">ignoreUnknown</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Track</span> <span class="o">{</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Track</span> <span class="o">{</span>
 	<span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
 	<span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Artist</span><span class="o">&gt;</span> <span class="n">artists</span><span class="o">;</span>
 	<span class="kd">private</span> <span class="n">String</span> <span class="n">href</span><span class="o">;</span>
-
-	<span class="c1">// Jackson needs an empty constructor</span>
-	<span class="kd">public</span> <span class="nf">Track</span><span class="o">()</span> <span class="o">{</span>
-	<span class="o">}</span>
 
 	<span class="kd">public</span> <span class="n">String</span> <span class="nf">getHref</span><span class="o">()</span> <span class="o">{</span>
 		<span class="k">return</span> <span class="n">href</span><span class="o">;</span>
@@ -173,13 +166,8 @@ Create the <b>Result</b> Dto object, which will contain a list of tracks
 <span class="o">}</span></code></pre></div>
 
 <b>Artist</b> domain object
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@JsonIgnoreProperties</span><span class="o">(</span><span class="n">ignoreUnknown</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Artist</span> <span class="o">{</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Artist</span> <span class="o">{</span>
 	<span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
-
-	<span class="c1">// Jackson needs an empty constructor</span>
-	<span class="kd">public</span> <span class="nf">Artist</span><span class="o">()</span> <span class="o">{</span>
-	<span class="o">}</span>
 
 	<span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
 		<span class="k">return</span> <span class="n">name</span><span class="o">;</span>
