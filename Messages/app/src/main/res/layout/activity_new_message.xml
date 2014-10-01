@@ -35,6 +35,13 @@
              />
 
         <Button
+            android:id="@+id/button_take_picture"
+            android:text="@string/button_take_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        <Button
             android:id="@+id/button_send_message"
             android:text="@string/button_send_message"
             android:layout_width="wrap_content"

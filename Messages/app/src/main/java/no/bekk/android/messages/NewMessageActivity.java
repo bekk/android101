@@ -2,7 +2,10 @@ package no.bekk.android.messages;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,12 +15,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import no.bekk.android.messages.imgur.Upload;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
 public class NewMessageActivity extends Activity {
+    private String imageUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,13 @@ public class NewMessageActivity extends Activity {
         Button sendButton = (Button) findViewById(R.id.button_send_message);
         final EditText fromField = (EditText) findViewById(R.id.etFrom);
         final EditText messageField = (EditText) findViewById(R.id.etMessage);
+        final Button pictureButton = (Button) findViewById(R.id.button_take_picture);
+        pictureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dispatchTakePictureIntent();
+            }
+        });
 
         showKeyboard();
 
@@ -34,16 +46,17 @@ public class NewMessageActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Message message = new Message(fromField.getText().toString(), messageField.getText().toString());
+                message.setImage(imageUrl);
                 App.getMessageService().send(message, new Callback<Message>() {
                     @Override
                     public void success(Message message, Response response) {
-                        Toast.makeText(NewMessageActivity.this, "Meldingen ble sendt", 3).show();
+                        Toast.makeText(NewMessageActivity.this, "Meldingen ble sendt", Toast.LENGTH_SHORT).show();
                         NewMessageActivity.this.finish();
                     }
 
                     @Override
                     public void failure(RetrofitError retrofitError) {
-                        Toast.makeText(NewMessageActivity.this, "Kunne ikke sende melding", 5).show();
+                        Toast.makeText(NewMessageActivity.this, "Kunne ikke sende melding", Toast.LENGTH_SHORT).show();
                         if (BuildConfig.DEBUG) {
                             throw retrofitError;
                         }
@@ -51,6 +64,33 @@ public class NewMessageActivity extends Activity {
                 });
             }
         });
+    }
+
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            Upload upload = new Upload(imageBitmap, this) {
+                @Override
+                protected void onPostExecute(String imageId) {
+                    super.onPostExecute(imageId);
+                    if (imageId != null) {
+                        imageUrl = "http://imgur.com/" + imageId;
+                    }
+                }
+            };
+            upload.execute();
+        }
     }
 
     private void showKeyboard() {

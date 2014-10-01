@@ -6,12 +6,20 @@ import java.util.Comparator;
 
 public class Message implements Comparable<Message> {
     private DateTime date;
-    private String from, message;
+    private String from, message, image;
 
     public Message(String from, String message) {
         this.date = null;
         this.from = from;
         this.message = message;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     public String getFrom() {

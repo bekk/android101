@@ -111,7 +111,7 @@ public class MessagesActivity extends Activity {
             @Override
             public void failure(RetrofitError retrofitError) {
                 setProgressBarIndeterminateVisibility(false);
-                Toast.makeText(MessagesActivity.this, "Could not fetch messages at this time", 5).show();
+                Toast.makeText(MessagesActivity.this, "Could not fetch messages at this time", Toast.LENGTH_SHORT).show();
                 if (BuildConfig.DEBUG) {
                     throw retrofitError;
                 }
