@@ -45,10 +45,9 @@ an updated version of Android Studio
 
 <h3> Result Dto, AsyncTask and SearchService</h3>
 
-Create the <b>Result</b> Dto object, which will contain a list of tracks
+Create the <b>ResultDto</b> Dto object, which will contain a list of tracks
 {% highlight java %}
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Result {
+public class ResultDto {
     private List<Track> tracks;
 
     public List<Track> getTracks() {
@@ -131,7 +130,6 @@ private class SearchAsyncTask extends AsyncTask<String, Void, String> {
 <b>Track</b> domain object
 
 {% highlight java %}
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Track {
 	private String name;
 	private List<Artist> artists;
@@ -169,7 +167,6 @@ public class Track {
 
 <b>Artist</b> domain object
 {% highlight java %}
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Artist {
 	private String name;
 
