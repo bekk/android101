@@ -19,8 +19,7 @@ an updated version of Android Studio
     	Print a simple text in <code>doInBackground()</code> to illustrate background work</li>
 	<li>Add classes for network communication. We use the Apache HTTP client. Skip live coding this part.</li>
 	<li>Add Gradle dependencies for JSON parsing and explain why we need this:
-		<p><code>compile 'com.fasterxml.jackson.core:jackson-core:2.2.3'</code></p>
-   		<p><code>compile 'com.fasterxml.jackson.core:jackson-databind:2.2.3'</code> </p>
+		<p><code> compile 'com.google.code.gson:gson:1.7.2'</code></p>
 	</li>
 	<li>Replace content in <code>doInBackground()</code> with search method HTTPClient. Add a log statement which prints the received json.</li>
 	<li>Do not add internet permission until app has run and failed. Explain the Android Manifest and the need for permissions</li> 
@@ -34,7 +33,7 @@ an updated version of Android Studio
     	stringExtra</code></li>
     <li> Create the Artist and Track domain objects. Copy these</li>
     <li> Create the Result dto object and explain its connection to the JSON structure returned by the Spotify API. It will hold a list of tracks</li>
-    <li>In the ResultActivity, parse the String as the Result dto domain objects using Jacksons ObjectMapper and readValue()</li>
+    <li>In the ResultActivity, parse the String as the Result dto domain objects using gson</li>
     <li> Explain that a <code>SimpleListAdapter</code> can be used, but for more complex stuff, we want to create our own adapter</code></li>
     <li>Add and explain custom ListAdapters (<a href="list-list-adapters.html"> Lists and List Adapters).</a> Mention reuse of views by checking if view is null</li>
     <li>Populate the ListAdapter fields with properties from the Track domain objects</li>
@@ -135,10 +134,6 @@ public class Track {
 	private List<Artist> artists;
 	private String href;
 
-	// Jackson needs an empty constructor
-	public Track() {
-	}
-
 	public String getHref() {
 		return href;
 	}
@@ -169,10 +164,6 @@ public class Track {
 {% highlight java %}
 public class Artist {
 	private String name;
-
-	// Jackson needs an empty constructor
-	public Artist() {
-	}
 
 	public String getName() {
 		return name;
