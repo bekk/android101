@@ -1,21 +1,13 @@
 package no.bekk.spotifyapieksempel.domain;
 
 import android.os.Parcel;
-import android.os.Parcelable;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Track {
     private String name;
     private List<Artist> artists;
     private String href;
-
-    // Jackson needs an empty constructor
-    public Track() {
-    }
 
     public Track(Parcel in) {
         name = in.readString();

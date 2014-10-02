@@ -1,12 +1,10 @@
 package no.bekk.spotifyapieksempel.http;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
 
 import no.bekk.spotifyapieksempel.domain.Track;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Result {
 
     private List<Track> tracks;

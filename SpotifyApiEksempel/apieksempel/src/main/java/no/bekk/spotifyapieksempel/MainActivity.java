@@ -10,8 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -84,14 +83,10 @@ public class MainActivity extends Activity {
             // Start result activity which displays the result.
             Intent resultActivity = new Intent(getApplicationContext(), ResultActivity.class);
             // Add the search result as a String
-            ObjectMapper mapper = new ObjectMapper();
-            try {
-                String listAsString = mapper.writeValueAsString(tracks);
-                resultActivity.putExtra("tracks", listAsString);
-                startActivity(resultActivity);
-            } catch (JsonProcessingException e) {
-                // Do nothing
-            }
+            Gson gson = new Gson();
+            String listAsString = gson.toJson(tracks);
+            resultActivity.putExtra("tracks", listAsString);
+            startActivity(resultActivity);
         }
     }
 }

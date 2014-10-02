@@ -1,14 +1,12 @@
 package no.bekk.spotifyapieksempel.json;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.IOException;
+import com.google.gson.Gson;
 
 import no.bekk.spotifyapieksempel.http.Result;
 
 public class JsonParser {
-    public Result parseTrackResponse(String jsonString) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(jsonString, Result.class);
+    public Result parseTrackResponse(String jsonString) {
+        Gson gson = new Gson();
+        return gson.fromJson(jsonString, Result.class);
     }
 }
