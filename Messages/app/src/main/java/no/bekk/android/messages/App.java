@@ -15,7 +15,7 @@ public class App {
         if (messageService == null) {
             final Gson gson = Converters.registerDateTime(new GsonBuilder()).create();
             RestAdapter restAdapter = new RestAdapter.Builder()
-                    .setEndpoint("http://ios-course.herokuapp.com")
+                    .setEndpoint("http://mobile-course.herokuapp.com")
                     .setConverter(new GsonConverter(gson))
                     .build();
             messageService = restAdapter.create(MessageService.class);
