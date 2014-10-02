@@ -2,29 +2,17 @@
 <pre-dex-items>
 
     <item
-        dex="/Users/chris/Dev/Fagting/android101/SpotifyApiEksempel/apieksempel/build/intermediates/pre-dexed/debug/jackson-annotations-2.2.3-4c3b357790e68c18fd215a5e399756f3bce0b37c.jar"
-        jar="/Users/chris/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-annotations/2.2.3/527fece4f23a457070a36c371a26d6c0208e1c3/jackson-annotations-2.2.3.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="0527fece4f23a457070a36c371a26d6c0208e1c3"/>
-    <item
-        dex="/Users/chris/Dev/Fagting/android101/SpotifyApiEksempel/apieksempel/build/intermediates/pre-dexed/debug/jackson-databind-2.2.3-48a03de68c465103dfb6ea071e768715d90b38aa.jar"
-        jar="/Users/chris/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-databind/2.2.3/3ae380888029daefb91d3ecdca3a37d8cb92bc9/jackson-databind-2.2.3.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="03ae380888029daefb91d3ecdca3a37d8cb92bc9"/>
-    <item
         dex="/Users/chris/Dev/Fagting/android101/SpotifyApiEksempel/apieksempel/build/intermediates/pre-dexed/debug/support-v4-19.1.0-17e57183f0a062c45002a348e246b404dce16046.jar"
         jar="/Users/chris/android-sdks/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
     <item
-        dex="/Users/chris/Dev/Fagting/android101/SpotifyApiEksempel/apieksempel/build/intermediates/pre-dexed/debug/jackson-core-2.2.3-dbcb64cfa776bab6080be55c64994428fd76e5b9.jar"
-        jar="/Users/chris/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.2.3/1a0113da2cab5f4c216b4e5e7c1dbfaa67087e14/jackson-core-2.2.3.jar"
+        dex="/Users/chris/Dev/Fagting/android101/SpotifyApiEksempel/apieksempel/build/intermediates/pre-dexed/debug/gson-1.7.2-a313981ac130872f85796a4bf10a9fd201d3d4da.jar"
+        jar="/Users/chris/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/1.7.2/112366d8158749e25532ebce162232c6e0fb20a5/gson-1.7.2.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="1a0113da2cab5f4c216b4e5e7c1dbfaa67087e14"/>
+        sha1="112366d8158749e25532ebce162232c6e0fb20a5"/>
     <item
         dex="/Users/chris/Dev/Fagting/android101/SpotifyApiEksempel/apieksempel/build/intermediates/pre-dexed/debug/classes-843fe62552ccdba3d5747806410e7d2f299eeb8c.jar"
         jar="/Users/chris/Dev/Fagting/android101/SpotifyApiEksempel/apieksempel/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/classes.jar"
