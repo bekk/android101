@@ -15,6 +15,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         Intent msgActivity = new Intent(this, MessagesActivity.class);
         startActivity(msgActivity);
+        finish();
     }
 
 
