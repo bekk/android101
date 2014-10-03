@@ -17,4 +17,7 @@
     <string name="contextual_menu_delete">Delete</string>
     <string name="contextual_menu_edit">Edit</string>
 
+    <string name="image_upload_in_progress">Uploading image to imgur</string>
+    <string name="image_upload_success">Image was uploaded to </string>
+
 </resources>

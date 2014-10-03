@@ -34,12 +34,29 @@
             android:capitalize="sentences"
              />
 
-        <Button
-            android:id="@+id/button_take_picture"
-            android:text="@string/button_take_picture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/button_take_picture"
+                android:text="@string/button_take_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:id="@+id/image_upload"
+                android:visibility="invisible"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/image_upload_notice"
+                    android:text="@string/image_upload_in_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                </LinearLayout>
 
+            </LinearLayout>
 
         <Button
             android:id="@+id/button_send_message"

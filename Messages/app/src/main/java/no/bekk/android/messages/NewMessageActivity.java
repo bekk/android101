@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import no.bekk.android.messages.imgur.Upload;
@@ -24,10 +25,14 @@ import retrofit.client.Response;
 public class NewMessageActivity extends Activity {
     private String imageUrl;
 
+    private View imageUploadView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_message);
+
+        imageUploadView = findViewById(R.id.image_upload);
 
         Button sendButton = (Button) findViewById(R.id.button_send_message);
         final EditText fromField = (EditText) findViewById(R.id.etFrom);
@@ -75,6 +80,12 @@ public class NewMessageActivity extends Activity {
         }
     }
 
+    private void showImageUrl(String imageUrl) {
+        imageUploadView.setVisibility(View.VISIBLE);
+        TextView notice = (TextView) imageUploadView.findViewById(R.id.image_upload_notice);
+        notice.setText(getString(R.string.image_upload_success) + " " + imageUrl);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -85,7 +96,8 @@ public class NewMessageActivity extends Activity {
                 protected void onPostExecute(String imageId) {
                     super.onPostExecute(imageId);
                     if (imageId != null) {
-                        imageUrl = "http://imgur.com/" + imageId;
+                        imageUrl = "http://i.imgur.com/" + imageId + ".jpg";
+                        showImageUrl(imageUrl);
                     }
                 }
             };
