@@ -45,7 +45,8 @@ public class MessagesActivity extends Activity {
 
         final MessagesAdapter msgAdapter = new MessagesAdapter(this, messages);
         lvMessages.setAdapter(msgAdapter);
-
+        
+        lvMessages.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         lvMessages.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
             private int selectedCount;
             @Override
