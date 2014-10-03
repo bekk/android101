@@ -14,6 +14,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MessagesAdapter extends ArrayAdapter<Message> {
@@ -47,6 +48,16 @@ public class MessagesAdapter extends ArrayAdapter<Message> {
         notifyDataSetChanged();
     }
 
+    public List<Message> getSelectedMessages() {
+        ArrayList<Message> selectedMessages = new ArrayList<Message>();
+        for (int i = 0; i < selections.size(); i++) {
+            if (selections.valueAt(i)) {
+                selectedMessages.add(getItem(selections.keyAt(i)));
+            }
+        }
+        return selectedMessages;
+    }
+
     public boolean isSelected(int position) {
         return selections.get(position);
     }
@@ -69,6 +80,12 @@ public class MessagesAdapter extends ArrayAdapter<Message> {
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
+        }
+
+        if (isSelected(position)) {
+            convertView.setBackgroundColor(getContext().getResources().getColor(android.R.color.holo_blue_bright));
+        } else {
+            convertView.setBackgroundColor(getContext().getResources().getColor(android.R.color.transparent));
         }
         viewHolder.from.setText(msg.getFrom());
         viewHolder.message.setText(msg.getMessage());

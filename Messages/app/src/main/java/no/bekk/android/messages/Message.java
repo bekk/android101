@@ -6,7 +6,7 @@ import java.util.Comparator;
 
 public class Message implements Comparable<Message> {
     private DateTime date;
-    private String from, message, image;
+    private String from, message, image, _id;
 
     public Message(String from, String message) {
         this.date = null;
@@ -29,6 +29,8 @@ public class Message implements Comparable<Message> {
     public String getMessage() {
         return message;
     }
+
+    public String getId() { return _id; }
 
     @Override
     public int compareTo(Message message) {

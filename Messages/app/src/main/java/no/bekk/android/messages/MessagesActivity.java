@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -77,9 +78,25 @@ public class MessagesActivity extends Activity {
             public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.item_delete:
+                        List<Message> selectedMessages = getAdapter().getSelectedMessages();
                         selectedCount = 0;
                         getAdapter().clearSelection();
                         actionMode.finish();
+                        for (final Message selected : selectedMessages) {
+                            getAdapter().remove(selected);
+                            App.getMessageService().delete(selected.getId(), new Callback<String>() {
+                                @Override
+                                public void success(String s, Response response) {
+                                    Log.d("Tag", "Deleted msg id " + selected.getId());
+                                }
+
+                                @Override
+                                public void failure(RetrofitError error) {
+                                    Log.d("Tag", "Failed to delete msg id " + selected.getId() + " " + error.getBody());
+                                }
+                            });
+                        }
+                        break;
                 }
                 return false;
             }
