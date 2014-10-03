@@ -25,4 +25,6 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.5.1'
     compile 'com.google.guava:guava:17.0'
     compile 'com.fatboyindustrial.gson-jodatime-serialisers:gson-jodatime-serialisers:1.0.0'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
+
 }

@@ -16,6 +16,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.common.collect.Ordering;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import org.joda.time.DateTime;
 
@@ -41,6 +43,10 @@ public class MessagesActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_messages);
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
+        ImageLoader.getInstance().init(config);
+
         lvMessages = (ListView) findViewById(R.id.lvMessages);
 
         final MessagesAdapter msgAdapter = new MessagesAdapter(this, messages);
