@@ -29,7 +29,7 @@ As Retrofit handles the communication between the main UI thread and a backgroun
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">MessageService</span> <span class="o">{</span>
     <span class="nd">@GET</span><span class="o">(</span><span class="s">&quot;/messages&quot;</span><span class="o">)</span>
-    <span class="n">List</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="nf">listMessages</span><span class="o">(</span><span class="n">Callback</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;&gt;</span> <span class="n">callback</span><span class="o">));</span>
+    <span class="kt">void</span> <span class="nf">listMessages</span><span class="o">(</span><span class="n">Callback</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;&gt;</span> <span class="n">callback</span><span class="o">);</span>
 
     <span class="nd">@POST</span><span class="o">(</span><span class="s">&quot;/message&quot;</span><span class="o">)</span>
     <span class="kt">void</span> <span class="nf">send</span><span class="o">(</span><span class="nd">@Body</span> <span class="n">Message</span> <span class="n">message</span><span class="o">,</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="n">callback</span><span class="o">);</span>
