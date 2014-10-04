@@ -14,7 +14,7 @@ As Retrofit handles the communication between the main UI thread and a backgroun
 {% highlight java %}
 public interface MessageService {
     @GET("/messages")
-    List<Message> listMessages(Callback<List<Message>> callback));
+    void listMessages(Callback<List<Message>> callback);
 
     @POST("/message")
     void send(@Body Message message, Callback<Message> callback);
