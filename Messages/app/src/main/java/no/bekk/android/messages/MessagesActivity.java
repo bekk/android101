@@ -16,7 +16,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.fatboyindustrial.gsonjodatime.Converters;
 import com.google.common.collect.Ordering;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
@@ -76,9 +79,10 @@ public class MessagesActivity extends Activity {
 
             @Override
             public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+                List<Message> selectedMessages = getAdapter().getSelectedMessages();
                 switch (menuItem.getItemId()) {
                     case R.id.item_delete:
-                        List<Message> selectedMessages = getAdapter().getSelectedMessages();
+
                         selectedCount = 0;
                         getAdapter().clearSelection();
                         actionMode.finish();
@@ -96,6 +100,16 @@ public class MessagesActivity extends Activity {
                                 }
                             });
                         }
+                        break;
+                    case R.id.item_edit:
+                        Gson gson = Converters.registerDateTime(new GsonBuilder()).create();
+                        String messageAsString = gson.toJson(selectedMessages.get(0));
+                        Intent intent = new Intent(MessagesActivity.this,EditMessageActivity.class);
+                        intent.putExtra("message", messageAsString);
+                        startActivity(intent);
+                        selectedCount = 0;
+                        getAdapter().clearSelection();
+                        actionMode.finish();
                         break;
                 }
                 return false;

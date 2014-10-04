@@ -7,6 +7,7 @@ import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.PUT;
 import retrofit.http.Path;
 
 public interface MessageService {
@@ -18,4 +19,7 @@ public interface MessageService {
 
     @DELETE("/message/{id}")
     void delete(@Path("id") String id, Callback<String> callback);
+
+    @PUT("/message/{id}")
+    void update(@Body Message message,@Path("id") String id, Callback<Message> callback);
 }
