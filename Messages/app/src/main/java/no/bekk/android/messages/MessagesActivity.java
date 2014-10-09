@@ -58,7 +58,7 @@ public class MessagesActivity extends Activity {
             private int selectedCount;
             @Override
             public void onItemCheckedStateChanged(ActionMode actionMode, int position, long id, boolean checked) {
-                selectedCount = checked ? selectedCount + 1 : selectedCount;
+                selectedCount = checked ? selectedCount + 1 : selectedCount-1;
                 getAdapter().setSelection(position, checked);
                 actionMode.setTitle(selectedCount + " selected");
             }
