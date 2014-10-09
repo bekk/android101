@@ -7,17 +7,14 @@
     <string name="title_activity_messages">Messages</string>
     <string name="title_activity_new_message">New message</string>
     <string name="hello_world">Hello world!</string>
-
     <string name="hint_from">From</string>
     <string name="hint_message">Message text</string>
-
     <string name="button_send_message">Send message</string>
     <string name="button_take_picture">Take picture</string>
-
     <string name="contextual_menu_delete">Delete</string>
     <string name="contextual_menu_edit">Edit</string>
-
     <string name="image_upload_in_progress">Uploading image to imgur</string>
     <string name="image_upload_success">Image was uploaded to </string>
+    <string name="title_activity_edit_message">EditMessageActivity</string>
 
 </resources>
