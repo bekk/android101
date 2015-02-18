@@ -1,8 +1,8 @@
 package no.bekk.lollipop;
 
+import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,23 +11,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class MainActivity extends ActionBarActivity {
-    String TITLES[] = {"Search"};
-    String NAME = "Christoffer Marcussen";
-    String EMAIL = "christoffer.marcussen@bekk.no";
-    int PROFILE = R.drawable.cvbilde;
+import java.util.ArrayList;
+import java.util.List;
 
-    Toolbar toolbar;
-    RecyclerView mRecyclerView;
-    RecyclerView.Adapter mAdapter;
-    RecyclerView.LayoutManager mLayoutManager;
-    DrawerLayout Drawer;
-    ActionBarDrawerToggle mDrawerToggle;
+public class MainActivity extends ActionBarActivity {
+    private List<String> listItems = new ArrayList<String>();
+    private List<Integer> icons = new ArrayList<Integer>();
+    private String name = "Christoffer Marcussen";
+    private String email = "christoffer.marcussen@bekk.no";
+    private int profilePic = R.drawable.cvbilde;
+    private Toolbar toolbar;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private DrawerLayout Drawer;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        listItems.add("Search");
+        icons.add(R.mipmap.ic_action_music_1);
 
         setupToolbar();
         setupRecyclerView();
@@ -57,7 +62,7 @@ public class MainActivity extends ActionBarActivity {
     private void setupRecyclerView() {
         mRecyclerView = (RecyclerView) findViewById(R.id.RecyclerView);
         mRecyclerView.setHasFixedSize(true);
-        mAdapter = new MyAdapter(TITLES,NAME,EMAIL,PROFILE);
+        mAdapter = new MyAdapter(listItems, icons, name, email, profilePic);
         mRecyclerView.setAdapter(mAdapter);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);

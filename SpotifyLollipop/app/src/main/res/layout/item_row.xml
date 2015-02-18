@@ -7,6 +7,13 @@
     android:background="#ffffff"
     android:orientation="horizontal">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rowIcon"
+        android:paddingLeft="16dp"
+        android:src="@drawable/abc_btn_check_material"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
