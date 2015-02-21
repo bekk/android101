@@ -52,7 +52,6 @@ public class SongResultAdapter extends RecyclerView.Adapter<SongResultAdapter.So
             @Override
             public void onClick(View view, int position) {
                 Track track = tracks.get(position);
-                track.getHref();
                 Intent appPlayBackIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(track.getHref()));
                 if (appPlayBackIntent.resolveActivity(view.getContext().getPackageManager()) != null) {
                     view.getContext().startActivity(appPlayBackIntent);
