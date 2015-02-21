@@ -58,6 +58,16 @@ public interface SpotifySearchService {
 }
 {% endhighlight %}
 
+
+{% highlight java %}
+private static final String BASE_URL = "http://ws.spotify.com/";
+   RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(BASE_URL)
+                .build();
+
+   SpotifySearchService searchService = restAdapter.create(SpotifySearchService.class);
+{% endhighlight %}
+
 <h3> Result, Track and Artist classes</h3>
 
 {% highlight java %}
