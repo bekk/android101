@@ -132,68 +132,106 @@ public class Artist {
 {% endhighlight %}
 
 
-<h3>ListAdapter</h3>
-List adapter for displaying the search results
+<h3>RecyclerViewAdapter</h3>
+Adapter for displaying the search results in the RecyclerView
 {% highlight java %}
 
-public class TrackAdapter extends ArrayAdapter {
-	
-	private LayoutInflater inflater;
+public class SongResultAdapter extends RecyclerView.Adapter<SongResultAdapter.SongResultViewHolder> {
+    private List<Track> tracks;
 
-	public TrackAdapter(Context context, int resource, List<Track> tracks) {
-		super(context, resource, tracks);
+    public static class SongResultViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView trackView;
+        TextView artistView;
+        ResultClickListener resultClickListener;
 
-		inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	}
+        public SongResultViewHolder(View itemView, ResultClickListener resultClickListener) {
+            super(itemView);
+            this.resultClickListener = resultClickListener;
 
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		View view = convertView == null ? inflater.inflate(R.layout.result_list_item, null) : convertView;
-		// Get the track information
-		Track track = (Track) getItem(position);
-		String name = track.getName();
-		Artist artist = track.getArtists().get(0);
+            trackView = (TextView) itemView.findViewById(R.id.track_view);
+            artistView = (TextView) itemView.findViewById(R.id.artist_view);
+            itemView.setOnClickListener(this);
+        }
 
-		// Bind UI elements
-		TextView songTextView = (TextView) view.findViewById(R.id.song_text);
-		TextView artistTextView = (TextView) view.findViewById(R.id.artist_text);
+        @Override
+        public void onClick(View v) {
+            resultClickListener.onClick(v, getPosition());
+        }
 
-		// Update values
-		songTextView.setText(name);
-		artistTextView.setText(artist.getName());
+        public interface ResultClickListener {
+            public void onClick(View view, int position);
+        }
+    }
 
-		return view;
-	}
+    public SongResultAdapter(List<Track> tracks){
+        this.tracks = tracks;
+    }
+
+    @Override
+    public SongResultViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_result_card_row, parent, false);
+        return new SongResultViewHolder(v, new SongResultViewHolder.ResultClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Track track = tracks.get(position);
+                Intent appPlayBackIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(track.getHref()));
+                if (appPlayBackIntent.resolveActivity(view.getContext().getPackageManager()) != null) {
+                    view.getContext().startActivity(appPlayBackIntent);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onBindViewHolder(SongResultViewHolder holder, int position) {
+        holder.trackView.setText(tracks.get(position).getName());
+        holder.artistView.setText(tracks.get(position).getArtists().get(0).getName());
+    }
+
+    @Override
+    public int getItemCount() {
+        return tracks.size();
+    }
 }
 
 {% endhighlight %}
 {% highlight xml %}
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        card_view:cardElevation="2sp"
+        card_view:cardUseCompatPadding="true"
+        card_view:cardCornerRadius="4dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical">
+            <TextView
+                android:id="@+id/track_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dummySong"
+                android:textSize="30sp"
+                android:layout_marginLeft="5dp" />
+            <TextView
+                android:id="@+id/artist_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dummyArtist"
+                android:textSize="15sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp" />
+            </LinearLayout>
 
-<LinearLayout
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-xmlns:android="http://schemas.android.com/apk/res/android">
-
-<RelativeLayout
-android:layout_width="fill_parent"
-android:layout_height="wrap_content">
-<TextView
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:textAppearance="?android:attr/textAppearanceLarge"
-android:text="Midnatt"
-android:id="@+id/song_text"/>
-<TextView
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:textAppearance="?android:attr/textAppearanceMedium"
-android:text="Oslo ess"
-android:id="@+id/artist_text"
-android:layout_below="@id/song_text"
-/>
-</RelativeLayout>
+    </android.support.v7.widget.CardView>
 </LinearLayout>
 {% endhighlight %}
 
