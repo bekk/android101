@@ -35,13 +35,16 @@ an updated version of Android Studio
     <li>Create a click listener for the button. This is where we want to initiate the search. Explain AsyncTasks (<a href="working-in-the-background.html"> Working In the Background.</a>)
     	Say that for this course we will use Retrofit, and provide Retrofit basics (background thread, GSON, etc). Add Gradle dependency:
         <p><code> compile 'com.squareup.retrofit:retrofit:1.9.0'</code></p></li>
-	<li>Add SpotifySearchService which is the Retrofit interface. Maybe live code this. Also, add URL as a final variable to the MainActivity
+	<li>Add SpotifySearchService which is the Retrofit interface. Maybe live code this. Also, add URL as a final variable to the MainActivity.
         <p><code>http://ws.spotify.com/</code></p>
     </li>
-    <li> Create the Result object and explain its connection to the JSON structure returned by the Spotify API. It will hold a list of tracks</li>
+    <li> Create the Result object and explain its connection to the JSON structure returned by the Spotify API. It will hold a list of tracks.</li>
     <li> Create the Artist and Track domain objects. Copy these</li>
-    <li> Create an instance of RestAdapter, and use this to instansiate the SpotifySearcService. Add the rest call to the created click listener. </li>
-    <li> Run the app and perform a search</li>
+    <li> Create an instance of RestAdapter, and use this to instansiate the SpotifySearchService. Add the rest call to the created click listener. </li>
+    <li> Run the app and perform a search.</li>
+
+    <p><code> PAUSE / SWITCH PRESENTER</code></p></li>
+
 	<li>Do not add internet permission until app has run and failed. Explain the need for permissions</li> 
 	<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&quot;android.permission.INTERNET&quot;</span> <span class="nt">/&gt;</span></code></pre></div>
 	<li>Run app again and view the log statement</li>
