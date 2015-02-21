@@ -6,4 +6,8 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="title_activity_search">SearchActivity</string>
+    <string name="dummyEmailAddress">christoffer.marcussen@bekk.no</string>
+    <string name="dummyRowText">Medium Text</string>
+    <string name="dummySong">Midnatt</string>
+    <string name="dummyArtist">Oslo Ess</string>
 </resources>

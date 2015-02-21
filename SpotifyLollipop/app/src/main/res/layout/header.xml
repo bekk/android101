@@ -33,7 +33,7 @@
             android:textColor="#ffffff"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="5dp"
-            android:text="christoffer.marcussen@bekk.no"
+            android:text="@string/dummyEmailAddress"
             android:textSize="14sp"
             android:textStyle="normal"
 
@@ -43,7 +43,7 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:src="@drawable/cvbilde"
+        android:src="@drawable/profile_picture"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="38dp"
         android:id="@+id/circleView"

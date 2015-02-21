@@ -7,8 +7,7 @@
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -35,22 +34,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     fab:fab_colorNormal="@color/white"
+                    fab:fab_icon="@mipmap/ic_action_music_1"
                     fab:fab_colorPressed="@color/white_pressed"
                     fab:fab_title="Search"
                     fab:fab_size="mini"/>
-
             </com.getbase.floatingactionbutton.FloatingActionsMenu>
         </RelativeLayout>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/RecyclerView"
+            android:id="@+id/drawer_view"
             android:layout_width="320dp"
             android:background="#ffffff"
             android:layout_height="match_parent"
             android:layout_gravity="left"
-            android:scrollbars="vertical"
-            >
-
+            android:scrollbars="vertical">
         </android.support.v7.widget.RecyclerView>
     </android.support.v4.widget.DrawerLayout>
 </RelativeLayout>
