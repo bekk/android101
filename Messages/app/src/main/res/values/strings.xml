@@ -15,6 +15,6 @@
     <string name="contextual_menu_edit">Edit</string>
     <string name="image_upload_in_progress">Uploading image to imgur</string>
     <string name="image_upload_success">Image was uploaded to </string>
-    <string name="title_activity_edit_message">EditMessageActivity</string>
+    <string name="title_activity_edit_message">Edit message</string>
 
 </resources>

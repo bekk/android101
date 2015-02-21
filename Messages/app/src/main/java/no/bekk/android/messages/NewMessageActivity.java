@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,14 +26,13 @@ import retrofit.client.Response;
 public class NewMessageActivity extends Activity {
     private String imageUrl;
 
-    private View imageUploadView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_message);
 
-        imageUploadView = findViewById(R.id.image_upload);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.title_activity_new_message);
 
         Button sendButton = (Button) findViewById(R.id.button_send_message);
         final EditText fromField = (EditText) findViewById(R.id.etFrom);
@@ -81,14 +81,14 @@ public class NewMessageActivity extends Activity {
     }
 
     private void showImageUrl(String imageUrl) {
-        imageUploadView.setVisibility(View.VISIBLE);
-        TextView notice = (TextView) imageUploadView.findViewById(R.id.image_upload_notice);
+        TextView notice = (TextView) findViewById(R.id.image_upload_notice);
         notice.setText(getString(R.string.image_upload_success) + " " + imageUrl);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            findViewById(R.id.image_upload_notice).setVisibility(View.VISIBLE);
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             Upload upload = new Upload(imageBitmap, this) {

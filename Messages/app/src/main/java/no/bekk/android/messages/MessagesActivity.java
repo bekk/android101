@@ -2,44 +2,35 @@ package no.bekk.android.messages;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.DataSetObserver;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.ActionMode;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.fatboyindustrial.gsonjodatime.Converters;
 import com.google.common.collect.Ordering;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-
-import org.joda.time.DateTime;
+import com.software.shell.fab.ActionButton;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import no.bekk.android.messages.utils.LongTapDelegate;
+import no.bekk.android.messages.utils.TapDelegate;
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import static java.util.Arrays.asList;
 
+public class MessagesActivity extends Activity implements TapDelegate, LongTapDelegate {
 
-public class MessagesActivity extends Activity {
-
-    private ListView lvMessages;
+    private RecyclerView msgView;
     private List<Message> messages = new ArrayList<Message>();
 
     @Override
@@ -48,91 +39,29 @@ public class MessagesActivity extends Activity {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_messages);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.title_activity_messages);
+
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
         ImageLoader.getInstance().init(config);
 
-        lvMessages = (ListView) findViewById(R.id.lvMessages);
+        msgView = (RecyclerView) findViewById(R.id.messageList);
+        msgView.setLayoutManager(new LinearLayoutManager(this));
 
-        final MessagesAdapter msgAdapter = new MessagesAdapter(this, messages);
-        lvMessages.setAdapter(msgAdapter);
-        
-        lvMessages.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        lvMessages.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
-            private int selectedCount;
+        final MessagesAdapter msgAdapter = new MessagesAdapter(this.getLayoutInflater(), messages, this);
+        msgView.setAdapter(msgAdapter);
+
+        ActionButton ac = (ActionButton) findViewById(R.id.action_button);
+        ac.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemCheckedStateChanged(ActionMode actionMode, int position, long id, boolean checked) {
-                selectedCount = checked ? selectedCount + 1 : selectedCount-1;
-                getAdapter().setSelection(position, checked);
-                actionMode.setTitle(selectedCount + " selected");
-            }
-
-            @Override
-            public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-                getMenuInflater().inflate(R.menu.contextual_menu, menu);
-                return true;
-            }
-
-            @Override
-            public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
-                return false;
-            }
-
-            @Override
-            public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
-                List<Message> selectedMessages = getAdapter().getSelectedMessages();
-                switch (menuItem.getItemId()) {
-                    case R.id.item_delete:
-
-                        selectedCount = 0;
-                        getAdapter().clearSelection();
-                        actionMode.finish();
-                        for (final Message selected : selectedMessages) {
-                            getAdapter().remove(selected);
-                            App.getMessageService().delete(selected.getId(), new Callback<String>() {
-                                @Override
-                                public void success(String s, Response response) {
-                                    Log.d("Tag", "Deleted msg id " + selected.getId());
-                                }
-
-                                @Override
-                                public void failure(RetrofitError error) {
-                                    Log.d("Tag", "Failed to delete msg id " + selected.getId() + " " + error.getBody());
-                                }
-                            });
-                        }
-                        break;
-                    case R.id.item_edit:
-                        Gson gson = Converters.registerDateTime(new GsonBuilder()).create();
-                        String messageAsString = gson.toJson(selectedMessages.get(0));
-                        Intent intent = new Intent(MessagesActivity.this,EditMessageActivity.class);
-                        intent.putExtra("message", messageAsString);
-                        startActivity(intent);
-                        selectedCount = 0;
-                        getAdapter().clearSelection();
-                        actionMode.finish();
-                        break;
-                }
-                return false;
-            }
-
-            @Override
-            public void onDestroyActionMode(ActionMode actionMode) {
-                selectedCount = 0;
-                getAdapter().clearSelection();
-            }
-        });
-
-        lvMessages.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                lvMessages.setItemChecked(i, !getAdapter().isSelected(i));
-                return false;
+            public void onClick(View view) {
+                startActivity(new Intent(MessagesActivity.this, NewMessageActivity.class));
             }
         });
     }
 
     private MessagesAdapter getAdapter() {
-        return (MessagesAdapter) lvMessages.getAdapter();
+        return (MessagesAdapter) msgView.getAdapter();
     }
 
     private void fetchMessagesAsync() {
@@ -172,14 +101,26 @@ public class MessagesActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_new_message) {
-            startActivity(new Intent(this, NewMessageActivity.class));
-            return true;
-        }
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//        if (id == R.id.action_new_message) {
+//            startActivity(new Intent(this, NewMessageActivity.class));
+//            return true;
+//        }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean longTappedItemAtPosition(int position) {
+        return false;
+    }
+
+    @Override
+    public void tappedItemAtPosition(int position) {
+        Intent intent = new Intent(this, EditMessageActivity.class);
+        intent.putExtra("message", GetGson.getInstance().toJson(messages.get(position), Message.class));
+        startActivity(intent);
     }
 }

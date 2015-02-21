@@ -1,70 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_gravity="center"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
-    android:descendantFocusability="beforeDescendants"
+    card:cardUseCompatPadding="true"
+    card:cardCornerRadius="4dp"
+    card:cardBackgroundColor="@android:color/white"
+    card:cardElevation="2sp"
+    android:layout_margin="5dp"
+    card:contentPadding="5dp"
+    card:contentPaddingBottom="10dp"
+    card:contentPaddingTop="10dp"
     >
 
-    <LinearLayout
-        android:background="@drawable/selector_card_background"
-        android:descendantFocusability="afterDescendants"
-        android:orientation="vertical"
-        android:paddingLeft="15dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:paddingRight="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            >
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/llMessage"
-                android:layout_alignParentLeft="true"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tvFrom"
-                    android:text="From:"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tvMessage"
-                    android:text="Message body"/>
-            </LinearLayout>
+            android:id="@+id/tvFrom"
+            android:text="From:"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvMessage"
+            android:text="Message body"
+            android:layout_below="@id/tvFrom"/>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/llMessage"
-                android:layout_alignParentRight="true"
-                android:gravity="right"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tvDate"
-                    android:text="Timestamp"
-                    />
-            </LinearLayout>
-        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvDate"
+            android:text="Timestamp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            />
 
         <ImageView
-            android:layout_marginTop="10dp"
-            android:gravity="start"
-            android:layout_gravity="start"
             android:id="@+id/message_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        </LinearLayout>
-
-</FrameLayout>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:layout_centerInParent="true"
+            android:layout_below="@id/tvMessage"/>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
+</LinearLayout>

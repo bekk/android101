@@ -83,7 +83,7 @@ public abstract class Upload extends AsyncTask<Void, Void, String> {
     private static int copy(InputStream input, OutputStream output) throws IOException {
         byte[] buffer = new byte[8192];
         int count = 0;
-        int n = 0;
+        int n;
         while (-1 != (n = input.read(buffer))) {
             output.write(buffer, 0, n);
             count += n;
