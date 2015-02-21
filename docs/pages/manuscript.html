@@ -17,9 +17,11 @@ an updated version of Android Studio
 	<li>Create the MainActivity for the Spotify app. MainActivity will display an input text field and a button. </li>
     <li>Create the layout files and controls for the activity.</li>
     <li>Setup search and explain AsyncTasks (<a href="working-in-the-background.html"> Working In the Background.</a>)
-    	Explain that for this course we will use Retrofit, and explain basics of Retrofit (Background thread, GSON, etc). Add Gradle dependency:
-        <p><code> compile 'com.squareup.retrofit:retrofit:1.9.0'</code></p>
-	<li>Add SpotifySearchService which is the Retrofit interface. Maybe live code this. Also add URL as a final variable to the MainActivity</li>
+    	Explain that for this course we will use Retrofit, and explain basics of Retrofit (background thread, GSON, etc). Add Gradle dependency:
+        <p><code> compile 'com.squareup.retrofit:retrofit:1.9.0'</code></p></li>
+	<li>Add SpotifySearchService which is the Retrofit interface. Maybe live code this. Also add URL as a final variable to the MainActivity
+        <p><code>http://ws.spotify.com/</code></p>
+    </li>
 	<li>Do not add internet permission until app has run and failed. Explain the need for permissions</li> 
 	{% highlight xml %}
 	    <uses-permission android:name="android.permission.INTERNET" />
