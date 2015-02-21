@@ -35,9 +35,11 @@ an updated version of Android Studio
     <li>Setup search and explain AsyncTasks (<a href="working-in-the-background.html"> Working In the Background.</a>)
     	Explain that for this course we will use Retrofit, and explain basics of Retrofit (background thread, GSON, etc). Add Gradle dependency:
         <p><code> compile 'com.squareup.retrofit:retrofit:1.9.0'</code></p></li>
-	<li>Add SpotifySearchService which is the Retrofit interface. Maybe live code this. Also add URL as a final variable to the MainActivity
+	<li>Add SpotifySearchService which is the Retrofit interface. Maybe live code this. Also, add URL as a final variable to the MainActivity
         <p><code>http://ws.spotify.com/</code></p>
     </li>
+    <li> Create the Artist and Track domain objects. Copy these</li>
+    <li> Create the Result object and explain its connection to the JSON structure returned by the Spotify API. It will hold a list of tracks</li>
 	<li>Do not add internet permission until app has run and failed. Explain the need for permissions</li> 
 	<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&quot;android.permission.INTERNET&quot;</span> <span class="nt">/&gt;</span></code></pre></div>
 	<li>Run app again and view the log statement</li>
@@ -45,8 +47,6 @@ an updated version of Android Studio
     <li>Remove <code>Toast</code> and start the ResultActivity from the <code>onPostExecute()</code>using Intents. Explain that there are several ways to pass
     	objects between activities, for instance Parcelable. For simplicity, we pass the json as a <code>
     	stringExtra</code></li>
-    <li> Create the Artist and Track domain objects. Copy these</li>
-    <li> Create the Result dto object and explain its connection to the JSON structure returned by the Spotify API. It will hold a list of tracks</li>
     <li>In the ResultActivity, parse the String as the Result dto domain objects using gson</li>
     <li> Explain that a <code>SimpleListAdapter</code> can be used, but for more complex stuff, we want to create our own adapter</code></li>
     <li>Add and explain custom ListAdapters (<a href="list-list-adapters.html"> Lists and List Adapters).</a> Mention reuse of views by checking if view is null</li>
@@ -56,10 +56,16 @@ an updated version of Android Studio
 </ol>
 
 
-<h3> Result Dto, AsyncTask and SearchService</h3>
+<h3> Retrofit SpotifySearchService</h3>
+<b>SpotifySearchService</b>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">SpotifySearchService</span> <span class="o">{</span>
+    <span class="nd">@GET</span><span class="o">(</span><span class="s">&quot;/search/1/track.json&quot;</span><span class="o">)</span>
+    <span class="kt">void</span> <span class="nf">searchForTracks</span><span class="o">(</span><span class="nd">@Query</span><span class="o">(</span><span class="s">&quot;q&quot;</span><span class="o">)</span> <span class="n">String</span> <span class="n">searchString</span><span class="o">,</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Result</span><span class="o">&gt;</span> <span class="n">trackCallback</span><span class="o">);</span>
+<span class="o">}</span></code></pre></div>
 
-Create the <b>ResultDto</b> Dto object, which will contain a list of tracks
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ResultDto</span> <span class="o">{</span>
+<h3> Result, Track and Artist classes</h3>
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Result</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">;</span>
 
     <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="nf">getTracks</span><span class="o">()</span> <span class="o">{</span>
@@ -71,111 +77,49 @@ Create the <b>ResultDto</b> Dto object, which will contain a list of tracks
     <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
-	Create an <b>AsyncTask</b> for performing the web request
-	<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">class</span> <span class="nc">SearchAsyncTask</span> <span class="kd">extends</span> <span class="n">AsyncTask</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Void</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="o">{</span>
-        <span class="nd">@Override</span>
-        <span class="kd">protected</span> <span class="n">String</span> <span class="nf">doInBackground</span><span class="o">(</span><span class="n">String</span><span class="o">...</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">String</span> <span class="n">tracks</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">getTracks</span><span class="o">(</span><span class="n">params</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
-            <span class="k">return</span> <span class="n">tracks</span><span class="o">;</span>
-        <span class="o">}</span>
+   <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="o">&lt;</span><span class="n">b</span><span class="o">&gt;</span><span class="n">Track</span><span class="o">&lt;/</span><span class="n">b</span><span class="o">&gt;</span> <span class="n">domain</span> <span class="n">object</span>
 
-        <span class="nd">@Override</span>
-        <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onPostExecute</span><span class="o">(</span><span class="n">String</span> <span class="n">resultJson</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">getApplicationContext</span><span class="o">(),</span> <span class="n">ResultActivity</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-            <span class="n">intent</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="s">&quot;resultJson&quot;</span><span class="o">,</span> <span class="n">resultJson</span><span class="o">);</span>
-            <span class="n">startActivity</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
-        <span class="o">}</span>
-    <span class="o">}</span></code></pre></div>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Track</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Artist</span><span class="o">&gt;</span> <span class="n">artists</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">href</span><span class="o">;</span>
 
-<h3> Classes and Services</h3>
-<b>HttpClient</b>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HttpClient</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">TRACK_SEARCH_URL</span> <span class="o">=</span> <span class="s">&quot;http://ws.spotify.com/search/1/track.json?q=&quot;</span><span class="o">;</span>
-
-    <span class="cm">/*</span>
-<span class="cm">        Method which uses the built-in Apache HTTP client</span>
-<span class="cm">     */</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getTracks</span><span class="o">(</span><span class="n">String</span> <span class="n">trackName</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">trackName</span> <span class="o">=</span> <span class="n">trackName</span><span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="s">&quot; &quot;</span><span class="o">,</span> <span class="s">&quot;%20&quot;</span><span class="o">);</span>
-        <span class="n">String</span> <span class="n">trackSearchQueryWithArg</span> <span class="o">=</span> <span class="n">TRACK_SEARCH_URL</span> <span class="o">+</span> <span class="n">trackName</span><span class="o">;</span>
-        <span class="n">DefaultHttpClient</span> <span class="n">defaultHttpClient</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">DefaultHttpClient</span><span class="o">();</span>
-        <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
-        <span class="n">InputStream</span> <span class="n">data</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-        <span class="n">BufferedReader</span> <span class="n">reader</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-        <span class="k">try</span> <span class="o">{</span>
-            <span class="n">HttpGet</span> <span class="n">method</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">HttpGet</span><span class="o">(</span><span class="k">new</span> <span class="nf">URI</span><span class="o">(</span><span class="n">trackSearchQueryWithArg</span><span class="o">));</span>
-            <span class="n">HttpResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">defaultHttpClient</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">method</span><span class="o">);</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="na">getEntity</span><span class="o">().</span><span class="na">getContent</span><span class="o">();</span>
-            <span class="n">reader</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="nf">InputStreamReader</span><span class="o">(</span><span class="n">data</span><span class="o">,</span> <span class="s">&quot;UTF-8&quot;</span><span class="o">));</span>
-            <span class="n">StringBuilder</span> <span class="n">builder</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">StringBuilder</span><span class="o">();</span>
-            <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">line</span><span class="o">;</span> <span class="o">(</span><span class="n">line</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="na">readLine</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">;)</span> <span class="o">{</span>
-                <span class="n">builder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">line</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;\n&quot;</span><span class="o">);</span>
-            <span class="o">}</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
-        <span class="o">}</span>
-        <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
-        <span class="o">}</span>
-        <span class="k">finally</span> <span class="o">{</span>
-            <span class="k">try</span> <span class="o">{</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">data</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="n">data</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-                <span class="o">}</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">reader</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="n">reader</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-                <span class="o">}</span>
-            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getHref</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">href</span><span class="o">;</span>
     <span class="o">}</span>
-<span class="o">}</span></code></pre></div>
 
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setHref</span><span class="o">(</span><span class="n">String</span> <span class="n">href</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">href</span> <span class="o">=</span> <span class="n">href</span><span class="o">;</span>
+    <span class="o">}</span>
 
-<b>Track</b> domain object
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Artist</span><span class="o">&gt;</span> <span class="nf">getArtists</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">artists</span><span class="o">;</span>
+    <span class="o">}</span>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Track</span> <span class="o">{</span>
-	<span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
-	<span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Artist</span><span class="o">&gt;</span> <span class="n">artists</span><span class="o">;</span>
-	<span class="kd">private</span> <span class="n">String</span> <span class="n">href</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setArtists</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Artist</span><span class="o">&gt;</span> <span class="n">artists</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">artists</span> <span class="o">=</span> <span class="n">artists</span><span class="o">;</span>
+    <span class="o">}</span>
 
-	<span class="kd">public</span> <span class="n">String</span> <span class="nf">getHref</span><span class="o">()</span> <span class="o">{</span>
-		<span class="k">return</span> <span class="n">href</span><span class="o">;</span>
-	<span class="o">}</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
 
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setHref</span><span class="o">(</span><span class="n">String</span> <span class="n">href</span><span class="o">)</span> <span class="o">{</span>
-		<span class="k">this</span><span class="o">.</span><span class="na">href</span> <span class="o">=</span> <span class="n">href</span><span class="o">;</span>
-	<span class="o">}</span>
-
-	<span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Artist</span><span class="o">&gt;</span> <span class="nf">getArtists</span><span class="o">()</span> <span class="o">{</span>
-		<span class="k">return</span> <span class="n">artists</span><span class="o">;</span>
-	<span class="o">}</span>
-
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setArtists</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Artist</span><span class="o">&gt;</span> <span class="n">artists</span><span class="o">)</span> <span class="o">{</span>
-		<span class="k">this</span><span class="o">.</span><span class="na">artists</span> <span class="o">=</span> <span class="n">artists</span><span class="o">;</span>
-	<span class="o">}</span>
-
-	<span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
-		<span class="k">return</span> <span class="n">name</span><span class="o">;</span>
-	<span class="o">}</span>
-
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
-		<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
-	<span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
 <b>Artist</b> domain object
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Artist</span> <span class="o">{</span>
-	<span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
 
-	<span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
-		<span class="k">return</span> <span class="n">name</span><span class="o">;</span>
-	<span class="o">}</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
 
-	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
-		<span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
-	<span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
 
