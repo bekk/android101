@@ -16,14 +16,16 @@ an updated version of Android Studio
 	<li>Explain the UI builder</li>
 	<li>Create the MainActivity for the Spotify app. MainActivity will display an input text field and a button. </li>
     <li>Create the layout files and controls for the activity.</li>
-    <li>Setup search and explain AsyncTasks (<a href="working-in-the-background.html"> Working In the Background.</a>)
-    	Explain that for this course we will use Retrofit, and explain basics of Retrofit (background thread, GSON, etc). Add Gradle dependency:
+    <li>Create a click listener for the button. This is where we want to initiate the search. Explain AsyncTasks (<a href="working-in-the-background.html"> Working In the Background.</a>)
+    	Say that for this course we will use Retrofit, and provide Retrofit basics (background thread, GSON, etc). Add Gradle dependency:
         <p><code> compile 'com.squareup.retrofit:retrofit:1.9.0'</code></p></li>
 	<li>Add SpotifySearchService which is the Retrofit interface. Maybe live code this. Also, add URL as a final variable to the MainActivity
         <p><code>http://ws.spotify.com/</code></p>
     </li>
-    <li> Create the Artist and Track domain objects. Copy these</li>
     <li> Create the Result object and explain its connection to the JSON structure returned by the Spotify API. It will hold a list of tracks</li>
+    <li> Create the Artist and Track domain objects. Copy these</li>
+    <li> Create an instance of RestAdapter, and use this to instansiate the SpotifySearcService. Add the rest call to the created click listener. </li>
+    <li> Run the app and perform a search</li>
 	<li>Do not add internet permission until app has run and failed. Explain the need for permissions</li> 
 	{% highlight xml %}
 	    <uses-permission android:name="android.permission.INTERNET" />
