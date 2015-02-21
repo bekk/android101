@@ -48,12 +48,12 @@ Then, we create a layout xml file used for each message in the list. We place th
         <span class="na">android:text=</span><span class="s">&quot;Message&quot;</span> <span class="nt">/&gt;</span>
 
 <span class="nt">&lt;/LinearLayout&gt;</span></code></pre></div>
-For displaying lists, we use what is called a <code>RecyclerView</code>. A RecyclerView is a component for handling data sets, and it has two key concepts for rendering these in list form. 
+For displaying data in lists, we use what is called a <code>RecyclerView</code>. A RecyclerView is a component for handling data sets, and it has two key concepts for rendering these in list form:
 <ul>
    <li>We use an <code>Adapter</code> to bind the view elements in the RecyclerView to the data set we want to display.</li>
-   <li>We also need a <code>LayoutManager</code> for positioning the views inside the RecyclerView. For lists, the <code>LinearLayoutManager</code> is the chosen layout manager, which can display items either vertically or horizontally. The LayoutManager will also handle the reuse of item views that are no longer visible, in order to minimize view lookups.</li>
-</ul>
+   
  <code>View getView(int position, View convertView, ViewGroup parent)</code> will be invoked for each position in the list, fetching the view for that position. The "ViewHolder pattern" is used to cache layout elements to increase performance.
+
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MessagesAdapter</span> <span class="kd">extends</span> <span class="n">ArrayAdapter</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">ViewHolder</span> <span class="o">{</span>
@@ -83,7 +83,9 @@ For displaying lists, we use what is called a <code>RecyclerView</code>. A Recyc
         <span class="n">viewHolder</span><span class="o">.</span><span class="na">text</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">text</span><span class="o">);</span>
         <span class="k">return</span> <span class="n">convertView</span><span class="o">;</span>
     <span class="o">}</span>
-<span class="o">}</span></code></pre></div>
+<span class="o">}</span>
+<span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">We</span> <span class="n">also</span> <span class="n">need</span> <span class="n">a</span> <span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">LayoutManager</span><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">positioning</span> <span class="n">the</span> <span class="n">views</span> <span class="n">inside</span> <span class="n">the</span> <span class="n">RecyclerView</span><span class="o">.</span> <span class="n">For</span> <span class="n">lists</span><span class="o">,</span> <span class="n">the</span> <span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">LinearLayoutManager</span><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;</span> <span class="n">is</span> <span class="n">the</span> <span class="n">chosen</span> <span class="n">layout</span> <span class="n">manager</span><span class="o">,</span> <span class="n">which</span> <span class="n">can</span> <span class="n">display</span> <span class="n">items</span> <span class="n">either</span> <span class="n">vertically</span> <span class="n">or</span> <span class="n">horizontally</span><span class="o">.</span> <span class="n">The</span> <span class="n">LayoutManager</span> <span class="n">will</span> <span class="n">also</span> <span class="n">handle</span> <span class="n">the</span> <span class="n">reuse</span> <span class="n">of</span> <span class="n">item</span> <span class="n">views</span> <span class="n">that</span> <span class="n">are</span> <span class="n">no</span> <span class="n">longer</span> <span class="n">visible</span><span class="o">,</span> <span class="n">in</span> <span class="n">order</span> <span class="n">to</span> <span class="n">minimize</span> <span class="n">view</span> <span class="n">lookups</span><span class="o">.&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span></code></pre></div>
 In the activity that displays the list, we get the <code>ListView</code> from the activity layout using the id <code>R.id.lvMessages</code> and set it to use our adapter. All changes made to the messages list via the adapter will now be reflected in the GUI.
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="n">messages</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;();</span>
