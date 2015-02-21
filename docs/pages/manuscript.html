@@ -25,7 +25,7 @@ an updated version of Android Studio
     <li> Create the Result object and explain its connection to the JSON structure returned by the Spotify API. It will hold a list of tracks.</li>
     <li> Create the Artist and Track domain objects. Copy these</li>
     <li> Create an instance of RestAdapter, and use this to instansiate the SpotifySearchService. Add the rest call to the created click listener. </li>
-    <li> Run the app and perform a search.</li>
+    <li> Run the app and perform a search. Add a Toast to the success callback</li>
 
     <p><code> PAUSE / SWITCH PRESENTER</code></p></li>
 
@@ -33,14 +33,17 @@ an updated version of Android Studio
 	{% highlight xml %}
 	    <uses-permission android:name="android.permission.INTERNET" />
 	{% endhighlight %}
-	<li>Run app again and view the log statement</li>
+	<li>Run app again and see that the Toast pops up</li>
 	<li>Create the ResultActivity. ResultActivity will display a list containing the search results. Add entries to the Android Manifest</li>
-    <li>Remove <code>Toast</code> and start the ResultActivity from the <code>onPostExecute()</code>using Intents. Explain that there are several ways to pass
+    
+    <li>Remove <code>Toast</code> and start the ResultActivity from the success callback using Intents. Explain that there are several ways to pass
     	objects between activities, for instance Parcelable. For simplicity, we pass the json as a <code>
-    	stringExtra</code></li>
-    <li>In the ResultActivity, parse the String as the Result dto domain objects using gson</li>
-    <li> Explain that a <code>SimpleListAdapter</code> can be used, but for more complex stuff, we want to create our own adapter</code></li>
-    <li>Add and explain custom ListAdapters (<a href="list-list-adapters.html"> Lists and List Adapters).</a> Mention reuse of views by checking if view is null</li>
+    	stringExtra</code>. Parse the Result object using GSON and pass it.</li>
+
+    <li>In the ResultActivity, parse the String as the Result domain object using GSON</li>
+    <li> Explain that a <code>SimpleListAdapter</code> can be used for displaying the results, but for more complex stuff, we want to create our own adapter</code></li>
+    <li>Add and explain custom ListAdapters (<a href="list-list-adapters.html"> Lists and List Adapters).</a> Mention reuse of views by checking if view is null, and the new
+        feature which is called RecyclerView.</li>
     <li>Populate the ListAdapter fields with properties from the Track domain objects</li>
     <li>Add a click handler for each list element, where clicks will start Spotify and play song. Explain the use of implicit intents. An example
         can be opening Google Maps in Chrome, where the user is presented with options for which app to open maps in.</li>
