@@ -21,6 +21,7 @@
             android:name=".activities.SearchActivity"
             android:windowSoftInputMode="stateVisible"
             android:parentActivityName=".activities.MainActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_search" >
         </activity>
     </application>
