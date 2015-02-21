@@ -2,16 +2,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="no.bekk.android.messages.NewMessageActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
         >
 
         <EditText
@@ -20,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lines="1"
-            android:capitalize="words"
+            android:inputType="textCapWords"
             />
 
         <EditText
@@ -31,11 +36,10 @@
             android:lines="5"
             android:gravity="top"
             android:layout_marginBottom="10dp"
-            android:capitalize="sentences"
+            android:inputType="textCapSentences"
              />
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <Button
@@ -43,27 +47,23 @@
                 android:text="@string/button_take_picture"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <LinearLayout
-                android:id="@+id/image_upload"
-                android:visibility="invisible"
-                android:orientation="horizontal"
+
+            <TextView
+                android:id="@+id/image_upload_notice"
+                android:text="@string/image_upload_in_progress"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/image_upload_notice"
-                    android:text="@string/image_upload_in_progress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                </LinearLayout>
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:layout_toEndOf="@id/button_take_picture"
+                android:layout_toRightOf="@id/button_take_picture"/>
 
-            </LinearLayout>
-
-        <Button
-            android:id="@+id/button_send_message"
-            android:text="@string/button_send_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
+            <Button
+                android:id="@+id/button_send_message"
+                android:text="@string/button_send_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/button_take_picture"/>
+            </RelativeLayout>
 
     </LinearLayout>
 

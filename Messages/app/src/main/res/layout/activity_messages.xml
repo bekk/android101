@@ -3,20 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="no.bekk.android.messages.MessagesActivity"
-    android:background="#DEDEDE">
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:background="@color/windowBackgroundColor"
+    >
 
-    <ListView
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/messageList"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/lvMessages"
-        android:divider="@null"
-        android:dividerHeight="10dp"
-        android:listSelector="@android:color/transparent"
-        android:cacheColorHint="@android:color/transparent"
-        android:headerDividersEnabled="true"
-        android:footerDividersEnabled="true"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        />
+
+    <com.software.shell.fab.ActionButton
+        android:id="@+id/action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
+        fab:button_color="@color/fab_material_red_500"
+        fab:image="@drawable/fab_plus_icon"
         />
 
 </RelativeLayout>

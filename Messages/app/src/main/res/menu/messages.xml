@@ -1,11 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="no.bekk.android.messages.MessagesActivity" >
-    <item android:id="@+id/action_new_message"
-        android:title="@string/action_new_message"
-        android:showAsAction="always"
-        app:showAsAction="always"
-        android:icon="@drawable/ic_action_new_email"
-        />
+    tools:context="no.bekk.android.messages.MessagesActivity">
+
 </menu>

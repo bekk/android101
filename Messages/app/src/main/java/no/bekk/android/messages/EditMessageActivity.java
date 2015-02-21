@@ -2,6 +2,7 @@ package no.bekk.android.messages;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,11 +25,13 @@ public class EditMessageActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Gson gson = Converters.registerDateTime(new GsonBuilder()).create();
         String messageString = getIntent().getExtras().getString("message");
         Log.i("MESSAGE", messageString);
-        final Message message = gson.fromJson(messageString, Message.class);
+        final Message message = GetGson.getInstance().fromJson(messageString, Message.class);
         setContentView(R.layout.activity_new_message);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.title_activity_edit_message);
 
         final EditText msgText = (EditText)findViewById(R.id.etMessage);
         msgText.setText(message.getMessage());
