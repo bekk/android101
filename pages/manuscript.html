@@ -57,7 +57,6 @@ an updated version of Android Studio
 
 
 <h3> Retrofit SpotifySearchService</h3>
-<b>SpotifySearchService</b>
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">SpotifySearchService</span> <span class="o">{</span>
     <span class="nd">@GET</span><span class="o">(</span><span class="s">&quot;/search/1/track.json&quot;</span><span class="o">)</span>
     <span class="kt">void</span> <span class="nf">searchForTracks</span><span class="o">(</span><span class="nd">@Query</span><span class="o">(</span><span class="s">&quot;q&quot;</span><span class="o">)</span> <span class="n">String</span> <span class="n">searchString</span><span class="o">,</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Result</span><span class="o">&gt;</span> <span class="n">trackCallback</span><span class="o">);</span>
@@ -77,9 +76,7 @@ an updated version of Android Studio
     <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
-   <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="o">&lt;</span><span class="n">b</span><span class="o">&gt;</span><span class="n">Track</span><span class="o">&lt;/</span><span class="n">b</span><span class="o">&gt;</span> <span class="n">domain</span> <span class="n">object</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Track</span> <span class="o">{</span>
+   <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Track</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
     <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Artist</span><span class="o">&gt;</span> <span class="n">artists</span><span class="o">;</span>
     <span class="kd">private</span> <span class="n">String</span> <span class="n">href</span><span class="o">;</span>
@@ -109,7 +106,6 @@ an updated version of Android Studio
     <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
-<b>Artist</b> domain object
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Artist</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
 
