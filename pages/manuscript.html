@@ -70,6 +70,14 @@ an updated version of Android Studio
     <span class="kt">void</span> <span class="nf">searchForTracks</span><span class="o">(</span><span class="nd">@Query</span><span class="o">(</span><span class="s">&quot;q&quot;</span><span class="o">)</span> <span class="n">String</span> <span class="n">searchString</span><span class="o">,</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Result</span><span class="o">&gt;</span> <span class="n">trackCallback</span><span class="o">);</span>
 <span class="o">}</span></code></pre></div>
 
+
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">BASE_URL</span> <span class="o">=</span> <span class="s">&quot;http://ws.spotify.com/&quot;</span><span class="o">;</span>
+   <span class="n">RestAdapter</span> <span class="n">restAdapter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RestAdapter</span><span class="o">.</span><span class="na">Builder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">setEndpoint</span><span class="o">(</span><span class="n">BASE_URL</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+
+   <span class="n">SpotifySearchService</span> <span class="n">searchService</span> <span class="o">=</span> <span class="n">restAdapter</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">SpotifySearchService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span></code></pre></div>
+
 <h3> Result, Track and Artist classes</h3>
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Result</span> <span class="o">{</span>
