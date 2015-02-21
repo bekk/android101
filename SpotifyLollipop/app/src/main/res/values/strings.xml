@@ -10,4 +10,5 @@
     <string name="dummyRowText">Medium Text</string>
     <string name="dummySong">Midnatt</string>
     <string name="dummyArtist">Oslo Ess</string>
+    <string name="title_activity_result">ResultActivity</string>
 </resources>

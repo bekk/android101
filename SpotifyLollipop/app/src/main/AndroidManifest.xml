@@ -3,6 +3,7 @@
     package="no.bekk.lollipop" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,10 +20,15 @@
         </activity>
         <activity
             android:name=".activities.SearchActivity"
-            android:windowSoftInputMode="stateVisible"
-            android:parentActivityName=".activities.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_search" >
+            android:label="@string/title_activity_search"
+            android:parentActivityName=".activities.MainActivity"
+            android:windowSoftInputMode="stateVisible" >
+        </activity>
+        <activity
+            android:name=".activities.ResultActivity"
+            android:label="@string/title_activity_result"
+            android:parentActivityName=".activities.SearchActivity">
         </activity>
     </application>
 

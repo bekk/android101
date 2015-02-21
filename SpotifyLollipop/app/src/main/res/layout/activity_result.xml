@@ -1,0 +1,15 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="no.bekk.lollipop.activities.SearchActivity">
+    <include layout="@layout/toolbar"
+        android:id="@+id/include" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/song_result_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:layout_below="@id/include">
+    </android.support.v7.widget.RecyclerView>
+</RelativeLayout>
