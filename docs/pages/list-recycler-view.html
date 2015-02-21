@@ -37,12 +37,12 @@ Then, we create a layout xml file used for each message in the list. We place th
 
 </LinearLayout>
 {% endhighlight %}
-For displaying lists, we use what is called a <code>RecyclerView</code>. A RecyclerView is a component for handling data sets, and it has two key concepts for rendering these in list form. 
+For displaying data in lists, we use what is called a <code>RecyclerView</code>. A RecyclerView is a component for handling data sets, and it has two key concepts for rendering these in list form:
 <ul>
    <li>We use an <code>Adapter</code> to bind the view elements in the RecyclerView to the data set we want to display.</li>
-   <li>We also need a <code>LayoutManager</code> for positioning the views inside the RecyclerView. For lists, the <code>LinearLayoutManager</code> is the chosen layout manager, which can display items either vertically or horizontally. The LayoutManager will also handle the reuse of item views that are no longer visible, in order to minimize view lookups.</li>
-</ul>
+   
  <code>View getView(int position, View convertView, ViewGroup parent)</code> will be invoked for each position in the list, fetching the view for that position. The "ViewHolder pattern" is used to cache layout elements to increase performance.
+
 
 {% highlight java %}
 public class MessagesAdapter extends ArrayAdapter<Message> {
@@ -74,6 +74,8 @@ public class MessagesAdapter extends ArrayAdapter<Message> {
         return convertView;
     }
 }
+<li>We also need a <code>LayoutManager</code> for positioning the views inside the RecyclerView. For lists, the <code>LinearLayoutManager</code> is the chosen layout manager, which can display items either vertically or horizontally. The LayoutManager will also handle the reuse of item views that are no longer visible, in order to minimize view lookups.</li>
+</ul>
 {% endhighlight %}
 In the activity that displays the list, we get the <code>ListView</code> from the activity layout using the id <code>R.id.lvMessages</code> and set it to use our adapter. All changes made to the messages list via the adapter will now be reflected in the GUI.
 
