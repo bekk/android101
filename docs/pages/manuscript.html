@@ -19,9 +19,11 @@ an updated version of Android Studio
     <li>Setup search and explain AsyncTasks (<a href="working-in-the-background.html"> Working In the Background.</a>)
     	Explain that for this course we will use Retrofit, and explain basics of Retrofit (background thread, GSON, etc). Add Gradle dependency:
         <p><code> compile 'com.squareup.retrofit:retrofit:1.9.0'</code></p></li>
-	<li>Add SpotifySearchService which is the Retrofit interface. Maybe live code this. Also add URL as a final variable to the MainActivity
+	<li>Add SpotifySearchService which is the Retrofit interface. Maybe live code this. Also, add URL as a final variable to the MainActivity
         <p><code>http://ws.spotify.com/</code></p>
     </li>
+    <li> Create the Artist and Track domain objects. Copy these</li>
+    <li> Create the Result object and explain its connection to the JSON structure returned by the Spotify API. It will hold a list of tracks</li>
 	<li>Do not add internet permission until app has run and failed. Explain the need for permissions</li> 
 	{% highlight xml %}
 	    <uses-permission android:name="android.permission.INTERNET" />
@@ -31,8 +33,6 @@ an updated version of Android Studio
     <li>Remove <code>Toast</code> and start the ResultActivity from the <code>onPostExecute()</code>using Intents. Explain that there are several ways to pass
     	objects between activities, for instance Parcelable. For simplicity, we pass the json as a <code>
     	stringExtra</code></li>
-    <li> Create the Artist and Track domain objects. Copy these</li>
-    <li> Create the Result dto object and explain its connection to the JSON structure returned by the Spotify API. It will hold a list of tracks</li>
     <li>In the ResultActivity, parse the String as the Result dto domain objects using gson</li>
     <li> Explain that a <code>SimpleListAdapter</code> can be used, but for more complex stuff, we want to create our own adapter</code></li>
     <li>Add and explain custom ListAdapters (<a href="list-list-adapters.html"> Lists and List Adapters).</a> Mention reuse of views by checking if view is null</li>
@@ -42,11 +42,19 @@ an updated version of Android Studio
 </ol>
 
 
-<h3> Result Dto, AsyncTask and SearchService</h3>
-
-Create the <b>ResultDto</b> Dto object, which will contain a list of tracks
+<h3> Retrofit SpotifySearchService</h3>
+<b>SpotifySearchService</b>
 {% highlight java %}
-public class ResultDto {
+public interface SpotifySearchService {
+    @GET("/search/1/track.json")
+    void searchForTracks(@Query("q") String searchString, Callback<Result> trackCallback);
+}
+{% endhighlight %}
+
+<h3> Result, Track and Artist classes</h3>
+
+{% highlight java %}
+public class Result {
     private List<Track> tracks;
 
     public List<Track> getTracks() {
@@ -57,121 +65,54 @@ public class ResultDto {
         this.tracks = tracks;
     }
 }
-
 	{% endhighlight %}
 
-	Create an <b>AsyncTask</b> for performing the web request
-	{% highlight java %}
-private class SearchAsyncTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... params) {
-            String tracks = client.getTracks(params[0]);
-            return tracks;
-        }
+   {% highlight java %}
+    <b>Track</b> domain object
 
-        @Override
-        protected void onPostExecute(String resultJson) {
-            Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
-            intent.putExtra("resultJson", resultJson);
-            startActivity(intent);
-        }
-    }
-{% endhighlight %}
-
-<h3> Classes and Services</h3>
-<b>HttpClient</b>
-{% highlight java %}
-	public class HttpClient {
-    private static final String TRACK_SEARCH_URL = "http://ws.spotify.com/search/1/track.json?q=";
-
-    /*
-        Method which uses the built-in Apache HTTP client
-     */
-    public String getTracks(String trackName) {
-        trackName = trackName.replace(" ", "%20");
-        String trackSearchQueryWithArg = TRACK_SEARCH_URL + trackName;
-        DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
-        String result = "";
-        InputStream data = null;
-        BufferedReader reader = null;
-        try {
-            HttpGet method = new HttpGet(new URI(trackSearchQueryWithArg));
-            HttpResponse response = defaultHttpClient.execute(method);
-            data = response.getEntity().getContent();
-            reader = new BufferedReader(new InputStreamReader(data, "UTF-8"));
-            StringBuilder builder = new StringBuilder();
-            for (String line; (line = reader.readLine()) != null;) {
-                builder.append(line).append("\n");
-            }
-            result = builder.toString();
-        }
-        catch (Exception e) {
-            System.out.println(e);
-        }
-        finally {
-            try {
-                if (data != null) {
-                    data.close();
-                }
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return result;
-    }
-}
- 	{% endhighlight %}
-
-
-<b>Track</b> domain object
-
-{% highlight java %}
 public class Track {
-	private String name;
-	private List<Artist> artists;
-	private String href;
+    private String name;
+    private List<Artist> artists;
+    private String href;
 
-	public String getHref() {
-		return href;
-	}
+    public String getHref() {
+        return href;
+    }
 
-	public void setHref(String href) {
-		this.href = href;
-	}
+    public void setHref(String href) {
+        this.href = href;
+    }
 
-	public List<Artist> getArtists() {
-		return artists;
-	}
+    public List<Artist> getArtists() {
+        return artists;
+    }
 
-	public void setArtists(List<Artist> artists) {
-		this.artists = artists;
-	}
+    public void setArtists(List<Artist> artists) {
+        this.artists = artists;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 }
 {% endhighlight %}
 
 <b>Artist</b> domain object
 {% highlight java %}
 public class Artist {
-	private String name;
+    private String name;
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 }
 {% endhighlight %}
 
