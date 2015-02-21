@@ -48,8 +48,11 @@ Then, we create a layout xml file used for each message in the list. We place th
         <span class="na">android:text=</span><span class="s">&quot;Message&quot;</span> <span class="nt">/&gt;</span>
 
 <span class="nt">&lt;/LinearLayout&gt;</span></code></pre></div>
-For displaying lists, we use what is called a <code>RecyclerView</code>. A RecyclerView is a component for handling data sets, and it has two key components for rendering these in list form. We use an <code>Adapter</code> to bind the view elements in the RecyclerView to the data set we want to display. We also need a <code>LayoutManager</code> for positioning the views inside the RecyclerView. For lists, the <code>LinearLayoutManager</code> is the chosen layout manager, which can display items either vertically or horizontally. The LayoutManager will also handle the reuse of item views that are no longer visible, in order to minimize view lookups.
-
+For displaying lists, we use what is called a <code>RecyclerView</code>. A RecyclerView is a component for handling data sets, and it has two key concepts for rendering these in list form. 
+<ul>
+   <li>We use an <code>Adapter</code> to bind the view elements in the RecyclerView to the data set we want to display.</li>
+   <li>We also need a <code>LayoutManager</code> for positioning the views inside the RecyclerView. For lists, the <code>LinearLayoutManager</code> is the chosen layout manager, which can display items either vertically or horizontally. The LayoutManager will also handle the reuse of item views that are no longer visible, in order to minimize view lookups.</li>
+</ul>
  <code>View getView(int position, View convertView, ViewGroup parent)</code> will be invoked for each position in the list, fetching the view for that position. The "ViewHolder pattern" is used to cache layout elements to increase performance.
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MessagesAdapter</span> <span class="kd">extends</span> <span class="n">ArrayAdapter</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="o">{</span>
