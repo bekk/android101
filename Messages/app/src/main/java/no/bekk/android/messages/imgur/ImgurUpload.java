@@ -2,14 +2,12 @@ package no.bekk.android.messages.imgur;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -17,15 +15,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
-public abstract class Upload extends AsyncTask<Void, Void, String> {
+public abstract class ImgurUpload extends AsyncTask<Void, Void, String> {
 
-    private static final String TAG = Upload.class.getSimpleName();
+    private static final String TAG = ImgurUpload.class.getSimpleName();
 
     private static final String UPLOAD_URL = "https://api.imgur.com/3/image";
 
     private Activity mActivity;
     private Bitmap bitmap;
-    public Upload(Bitmap bitmap, Activity activity) {
+    public ImgurUpload(Bitmap bitmap, Activity activity) {
         this.bitmap = bitmap;
         this.mActivity = activity;
     }

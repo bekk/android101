@@ -29,7 +29,7 @@
             />
 
         <EditText
-            android:id="@+id/etMessage"
+            android:id="@+id/messageText"
             android:hint="@string/hint_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

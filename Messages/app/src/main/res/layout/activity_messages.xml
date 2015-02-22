@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     tools:context="no.bekk.android.messages.MessagesActivity"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
-    android:background="@color/windowBackgroundColor"
     >
 
     <include

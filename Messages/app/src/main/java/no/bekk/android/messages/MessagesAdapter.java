@@ -55,7 +55,12 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
         holder.message.setText(message.getMessage());
         holder.date.setText(message.getDateTimeString());
         holder.position = position;
-        ImageLoader.getInstance().displayImage(message.getImage(), holder.image, imageLoaderOptions);
+        if (message.getImage() != null) {
+            holder.image.setVisibility(View.VISIBLE);
+            ImageLoader.getInstance().displayImage(message.getImage(), holder.image, imageLoaderOptions);
+        } else {
+            holder.image.setVisibility(View.GONE);
+        }
     }
 
     @Override

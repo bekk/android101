@@ -1,7 +1,6 @@
 package no.bekk.android.messages;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -11,13 +10,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import no.bekk.android.messages.imgur.Upload;
+import no.bekk.android.messages.imgur.ImgurUpload;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -36,7 +34,7 @@ public class NewMessageActivity extends Activity {
 
         Button sendButton = (Button) findViewById(R.id.button_send_message);
         final EditText fromField = (EditText) findViewById(R.id.etFrom);
-        final EditText messageField = (EditText) findViewById(R.id.etMessage);
+        final EditText messageField = (EditText) findViewById(R.id.messageText);
         final Button pictureButton = (Button) findViewById(R.id.button_take_picture);
         pictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +89,7 @@ public class NewMessageActivity extends Activity {
             findViewById(R.id.image_upload_notice).setVisibility(View.VISIBLE);
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            Upload upload = new Upload(imageBitmap, this) {
+            ImgurUpload imgurUpload = new ImgurUpload(imageBitmap, this) {
                 @Override
                 protected void onPostExecute(String imageId) {
                     super.onPostExecute(imageId);
@@ -101,7 +99,7 @@ public class NewMessageActivity extends Activity {
                     }
                 }
             };
-            upload.execute();
+            imgurUpload.execute();
         }
     }
 

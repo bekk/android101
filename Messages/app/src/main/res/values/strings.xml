@@ -10,6 +10,7 @@
     <string name="hint_from">From</string>
     <string name="hint_message">Message text</string>
     <string name="button_send_message">Send message</string>
+    <string name="button_update_message">Update message</string>
     <string name="button_take_picture">Take picture</string>
     <string name="contextual_menu_delete">Delete</string>
     <string name="contextual_menu_edit">Edit</string>

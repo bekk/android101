@@ -4,9 +4,10 @@
 
     <style name="AppTheme.Base" parent="Theme.AppCompat">
         <item name="android:textColor">#333</item>
+        <item name="android:windowBackground">@color/windowBackgroundColor</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
+        <!--<item name="android:windowNoTitle">true</item>-->
+        <!--<item name="windowActionBar">false</item>-->
     </style>
 </resources>
