@@ -7,7 +7,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -15,6 +18,8 @@ import retrofit.client.Response;
 
 
 public class EditMessageActivity extends Activity {
+
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +38,17 @@ public class EditMessageActivity extends Activity {
         final EditText fromText = (EditText) findViewById(R.id.etFrom);
         fromText.setText(message.getFrom());
 
-        Button post = (Button)findViewById(R.id.button_send_message);
-        post.setText(R.string.button_update_message);
+        View actionButton = findViewById(R.id.action_button);
 
-        post.setOnClickListener(new View.OnClickListener() {
+        imageView = (ImageView) findViewById(R.id.message_image);
+
+        Picasso.with(this)
+                .load(message.getImage())
+                .resize(800, 600)
+                .centerCrop()
+                .into(imageView);
+
+        actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Message sendMsg = new Message(fromText.getText().toString(),msgText.getText().toString());

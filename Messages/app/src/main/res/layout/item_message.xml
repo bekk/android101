@@ -30,16 +30,27 @@
         android:padding="10dp"
         >
 
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:id="@+id/senderCircle"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvFrom"
+            android:layout_toEndOf="@id/senderCircle"
+            android:layout_toRightOf="@id/senderCircle"
             android:text="From:"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvMessage"
             android:text="Message body"
+            android:layout_toEndOf="@id/senderCircle"
+            android:layout_toRightOf="@id/senderCircle"
             android:layout_below="@id/tvFrom"/>
 
         <TextView
@@ -49,6 +60,7 @@
             android:text="Timestamp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:textColor="@color/md_grey_500"
             />
     </RelativeLayout>
     <ImageView

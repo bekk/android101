@@ -1,33 +1,36 @@
 package no.bekk.android.messages;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import no.bekk.android.messages.utils.LongTapDelegate;
 import no.bekk.android.messages.utils.TapDelegate;
 
 public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MessagesViewHolder> {
-    private static final DisplayImageOptions imageLoaderOptions = buildImageOptions();
     private LayoutInflater inflater;
     private List<Message> messages;
     private TapDelegate tapDelegate;
+    private ColorGenerator generator = ColorGenerator.MATERIAL;
+    private HashMap<String, TextDrawable> senderIcons = new HashMap<>();
+    private Context context;
 
-    public MessagesAdapter(LayoutInflater inflater, List<Message> messages, TapDelegate tapDelegate) {
+    public MessagesAdapter(LayoutInflater inflater, List<Message> messages, TapDelegate tapDelegate, Context context) {
         this.inflater = inflater;
         this.messages = messages;
         this.tapDelegate = tapDelegate;
+        this.context = context;
     }
 
     @Override
@@ -39,16 +42,13 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
         messagesViewHolder.message = (TextView) itemMessage.findViewById(R.id.tvMessage);
         messagesViewHolder.date = (TextView) itemMessage.findViewById(R.id.tvDate);
         messagesViewHolder.image = (ImageView) itemMessage.findViewById(R.id.message_image);
+        messagesViewHolder.senderCircle = (ImageView) itemMessage.findViewById(R.id.senderCircle);
 
         return messagesViewHolder;
     }
 
     @Override
     public void onBindViewHolder(MessagesViewHolder holder, int position) {
-        int selectedColor = holder.view.getContext().getResources().getColor(R.color.colorPrimary);
-        int transparent = holder.view.getResources().getColor(android.R.color.transparent);
-        holder.view.setBackgroundColor(isSelected(position) ? selectedColor : transparent);
-
         Message message = messages.get(position);
 
         holder.from.setText(message.getFrom());
@@ -57,10 +57,24 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
         holder.position = position;
         if (message.getImage() != null) {
             holder.image.setVisibility(View.VISIBLE);
-            ImageLoader.getInstance().displayImage(message.getImage(), holder.image, imageLoaderOptions);
+            Picasso.with(context)
+                    .load(message.getImage())
+                    .resize(600, 800)
+                    .centerCrop()
+                    .into(holder.image);
         } else {
             holder.image.setVisibility(View.GONE);
         }
+
+        String letter = message.getFrom().substring(0, 1);
+        TextDrawable textDrawable = senderIcons.get(letter);
+        if (textDrawable == null) {
+            textDrawable = TextDrawable.builder()
+                    .buildRound(letter, generator.getColor(letter));
+            senderIcons.put(letter, textDrawable);
+        }
+
+        holder.senderCircle.setImageDrawable(textDrawable);
     }
 
     @Override
@@ -75,6 +89,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
         int position;
         TapDelegate tapDelegate;
         LongTapDelegate longTapDelegate;
+        ImageView senderCircle;
 
         public MessagesViewHolder(View itemView, TapDelegate tapDelegate, LongTapDelegate longTapDelegate) {
             super(itemView);
@@ -95,40 +110,5 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
         }
     }
 
-    private static DisplayImageOptions buildImageOptions() {
-        return new DisplayImageOptions.Builder()
-//                .showImageOnLoading(R.drawable.ic_stub)
-//                .showImageForEmptyUri(R.drawable.ic_empty)
-//                .showImageOnFail(R.drawable.ic_error)
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .considerExifParams(true)
-                .displayer(new FadeInBitmapDisplayer(200))
-                .build();
-    }
 
-    private SparseBooleanArray selections = new SparseBooleanArray();
-
-    public void setSelection(int position, boolean selected) {
-        selections.put(position, selected);
-        notifyDataSetChanged();
-    }
-
-    public List<Message> getSelectedMessages() {
-        ArrayList<Message> selectedMessages = new ArrayList<Message>();
-        for (int i = 0; i < selections.size(); i++) {
-            if (selections.valueAt(i)) {
-                selectedMessages.add(messages.get(selections.keyAt(i)));
-            }
-        }
-        return selectedMessages;
-    }
-
-    public boolean isSelected(int position) {
-        return selections.get(position);
-    }
-
-    public void clearSelection() {
-        selections.clear();
-    }
 }

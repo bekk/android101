@@ -13,9 +13,6 @@ import android.view.Window;
 import android.widget.Toast;
 
 import com.google.common.collect.Ordering;
-import com.google.gson.Gson;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.software.shell.fab.ActionButton;
 
 import java.util.ArrayList;
@@ -42,13 +39,10 @@ public class MessagesActivity extends Activity implements TapDelegate, LongTapDe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_activity_messages);
 
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
-        ImageLoader.getInstance().init(config);
-
         msgView = (RecyclerView) findViewById(R.id.messageList);
         msgView.setLayoutManager(new LinearLayoutManager(this));
 
-        final MessagesAdapter msgAdapter = new MessagesAdapter(this.getLayoutInflater(), messages, this);
+        final MessagesAdapter msgAdapter = new MessagesAdapter(this.getLayoutInflater(), messages, this, this);
         msgView.setAdapter(msgAdapter);
 
         ActionButton ac = (ActionButton) findViewById(R.id.action_button);

@@ -21,7 +21,9 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.5.1'
     compile 'com.google.guava:guava:17.0'
     compile 'com.fatboyindustrial.gson-jodatime-serialisers:gson-jodatime-serialisers:1.0.0'
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
+    compile 'com.squareup.picasso:picasso:2.5.0'
     compile 'com.github.shell-software:fab:1.0.3'
+    compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
+    compile 'at.wada811:android-material-design-colors:1.2.0'
 
 }
