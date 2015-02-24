@@ -117,19 +117,20 @@ For displaying data in lists, we use what is called a <code>RecyclerView</code>.
         <span class="o">}</span>
     <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
-The <code>MessagesViewHolder</code> caches the view elements for quicker access. The <code>MessagesAdapter</code> provides access to the data set, as well as creating the correct view elements. In our example this is seen by the <code>itemMessage.findViewById()</code> calls.
+The <code>MessagesViewHolder</code> caches the view elements for quicker access. The <code>MessagesAdapter</code> provides access to the data set, as well as provides the correct view elements. In our example this is seen by the <code>itemMessage.findViewById()</code> calls.
 
 <li>We also need a <code>LayoutManager</code>, for the layout of child views. To display a list, the <code>LinearLayoutManager</code> is the chosen layout manager. It can display items either vertically or horizontally.
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">myRecyclerView</span><span class="o">.</span><span class="na">setLayoutManager</span><span class="o">(</span><span class="k">new</span> <span class="nf">LinearLayoutManager</span><span class="o">(</span><span class="k">this</span><span class="o">));</span></code></pre></div>
 
 </ul>
-In the activity that displays the list, we get the <code>ListView</code> from the activity layout using the id <code>R.id.lvMessages</code> and set it to use our adapter. All changes made to the messages list via the adapter will now be reflected in the GUI.
+In the activity where we want to display a list, we get the <code>RecyclerView</code> from the activity layout using the id <code>R.id.messageList</code> and set it to use our adapter and a LayoutManager. 
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="n">messages</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;();</span>
-<span class="n">MessageAdapter</span> <span class="n">adapter</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">MessageAdapter</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">messages</span><span class="o">);</span>
-<span class="n">ListView</span> <span class="n">listView</span> <span class="o">=</span> <span class="o">(</span><span class="n">ListView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">lvMessages</span><span class="o">);</span>
-<span class="n">listView</span><span class="o">.</span><span class="na">setAdapter</span><span class="o">(</span><span class="n">adapter</span><span class="o">);</span></code></pre></div>
+<span class="n">RecyclerView</span> <span class="n">msgView</span> <span class="o">=</span> <span class="o">(</span><span class="n">RecyclerView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">messageList</span><span class="o">);</span>
+<span class="n">msgView</span><span class="o">.</span><span class="na">setLayoutManager</span><span class="o">(</span><span class="k">new</span> <span class="nf">LinearLayoutManager</span><span class="o">(</span><span class="k">this</span><span class="o">));</span>
+<span class="n">MessagesAdapter</span> <span class="n">msgAdapter</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">MessagesAdapter</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">getLayoutInflater</span><span class="o">(),</span> <span class="n">messages</span><span class="o">,</span> <span class="k">this</span><span class="o">,</span> <span class="k">this</span><span class="o">);</span>
+<span class="n">msgView</span><span class="o">.</span><span class="na">setAdapter</span><span class="o">(</span><span class="n">msgAdapter</span><span class="o">);</span></code></pre></div>
 
           </div>
           <nav class="span4">
