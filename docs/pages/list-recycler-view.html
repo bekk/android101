@@ -56,9 +56,9 @@ Then, we create a layout xml file used for each message in the list. We place th
                 android:text="Timestamp"/>
         </RelativeLayout>
 {% endhighlight %}
-For displaying data in lists, we use what is called a <code>RecyclerView</code>. A RecyclerView is a component for handling data sets, and it has two key concepts for rendering these in list form:
+For displaying data in lists, we use what is called a <code>RecyclerView</code>. A RecyclerView is a loosely coupled component for handling data sets, which has two key concepts we use when we want to render lists:
 <ul>
-   <li>We use an <code>Adapter</code> to bind the view elements in the RecyclerView to the data set we want to display.</li>
+   <li>We use an <code>Adapter</code> to cache and bind view elements in the RecyclerView to the data set we want to display.</li>
 
 {% highlight java %}
 ppublic class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MessagesViewHolder> {
@@ -85,7 +85,6 @@ ppublic class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messa
     @Override
     public void onBindViewHolder(MessagesViewHolder holder, int position) {
         Message message = messages.get(position);
-
         holder.from.setText(message.getFrom());
         holder.message.setText(message.getMessage());
         holder.date.setText(message.getDateTimeString());
@@ -101,8 +100,6 @@ ppublic class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messa
         View view;
         TextView from, message, date;
         int position;
-        TapDelegate tapDelegate;
-        LongTapDelegate longTapDelegate;
 
         public MessagesViewHolder(View itemView) {
             super(itemView);
@@ -111,10 +108,12 @@ ppublic class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messa
     }
 }
 {% endhighlight %}
+The <code>MessagesViewHolder</code> caches the view elements for quicker access. The <code>MessagesAdapter</code> provides access to the data set, as well as creating the correct view elements. In our example this is seen by the <code>itemMessage.findViewById()</code> calls.
 
-<li>We also need a <code>LayoutManager</code> for positioning the views inside the RecyclerView. For lists, the <code>LinearLayoutManager</code> is the chosen layout manager, which can display items either vertically or horizontally. The LayoutManager will also handle the reuse of item views that are no longer visible, in order to minimize view lookups.</li>
+<li>We also need a <code>LayoutManager</code>, for the layout of child views. To display a list, the <code>LinearLayoutManager</code> is the chosen layout manager. It can display items either vertically or horizontally.
+
 {% highlight java %}
- Layoutmanagereksempel
+myRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 {% endhighlight %}
 
 </ul>
