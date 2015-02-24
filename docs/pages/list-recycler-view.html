@@ -108,7 +108,7 @@ ppublic class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messa
     }
 }
 {% endhighlight %}
-The <code>MessagesViewHolder</code> caches the view elements for quicker access. The <code>MessagesAdapter</code> provides access to the data set, as well as creating the correct view elements. In our example this is seen by the <code>itemMessage.findViewById()</code> calls.
+The <code>MessagesViewHolder</code> caches the view elements for quicker access. The <code>MessagesAdapter</code> provides access to the data set, as well as provides the correct view elements. In our example this is seen by the <code>itemMessage.findViewById()</code> calls.
 
 <li>We also need a <code>LayoutManager</code>, for the layout of child views. To display a list, the <code>LinearLayoutManager</code> is the chosen layout manager. It can display items either vertically or horizontally.
 
@@ -117,11 +117,12 @@ myRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 {% endhighlight %}
 
 </ul>
-In the activity that displays the list, we get the <code>ListView</code> from the activity layout using the id <code>R.id.lvMessages</code> and set it to use our adapter. All changes made to the messages list via the adapter will now be reflected in the GUI.
+In the activity where we want to display a list, we get the <code>RecyclerView</code> from the activity layout using the id <code>R.id.messageList</code> and set it to use our adapter and a LayoutManager. 
 
 {% highlight java %}
 ArrayList<Message> messages = new ArrayList<Message>();
-MessageAdapter adapter = new MessageAdapter(this, messages);
-ListView listView = (ListView) findViewById(R.id.lvMessages);
-listView.setAdapter(adapter);
+RecyclerView msgView = (RecyclerView) findViewById(R.id.messageList);
+msgView.setLayoutManager(new LinearLayoutManager(this));
+MessagesAdapter msgAdapter = new MessagesAdapter(this.getLayoutInflater(), messages, this, this);
+msgView.setAdapter(msgAdapter);
 {% endhighlight %}
