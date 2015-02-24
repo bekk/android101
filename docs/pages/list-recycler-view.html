@@ -40,43 +40,80 @@ Then, we create a layout xml file used for each message in the list. We place th
 For displaying data in lists, we use what is called a <code>RecyclerView</code>. A RecyclerView is a component for handling data sets, and it has two key concepts for rendering these in list form:
 <ul>
    <li>We use an <code>Adapter</code> to bind the view elements in the RecyclerView to the data set we want to display.</li>
-   
- <code>View getView(int position, View convertView, ViewGroup parent)</code> will be invoked for each position in the list, fetching the view for that position. The "ViewHolder pattern" is used to cache layout elements to increase performance.
-
 
 {% highlight java %}
-public class MessagesAdapter extends ArrayAdapter<Message> {
-    private static class ViewHolder {
-        TextView user, text;
-    }
-    public MessagesAdapter(Context context, List<Message> messages) {
-        super(context, R.layout.item_message, messages);
+ppublic class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MessagesViewHolder> {
+    private LayoutInflater inflater;
+    private List<Message> messages;
+    private TapDelegate tapDelegate;
+
+    public MessagesAdapter(LayoutInflater inflater, List<Message> messages, TapDelegate tapDelegate) {
+        this.inflater = inflater;
+        this.messages = messages;
+        this.tapDelegate = tapDelegate;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        Message message = getItem(position);
-        ViewHolder viewHolder;
-        // Check if we are reusing a view
-        // If not, inflate layout
-        if (convertView == null) {
-            viewHolder = new ViewHolder();
-            LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.item_message, parent, false);
-            viewHolder.user = (TextView) convertView.findViewById(R.id.tvUser);
-            viewHolder.text = (TextView) convertView.findViewById(R.id.tvText);
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
+    public MessagesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemMessage = inflater.inflate(R.layout.item_message, parent, false);
+        MessagesViewHolder messagesViewHolder = new MessagesViewHolder(itemMessage, tapDelegate, null);
+        messagesViewHolder.view = itemMessage;
+        messagesViewHolder.from = (TextView) itemMessage.findViewById(R.id.tvFrom);
+        messagesViewHolder.message = (TextView) itemMessage.findViewById(R.id.tvMessage);
+        messagesViewHolder.date = (TextView) itemMessage.findViewById(R.id.tvDate);
+
+        return messagesViewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(MessagesViewHolder holder, int position) {
+        Message message = messages.get(position);
+
+        holder.from.setText(message.getFrom());
+        holder.message.setText(message.getMessage());
+        holder.date.setText(message.getDateTimeString());
+        holder.position = position;
+    }
+
+    @Override
+    public int getItemCount() {
+        return messages.size();
+    }
+
+    public static class MessagesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+        View view;
+        TextView from, message, date;
+        int position;
+        TapDelegate tapDelegate;
+        LongTapDelegate longTapDelegate;
+
+        public MessagesViewHolder(View itemView, TapDelegate tapDelegate, LongTapDelegate longTapDelegate) {
+            super(itemView);
+            this.tapDelegate = tapDelegate;
+            this.longTapDelegate = longTapDelegate;
+            this.view = itemView;
+            view.setOnClickListener(this);
         }
-        viewHolder.user.setText(message.user);
-        viewHolder.text.setText(message.text);
-        return convertView;
+
+        @Override
+        public void onClick(View view) {
+            tapDelegate.tappedItemAtPosition(position);
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            return longTapDelegate.longTappedItemAtPosition(position);
+        }
     }
 }
-<li>We also need a <code>LayoutManager</code> for positioning the views inside the RecyclerView. For lists, the <code>LinearLayoutManager</code> is the chosen layout manager, which can display items either vertically or horizontally. The LayoutManager will also handle the reuse of item views that are no longer visible, in order to minimize view lookups.</li>
-</ul>
 {% endhighlight %}
+
+<li>We also need a <code>LayoutManager</code> for positioning the views inside the RecyclerView. For lists, the <code>LinearLayoutManager</code> is the chosen layout manager, which can display items either vertically or horizontally. The LayoutManager will also handle the reuse of item views that are no longer visible, in order to minimize view lookups.</li>
+{% highlight java %}
+ Layoutmanagereksempel
+{% endhighlight %}
+
+</ul>
 In the activity that displays the list, we get the <code>ListView</code> from the activity layout using the id <code>R.id.lvMessages</code> and set it to use our adapter. All changes made to the messages list via the adapter will now be reflected in the GUI.
 
 {% highlight java %}
