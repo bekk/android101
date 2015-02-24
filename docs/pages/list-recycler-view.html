@@ -64,12 +64,10 @@ For displaying data in lists, we use what is called a <code>RecyclerView</code>.
 ppublic class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MessagesViewHolder> {
     private LayoutInflater inflater;
     private List<Message> messages;
-    private TapDelegate tapDelegate;
 
-    public MessagesAdapter(LayoutInflater inflater, List<Message> messages, TapDelegate tapDelegate) {
+    public MessagesAdapter(LayoutInflater inflater, List<Message> messages) {
         this.inflater = inflater;
         this.messages = messages;
-        this.tapDelegate = tapDelegate;
     }
 
     @Override
@@ -99,29 +97,16 @@ ppublic class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messa
         return messages.size();
     }
 
-    public static class MessagesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    public static class MessagesViewHolder extends RecyclerView.ViewHolder {
         View view;
         TextView from, message, date;
         int position;
         TapDelegate tapDelegate;
         LongTapDelegate longTapDelegate;
 
-        public MessagesViewHolder(View itemView, TapDelegate tapDelegate, LongTapDelegate longTapDelegate) {
+        public MessagesViewHolder(View itemView) {
             super(itemView);
-            this.tapDelegate = tapDelegate;
-            this.longTapDelegate = longTapDelegate;
             this.view = itemView;
-            view.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            tapDelegate.tappedItemAtPosition(position);
-        }
-
-        @Override
-        public boolean onLongClick(View view) {
-            return longTapDelegate.longTappedItemAtPosition(position);
         }
     }
 }
