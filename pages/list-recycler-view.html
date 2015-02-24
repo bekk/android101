@@ -51,41 +51,76 @@ Then, we create a layout xml file used for each message in the list. We place th
 For displaying data in lists, we use what is called a <code>RecyclerView</code>. A RecyclerView is a component for handling data sets, and it has two key concepts for rendering these in list form:
 <ul>
    <li>We use an <code>Adapter</code> to bind the view elements in the RecyclerView to the data set we want to display.</li>
-   
- <code>View getView(int position, View convertView, ViewGroup parent)</code> will be invoked for each position in the list, fetching the view for that position. The "ViewHolder pattern" is used to cache layout elements to increase performance.
 
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">ppublic</span> <span class="kd">class</span> <span class="nc">MessagesAdapter</span> <span class="kd">extends</span> <span class="n">RecyclerView</span><span class="o">.</span><span class="na">Adapter</span><span class="o">&lt;</span><span class="n">MessagesAdapter</span><span class="o">.</span><span class="na">MessagesViewHolder</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">LayoutInflater</span> <span class="n">inflater</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="n">messages</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">TapDelegate</span> <span class="n">tapDelegate</span><span class="o">;</span>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MessagesAdapter</span> <span class="kd">extends</span> <span class="n">ArrayAdapter</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">ViewHolder</span> <span class="o">{</span>
-        <span class="n">TextView</span> <span class="n">user</span><span class="o">,</span> <span class="n">text</span><span class="o">;</span>
-    <span class="o">}</span>
-    <span class="kd">public</span> <span class="nf">MessagesAdapter</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="n">messages</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kd">super</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">item_message</span><span class="o">,</span> <span class="n">messages</span><span class="o">);</span>
+    <span class="kd">public</span> <span class="nf">MessagesAdapter</span><span class="o">(</span><span class="n">LayoutInflater</span> <span class="n">inflater</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="n">messages</span><span class="o">,</span> <span class="n">TapDelegate</span> <span class="n">tapDelegate</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">inflater</span> <span class="o">=</span> <span class="n">inflater</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">messages</span> <span class="o">=</span> <span class="n">messages</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">tapDelegate</span> <span class="o">=</span> <span class="n">tapDelegate</span><span class="o">;</span>
     <span class="o">}</span>
 
     <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="n">View</span> <span class="nf">getView</span><span class="o">(</span><span class="kt">int</span> <span class="n">position</span><span class="o">,</span> <span class="n">View</span> <span class="n">convertView</span><span class="o">,</span> <span class="n">ViewGroup</span> <span class="n">parent</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">Message</span> <span class="n">message</span> <span class="o">=</span> <span class="n">getItem</span><span class="o">(</span><span class="n">position</span><span class="o">);</span>
-        <span class="n">ViewHolder</span> <span class="n">viewHolder</span><span class="o">;</span>
-        <span class="c1">// Check if we are reusing a view</span>
-        <span class="c1">// If not, inflate layout</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">convertView</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">viewHolder</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ViewHolder</span><span class="o">();</span>
-            <span class="n">LayoutInflater</span> <span class="n">inflater</span> <span class="o">=</span> <span class="n">LayoutInflater</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="n">getContext</span><span class="o">());</span>
-            <span class="n">convertView</span> <span class="o">=</span> <span class="n">inflater</span><span class="o">.</span><span class="na">inflate</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">item_message</span><span class="o">,</span> <span class="n">parent</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
-            <span class="n">viewHolder</span><span class="o">.</span><span class="na">user</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">convertView</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">tvUser</span><span class="o">);</span>
-            <span class="n">viewHolder</span><span class="o">.</span><span class="na">text</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">convertView</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">tvText</span><span class="o">);</span>
-            <span class="n">convertView</span><span class="o">.</span><span class="na">setTag</span><span class="o">(</span><span class="n">viewHolder</span><span class="o">);</span>
-        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-            <span class="n">viewHolder</span> <span class="o">=</span> <span class="o">(</span><span class="n">ViewHolder</span><span class="o">)</span> <span class="n">convertView</span><span class="o">.</span><span class="na">getTag</span><span class="o">();</span>
-        <span class="o">}</span>
-        <span class="n">viewHolder</span><span class="o">.</span><span class="na">user</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">user</span><span class="o">);</span>
-        <span class="n">viewHolder</span><span class="o">.</span><span class="na">text</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">text</span><span class="o">);</span>
-        <span class="k">return</span> <span class="n">convertView</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="n">MessagesViewHolder</span> <span class="nf">onCreateViewHolder</span><span class="o">(</span><span class="n">ViewGroup</span> <span class="n">parent</span><span class="o">,</span> <span class="kt">int</span> <span class="n">viewType</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">View</span> <span class="n">itemMessage</span> <span class="o">=</span> <span class="n">inflater</span><span class="o">.</span><span class="na">inflate</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">item_message</span><span class="o">,</span> <span class="n">parent</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+        <span class="n">MessagesViewHolder</span> <span class="n">messagesViewHolder</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">MessagesViewHolder</span><span class="o">(</span><span class="n">itemMessage</span><span class="o">,</span> <span class="n">tapDelegate</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+        <span class="n">messagesViewHolder</span><span class="o">.</span><span class="na">view</span> <span class="o">=</span> <span class="n">itemMessage</span><span class="o">;</span>
+        <span class="n">messagesViewHolder</span><span class="o">.</span><span class="na">from</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">itemMessage</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">tvFrom</span><span class="o">);</span>
+        <span class="n">messagesViewHolder</span><span class="o">.</span><span class="na">message</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">itemMessage</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">tvMessage</span><span class="o">);</span>
+        <span class="n">messagesViewHolder</span><span class="o">.</span><span class="na">date</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">itemMessage</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">tvDate</span><span class="o">);</span>
+
+        <span class="k">return</span> <span class="n">messagesViewHolder</span><span class="o">;</span>
     <span class="o">}</span>
-<span class="o">}</span>
-<span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">We</span> <span class="n">also</span> <span class="n">need</span> <span class="n">a</span> <span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">LayoutManager</span><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">positioning</span> <span class="n">the</span> <span class="n">views</span> <span class="n">inside</span> <span class="n">the</span> <span class="n">RecyclerView</span><span class="o">.</span> <span class="n">For</span> <span class="n">lists</span><span class="o">,</span> <span class="n">the</span> <span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">LinearLayoutManager</span><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;</span> <span class="n">is</span> <span class="n">the</span> <span class="n">chosen</span> <span class="n">layout</span> <span class="n">manager</span><span class="o">,</span> <span class="n">which</span> <span class="n">can</span> <span class="n">display</span> <span class="n">items</span> <span class="n">either</span> <span class="n">vertically</span> <span class="n">or</span> <span class="n">horizontally</span><span class="o">.</span> <span class="n">The</span> <span class="n">LayoutManager</span> <span class="n">will</span> <span class="n">also</span> <span class="n">handle</span> <span class="n">the</span> <span class="n">reuse</span> <span class="n">of</span> <span class="n">item</span> <span class="n">views</span> <span class="n">that</span> <span class="n">are</span> <span class="n">no</span> <span class="n">longer</span> <span class="n">visible</span><span class="o">,</span> <span class="n">in</span> <span class="n">order</span> <span class="n">to</span> <span class="n">minimize</span> <span class="n">view</span> <span class="n">lookups</span><span class="o">.&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-<span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span></code></pre></div>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onBindViewHolder</span><span class="o">(</span><span class="n">MessagesViewHolder</span> <span class="n">holder</span><span class="o">,</span> <span class="kt">int</span> <span class="n">position</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Message</span> <span class="n">message</span> <span class="o">=</span> <span class="n">messages</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">position</span><span class="o">);</span>
+
+        <span class="n">holder</span><span class="o">.</span><span class="na">from</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">getFrom</span><span class="o">());</span>
+        <span class="n">holder</span><span class="o">.</span><span class="na">message</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+        <span class="n">holder</span><span class="o">.</span><span class="na">date</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">getDateTimeString</span><span class="o">());</span>
+        <span class="n">holder</span><span class="o">.</span><span class="na">position</span> <span class="o">=</span> <span class="n">position</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getItemCount</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">messages</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">MessagesViewHolder</span> <span class="kd">extends</span> <span class="n">RecyclerView</span><span class="o">.</span><span class="na">ViewHolder</span> <span class="kd">implements</span> <span class="n">View</span><span class="o">.</span><span class="na">OnClickListener</span><span class="o">,</span> <span class="n">View</span><span class="o">.</span><span class="na">OnLongClickListener</span> <span class="o">{</span>
+        <span class="n">View</span> <span class="n">view</span><span class="o">;</span>
+        <span class="n">TextView</span> <span class="n">from</span><span class="o">,</span> <span class="n">message</span><span class="o">,</span> <span class="n">date</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">position</span><span class="o">;</span>
+        <span class="n">TapDelegate</span> <span class="n">tapDelegate</span><span class="o">;</span>
+        <span class="n">LongTapDelegate</span> <span class="n">longTapDelegate</span><span class="o">;</span>
+
+        <span class="kd">public</span> <span class="nf">MessagesViewHolder</span><span class="o">(</span><span class="n">View</span> <span class="n">itemView</span><span class="o">,</span> <span class="n">TapDelegate</span> <span class="n">tapDelegate</span><span class="o">,</span> <span class="n">LongTapDelegate</span> <span class="n">longTapDelegate</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kd">super</span><span class="o">(</span><span class="n">itemView</span><span class="o">);</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">tapDelegate</span> <span class="o">=</span> <span class="n">tapDelegate</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">longTapDelegate</span> <span class="o">=</span> <span class="n">longTapDelegate</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">view</span> <span class="o">=</span> <span class="n">itemView</span><span class="o">;</span>
+            <span class="n">view</span><span class="o">.</span><span class="na">setOnClickListener</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">view</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">tapDelegate</span><span class="o">.</span><span class="na">tappedItemAtPosition</span><span class="o">(</span><span class="n">position</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">onLongClick</span><span class="o">(</span><span class="n">View</span> <span class="n">view</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">longTapDelegate</span><span class="o">.</span><span class="na">longTappedItemAtPosition</span><span class="o">(</span><span class="n">position</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+
+<li>We also need a <code>LayoutManager</code> for positioning the views inside the RecyclerView. For lists, the <code>LinearLayoutManager</code> is the chosen layout manager, which can display items either vertically or horizontally. The LayoutManager will also handle the reuse of item views that are no longer visible, in order to minimize view lookups.</li>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Layoutmanagereksempel</span></code></pre></div>
+
+</ul>
 In the activity that displays the list, we get the <code>ListView</code> from the activity layout using the id <code>R.id.lvMessages</code> and set it to use our adapter. All changes made to the messages list via the adapter will now be reflected in the GUI.
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="n">messages</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;();</span>
