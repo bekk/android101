@@ -6,11 +6,25 @@ title: Lists and RecyclerView
 When we work with lists in Android, we first create a model to hold the data we want to display:
 {% highlight java %}
 public class Message {
-    public final String user, text;
+    private DateTime date;
+    private String from, message;
 
-    public Message(String user, String text) {
-        this.user = user;
-        this.text = text;
+    public Message(String from, String message, DateTime date) {
+        this.date = date;
+        this.from = from;
+        this.message = message;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public DateTime getDate() {
+        return date;
     }
 }
 {% endhighlight %}
@@ -20,22 +34,27 @@ Then, we create a layout xml file used for each message in the list. We place th
 {% highlight xml %}
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    <RelativeLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:padding="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvFrom"
+                android:text="From:"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvMessage"
+                android:text="Message body"/>
 
-    <TextView
-        android:id="@+id/tvUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="User" />
-    <TextView
-        android:id="@+id/tvText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Message" />
-
-</LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvDate"
+                android:text="Timestamp"/>
+        </RelativeLayout>
 {% endhighlight %}
 For displaying data in lists, we use what is called a <code>RecyclerView</code>. A RecyclerView is a component for handling data sets, and it has two key concepts for rendering these in list form:
 <ul>
