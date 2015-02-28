@@ -3,6 +3,46 @@ layout: default
 title: Assignments
 ---
 
+<h3>Your first activity</h3>
+Activities are the most important building blocks in Android. They provide the data and wiring required for displaying each screen in your app. A simple rule of thumb is one activity for each screen. Activities provide callback methods to hook into various lifecycle events, e.g. creating and resuming the activity, that you must override.
+
+<ol>
+  <li>Create a new activity called 'MessagesActivity' (Java class that extends Activity).</li>
+  <li>Override the onCreate(Bundle savedInstanceState) method that will be called when your activity is created.</li>
+</ol>
+
+Now we need to tell the system how to display the UI for the new activity. The UI in Android apps are created using XML layout files. They live in the res/layout folder. Each xml file in this folder will be accessible from java code using <code>R.layout.layout_file_name</code>.
+
+<ol>
+  <li>Create the layout <code>activity_messages.xml</code> by right clicking the layout folder and selecting New/Layout resource file.</li>
+  <li>Under Root element, choose RelativeLayout.</li>
+  <li>Create an TextView view inside the RelativeLayout. The android:layout_width and android:layout_height attributes are required. Most of the time you will be using either match_parent when you want the same width or height as the parent view, or wrap_content when the view should take up only the space it requires in the layout. Choose wrap_content for both for now. Also you should never hard code strings in your app, so in the android:text attribute we will be referencing a string value from another resource file.</li>
+  <li>Create a new string in res/values/strings.xml</li>
+  <li>Reference this string in your new TextView view with <code>@string/your_string_name</code>. The @ prefix also lets you look up values like other views by @id/your_view_id when you need to reference another element.</li>
+  <li>Give the TextView view an id, <code>android:id="@+id/my_text_view"</code>. Notice the + sign after @id. This means create an id for this view instead of referencing an existing id.</li>
+  <li>Create another TextView view and set it's text to a another string value. Make the new one appear to the right of the first one, by using android:layout_toRightOf and reference the id of the first TextView.</li>
+  <li>Tell MessagesActivity to use this layout by calling <code>setContentView()</code> in <code>onCreate()</code>.</li>
+</ol>
+
+The time has come for you to start the app and see what it looks like, but first we need to specify which activity will be displayed when the app starts. A special file called AndroidManifest.xml contains a declaration of all the app activities, the permissions required (like internet access) and much more.
+
+<ol>
+  <li>Open the file 'AndroidManifest.xml' and add and activity element inside the application element.</li>
+  <li>Set the name to the MessagesActivity class and give it a descriptive label.</li>
+  <li>Add an intent-filter inside the activity element so that the activity responds to intents of the category android.intent.category.LAUNCHER. You can think of intents as broadcast messages with a name and payload that activites can listen for. They can be sent by the system and between activities in your own app. When the system sends an intent to start the app, MessagesActivity will now respond and show itself on screen.
+    <code class="xml">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </code>
+  </li>
+  <li>Plug in your phone, hit the debug button in the top menu in Android Studio, choose your phone in the list that appears, wait a few seconds and profit!</li>
+</ol>
+
+
+
 You will create a twitter-like app that communicates with an HTTP REST API for viewing and creating messages. It is up to you whether you want to focus on GUI polish and interaction, or implement all the functionality in the API.
 
 <h3>API</h3>
@@ -61,120 +101,3 @@ If you want to use retrofit, you will need the following gradle dependency:
 <code>compile 'com.squareup.retrofit:retrofit:1.6.1'</code>.
 
 If you want to do things manually and need a framework for JSON-parsing, we suggest using Gson.
-
-<h3> Helper class for uploading photo to Imgur</h3>
-{% highlight java %}
-package no.bekk.android.messages.imgur;
-
-import android.app.Activity;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.util.Log;
-import org.json.JSONObject;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Scanner;
-
-public abstract class Upload extends AsyncTask<Void, Void, String> {
-
-    private static final String TAG = Upload.class.getSimpleName();
-
-    private static final String UPLOAD_URL = "https://api.imgur.com/3/image";
-
-    private Activity mActivity;
-    private Bitmap bitmap;
-    public Upload(Bitmap bitmap, Activity activity) {
-        this.bitmap = bitmap;
-        this.mActivity = activity;
-    }
-
-    @Override
-    protected String doInBackground(Void... params) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        InputStream imageIn = new ByteArrayInputStream(stream.toByteArray());
-
-        HttpURLConnection conn = null;
-        InputStream responseIn = null;
-
-        try {
-            conn = (HttpURLConnection) new URL(UPLOAD_URL).openConnection();
-            conn.setRequestProperty("Authorization", "Client-ID " + "7362bd404ecd0c1");
-            conn.setDoOutput(true);
-
-            OutputStream out = conn.getOutputStream();
-            copy(imageIn, out);
-            out.flush();
-            out.close();
-
-            if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                responseIn = conn.getInputStream();
-                return onInput(responseIn);
-            }
-            else {
-                Log.i(TAG, "responseCode=" + conn.getResponseCode());
-                responseIn = conn.getErrorStream();
-                StringBuilder sb = new StringBuilder();
-                Scanner scanner = new Scanner(responseIn);
-                while (scanner.hasNext()) {
-                    sb.append(scanner.next());
-                }
-                Log.i(TAG, "error response: " + sb.toString());
-                return null;
-            }
-        } catch (Exception ex) {
-            Log.e(TAG, "Error during POST", ex);
-            return null;
-        } finally {
-            try {
-                responseIn.close();
-            } catch (Exception ignore) {}
-            try {
-                conn.disconnect();
-            } catch (Exception ignore) {}
-            try {
-                imageIn.close();
-            } catch (Exception ignore) {}
-        }
-    }
-
-    private static int copy(InputStream input, OutputStream output) throws IOException {
-        byte[] buffer = new byte[8192];
-        int count = 0;
-        int n = 0;
-        while (-1 != (n = input.read(buffer))) {
-            output.write(buffer, 0, n);
-            count += n;
-        }
-        return count;
-    }
-
-    protected String onInput(InputStream in) throws Exception {
-        StringBuilder sb = new StringBuilder();
-        Scanner scanner = new Scanner(in);
-        while (scanner.hasNext()) {
-            sb.append(scanner.next());
-        }
-
-        JSONObject root = new JSONObject(sb.toString());
-        String id = root.getJSONObject("data").getString("id");
-        String deletehash = root.getJSONObject("data").getString("deletehash");
-
-        Log.i(TAG, "new imgur url: http://imgur.com/" + id + " (delete hash: " + deletehash + ")");
-        return id;
-    }
-
-}
-{% endhighlight %}
-
-
-<h3> Pro tip for downloading images </h3>
-compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
