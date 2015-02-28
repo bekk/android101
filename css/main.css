@@ -21,3 +21,8 @@ h2:first-of-type {
 img, pre {
   margin: 20px 0 20px 0;
 }
+
+ol, ul {
+    padding: 20px 0 10px 0px;
+    margin-left: 0;
+}
