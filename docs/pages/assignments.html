@@ -37,17 +37,10 @@ The time has come for you to start the app and see what it looks like, but first
   <li>Open the file 'AndroidManifest.xml' and add and activity element inside the application element.</li>
   <li>Set the name to the MessagesActivity class and give it a descriptive label.</li>
   <li>Add an intent-filter inside the activity element so that the activity responds to intents of the category android.intent.category.LAUNCHER. You can think of intents as broadcast messages with a name and payload that activites can listen for. They can be sent by the system and between activities in your own app. When the system sends an intent to start the app, MessagesActivity will now respond and show itself on screen.
+    {% gist 4326ca7cbad76a96733e %}
   </li>
   <li>Plug in your phone, hit the debug button in the top menu in Android Studio, choose your phone in the list that appears, wait a few seconds and profit!</li>
 </ol>
-
-<code>
-  <intent-filter>
-    <action android:name="android.intent.action.MAIN" />
-
-    <category android:name="android.intent.category.LAUNCHER" />
-  </intent-filter>
-</code>
 
 
 You will create a twitter-like app that communicates with an HTTP REST API for viewing and creating messages. It is up to you whether you want to focus on GUI polish and interaction, or implement all the functionality in the API.
