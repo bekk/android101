@@ -18,7 +18,47 @@
         <div class="row-fluid">
           <div class="span8">
             <h1 class="page-header">Assignments</h1>
-            You will create a twitter-like app that communicates with an HTTP REST API for viewing and creating messages. It is up to you whether you want to focus on GUI polish and interaction, or implement all the functionality in the API.
+            <h3>Your first activity</h3>
+Activities are the most important building blocks in Android. They provide the data and wiring required for displaying each screen in your app. A simple rule of thumb is one activity for each screen. Activities provide callback methods to hook into various lifecycle events, e.g. creating and resuming the activity, that you must override.
+
+<ol>
+  <li>Create a new activity called 'MessagesActivity' (Java class that extends Activity).</li>
+  <li>Override the onCreate(Bundle savedInstanceState) method that will be called when your activity is created.</li>
+</ol>
+
+Now we need to tell the system how to display the UI for the new activity. The UI in Android apps are created using XML layout files. They live in the res/layout folder. Each xml file in this folder will be accessible from java code using <code>R.layout.layout_file_name</code>.
+
+<ol>
+  <li>Create the layout <code>activity_messages.xml</code> by right clicking the layout folder and selecting New/Layout resource file.</li>
+  <li>Under Root element, choose RelativeLayout.</li>
+  <li>Create an TextView view inside the RelativeLayout. The android:layout_width and android:layout_height attributes are required. Most of the time you will be using either match_parent when you want the same width or height as the parent view, or wrap_content when the view should take up only the space it requires in the layout. Choose wrap_content for both for now. Also you should never hard code strings in your app, so in the android:text attribute we will be referencing a string value from another resource file.</li>
+  <li>Create a new string in res/values/strings.xml</li>
+  <li>Reference this string in your new TextView view with <code>@string/your_string_name</code>. The @ prefix also lets you look up values like other views by @id/your_view_id when you need to reference another element.</li>
+  <li>Give the TextView view an id, <code>android:id="@+id/my_text_view"</code>. Notice the + sign after @id. This means create an id for this view instead of referencing an existing id.</li>
+  <li>Create another TextView view and set it's text to a another string value. Make the new one appear to the right of the first one, by using android:layout_toRightOf and reference the id of the first TextView.</li>
+  <li>Tell MessagesActivity to use this layout by calling <code>setContentView()</code> in <code>onCreate()</code>.</li>
+</ol>
+
+The time has come for you to start the app and see what it looks like, but first we need to specify which activity will be displayed when the app starts. A special file called AndroidManifest.xml contains a declaration of all the app activities, the permissions required (like internet access) and much more.
+
+<ol>
+  <li>Open the file 'AndroidManifest.xml' and add and activity element inside the application element.</li>
+  <li>Set the name to the MessagesActivity class and give it a descriptive label.</li>
+  <li>Add an intent-filter inside the activity element so that the activity responds to intents of the category android.intent.category.LAUNCHER. You can think of intents as broadcast messages with a name and payload that activites can listen for. They can be sent by the system and between activities in your own app. When the system sends an intent to start the app, MessagesActivity will now respond and show itself on screen.
+    <code class="xml">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </code>
+  </li>
+  <li>Plug in your phone, hit the debug button in the top menu in Android Studio, choose your phone in the list that appears, wait a few seconds and profit!</li>
+</ol>
+
+
+
+You will create a twitter-like app that communicates with an HTTP REST API for viewing and creating messages. It is up to you whether you want to focus on GUI polish and interaction, or implement all the functionality in the API.
 
 <h3>API</h3>
 
@@ -76,121 +116,6 @@ If you want to use retrofit, you will need the following gradle dependency:
 <code>compile 'com.squareup.retrofit:retrofit:1.6.1'</code>.
 
 If you want to do things manually and need a framework for JSON-parsing, we suggest using Gson.
-
-<h3> Helper class for uploading photo to Imgur</h3>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kn">package</span> <span class="n">no</span><span class="o">.</span><span class="na">bekk</span><span class="o">.</span><span class="na">android</span><span class="o">.</span><span class="na">messages</span><span class="o">.</span><span class="na">imgur</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">android.app.Activity</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">android.graphics.Bitmap</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">android.net.Uri</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">android.os.AsyncTask</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">android.util.Log</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.json.JSONObject</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">java.io.ByteArrayInputStream</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.io.ByteArrayOutputStream</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.io.FileNotFoundException</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.io.InputStream</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.io.OutputStream</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.net.HttpURLConnection</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.net.URL</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.Scanner</span><span class="o">;</span>
-
-<span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Upload</span> <span class="kd">extends</span> <span class="n">AsyncTask</span><span class="o">&lt;</span><span class="n">Void</span><span class="o">,</span> <span class="n">Void</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="o">{</span>
-
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">TAG</span> <span class="o">=</span> <span class="n">Upload</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getSimpleName</span><span class="o">();</span>
-
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">UPLOAD_URL</span> <span class="o">=</span> <span class="s">&quot;https://api.imgur.com/3/image&quot;</span><span class="o">;</span>
-
-    <span class="kd">private</span> <span class="n">Activity</span> <span class="n">mActivity</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="n">Bitmap</span> <span class="n">bitmap</span><span class="o">;</span>
-    <span class="kd">public</span> <span class="nf">Upload</span><span class="o">(</span><span class="n">Bitmap</span> <span class="n">bitmap</span><span class="o">,</span> <span class="n">Activity</span> <span class="n">activity</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">bitmap</span> <span class="o">=</span> <span class="n">bitmap</span><span class="o">;</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">mActivity</span> <span class="o">=</span> <span class="n">activity</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">protected</span> <span class="n">String</span> <span class="nf">doInBackground</span><span class="o">(</span><span class="n">Void</span><span class="o">...</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">ByteArrayOutputStream</span> <span class="n">stream</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ByteArrayOutputStream</span><span class="o">();</span>
-        <span class="n">bitmap</span><span class="o">.</span><span class="na">compress</span><span class="o">(</span><span class="n">Bitmap</span><span class="o">.</span><span class="na">CompressFormat</span><span class="o">.</span><span class="na">JPEG</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span> <span class="n">stream</span><span class="o">);</span>
-        <span class="n">InputStream</span> <span class="n">imageIn</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ByteArrayInputStream</span><span class="o">(</span><span class="n">stream</span><span class="o">.</span><span class="na">toByteArray</span><span class="o">());</span>
-
-        <span class="n">HttpURLConnection</span> <span class="n">conn</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-        <span class="n">InputStream</span> <span class="n">responseIn</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-
-        <span class="k">try</span> <span class="o">{</span>
-            <span class="n">conn</span> <span class="o">=</span> <span class="o">(</span><span class="n">HttpURLConnection</span><span class="o">)</span> <span class="k">new</span> <span class="nf">URL</span><span class="o">(</span><span class="n">UPLOAD_URL</span><span class="o">).</span><span class="na">openConnection</span><span class="o">();</span>
-            <span class="n">conn</span><span class="o">.</span><span class="na">setRequestProperty</span><span class="o">(</span><span class="s">&quot;Authorization&quot;</span><span class="o">,</span> <span class="s">&quot;Client-ID &quot;</span> <span class="o">+</span> <span class="s">&quot;7362bd404ecd0c1&quot;</span><span class="o">);</span>
-            <span class="n">conn</span><span class="o">.</span><span class="na">setDoOutput</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
-
-            <span class="n">OutputStream</span> <span class="n">out</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">getOutputStream</span><span class="o">();</span>
-            <span class="n">copy</span><span class="o">(</span><span class="n">imageIn</span><span class="o">,</span> <span class="n">out</span><span class="o">);</span>
-            <span class="n">out</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
-            <span class="n">out</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-
-            <span class="k">if</span> <span class="o">(</span><span class="n">conn</span><span class="o">.</span><span class="na">getResponseCode</span><span class="o">()</span> <span class="o">==</span> <span class="n">HttpURLConnection</span><span class="o">.</span><span class="na">HTTP_OK</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">responseIn</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">();</span>
-                <span class="k">return</span> <span class="nf">onInput</span><span class="o">(</span><span class="n">responseIn</span><span class="o">);</span>
-            <span class="o">}</span>
-            <span class="k">else</span> <span class="o">{</span>
-                <span class="n">Log</span><span class="o">.</span><span class="na">i</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;responseCode=&quot;</span> <span class="o">+</span> <span class="n">conn</span><span class="o">.</span><span class="na">getResponseCode</span><span class="o">());</span>
-                <span class="n">responseIn</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">getErrorStream</span><span class="o">();</span>
-                <span class="n">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">StringBuilder</span><span class="o">();</span>
-                <span class="n">Scanner</span> <span class="n">scanner</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Scanner</span><span class="o">(</span><span class="n">responseIn</span><span class="o">);</span>
-                <span class="k">while</span> <span class="o">(</span><span class="n">scanner</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
-                    <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">scanner</span><span class="o">.</span><span class="na">next</span><span class="o">());</span>
-                <span class="o">}</span>
-                <span class="n">Log</span><span class="o">.</span><span class="na">i</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;error response: &quot;</span> <span class="o">+</span> <span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
-                <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
-            <span class="o">}</span>
-        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">Log</span><span class="o">.</span><span class="na">e</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;Error during POST&quot;</span><span class="o">,</span> <span class="n">ex</span><span class="o">);</span>
-            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
-        <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
-            <span class="k">try</span> <span class="o">{</span>
-                <span class="n">responseIn</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">ignore</span><span class="o">)</span> <span class="o">{}</span>
-            <span class="k">try</span> <span class="o">{</span>
-                <span class="n">conn</span><span class="o">.</span><span class="na">disconnect</span><span class="o">();</span>
-            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">ignore</span><span class="o">)</span> <span class="o">{}</span>
-            <span class="k">try</span> <span class="o">{</span>
-                <span class="n">imageIn</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">ignore</span><span class="o">)</span> <span class="o">{}</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">copy</span><span class="o">(</span><span class="n">InputStream</span> <span class="n">input</span><span class="o">,</span> <span class="n">OutputStream</span> <span class="n">output</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
-        <span class="kt">byte</span><span class="o">[]</span> <span class="n">buffer</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="mi">8192</span><span class="o">];</span>
-        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="k">while</span> <span class="o">(-</span><span class="mi">1</span> <span class="o">!=</span> <span class="o">(</span><span class="n">n</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">buffer</span><span class="o">)))</span> <span class="o">{</span>
-            <span class="n">output</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">buffer</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">n</span><span class="o">);</span>
-            <span class="n">count</span> <span class="o">+=</span> <span class="n">n</span><span class="o">;</span>
-        <span class="o">}</span>
-        <span class="k">return</span> <span class="n">count</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="kd">protected</span> <span class="n">String</span> <span class="nf">onInput</span><span class="o">(</span><span class="n">InputStream</span> <span class="n">in</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-        <span class="n">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">StringBuilder</span><span class="o">();</span>
-        <span class="n">Scanner</span> <span class="n">scanner</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Scanner</span><span class="o">(</span><span class="n">in</span><span class="o">);</span>
-        <span class="k">while</span> <span class="o">(</span><span class="n">scanner</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
-            <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">scanner</span><span class="o">.</span><span class="na">next</span><span class="o">());</span>
-        <span class="o">}</span>
-
-        <span class="n">JSONObject</span> <span class="n">root</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">JSONObject</span><span class="o">(</span><span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
-        <span class="n">String</span> <span class="n">id</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="na">getJSONObject</span><span class="o">(</span><span class="s">&quot;data&quot;</span><span class="o">).</span><span class="na">getString</span><span class="o">(</span><span class="s">&quot;id&quot;</span><span class="o">);</span>
-        <span class="n">String</span> <span class="n">deletehash</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="na">getJSONObject</span><span class="o">(</span><span class="s">&quot;data&quot;</span><span class="o">).</span><span class="na">getString</span><span class="o">(</span><span class="s">&quot;deletehash&quot;</span><span class="o">);</span>
-
-        <span class="n">Log</span><span class="o">.</span><span class="na">i</span><span class="o">(</span><span class="n">TAG</span><span class="o">,</span> <span class="s">&quot;new imgur url: http://imgur.com/&quot;</span> <span class="o">+</span> <span class="n">id</span> <span class="o">+</span> <span class="s">&quot; (delete hash: &quot;</span> <span class="o">+</span> <span class="n">deletehash</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span><span class="o">);</span>
-        <span class="k">return</span> <span class="n">id</span><span class="o">;</span>
-    <span class="o">}</span>
-
-<span class="o">}</span></code></pre></div>
-
-
-<h3> Pro tip for downloading images </h3>
-compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
 
 
           </div>
