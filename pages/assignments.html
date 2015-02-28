@@ -31,7 +31,7 @@ Activities are the most important building blocks in Android. They provide the d
 
 <h3>Create the view</h3>
 
-Now we need to tell the system how to display the UI for the new activity. The UI in Android apps are created using XML layout files. They live in the res/layout folder. Each xml file in this folder will be accessible from java code using <code>R.layout.layout_file_name</code>.
+Now we need to tell the system how to display the UI for the new activity. The UI in Android apps are created using XML layout files. They live in the res/layout folder. Each xml file in this folder will be accessible from java code using <code>R.layout.layout_file_name</code>. The two most useful layout views are LinearLayout and RelativeLayout. LinearLayout allows you to layout child views sequentially either vertically or horizontally. The RelativeLayout allows you to position subviews in relation to each other, e.g. a button to the right of a text field, or a label on top.
 
 <ol>
   <li>Create the layout <code>activity_messages.xml</code> by right clicking the layout folder and selecting New/Layout resource file.</li>
@@ -51,11 +51,28 @@ The time has come for you to start the app and see what it looks like, but first
 <ol>
   <li>Open the file 'AndroidManifest.xml' and add and activity element inside the application element.</li>
   <li>Set the name to the MessagesActivity class and give it a descriptive label.</li>
-  <li>Add an intent-filter inside the activity element so that the activity responds to intents of the category android.intent.category.LAUNCHER. You can think of intents as broadcast messages with a name and payload that activites can listen for. They can be sent by the system and between activities in your own app. When the system sends an intent to start the app, MessagesActivity will now respond and show itself on screen.
+  <li>Add an intent-filter inside the activity element so that the activity responds to intents of the category android.intent.category.LAUNCHER. You can think of intents as broadcast messages with a name and payload that activites can listen for. They can be sent by the system and between activities in your own app. When the system sends an intent to start the app, MessagesActivity will now respond and show itself on screen.<br/>
     <script src="https://gist.github.com/4326ca7cbad76a96733e.js"> </script>
   </li>
   <li>Plug in your phone, hit the debug button in the top menu in Android Studio, choose your phone in the list that appears, wait a few seconds and profit!</li>
 </ol>
+
+<h2>Displaying the messages</h2>
+
+To display the messages from the API, we will use Retrofit to fetch the JSON and map into our domain objects, and a RecyclerView to display the list in our MessagesActivity. The RecyclerView was introduced in Lollipop, but is offered through the Android support library so that we can use it on lower API levels. Both list and grid layouts are supported. The primary advantage over the traditional ListView is that RecyclerView enforces the "View holder" pattern, in which list elements are cached and reused to improved performance.
+
+<ol>
+  <li>Add the following dependencies in app/build.gradle: <code>compile 'com.android.support:appcompat-v7:21.+'</code>, <code>compile 'com.android.support:recyclerview-v7:21.+'</code>.</li>
+  <li>Remove the stupid TextView's you created in res/layouts/activity_messages.xml</li>
+  <li>Add a RecyclerView in the layout and give it an ID so you can reference it in the activity. You should probably have width and height set to match_parent.</li>
+  <li>Use <code>findViewById(int)</code> in MessagesActivity to get a reference to the RecyclerView using R.id.you_recycler_view.</li>
+  <li>Set the RecyclerView's layout manager to be a linear one (because we will show a list, not a grid).</li>
+  <li>The RecyclerView needs an adapter that controls how to display its elements. Create a new class that extends <code>RecyclerView.Adapter&#60;YourViewHolderObject&#62;</code>. Override the required methods according to the description below. Remember to take a list of messages in the constructor.</li>
+</ol>
+
+<h3>View holder</h3>
+
+The view holder object must extend RecyclerView.ViewHolder and can be an inner static class if you like. The view holder should contain variables for all the subviews you need to set properties on when displaying the messages, e.g. e TextView for the message text. RecyclerView expects you to create a new ViewHolder in <code>onCreateViewHolder(ViewGroup viewGroup, int i). Here you will use <code>findViewById(int)</code> to fetch all the subviews you require and put them into the ViewHolder. You don't set display values for any of the views at this point, that happens in <code>onBindViewHolder(ViewHolder viewHolder, int i)</code>. In this method you are expected to e.g. set the text to display for the list element at position i. You should not do any expensive operations in this method. That is why you fetch the subviews in <code>onCreateViewHolder</code> instead (which is only called once).
 
 
 You will create a twitter-like app that communicates with an HTTP REST API for viewing and creating messages. It is up to you whether you want to focus on GUI polish and interaction, or implement all the functionality in the API.
