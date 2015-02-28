@@ -18,13 +18,17 @@
         <div class="row-fluid">
           <div class="span8">
             <h1 class="page-header">Assignments</h1>
-            <h3>Your first activity</h3>
+            <h2>Your first activity</h2>
 Activities are the most important building blocks in Android. They provide the data and wiring required for displaying each screen in your app. A simple rule of thumb is one activity for each screen. Activities provide callback methods to hook into various lifecycle events, e.g. creating and resuming the activity, that you must override.
+
+<h3>Create the activity</h3>
 
 <ol>
   <li>Create a new activity called 'MessagesActivity' (Java class that extends Activity).</li>
   <li>Override the onCreate(Bundle savedInstanceState) method that will be called when your activity is created.</li>
 </ol>
+
+<h3>Create the view</h3>
 
 Now we need to tell the system how to display the UI for the new activity. The UI in Android apps are created using XML layout files. They live in the res/layout folder. Each xml file in this folder will be accessible from java code using <code>R.layout.layout_file_name</code>.
 
@@ -38,6 +42,8 @@ Now we need to tell the system how to display the UI for the new activity. The U
   <li>Create another TextView view and set it's text to a another string value. Make the new one appear to the right of the first one, by using android:layout_toRightOf and reference the id of the first TextView.</li>
   <li>Tell MessagesActivity to use this layout by calling <code>setContentView()</code> in <code>onCreate()</code>.</li>
 </ol>
+
+<h3>Test the app</h3>
 
 The time has come for you to start the app and see what it looks like, but first we need to specify which activity will be displayed when the app starts. A special file called AndroidManifest.xml contains a declaration of all the app activities, the permissions required (like internet access) and much more.
 
@@ -55,7 +61,6 @@ The time has come for you to start the app and see what it looks like, but first
   </li>
   <li>Plug in your phone, hit the debug button in the top menu in Android Studio, choose your phone in the list that appears, wait a few seconds and profit!</li>
 </ol>
-
 
 
 You will create a twitter-like app that communicates with an HTTP REST API for viewing and creating messages. It is up to you whether you want to focus on GUI polish and interaction, or implement all the functionality in the API.
