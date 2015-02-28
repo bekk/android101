@@ -53,6 +53,8 @@ To display the messages from the API, we will use Retrofit to fetch the JSON and
   <li>Use <code>findViewById(int)</code> in MessagesActivity to get a reference to the RecyclerView using R.id.you_recycler_view.</li>
   <li>Set the RecyclerView's layout manager to be a linear one (because we will show a list, not a grid).</li>
   <li>The RecyclerView needs an adapter that controls how to display its elements. Create a new class that extends <code>RecyclerView.Adapter&#60;YourViewHolderObject&#62;</code>. Override the required methods according to the description below. Remember to take a list of messages in the constructor.</li>
+  <li>You need to create a new layout for display each element in the list. Create res/layout/item_message.xml and add a TextView to show the message. Use a LayoutInflater to create the message view in <code>onCreateViewHolder(ViewGroup viewGroup, int i)</code>. You will set the text value in <code>onBindViewHolder(ViewHolder viewHolder, int i)</code>.</li>
+  <li>Create the adapter, pass in the list of messages, and set the adapter on the RecyclerView instance in MessagesActivity. You can use a list of strings to test.</li>
 </ol>
 
 <h3>View holder</h3>
