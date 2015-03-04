@@ -8,16 +8,21 @@ an updated version of Android Studio
 
 <h3>Main</h3>
 <ol>
-	<li>Open Android Studio, create an empty project.</li>
-    <li>Run Hello World app and explain debugging.</li>
+	<li>Open Android Studio, create an empty project. Briefly mention what an Activity is, along with the xml layout.</li>
 	<li>Explain Activities (<a href="android-app-structure-and-components.html"> App Structure And Components</a>)</li>
-    <li>Explain the Android Manifest</li>
+    <li>Explain the Android Manifest and show that we have registred our Activity here.</li>
 	<li>Explain layouts and layout controls (<a href="common-view-controls.html"> Common View Controls</a>), (<a href="view-layout.html"> View Layout</a>))</li>
 	<li>Explain the UI builder</li>
-	<li>Create the MainActivity for the Spotify app. MainActivity will display an input text field and a button. </li>
+    <li>Run Hello World app and explain debugging.</li>
+	<li>Update the MainActivity. It will display an input text field and a button. </li>
     <li>Create the layout files and controls for the activity.</li>
-    <li>Create a click listener for the button. This is where we want to initiate the search. Explain AsyncTasks (<a href="working-in-the-background.html"> Working In the Background.</a>)
-    	Say that for this course we will use Retrofit, and provide Retrofit basics (background thread, GSON, etc). Add Gradle dependency:
+    <li>Create a click listener for the button. This is where we want to initiate the search. For now, add a Toast.
+    </li>
+    <li>Replace the Toast with an Intent which we will use to start the TracksActivity. Describe intents</li>
+    <li>Create the TracksActivity. TracksActivity will perform the actual search, and display a list containing the search results. Add entries to the Android Manifest</li>
+    <li>Start TracksActivity from MainActivity, and also pass the search input as an extra. Retrieve the bundle in TracksActivity.</li>
+    <li>Explain that we now want to set up a service for performing the search. Explain AsyncTasks (<a href="working-in-the-background.html"> Working In the Background.</a>)
+        Say that for this course we will use Retrofit, and provide Retrofit basics (background thread, GSON, etc). Add Gradle dependency:
         <p><code> compile 'com.squareup.retrofit:retrofit:1.9.0'</code></p></li>
 	<li>Add SpotifySearchService which is the Retrofit interface. Maybe live code this. Also, add URL as a final variable to the MainActivity.
         <p><code>"/search/1/track.json"</code></p>
@@ -26,7 +31,7 @@ an updated version of Android Studio
     <li> Create the Result object and explain its connection to the JSON structure returned by the Spotify API. It will hold a list of tracks.</li>
     <li> Create the Artist and Track domain objects. Copy these</li>
     <li> Create an instance of RestAdapter, and use this to instantiate the SpotifySearchService. Add the rest call to the created click listener. </li>
-    <li> Run the app and perform a search. Add a Toast to the success callback</li>
+    <li> Run the app and perform a search. Add a Toast to the success callback, and also log if success or error. Remember to log error</li>
 
     <p><code> PAUSE / SWITCH PRESENTER</code></p></li>
 
@@ -35,13 +40,8 @@ an updated version of Android Studio
 	    <uses-permission android:name="android.permission.INTERNET" />
 	{% endhighlight %}
 	<li>Run app again and see that the Toast pops up</li>
-	<li>Create the ResultActivity. ResultActivity will display a list containing the search results. Add entries to the Android Manifest</li>
     
-    <li>Remove <code>Toast</code> and start the ResultActivity from the success callback using Intents. Explain that there are several ways to pass
-    	objects between activities, for instance Parcelable. For simplicity, we pass the json as a <code>
-    	stringExtra</code>. Parse the Result object using GSON and pass it.</li>
-
-    <li>In the ResultActivity, parse the String as the Result domain object using GSON</li>
+    <li>Remove <code>Toast</code> and explain that we now want to display the data in a list </li>
     <li> Explain that a <code>RecyclerView</code> can be used for displaying the results (<a href="list-recycler-view.html"> Lists and RecyclerView)</a> </li>
     <code>compile 'com.android.support:recyclerview-v7:+'</code> <code> compile 'com.android.support:cardview-v7:+'</code>
     <li> Set up a RecyclerView, and populate the RecyclerViewAdapter fields with properties from the Track domain objects</li>
@@ -235,7 +235,7 @@ public class SongResultAdapter extends RecyclerView.Adapter<SongResultAdapter.So
 </LinearLayout>
 {% endhighlight %}
 
-<h3> ResultActivity</h3>
+<h3> TracksActivity</h3>
 {% highlight java %}
 public class ResultActivity extends ActionBarActivity {
     private RecyclerView searchResultView;
