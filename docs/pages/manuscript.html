@@ -53,29 +53,80 @@ title: Manuscript
         can be opening Google Maps in Chrome, where the user is presented with options for which app to open maps in.</li>
 </ol>
 
+<h3> MainActivity</h3>
+{% highlight java %}
+public class MainActivity extends ActionBarActivity {
+    private Button searchButton;
+    private EditText searchInputView;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        searchButton = (Button) findViewById(R.id.search_button);
+        searchInputView = (EditText) findViewById(R.id.input_view);
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String input = searchInputView.getText().toString();
+                Intent intent = new Intent(MainActivity.this, TracksActivity.class);
+                intent.putExtra("input", input);
+                startActivity(intent);
+            }
+        });
+    }
+}
+{% endhighlight %}
+{% highlight java %}
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/input_view"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/search_button_text"
+        android:id="@+id/search_button"
+        android:layout_below="@id/input_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"/>
+</RelativeLayout>
+
+{% endhighlight %}
+
+
+
 
 <h3> Retrofit SpotifySearchService</h3>
 {% highlight java %}
-public interface SpotifySearchService {
+public interface SpotifyService {
     @GET("/search/1/track.json")
-    void searchForTracks(@Query("q") String searchString, Callback<Result> trackCallback);
+    void searchForTrack(@Query("q") String input, Callback<TrackResponse> trackResponse);
 }
 {% endhighlight %}
 
 
 {% highlight java %}
 private static final String BASE_URL = "http://ws.spotify.com/";
-   RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(BASE_URL)
-                .build();
-
-   SpotifySearchService searchService = restAdapter.create(SpotifySearchService.class);
+RestAdapter adapter = new RestAdapter.Builder()
+             .setEndpoint("http://ws.spotify.com/")
+             .build();
+SpotifyService spotifyService = adapter.create(SpotifyService.class);
 {% endhighlight %}
 
-<h3> Result, Track and Artist classes</h3>
+<h3> TrackResponse, Track and Artist classes</h3>
 
 {% highlight java %}
-public class Result {
+public class TrackResponse {
     private List<Track> tracks;
 
     public List<Track> getTracks() {
@@ -140,61 +191,50 @@ public class Artist {
 Adapter for displaying the search results in the RecyclerView
 {% highlight java %}
 
-public class SongResultAdapter extends RecyclerView.Adapter<SongResultAdapter.SongResultViewHolder> {
-    private List<Track> tracks;
+public class TracksAdapter extends RecyclerView.Adapter<TracksAdapter.TrackViewHolder> {
+    private final List<Track> tracks;
+    private final Context context;
+    private final ClickedTrackListener listener;
 
-    public static class SongResultViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView trackView;
-        TextView artistView;
-        ResultClickListener resultClickListener;
-
-        public SongResultViewHolder(View itemView, ResultClickListener resultClickListener) {
-            super(itemView);
-            this.resultClickListener = resultClickListener;
-
-            trackView = (TextView) itemView.findViewById(R.id.track_view);
-            artistView = (TextView) itemView.findViewById(R.id.artist_view);
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            resultClickListener.onClick(v, getPosition());
-        }
-
-        public interface ResultClickListener {
-            public void onClick(View view, int position);
-        }
-    }
-
-    public SongResultAdapter(List<Track> tracks){
+    public TracksAdapter(Context context, ClickedTrackListener listener, List<Track> tracks) {
         this.tracks = tracks;
+        this.context = context;
+        this.listener = listener;
     }
 
     @Override
-    public SongResultViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_result_card_row, parent, false);
-        return new SongResultViewHolder(v, new SongResultViewHolder.ResultClickListener() {
+    public TrackViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View itemView = LayoutInflater.from(context).inflate(R.layout.item_track, viewGroup, false);
+        final TrackViewHolder trackViewHolder = new TrackViewHolder(itemView);
+        itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view, int position) {
-                Track track = tracks.get(position);
-                Intent appPlayBackIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(track.getHref()));
-                if (appPlayBackIntent.resolveActivity(view.getContext().getPackageManager()) != null) {
-                    view.getContext().startActivity(appPlayBackIntent);
-                }
+            public void onClick(View v) {
+                Track track = tracks.get(trackViewHolder.getPosition());
+                listener.clickedTrack(track);
             }
         });
+        return trackViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(SongResultViewHolder holder, int position) {
-        holder.trackView.setText(tracks.get(position).getName());
-        holder.artistView.setText(tracks.get(position).getArtists().get(0).getName());
+    public void onBindViewHolder(TrackViewHolder trackViewHolder, int i) {
+        Track track = tracks.get(i);
+        trackViewHolder.trackName.setText(track.getName());
     }
 
     @Override
     public int getItemCount() {
         return tracks.size();
+    }
+
+    public static class TrackViewHolder extends RecyclerView.ViewHolder {
+
+        private final TextView trackName;
+
+        public TrackViewHolder(View itemView) {
+            super(itemView);
+            trackName = (TextView) itemView.findViewById(R.id.trackName);
+        }
     }
 }
 
@@ -202,101 +242,83 @@ public class SongResultAdapter extends RecyclerView.Adapter<SongResultAdapter.So
 {% highlight xml %}
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/card_view"
-        android:layout_gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        card_view:cardElevation="2sp"
-        card_view:cardUseCompatPadding="true"
-        card_view:cardCornerRadius="4dp">
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical">
-            <TextView
-                android:id="@+id/track_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/dummySong"
-                android:textSize="30sp"
-                android:layout_marginLeft="5dp" />
-            <TextView
-                android:id="@+id/artist_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/dummyArtist"
-                android:textSize="15sp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp" />
-            </LinearLayout>
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    </android.support.v7.widget.CardView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/trackName"/>
 </LinearLayout>
 {% endhighlight %}
 
 <h3> TracksActivity</h3>
 {% highlight java %}
-public class ResultActivity extends ActionBarActivity {
-    private RecyclerView searchResultView;
-    private RecyclerView.Adapter searchResultAdapter;
+public class TracksActivity extends ActionBarActivity implements ClickedTrackListener {
+
+    private RecyclerView trackList;
+    private List<Track> tracks = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_result);
+        setContentView(R.layout.activity_tracks);
 
-        Bundle data = getIntent().getExtras();
-        Gson gson = new Gson();
-        Result result = gson.fromJson(data.getString("result"), Result.class);
+        trackList = (RecyclerView) findViewById(R.id.trackList);
+        trackList.setLayoutManager(new LinearLayoutManager(this));
+        final TracksAdapter tracksAdapter = new TracksAdapter(this, this, tracks);
+        trackList.setAdapter(tracksAdapter);
 
-        setupRecyclerView(result.getTracks());
+        Bundle extras = getIntent().getExtras();
+        String input = extras.getString("input");
+
+        RestAdapter adapter = new RestAdapter.Builder()
+                .setEndpoint("http://ws.spotify.com/")
+                .build();
+        SpotifyService spotifyService = adapter.create(SpotifyService.class);
+
+        spotifyService.searchForTrack(input, new Callback<TrackResponse>() {
+            @Override
+            public void success(TrackResponse trackResponse, Response response) {
+                tracks.clear();
+                tracks.addAll(trackResponse.getTracks());
+                tracksAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(TracksActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+                Log.e("search", "error", error);
+            }
+        });
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_result, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void setupRecyclerView(List<Track> tracks) {
-        searchResultView = (RecyclerView) findViewById(R.id.song_result_view);
-        searchResultAdapter = new SongResultAdapter(tracks);
-        searchResultView.setAdapter(searchResultAdapter);
-        searchResultView.setLayoutManager(new LinearLayoutManager(this));
+    public void clickedTrack(Track track) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(track.getHref()));
+        startActivity(intent);
     }
 }
 {% endhighlight %}
 {% highlight java %}
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:foo="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="no.bekk.liverpool.TracksActivity">
+
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/song_result_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffffff">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"
+        android:id="@+id/trackList">
+        </android.support.v7.widget.RecyclerView>
+
 </RelativeLayout>
 
 {% endhighlight %}
-
 
 
 {% highlight json %}
