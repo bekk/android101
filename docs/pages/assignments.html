@@ -3,7 +3,7 @@ layout: default
 title: Assignments
 ---
 
-<h3>Displaying the messages</h3>
+<h3>1. Displaying the messages</h3>
 <ol>
   <li>Create a MessagesActivity and corresponding layout. Add a RecyclerView to the layout and get a reference to it in the activity.</li>
   <li>Create a layout file for displaying messages in the list, f. ex /res/layout/item_message.xml, and put in some views to display the message sender, text and date.</li>
@@ -19,7 +19,7 @@ title: Assignments
   <li>Store a reference to the list of messages in MessagesAdapter. When you have added some messages to the list, call <code>notifyDataSetChanged</code> on the adapter, and it will render the messages again.</li>
 </ul>
 
-<h3>Sending a new message</h3>
+<h3>2. Sending a new message</h3>
 <ol>
   <li>Create a NewMessageActivity and corresponding layout with some EditText views to fill in the sender and the message text.</li>
   <li>Create a send button and add an OnClickListener that will create a new Message object based on the input views.</li>
@@ -32,7 +32,7 @@ title: Assignments
   <li>Use <code>NewMessageActivity.this.finish();</code> to navigate back to the previous Activity.</li>
 </ul>
 
-<h3>Show images</h3>
+<h3>3. Show images</h3>
 <ol>
   <li>Add an ImageView in your message layout (e.g. item_message.xml).</li>
   <li>In <code>onBindViewHolder</code> in MessagesAdapter, use the Picasso image loader library to load the image from a url if it exists for that message.</li>
@@ -42,6 +42,39 @@ title: Assignments
 <ul>
   <li>Add the Picasso dependency to your app.gradle file: compile 'com.squareup.picasso:picasso:2.5.0'.</li>
 </ul>
+
+<h3>4. Use the camera to add images to your messages</h3>
+<ol>
+  <li>Add a button in your new message layout and add an OnClickListener for it in NewMessageActivity.</li>
+  <li>In the listener, start the image capture by using an Intent.</li>
+  <li>Override <code>onActivityResult(...)</code> to receive to captured photo.</li>
+  <li>Use the provided ImgurUpload class to upload the photo to Imgur.</li>
+  <li>Set the imgur url on the message and post it as before.</li>
+</ol>
+
+<h4>Store the captured photo in external storage</h4>
+Use <code>intent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri)</code> on your camera intent to store the photo on external storage. In <code>onActivityResult(...)</code> you can use <code>BitmapFactory.decodeFile(...)</code> to get the photo.
+{% highlight java %}
+String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+String imageFilePath = Environment.getExternalStorageDirectory().toString()+"/Android/data/no.bekk.android.messages/Image-"+timeStamp+".png";
+File imageFile = new File(imageFilePath);
+Uri imageFileUri = Uri.fromFile(imageFile); // convert path to Uri
+{% endhighlight %}
+
+<h3>5. Improve the design or implement more API operations. Choose 5a or 5b.</h3>
+
+<h3>5a. Improve design</h3>
+<ol>
+  <li>Use a android.support.v7.widget.CardView in the item_message layout and make it look good.</li>
+  <li>Add a Lollipop toolbar to your app by using the support library (android.support.v7.widget.Toolbar). Put it in a separate layout file so that you can include it in all activities. Style it with a theme.</li>
+  <li>Use com.amulyakhare:com.amulyakhare.textdrawable to display a colored box for each message with the first letter of recipients name, ala. Gmail. Use ColorGenerator with material design colors.</li>
+  <li>By using the library com.github.shell-software:fab, add a FAB button (again, like Gmail) for creating a new message.</li>
+</ol>
+
+<h3>5b. Edit and delete messages</h3>
+<ol>
+  <li></li>
+</ol>
 
 <h3>API</h3>
 
