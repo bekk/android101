@@ -68,8 +68,8 @@ Taking a picture is a task which is delegated to the native camera application b
 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 intent.putExtra(MediaStore.EXTRA_OUTPUT, someExistingFileUri); // set the image file name
 // start the image capture Intent
-startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE); // you determine your own request code, which is later 
-used in onActivityResult() in order to know which action was performed by the external activity
+startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE); /** you determine your own request code, which is later
+used in onActivityResult() in order to know which action was performed by the external activity */
 {% endhighlight %}
 
 You switch between in-app activitivities by using intents in the following way:
