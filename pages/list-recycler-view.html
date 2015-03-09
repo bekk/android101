@@ -41,7 +41,7 @@
         <span class="k">return</span> <span class="n">date</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
-Then, we create a layout xml file used for each message in the list. We place this file in
+Then, we create a layout xml file used for each message in the list. The views you declare here will end up in each row of the list, and you will be populate each row with the right data. We place this file in
 <code>res/layout/item_message.xml</code>.
 
 <div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
@@ -67,9 +67,7 @@ Then, we create a layout xml file used for each message in the list. We place th
                 <span class="na">android:id=</span><span class="s">&quot;@+id/tvDate&quot;</span>
                 <span class="na">android:text=</span><span class="s">&quot;Timestamp&quot;</span><span class="nt">/&gt;</span>
         <span class="nt">&lt;/RelativeLayout&gt;</span></code></pre></div>
-For displaying data in lists, we use what is called a <code>RecyclerView</code>. A RecyclerView is a loosely coupled component for handling data sets, which has two key concepts we use when we want to render lists:
-<ul>
-   <li>We use an <code>Adapter</code> to cache and bind view elements in the RecyclerView to the data set we want to display.</li>
+For displaying data in lists, we use what is called a <code>RecyclerView</code>. It uses an <code>Adapter</code> to control the display of each item in the list by asking you to first create a view for each position, and then define a way to update these views for the data at each position. We use a helper object called a <code>ViewHolder</code> that stores references to all the views we need for each row, e.g. a TextView for displaying an item name and a button for taking some action. We create this object in <code>onCreateViewHolder</code> using a <code>LayoutInflater</code> to create the item layout, and then <code>findViewById</code> to obtain references to the subviews. In <code>onBindViewHolder</code> we use the ViewHolder to get the stored TextView for this particular row and update the text displayed to the message text for this position in the list.
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">ppublic</span> <span class="kd">class</span> <span class="nc">MessagesAdapter</span> <span class="kd">extends</span> <span class="n">RecyclerView</span><span class="o">.</span><span class="na">Adapter</span><span class="o">&lt;</span><span class="n">MessagesAdapter</span><span class="o">.</span><span class="na">MessagesViewHolder</span><span class="o">&gt;</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="n">LayoutInflater</span> <span class="n">inflater</span><span class="o">;</span>
@@ -117,13 +115,13 @@ For displaying data in lists, we use what is called a <code>RecyclerView</code>.
         <span class="o">}</span>
     <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
+
 The <code>MessagesViewHolder</code> caches the view elements for quicker access. The <code>MessagesAdapter</code> provides access to the data set, as well as provides the correct view elements. In our example this is seen by the <code>itemMessage.findViewById()</code> calls.
 
-<li>We also need a <code>LayoutManager</code>, for the layout of child views. To display a list, the <code>LinearLayoutManager</code> is the chosen layout manager. It can display items either vertically or horizontally.
+We also need a <code>LayoutManager</code>, for the layout of child views. To display a list, the <code>LinearLayoutManager</code> is the chosen layout manager. It can display items either vertically or horizontally.
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">myRecyclerView</span><span class="o">.</span><span class="na">setLayoutManager</span><span class="o">(</span><span class="k">new</span> <span class="nf">LinearLayoutManager</span><span class="o">(</span><span class="k">this</span><span class="o">));</span></code></pre></div>
 
-</ul>
 In the activity where we want to display a list, we get the <code>RecyclerView</code> from the activity layout using the id <code>R.id.messageList</code> and set it to use our adapter and a LayoutManager. 
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="n">messages</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;();</span>

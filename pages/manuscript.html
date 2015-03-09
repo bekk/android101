@@ -19,66 +19,118 @@
           <div class="span8">
             <h1 class="page-header">Manuscript</h1>
             <h3>Introduction</h3>
-In this session we will create an app where the user can search for a Spotify track, and play the found track on a device. Remember to have
-an updated version of Android Studio
+<li>Who are we, where do we work and what experience do we have with Android? </li>
+<li>What are we presenting today? We will live code an application and show how the different components work. The app will allow the user to search for a Spotify track, and play the found track on a device</li>
+<li> Afterwards, you will do assignments where the goal is to create a Twitter like app which communicates with a REST API</li>
+<li> Please ask questions.</li>
+<li> How many have brought devices/installed emulators?  </li>
+<li> If you do not have a device or an emulator, join those who do.</li>
 
 <h3>Main</h3>
 <ol>
-	<li>Open Android Studio, create an empty project.</li>
-    <li>Run Hello World app and explain debugging.</li>
+	<li>Open Android Studio. Decribe that it is the standard IDE choice. Create an empty project. Briefly mention what an Activity is, along with the xml layout.</li>
 	<li>Explain Activities (<a href="android-app-structure-and-components.html"> App Structure And Components</a>)</li>
-    <li>Explain the Android Manifest</li>
+    <li>Explain the Android Manifest and show that we have registred our Activity here.</li>
 	<li>Explain layouts and layout controls (<a href="common-view-controls.html"> Common View Controls</a>), (<a href="view-layout.html"> View Layout</a>))</li>
 	<li>Explain the UI builder</li>
-	<li>Create the MainActivity for the Spotify app. MainActivity will display an input text field and a button. </li>
+    <li>Run Hello World app and explain debugging.</li>
+	<li>Update the MainActivity. It will display an input text field and a button. </li>
     <li>Create the layout files and controls for the activity.</li>
-    <li>Create a click listener for the button. This is where we want to initiate the search. Explain AsyncTasks (<a href="working-in-the-background.html"> Working In the Background.</a>)
-    	Say that for this course we will use Retrofit, and provide Retrofit basics (background thread, GSON, etc). Add Gradle dependency:
+    <li>Create a click listener for the button. This is where we want to initiate the search. For now, add a Toast, and run the app.
+    </li>
+    <li>Replace the Toast with an Intent which we will use to start the TracksActivity. Describe intents</li>
+    <li>Create the TracksActivity. TracksActivity will perform the actual search, and display a list containing the search results. Add entries to the Android Manifest</li>
+    <li>Start TracksActivity from MainActivity, and also pass the search input as an extra. Retrieve the bundle in TracksActivity.</li>
+    <li>Explain that we now want to set up a service for performing the search. Explain AsyncTasks (<a href="working-in-the-background.html"> Working In the Background.</a>)
+        Say that for this course we will use Retrofit, and provide Retrofit basics (background thread, GSON, etc). Add Gradle dependency:
         <p><code> compile 'com.squareup.retrofit:retrofit:1.9.0'</code></p></li>
 	<li>Add SpotifySearchService which is the Retrofit interface. Maybe live code this. Also, add URL as a final variable to the MainActivity.
+        <p><code>"/search/1/track.json"</code></p>
         <p><code>http://ws.spotify.com/</code></p>
     </li>
     <li> Create the Result object and explain its connection to the JSON structure returned by the Spotify API. It will hold a list of tracks.</li>
     <li> Create the Artist and Track domain objects. Copy these</li>
-    <li> Create an instance of RestAdapter, and use this to instansiate the SpotifySearchService. Add the rest call to the created click listener. </li>
-    <li> Run the app and perform a search. Add a Toast to the success callback</li>
+    <li> Create an instance of RestAdapter, and use this to instantiate the SpotifySearchService. Add the rest call to the created click listener. </li>
+    <li> Run the app and perform a search. Add a Toast to the success callback, and also log if success or error. Remember to log error</li>
 
     <p><code> PAUSE / SWITCH PRESENTER</code></p></li>
 
 	<li>Do not add internet permission until app has run and failed. Explain the need for permissions</li> 
 	<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&quot;android.permission.INTERNET&quot;</span> <span class="nt">/&gt;</span></code></pre></div>
 	<li>Run app again and see that the Toast pops up</li>
-	<li>Create the ResultActivity. ResultActivity will display a list containing the search results. Add entries to the Android Manifest</li>
     
-    <li>Remove <code>Toast</code> and start the ResultActivity from the success callback using Intents. Explain that there are several ways to pass
-    	objects between activities, for instance Parcelable. For simplicity, we pass the json as a <code>
-    	stringExtra</code>. Parse the Result object using GSON and pass it.</li>
-
-    <li>In the ResultActivity, parse the String as the Result domain object using GSON</li>
-    <li> Explain that a <code>RecyclerView</code> can be used for displaying the results (<a href="list-list-adapters.html"> Lists and RecyclerView)</a> </code></li>
+    <li>Remove <code>Toast</code> and explain that we now want to display the data in a list </li>
+    <li> Explain that a <code>RecyclerView</code> can be used for displaying the results (<a href="list-recycler-view.html"> Lists and RecyclerView)</a> </li>
+    <code>compile 'com.android.support:recyclerview-v7:+'</code> <code> compile 'com.android.support:cardview-v7:+'</code>
     <li> Set up a RecyclerView, and populate the RecyclerViewAdapter fields with properties from the Track domain objects</li>
     <li>Add a click handler for the list elements, where clicks will start Spotify and play song. Explain the use of implicit intents. An example
         can be opening Google Maps in Chrome, where the user is presented with options for which app to open maps in.</li>
 </ol>
 
+<h3> MainActivity</h3>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainActivity</span> <span class="kd">extends</span> <span class="n">ActionBarActivity</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">Button</span> <span class="n">searchButton</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">EditText</span> <span class="n">searchInputView</span><span class="o">;</span>
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">);</span>
+        <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">activity_main</span><span class="o">);</span>
+
+        <span class="n">searchButton</span> <span class="o">=</span> <span class="o">(</span><span class="n">Button</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">search_button</span><span class="o">);</span>
+        <span class="n">searchInputView</span> <span class="o">=</span> <span class="o">(</span><span class="n">EditText</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">input_view</span><span class="o">);</span>
+
+        <span class="n">searchButton</span><span class="o">.</span><span class="na">setOnClickListener</span><span class="o">(</span><span class="k">new</span> <span class="n">View</span><span class="o">.</span><span class="na">OnClickListener</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">String</span> <span class="n">input</span> <span class="o">=</span> <span class="n">searchInputView</span><span class="o">.</span><span class="na">getText</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
+                <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">MainActivity</span><span class="o">.</span><span class="na">this</span><span class="o">,</span> <span class="n">TracksActivity</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+                <span class="n">intent</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="s">&quot;input&quot;</span><span class="o">,</span> <span class="n">input</span><span class="o">);</span>
+                <span class="n">startActivity</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="o">&lt;</span><span class="n">RelativeLayout</span> <span class="nl">xmlns:</span><span class="n">android</span><span class="o">=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    <span class="nl">xmlns:</span><span class="n">tools</span><span class="o">=</span><span class="s">&quot;http://schemas.android.com/tools&quot;</span> <span class="nl">android:</span><span class="n">layout_width</span><span class="o">=</span><span class="s">&quot;match_parent&quot;</span>
+    <span class="nl">android:</span><span class="n">layout_height</span><span class="o">=</span><span class="s">&quot;match_parent&quot;</span> <span class="nl">android:</span><span class="n">paddingLeft</span><span class="o">=</span><span class="s">&quot;@dimen/activity_horizontal_margin&quot;</span>
+    <span class="nl">android:</span><span class="n">paddingRight</span><span class="o">=</span><span class="s">&quot;@dimen/activity_horizontal_margin&quot;</span>
+    <span class="nl">android:</span><span class="n">paddingTop</span><span class="o">=</span><span class="s">&quot;@dimen/activity_vertical_margin&quot;</span>
+    <span class="nl">android:</span><span class="n">paddingBottom</span><span class="o">=</span><span class="s">&quot;@dimen/activity_vertical_margin&quot;</span> <span class="nl">tools:</span><span class="n">context</span><span class="o">=</span><span class="s">&quot;.MainActivity&quot;</span><span class="o">&gt;</span>
+
+    <span class="o">&lt;</span><span class="n">EditText</span>
+        <span class="nl">android:</span><span class="n">layout_width</span><span class="o">=</span><span class="s">&quot;match_parent&quot;</span>
+        <span class="nl">android:</span><span class="n">layout_height</span><span class="o">=</span><span class="s">&quot;wrap_content&quot;</span>
+        <span class="nl">android:</span><span class="n">id</span><span class="o">=</span><span class="s">&quot;@+id/input_view&quot;</span><span class="o">/&gt;</span>
+
+    <span class="o">&lt;</span><span class="n">Button</span>
+        <span class="nl">android:</span><span class="n">layout_width</span><span class="o">=</span><span class="s">&quot;wrap_content&quot;</span>
+        <span class="nl">android:</span><span class="n">layout_height</span><span class="o">=</span><span class="s">&quot;wrap_content&quot;</span>
+        <span class="nl">android:</span><span class="n">text</span><span class="o">=</span><span class="s">&quot;@string/search_button_text&quot;</span>
+        <span class="nl">android:</span><span class="n">id</span><span class="o">=</span><span class="s">&quot;@+id/search_button&quot;</span>
+        <span class="nl">android:</span><span class="n">layout_below</span><span class="o">=</span><span class="s">&quot;@id/input_view&quot;</span>
+        <span class="nl">android:</span><span class="n">layout_centerHorizontal</span><span class="o">=</span><span class="s">&quot;true&quot;</span>
+        <span class="nl">android:</span><span class="n">layout_marginTop</span><span class="o">=</span><span class="s">&quot;15dp&quot;</span><span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">RelativeLayout</span><span class="o">&gt;</span></code></pre></div>
+
+
+
 
 <h3> Retrofit SpotifySearchService</h3>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">SpotifySearchService</span> <span class="o">{</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">SpotifyService</span> <span class="o">{</span>
     <span class="nd">@GET</span><span class="o">(</span><span class="s">&quot;/search/1/track.json&quot;</span><span class="o">)</span>
-    <span class="kt">void</span> <span class="nf">searchForTracks</span><span class="o">(</span><span class="nd">@Query</span><span class="o">(</span><span class="s">&quot;q&quot;</span><span class="o">)</span> <span class="n">String</span> <span class="n">searchString</span><span class="o">,</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Result</span><span class="o">&gt;</span> <span class="n">trackCallback</span><span class="o">);</span>
+    <span class="kt">void</span> <span class="nf">searchForTrack</span><span class="o">(</span><span class="nd">@Query</span><span class="o">(</span><span class="s">&quot;q&quot;</span><span class="o">)</span> <span class="n">String</span> <span class="n">input</span><span class="o">,</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">TrackResponse</span><span class="o">&gt;</span> <span class="n">trackResponse</span><span class="o">);</span>
 <span class="o">}</span></code></pre></div>
 
 
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">BASE_URL</span> <span class="o">=</span> <span class="s">&quot;http://ws.spotify.com/&quot;</span><span class="o">;</span>
-   <span class="n">RestAdapter</span> <span class="n">restAdapter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RestAdapter</span><span class="o">.</span><span class="na">Builder</span><span class="o">()</span>
-                <span class="o">.</span><span class="na">setEndpoint</span><span class="o">(</span><span class="n">BASE_URL</span><span class="o">)</span>
-                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+<span class="n">RestAdapter</span> <span class="n">adapter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RestAdapter</span><span class="o">.</span><span class="na">Builder</span><span class="o">()</span>
+             <span class="o">.</span><span class="na">setEndpoint</span><span class="o">(</span><span class="s">&quot;http://ws.spotify.com/&quot;</span><span class="o">)</span>
+             <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+<span class="n">SpotifyService</span> <span class="n">spotifyService</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">SpotifyService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span></code></pre></div>
 
-   <span class="n">SpotifySearchService</span> <span class="n">searchService</span> <span class="o">=</span> <span class="n">restAdapter</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">SpotifySearchService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span></code></pre></div>
+<h3> TrackResponse, Track and Artist classes</h3>
 
-<h3> Result, Track and Artist classes</h3>
-
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Result</span> <span class="o">{</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TrackResponse</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">;</span>
 
     <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="nf">getTracks</span><span class="o">()</span> <span class="o">{</span>
@@ -135,154 +187,125 @@ an updated version of Android Studio
 
 <h3>RecyclerViewAdapter</h3>
 Adapter for displaying the search results in the RecyclerView
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SongResultAdapter</span> <span class="kd">extends</span> <span class="n">RecyclerView</span><span class="o">.</span><span class="na">Adapter</span><span class="o">&lt;</span><span class="n">SongResultAdapter</span><span class="o">.</span><span class="na">SongResultViewHolder</span><span class="o">&gt;</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">;</span>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TracksAdapter</span> <span class="kd">extends</span> <span class="n">RecyclerView</span><span class="o">.</span><span class="na">Adapter</span><span class="o">&lt;</span><span class="n">TracksAdapter</span><span class="o">.</span><span class="na">TrackViewHolder</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">Context</span> <span class="n">context</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">ClickedTrackListener</span> <span class="n">listener</span><span class="o">;</span>
 
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">SongResultViewHolder</span> <span class="kd">extends</span> <span class="n">RecyclerView</span><span class="o">.</span><span class="na">ViewHolder</span> <span class="kd">implements</span> <span class="n">View</span><span class="o">.</span><span class="na">OnClickListener</span> <span class="o">{</span>
-        <span class="n">TextView</span> <span class="n">trackView</span><span class="o">;</span>
-        <span class="n">TextView</span> <span class="n">artistView</span><span class="o">;</span>
-        <span class="n">ResultClickListener</span> <span class="n">resultClickListener</span><span class="o">;</span>
-
-        <span class="kd">public</span> <span class="nf">SongResultViewHolder</span><span class="o">(</span><span class="n">View</span> <span class="n">itemView</span><span class="o">,</span> <span class="n">ResultClickListener</span> <span class="n">resultClickListener</span><span class="o">)</span> <span class="o">{</span>
-            <span class="kd">super</span><span class="o">(</span><span class="n">itemView</span><span class="o">);</span>
-            <span class="k">this</span><span class="o">.</span><span class="na">resultClickListener</span> <span class="o">=</span> <span class="n">resultClickListener</span><span class="o">;</span>
-
-            <span class="n">trackView</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">itemView</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">track_view</span><span class="o">);</span>
-            <span class="n">artistView</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">itemView</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">artist_view</span><span class="o">);</span>
-            <span class="n">itemView</span><span class="o">.</span><span class="na">setOnClickListener</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
-        <span class="o">}</span>
-
-        <span class="nd">@Override</span>
-        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">resultClickListener</span><span class="o">.</span><span class="na">onClick</span><span class="o">(</span><span class="n">v</span><span class="o">,</span> <span class="n">getPosition</span><span class="o">());</span>
-        <span class="o">}</span>
-
-        <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">ResultClickListener</span> <span class="o">{</span>
-            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">view</span><span class="o">,</span> <span class="kt">int</span> <span class="n">position</span><span class="o">);</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">public</span> <span class="nf">SongResultAdapter</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">){</span>
+    <span class="kd">public</span> <span class="nf">TracksAdapter</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="n">ClickedTrackListener</span> <span class="n">listener</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">this</span><span class="o">.</span><span class="na">tracks</span> <span class="o">=</span> <span class="n">tracks</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">context</span> <span class="o">=</span> <span class="n">context</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">listener</span> <span class="o">=</span> <span class="n">listener</span><span class="o">;</span>
     <span class="o">}</span>
 
     <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="n">SongResultViewHolder</span> <span class="nf">onCreateViewHolder</span><span class="o">(</span><span class="n">ViewGroup</span> <span class="n">parent</span><span class="o">,</span> <span class="kt">int</span> <span class="n">viewType</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">View</span> <span class="n">v</span> <span class="o">=</span> <span class="n">LayoutInflater</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="n">parent</span><span class="o">.</span><span class="na">getContext</span><span class="o">()).</span><span class="na">inflate</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">search_result_card_row</span><span class="o">,</span> <span class="n">parent</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="nf">SongResultViewHolder</span><span class="o">(</span><span class="n">v</span><span class="o">,</span> <span class="k">new</span> <span class="n">SongResultViewHolder</span><span class="o">.</span><span class="na">ResultClickListener</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">TrackViewHolder</span> <span class="nf">onCreateViewHolder</span><span class="o">(</span><span class="n">ViewGroup</span> <span class="n">viewGroup</span><span class="o">,</span> <span class="kt">int</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">View</span> <span class="n">itemView</span> <span class="o">=</span> <span class="n">LayoutInflater</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="n">context</span><span class="o">).</span><span class="na">inflate</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">item_track</span><span class="o">,</span> <span class="n">viewGroup</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+        <span class="kd">final</span> <span class="n">TrackViewHolder</span> <span class="n">trackViewHolder</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">TrackViewHolder</span><span class="o">(</span><span class="n">itemView</span><span class="o">);</span>
+        <span class="n">itemView</span><span class="o">.</span><span class="na">setOnClickListener</span><span class="o">(</span><span class="k">new</span> <span class="n">View</span><span class="o">.</span><span class="na">OnClickListener</span><span class="o">()</span> <span class="o">{</span>
             <span class="nd">@Override</span>
-            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">view</span><span class="o">,</span> <span class="kt">int</span> <span class="n">position</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">Track</span> <span class="n">track</span> <span class="o">=</span> <span class="n">tracks</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">position</span><span class="o">);</span>
-                <span class="n">Intent</span> <span class="n">appPlayBackIntent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_VIEW</span><span class="o">,</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">track</span><span class="o">.</span><span class="na">getHref</span><span class="o">()));</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">appPlayBackIntent</span><span class="o">.</span><span class="na">resolveActivity</span><span class="o">(</span><span class="n">view</span><span class="o">.</span><span class="na">getContext</span><span class="o">().</span><span class="na">getPackageManager</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="n">view</span><span class="o">.</span><span class="na">getContext</span><span class="o">().</span><span class="na">startActivity</span><span class="o">(</span><span class="n">appPlayBackIntent</span><span class="o">);</span>
-                <span class="o">}</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">Track</span> <span class="n">track</span> <span class="o">=</span> <span class="n">tracks</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">trackViewHolder</span><span class="o">.</span><span class="na">getPosition</span><span class="o">());</span>
+                <span class="n">listener</span><span class="o">.</span><span class="na">clickedTrack</span><span class="o">(</span><span class="n">track</span><span class="o">);</span>
             <span class="o">}</span>
         <span class="o">});</span>
+        <span class="k">return</span> <span class="n">trackViewHolder</span><span class="o">;</span>
     <span class="o">}</span>
 
     <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onBindViewHolder</span><span class="o">(</span><span class="n">SongResultViewHolder</span> <span class="n">holder</span><span class="o">,</span> <span class="kt">int</span> <span class="n">position</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">holder</span><span class="o">.</span><span class="na">trackView</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">tracks</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">position</span><span class="o">).</span><span class="na">getName</span><span class="o">());</span>
-        <span class="n">holder</span><span class="o">.</span><span class="na">artistView</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">tracks</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">position</span><span class="o">).</span><span class="na">getArtists</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">getName</span><span class="o">());</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onBindViewHolder</span><span class="o">(</span><span class="n">TrackViewHolder</span> <span class="n">trackViewHolder</span><span class="o">,</span> <span class="kt">int</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Track</span> <span class="n">track</span> <span class="o">=</span> <span class="n">tracks</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+        <span class="n">trackViewHolder</span><span class="o">.</span><span class="na">trackName</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">track</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
     <span class="o">}</span>
 
     <span class="nd">@Override</span>
     <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getItemCount</span><span class="o">()</span> <span class="o">{</span>
         <span class="k">return</span> <span class="n">tracks</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
     <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">TrackViewHolder</span> <span class="kd">extends</span> <span class="n">RecyclerView</span><span class="o">.</span><span class="na">ViewHolder</span> <span class="o">{</span>
+
+        <span class="kd">private</span> <span class="kd">final</span> <span class="n">TextView</span> <span class="n">trackName</span><span class="o">;</span>
+
+        <span class="kd">public</span> <span class="nf">TrackViewHolder</span><span class="o">(</span><span class="n">View</span> <span class="n">itemView</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kd">super</span><span class="o">(</span><span class="n">itemView</span><span class="o">);</span>
+            <span class="n">trackName</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">itemView</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">trackName</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 <div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
 <span class="nt">&lt;LinearLayout</span> <span class="na">xmlns:android=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
-    <span class="na">android:layout_height=</span><span class="s">&quot;match_parent&quot;</span>
-    <span class="na">android:layout_width=</span><span class="s">&quot;match_parent&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;android.support.v7.widget.CardView</span>
-        <span class="na">xmlns:card_view=</span><span class="s">&quot;http://schemas.android.com/apk/res-auto&quot;</span>
-        <span class="na">android:id=</span><span class="s">&quot;@+id/card_view&quot;</span>
-        <span class="na">android:layout_gravity=</span><span class="s">&quot;center&quot;</span>
-        <span class="na">android:layout_width=</span><span class="s">&quot;match_parent&quot;</span>
-        <span class="na">android:layout_height=</span><span class="s">&quot;100dp&quot;</span>
-        <span class="na">card_view:cardElevation=</span><span class="s">&quot;2sp&quot;</span>
-        <span class="na">card_view:cardUseCompatPadding=</span><span class="s">&quot;true&quot;</span>
-        <span class="na">card_view:cardCornerRadius=</span><span class="s">&quot;4dp&quot;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;LinearLayout</span>
-            <span class="na">android:orientation=</span><span class="s">&quot;vertical&quot;</span>
-            <span class="na">android:layout_width=</span><span class="s">&quot;wrap_content&quot;</span>
-            <span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>
-            <span class="na">android:layout_gravity=</span><span class="s">&quot;center_vertical&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;TextView</span>
-                <span class="na">android:id=</span><span class="s">&quot;@+id/track_view&quot;</span>
-                <span class="na">android:layout_width=</span><span class="s">&quot;wrap_content&quot;</span>
-                <span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>
-                <span class="na">android:text=</span><span class="s">&quot;@string/dummySong&quot;</span>
-                <span class="na">android:textSize=</span><span class="s">&quot;30sp&quot;</span>
-                <span class="na">android:layout_marginLeft=</span><span class="s">&quot;5dp&quot;</span> <span class="nt">/&gt;</span>
-            <span class="nt">&lt;TextView</span>
-                <span class="na">android:id=</span><span class="s">&quot;@+id/artist_view&quot;</span>
-                <span class="na">android:layout_width=</span><span class="s">&quot;wrap_content&quot;</span>
-                <span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>
-                <span class="na">android:text=</span><span class="s">&quot;@string/dummyArtist&quot;</span>
-                <span class="na">android:textSize=</span><span class="s">&quot;15sp&quot;</span>
-                <span class="na">android:layout_marginLeft=</span><span class="s">&quot;10dp&quot;</span>
-                <span class="na">android:layout_marginTop=</span><span class="s">&quot;10dp&quot;</span> <span class="nt">/&gt;</span>
-            <span class="nt">&lt;/LinearLayout&gt;</span>
+    <span class="na">android:orientation=</span><span class="s">&quot;vertical&quot;</span> <span class="na">android:layout_width=</span><span class="s">&quot;match_parent&quot;</span>
+    <span class="na">android:layout_height=</span><span class="s">&quot;match_parent&quot;</span><span class="nt">&gt;</span>
 
-    <span class="nt">&lt;/android.support.v7.widget.CardView&gt;</span>
+    <span class="nt">&lt;TextView</span>
+        <span class="na">android:layout_width=</span><span class="s">&quot;wrap_content&quot;</span>
+        <span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>
+        <span class="na">android:id=</span><span class="s">&quot;@+id/trackName&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/LinearLayout&gt;</span></code></pre></div>
 
-<h3> ResultActivity</h3>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ResultActivity</span> <span class="kd">extends</span> <span class="n">ActionBarActivity</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="n">RecyclerView</span> <span class="n">searchResultView</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="n">RecyclerView</span><span class="o">.</span><span class="na">Adapter</span> <span class="n">searchResultAdapter</span><span class="o">;</span>
+<h3> TracksActivity</h3>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TracksActivity</span> <span class="kd">extends</span> <span class="n">ActionBarActivity</span> <span class="kd">implements</span> <span class="n">ClickedTrackListener</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">RecyclerView</span> <span class="n">trackList</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
 
     <span class="nd">@Override</span>
     <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
         <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">);</span>
-        <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">activity_result</span><span class="o">);</span>
+        <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">activity_tracks</span><span class="o">);</span>
 
-        <span class="n">Bundle</span> <span class="n">data</span> <span class="o">=</span> <span class="n">getIntent</span><span class="o">().</span><span class="na">getExtras</span><span class="o">();</span>
-        <span class="n">Gson</span> <span class="n">gson</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Gson</span><span class="o">();</span>
-        <span class="n">Result</span> <span class="n">result</span> <span class="o">=</span> <span class="n">gson</span><span class="o">.</span><span class="na">fromJson</span><span class="o">(</span><span class="n">data</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&quot;result&quot;</span><span class="o">),</span> <span class="n">Result</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="n">trackList</span> <span class="o">=</span> <span class="o">(</span><span class="n">RecyclerView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">trackList</span><span class="o">);</span>
+        <span class="n">trackList</span><span class="o">.</span><span class="na">setLayoutManager</span><span class="o">(</span><span class="k">new</span> <span class="nf">LinearLayoutManager</span><span class="o">(</span><span class="k">this</span><span class="o">));</span>
+        <span class="kd">final</span> <span class="n">TracksAdapter</span> <span class="n">tracksAdapter</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">TracksAdapter</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="k">this</span><span class="o">,</span> <span class="n">tracks</span><span class="o">);</span>
+        <span class="n">trackList</span><span class="o">.</span><span class="na">setAdapter</span><span class="o">(</span><span class="n">tracksAdapter</span><span class="o">);</span>
 
-        <span class="n">setupRecyclerView</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">getTracks</span><span class="o">());</span>
+        <span class="n">Bundle</span> <span class="n">extras</span> <span class="o">=</span> <span class="n">getIntent</span><span class="o">().</span><span class="na">getExtras</span><span class="o">();</span>
+        <span class="n">String</span> <span class="n">input</span> <span class="o">=</span> <span class="n">extras</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&quot;input&quot;</span><span class="o">);</span>
+
+        <span class="n">RestAdapter</span> <span class="n">adapter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RestAdapter</span><span class="o">.</span><span class="na">Builder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">setEndpoint</span><span class="o">(</span><span class="s">&quot;http://ws.spotify.com/&quot;</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+        <span class="n">SpotifyService</span> <span class="n">spotifyService</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">SpotifyService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+        <span class="n">spotifyService</span><span class="o">.</span><span class="na">searchForTrack</span><span class="o">(</span><span class="n">input</span><span class="o">,</span> <span class="k">new</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">TrackResponse</span><span class="o">&gt;()</span> <span class="o">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">success</span><span class="o">(</span><span class="n">TrackResponse</span> <span class="n">trackResponse</span><span class="o">,</span> <span class="n">Response</span> <span class="n">response</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">tracks</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
+                <span class="n">tracks</span><span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="n">trackResponse</span><span class="o">.</span><span class="na">getTracks</span><span class="o">());</span>
+                <span class="n">tracksAdapter</span><span class="o">.</span><span class="na">notifyDataSetChanged</span><span class="o">();</span>
+            <span class="o">}</span>
+
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">failure</span><span class="o">(</span><span class="n">RetrofitError</span> <span class="n">error</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">Toast</span><span class="o">.</span><span class="na">makeText</span><span class="o">(</span><span class="n">TracksActivity</span><span class="o">.</span><span class="na">this</span><span class="o">,</span> <span class="s">&quot;Failure&quot;</span><span class="o">,</span> <span class="n">Toast</span><span class="o">.</span><span class="na">LENGTH_SHORT</span><span class="o">).</span><span class="na">show</span><span class="o">();</span>
+                <span class="n">Log</span><span class="o">.</span><span class="na">e</span><span class="o">(</span><span class="s">&quot;search&quot;</span><span class="o">,</span> <span class="s">&quot;error&quot;</span><span class="o">,</span> <span class="n">error</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
     <span class="o">}</span>
 
     <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">onCreateOptionsMenu</span><span class="o">(</span><span class="n">Menu</span> <span class="n">menu</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">getMenuInflater</span><span class="o">().</span><span class="na">inflate</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">menu</span><span class="o">.</span><span class="na">menu_result</span><span class="o">,</span> <span class="n">menu</span><span class="o">);</span>
-        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">onOptionsItemSelected</span><span class="o">(</span><span class="n">MenuItem</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="na">getItemId</span><span class="o">();</span>
-
-        <span class="k">if</span> <span class="o">(</span><span class="n">id</span> <span class="o">==</span> <span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">action_settings</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
-        <span class="o">}</span>
-
-        <span class="k">return</span> <span class="kd">super</span><span class="o">.</span><span class="na">onOptionsItemSelected</span><span class="o">(</span><span class="n">item</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">setupRecyclerView</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">searchResultView</span> <span class="o">=</span> <span class="o">(</span><span class="n">RecyclerView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">song_result_view</span><span class="o">);</span>
-        <span class="n">searchResultAdapter</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">SongResultAdapter</span><span class="o">(</span><span class="n">tracks</span><span class="o">);</span>
-        <span class="n">searchResultView</span><span class="o">.</span><span class="na">setAdapter</span><span class="o">(</span><span class="n">searchResultAdapter</span><span class="o">);</span>
-        <span class="n">searchResultView</span><span class="o">.</span><span class="na">setLayoutManager</span><span class="o">(</span><span class="k">new</span> <span class="nf">LinearLayoutManager</span><span class="o">(</span><span class="k">this</span><span class="o">));</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">clickedTrack</span><span class="o">(</span><span class="n">Track</span> <span class="n">track</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_VIEW</span><span class="o">,</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">track</span><span class="o">.</span><span class="na">getHref</span><span class="o">()));</span>
+        <span class="n">startActivity</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="o">&lt;</span><span class="n">RelativeLayout</span> <span class="nl">xmlns:</span><span class="n">android</span><span class="o">=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
-    <span class="nl">xmlns:</span><span class="n">tools</span><span class="o">=</span><span class="s">&quot;http://schemas.android.com/tools&quot;</span>
-    <span class="nl">android:</span><span class="n">layout_width</span><span class="o">=</span><span class="s">&quot;match_parent&quot;</span>
-    <span class="nl">android:</span><span class="n">layout_height</span><span class="o">=</span><span class="s">&quot;match_parent&quot;</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="n">android</span><span class="o">.</span><span class="na">support</span><span class="o">.</span><span class="na">v7</span><span class="o">.</span><span class="na">widget</span><span class="o">.</span><span class="na">RecyclerView</span>
-        <span class="nl">android:</span><span class="n">id</span><span class="o">=</span><span class="s">&quot;@+id/song_result_view&quot;</span>
-        <span class="nl">android:</span><span class="n">layout_width</span><span class="o">=</span><span class="s">&quot;match_parent&quot;</span>
-        <span class="nl">android:</span><span class="n">layout_height</span><span class="o">=</span><span class="s">&quot;wrap_content&quot;</span>
-        <span class="nl">android:</span><span class="n">background</span><span class="o">=</span><span class="s">&quot;#ffffff&quot;</span><span class="o">&gt;</span>
-    <span class="o">&lt;/</span><span class="n">android</span><span class="o">.</span><span class="na">support</span><span class="o">.</span><span class="na">v7</span><span class="o">.</span><span class="na">widget</span><span class="o">.</span><span class="na">RecyclerView</span><span class="o">&gt;</span>
-<span class="o">&lt;/</span><span class="n">RelativeLayout</span><span class="o">&gt;</span></code></pre></div>
+    <span class="nl">xmlns:</span><span class="n">foo</span><span class="o">=</span><span class="s">&quot;http://schemas.android.com/apk/res-auto&quot;</span>
+    <span class="nl">xmlns:</span><span class="n">tools</span><span class="o">=</span><span class="s">&quot;http://schemas.android.com/tools&quot;</span> <span class="nl">android:</span><span class="n">layout_width</span><span class="o">=</span><span class="s">&quot;match_parent&quot;</span>
+    <span class="nl">android:</span><span class="n">layout_height</span><span class="o">=</span><span class="s">&quot;match_parent&quot;</span> <span class="nl">android:</span><span class="n">paddingLeft</span><span class="o">=</span><span class="s">&quot;@dimen/activity_horizontal_margin&quot;</span>
+    <span class="nl">android:</span><span class="n">paddingRight</span><span class="o">=</span><span class="s">&quot;@dimen/activity_horizontal_margin&quot;</span>
+    <span class="nl">android:</span><span class="n">paddingTop</span><span class="o">=</span><span class="s">&quot;@dimen/activity_vertical_margin&quot;</span>
+    <span class="nl">android:</span><span class="n">paddingBottom</span><span class="o">=</span><span class="s">&quot;@dimen/activity_vertical_margin&quot;</span>
+    <span class="nl">tools:</span><span class="n">context</span><span class="o">=</span><span class="s">&quot;no.bekk.liverpool.TracksActivity&quot;</span><span class="o">&gt;</span>
 
+    <span class="o">&lt;</span><span class="n">android</span><span class="o">.</span><span class="na">support</span><span class="o">.</span><span class="na">v7</span><span class="o">.</span><span class="na">widget</span><span class="o">.</span><span class="na">RecyclerView</span>
+        <span class="nl">android:</span><span class="n">layout_width</span><span class="o">=</span><span class="s">&quot;match_parent&quot;</span>
+        <span class="nl">android:</span><span class="n">layout_height</span><span class="o">=</span><span class="s">&quot;match_parent&quot;</span>
+        <span class="nl">android:</span><span class="n">id</span><span class="o">=</span><span class="s">&quot;@+id/trackList&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">android</span><span class="o">.</span><span class="na">support</span><span class="o">.</span><span class="na">v7</span><span class="o">.</span><span class="na">widget</span><span class="o">.</span><span class="na">RecyclerView</span><span class="o">&gt;</span>
+
+<span class="o">&lt;/</span><span class="n">RelativeLayout</span><span class="o">&gt;</span></code></pre></div>
 
 
 <div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
