@@ -18,66 +18,45 @@
         <div class="row-fluid">
           <div class="span8">
             <h1 class="page-header">Assignments</h1>
-            <h2>Your first activity</h2>
-
-<h3>Create the activity</h3>
-
-Activities are the most important building blocks in Android. They provide the data and wiring required for displaying each screen in your app. A simple rule of thumb is one activity for each screen. Activities provide callback methods to hook into various lifecycle events, e.g. creating and resuming the activity, that you must override.
-
+            <h3>Displaying the messages</h3>
 <ol>
-  <li>Create a new activity called 'MessagesActivity' (Java class that extends Activity).</li>
-  <li>Override the onCreate(Bundle savedInstanceState) method that will be called when your activity is created.</li>
+  <li>Create a MessagesActivity and corresponding layout. Add a RecyclerView to the layout and get a reference to it in the activity.</li>
+  <li>Create a layout file for displaying messages in the list, f. ex /res/layout/item_message.xml, and put in some views to display the message sender, text and date.</li>
+  <li>Create a MessagesAdapter class that extends RecyclerView.Adapter and implement the required methods.</li>
+  <li>Use Retrofit to create a client for the REST API and fetch the messages asynchronously.</li>
+  <li>Add the received messages to the adapter and notify it of the changed message list.</li>
 </ol>
 
-<h3>Create the view</h3>
+<h4>Tips</h4>
+<ul>
+  <li>The ViewHolder you create should contain references to all the TextViews you need to show for each position in the message list.</li>
+  <li>You will need a <code>LayoutInflater</code> in MessagesAdapter in <code>onCreateViewHolder</code> to create the layout view of the message. It is probably easiest to use Activitys <code>getLayoutInflater()</code> and pass it to the adapter.</li>
+  <li>Store a reference to the list of messages in MessagesAdapter. When you have added some messages to the list, call <code>notifyDataSetChanged</code> on the adapter, and it will render the messages again.</li>
+</ul>
 
-Now we need to tell the system how to display the UI for the new activity. The UI in Android apps are created using XML layout files. They live in the res/layout folder. Each xml file in this folder will be accessible from java code using <code>R.layout.layout_file_name</code>. The two most useful layout views are LinearLayout and RelativeLayout. LinearLayout allows you to layout child views sequentially either vertically or horizontally. The RelativeLayout allows you to position subviews in relation to each other, e.g. a button to the right of a text field, or a label on top.
-
+<h3>Sending a new message</h3>
 <ol>
-  <li>Create the layout <code>activity_messages.xml</code> by right clicking the layout folder and selecting New/Layout resource file.</li>
-  <li>Under Root element, choose RelativeLayout.</li>
-  <li>Create an TextView view inside the RelativeLayout. The android:layout_width and android:layout_height attributes are required. Most of the time you will be using either match_parent when you want the same width or height as the parent view, or wrap_content when the view should take up only the space it requires in the layout. Choose wrap_content for both for now. Also you should never hard code strings in your app, so in the android:text attribute we will be referencing a string value from another resource file.</li>
-  <li>Create a new string in res/values/strings.xml</li>
-  <li>Reference this string in your new TextView view with <code>@string/your_string_name</code>. The @ prefix also lets you look up values like other views by @id/your_view_id when you need to reference another element.</li>
-  <li>Give the TextView view an id, <code>android:id="@+id/my_text_view"</code>. Notice the + sign after @id. This means create an id for this view instead of referencing an existing id.</li>
-  <li>Create another TextView view and set it's text to a another string value. Make the new one appear to the right of the first one, by using android:layout_toRightOf and reference the id of the first TextView.</li>
-  <li>Tell MessagesActivity to use this layout by calling <code>setContentView()</code> in <code>onCreate()</code>.</li>
+  <li>Create a NewMessageActivity and corresponding layout with some EditText views to fill in the sender and the message text.</li>
+  <li>Create a send button and add an OnClickListener that will create a new Message object based on the input views.</li>
+  <li>Extend the client Retrofit API with a send message operation and call it in the OnClickListener.</li>
+  <li>Show the MessagesActivity with the updated message list.</li>
 </ol>
 
-<h3>Test the app</h3>
+<h4>Tips</h4>
+<ul>
+  <li>Use <code>NewMessageActivity.this.finish();</code> to navigate back to the previous Activity.</li>
+</ul>
 
-The time has come for you to start the app and see what it looks like, but first we need to specify which activity will be displayed when the app starts. A special file called AndroidManifest.xml contains a declaration of all the app activities, the permissions required (like internet access) and much more.
-
+<h3>Show images</h3>
 <ol>
-  <li>Open the file 'AndroidManifest.xml' and add and activity element inside the application element.</li>
-  <li>Set the name to the MessagesActivity class and give it a descriptive label.</li>
-  <li>Add an intent-filter inside the activity element so that the activity responds to intents of the category android.intent.category.LAUNCHER. You can think of intents as broadcast messages with a name and payload that activites can listen for. They can be sent by the system and between activities in your own app. When the system sends an intent to start the app, MessagesActivity will now respond and show itself on screen.<br/>
-    <script src="https://gist.github.com/4326ca7cbad76a96733e.js"> </script>
-  </li>
-  <li>Plug in your phone, hit the debug button in the top menu in Android Studio, choose your phone in the list that appears, wait a few seconds and profit!</li>
+  <li>Add an ImageView in your message layout (e.g. item_message.xml).</li>
+  <li>In <code>onBindViewHolder</code> in MessagesAdapter, use the Picasso image loader library to load the image from a url if it exists for that message.</li>
 </ol>
 
-<h2>Displaying the messages</h2>
-
-To display the messages from the API, we will use Retrofit to fetch the JSON and map into our domain objects, and a RecyclerView to display the list in our MessagesActivity. The RecyclerView was introduced in Lollipop, but is offered through the Android support library so that we can use it on lower API levels. Both list and grid layouts are supported. The primary advantage over the traditional ListView is that RecyclerView enforces the "View holder" pattern, in which list elements are cached and reused to improved performance.
-
-<ol>
-  <li>Add the following dependencies in app/build.gradle: <code>compile 'com.android.support:appcompat-v7:21.+'</code>, <code>compile 'com.android.support:recyclerview-v7:21.+'</code>.</li>
-  <li>Remove the stupid TextView's you created in res/layouts/activity_messages.xml</li>
-  <li>Add a RecyclerView in the layout and give it an ID so you can reference it in the activity. You should probably have width and height set to match_parent.</li>
-  <li>Use <code>findViewById(int)</code> in MessagesActivity to get a reference to the RecyclerView using R.id.you_recycler_view.</li>
-  <li>Set the RecyclerView's layout manager to be a linear one (because we will show a list, not a grid).</li>
-  <li>The RecyclerView needs an adapter that controls how to display its elements. Create a new class that extends <code>RecyclerView.Adapter&#60;YourViewHolderObject&#62;</code>. Override the required methods according to the description below. Remember to take a list of messages in the constructor.</li>
-  <li>You need to create a new layout for display each element in the list. Create res/layout/item_message.xml and add a TextView to show the message. Use a LayoutInflater to create the message view in <code>onCreateViewHolder(ViewGroup viewGroup, int i)</code>. You will set the text value in <code>onBindViewHolder(ViewHolder viewHolder, int i)</code>.</li>
-  <li>Create the adapter, pass in the list of messages, and set the adapter on the RecyclerView instance in MessagesActivity. You can use a list of strings to test.</li>
-</ol>
-
-<h3>View holder</h3>
-
-The view holder object must extend RecyclerView.ViewHolder and can be an inner static class if you like. The view holder should contain variables for all the subviews you need to set properties on when displaying the messages, e.g. e TextView for the message text. RecyclerView expects you to create a new ViewHolder in <code>onCreateViewHolder(ViewGroup viewGroup, int i)</code>. Here you will use <code>findViewById(int)</code> to fetch all the subviews you require and put them into the ViewHolder. You don't set display values for any of the views at this point, that happens in <code>onBindViewHolder(ViewHolder viewHolder, int i)</code>. In this method you are expected to e.g. set the text to display for the list element at position i. You should not do any expensive operations in this method. That is why you fetch the subviews in <code>onCreateViewHolder</code> instead (which is only called once).
-
-
-You will create a twitter-like app that communicates with an HTTP REST API for viewing and creating messages. It is up to you whether you want to focus on GUI polish and interaction, or implement all the functionality in the API.
+<h4>Tips</h4>
+<ul>
+  <li>Add the Picasso dependency to your app.gradle file: compile 'com.squareup.picasso:picasso:2.5.0'.</li>
+</ul>
 
 <h3>API</h3>
 
