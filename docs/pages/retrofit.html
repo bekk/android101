@@ -29,7 +29,7 @@ RestAdapter restAdapter = new RestAdapter.Builder()
                     .setEndpoint("https://messages.com")
                     .build();
 MessageService msgs = restAdapter.create(MessageService.class);
-List<Message> messages = msgs.listMessages(new Callback<List<Message>>() {
+msgs.listMessages(new Callback<List<Message>>() {
     @Override
     public void success(List<Message> messages, Response response) {
         // Successfull request, do something with the retrieved messages
