@@ -129,6 +129,8 @@ public class NewMessageActivity extends Activity {
                     }
                 }
             };
+            Intent intent = new Intent();
+            intent.resolveActivity(getPackageManager());
             imgurUpload.execute();
         }
     }

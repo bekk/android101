@@ -1,6 +1,7 @@
 package no.bekk.android.messages.imgur;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
