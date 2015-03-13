@@ -66,15 +66,18 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
             holder.image.setVisibility(View.GONE);
         }
 
-        String letter = message.getFrom().substring(0, 1);
-        TextDrawable textDrawable = senderIcons.get(letter);
-        if (textDrawable == null) {
-            textDrawable = TextDrawable.builder()
-                    .buildRound(letter, generator.getColor(letter));
-            senderIcons.put(letter, textDrawable);
+        if (message.getFrom() != null) {
+            String letter = message.getFrom().substring(0, 1);
+            TextDrawable textDrawable = senderIcons.get(letter);
+            if (textDrawable == null) {
+                textDrawable = TextDrawable.builder()
+                        .buildRound(letter, generator.getColor(letter));
+                senderIcons.put(letter, textDrawable);
+            }
+
+            holder.senderCircle.setImageDrawable(textDrawable);
         }
 
-        holder.senderCircle.setImageDrawable(textDrawable);
     }
 
     @Override

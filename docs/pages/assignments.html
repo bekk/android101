@@ -12,7 +12,7 @@ title: Assignments
   <li>Add the received messages to the adapter and notify it of the changed message list.</li>
 </ol>
 
-<h4>Tips</h4>
+<h4>Hints</h4>
 <ul>
   <li>The ViewHolder you create should contain references to all the TextViews you need to show for each position in the message list.</li>
   <li>You will need a <code>LayoutInflater</code> in MessagesAdapter in <code>onCreateViewHolder</code> to create the layout view of the message. It is probably easiest to use Activitys <code>getLayoutInflater()</code> and pass it to the adapter.</li>
@@ -27,7 +27,7 @@ title: Assignments
   <li>Show the MessagesActivity with the updated message list.</li>
 </ol>
 
-<h4>Tips</h4>
+<h4>Hints</h4>
 <ul>
   <li>Use <code>NewMessageActivity.this.finish();</code> to navigate back to the previous Activity.</li>
 </ul>
@@ -38,7 +38,7 @@ title: Assignments
   <li>In <code>onBindViewHolder</code> in MessagesAdapter, use the Picasso image loader library to load the image from a url if it exists for that message.</li>
 </ol>
 
-<h4>Tips</h4>
+<h4>Hints</h4>
 <ul>
   <li>Add the Picasso dependency to your app.gradle file: compile 'com.squareup.picasso:picasso:2.5.0'.</li>
 </ul>
@@ -73,7 +73,19 @@ Uri imageFileUri = Uri.fromFile(imageFile); // convert path to Uri
 
 <h3>5b. Edit and delete messages</h3>
 <ol>
-  <li></li>
+  <li>Add an EditMessageActivity. Try to reuse the layout for NewMessageActivity as much as you can.</li>
+  <li>Implement delete. You can f. ex have add a delete button in EditMessageActivity or delete by long-pressing messages in the list.</li>
+</ol>
+
+<h4>Hints</h4>
+<ul>
+  <li>To pass objects between activities in intents, you can serialize them using Gson, and pass the serialized string instead. Convert back from json to java at the destination activity.</li>
+</ul>
+
+<h3>6. Other devices and form factors</h3>
+
+<ol>
+  <li>Port your app to Android Wear.</li>
 </ol>
 
 <h3>API</h3>
@@ -118,6 +130,10 @@ It hosts the following JSON endpoints:
 <h3>POST example</h3>
 
 {% gist 0a2f2c1a6419dc28de22 %}
+
+<h3>Uploading to Imgur</h3>
+
+{% gist 1b9a5cee635c52249fd2 %}
 
 <h3> Retrofit </h3>
 If you want to use retrofit, you will need the following gradle dependency:
