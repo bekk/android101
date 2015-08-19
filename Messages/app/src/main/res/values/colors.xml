@@ -8,6 +8,9 @@
 
     <color name="light">@color/fab_material_white</color>
 
+    <color name="actionbar_title_text">@color/fab_material_white</color>
+    <color name="actionbar_color">@color/material_deep_teal_500</color>
+
     <color name="windowBackgroundColor">#DEDEDE</color>
     <color name="black_translucent">#80000000</color>
 </resources>

@@ -13,8 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -31,8 +31,10 @@ import retrofit.client.Response;
 
 
 public class NewMessageActivity extends Activity {
+    static final int REQUEST_IMAGE_CAPTURE = 0;
+
     private String imageUrl;
-    private String imageFilePath;
+    private File imageFile;
     private ImageView imageView;
 
     @Override
@@ -42,18 +44,16 @@ public class NewMessageActivity extends Activity {
 
         imageView = (ImageView) findViewById(R.id.message_image);
 
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_activity_new_message);
 
         final EditText fromField = (EditText) findViewById(R.id.etFrom);
         final EditText messageField = (EditText) findViewById(R.id.messageText);
-        final Button pictureButton = (Button) findViewById(R.id.button_take_picture);
+        final ImageButton pictureButton = (ImageButton) findViewById(R.id.button_take_picture);
         pictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imageFilePath = startCameraIntent();
+                imageFile = startCameraIntent();
             }
         });
 
@@ -85,24 +85,23 @@ public class NewMessageActivity extends Activity {
         });
     }
 
-    static final int REQUEST_IMAGE_CAPTURE = 1;
 
-    public String startCameraIntent(){
+
+    public File startCameraIntent(){
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFilePath = Environment.getExternalStorageDirectory().toString()+"/Android/data/no.bekk.android.messages/Image-"+timeStamp+".png";
-        File imageFile = new File(imageFilePath);
+        File imageFile = getPhotoFile("IMG_" + timeStamp + ".jpg");
         Uri imageFileUri = Uri.fromFile(imageFile); // convert path to Uri
 
         // Standard Intent action that can be sent to have the camera
         // application capture an image and return it.
-        Intent intent = new Intent( MediaStore.ACTION_IMAGE_CAPTURE );
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri);   // set the image file name
 
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
         }
 
-        return imageFilePath;
+        return imageFile;
     }
 
     @Override
@@ -111,11 +110,29 @@ public class NewMessageActivity extends Activity {
             // Decode it for real
             BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();
             bmpFactoryOptions.inJustDecodeBounds = false;
+            BitmapFactory.decodeFile(imageFile.getPath(), bmpFactoryOptions);
 
-            //imageFilePath image path which you pass with intent
-            Bitmap bp = BitmapFactory.decodeFile(imageFilePath, bmpFactoryOptions);
+            float srcWidth = bmpFactoryOptions.outWidth;
+            float srcHeight = bmpFactoryOptions.outHeight;
 
-            ImgurUpload imgurUpload = new ImgurUpload(Bitmap.createScaledBitmap(bp, (int)(bp.getWidth()*0.5), (int)(bp.getHeight()*0.5), false), this) {
+            float destWidth = 1024;
+            float destHeight = 768;
+
+            int inSampleSize = 1;
+            if (srcHeight > destHeight || srcWidth > destWidth) {
+                if (srcWidth > srcHeight) {
+                    inSampleSize = Math.round(srcHeight/destHeight);
+                } else {
+                    inSampleSize = Math.round(srcWidth/destWidth);
+                }
+            }
+
+            bmpFactoryOptions = new BitmapFactory.Options();
+            bmpFactoryOptions.inSampleSize = inSampleSize;
+
+            Bitmap scaledBitmap = BitmapFactory.decodeFile(imageFile.getPath(), bmpFactoryOptions);
+
+            ImgurUpload imgurUpload = new ImgurUpload(scaledBitmap, this) {
                 @Override
                 protected void onPostExecute(String imageId) {
                     super.onPostExecute(imageId);
@@ -123,8 +140,6 @@ public class NewMessageActivity extends Activity {
                         imageUrl = "http://i.imgur.com/" + imageId + ".jpg";
                         Picasso.with(NewMessageActivity.this)
                                 .load(imageUrl)
-                                .resize(800, 600)
-                                .centerCrop()
                                 .into(imageView);
                     }
                 }
@@ -133,6 +148,14 @@ public class NewMessageActivity extends Activity {
             intent.resolveActivity(getPackageManager());
             imgurUpload.execute();
         }
+    }
+
+    private File getPhotoFile(String filename) {
+        File externalFilesDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        if (externalFilesDir == null) {
+            return null;
+        }
+        return new File(externalFilesDir, filename);
     }
 
     private void showKeyboard() {

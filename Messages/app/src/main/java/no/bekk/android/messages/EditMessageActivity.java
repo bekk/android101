@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -44,8 +43,8 @@ public class EditMessageActivity extends Activity {
 
         Picasso.with(this)
                 .load(message.getImage())
-                .resize(800, 600)
-                .centerCrop()
+                .resize(1024, 768)
+                .centerInside()
                 .into(imageView);
 
         actionButton.setOnClickListener(new View.OnClickListener() {

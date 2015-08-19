@@ -66,7 +66,7 @@
     <ImageView
         android:id="@+id/message_image"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="200dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         android:layout_gravity="center"
