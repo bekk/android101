@@ -39,14 +39,29 @@ title: Manuscript
 
     <p><code> PAUSE / SWITCH PRESENTER</code></p></li>
 
-	<li>Do not add internet permission until app has run and failed. Explain the need for permissions</li> 
+	<li>Do not add internet permission until app has run and failed. Explain the need for permissions</li>
 	{% highlight xml %}
 	    <uses-permission android:name="android.permission.INTERNET" />
 	{% endhighlight %}
 	<li>Run app again and see that the Toast pops up</li>
-    
+
     <li>Remove <code>Toast</code> and explain that we now want to display the data in a list </li>
-    <li> Explain that a <code>RecyclerView</code> can be used for displaying the results (<a href="list-recycler-view.html"> Lists and RecyclerView)</a> </li>
+    <li>
+			Explain that a <code>RecyclerView</code> can be used for displaying the results (<a href="list-recycler-view.html"> Lists and RecyclerView)</a>
+			<div>
+				<h4>RecyclerView</h4>
+				<p>
+					RecyclerView is a subclass of ViewGroup. It displays a list of child View objects, one for each item in your list of items. If you have 100 items in the list, the RecyclerView will only create e.g. 12 views, just enough to fill the visible part of the screen. When you scroll, it will reuse these views and just update the data inside them - it recycles views over and over.
+				</p>
+			</div>
+			<div>
+				<h4>ViewHolders and Adapters</h4>
+				<p>
+					RecyclerView only recycles views and positions them on screen. To create the views we will use a RecyclerView.Adapter subclass and a RecyclerView.ViewHolder subclass. The ViewHolder only does one thing: Hold on to a view and subviews inside it. The RecyclerView does not create these ViewHolders itself, instead it asks an Adapter to create them. The Adapter is responsible for creating the necessary ViewHolders and then populating them with data for each item. RecyclerView first asks the Adapter how many items it has using getItemCount(). Then it wants to create the view holder using createViewHolder(). Finally it wants to bind the data for this item using bindViewHolder(). It then repeats this for all the items in the list.
+				</p>
+			</div>
+
+		</li>
     <code>compile 'com.android.support:recyclerview-v7:+'</code> <code> compile 'com.android.support:cardview-v7:+'</code>
     <li> Set up a RecyclerView, and populate the RecyclerViewAdapter fields with properties from the Track domain objects</li>
     <li>Add a click handler for the list elements, where clicks will start Spotify and play song. Explain the use of implicit intents. An example
@@ -363,4 +378,3 @@ public class TracksActivity extends ActionBarActivity implements ClickedTrackLis
 }
 
 {% endhighlight %}
-
