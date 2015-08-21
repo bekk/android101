@@ -1,3 +1,11 @@
 <resources>
+    <style name="Widget.Messages.ActionBar" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/actionbar_color</item>
+        <item name="theme">@style/ThemeOverlay.Messages.ActionBar</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+    </style>
 
+    <style name="ThemeOverlay.Messages.ActionBar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorPrimary">@color/actionbar_title_text</item>
+    </style>
 </resources>

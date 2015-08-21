@@ -59,7 +59,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
             holder.image.setVisibility(View.VISIBLE);
             Picasso.with(context)
                     .load(message.getImage())
-                    .resize(600, 800)
+                    .resize(1024, 768)
                     .centerCrop()
                     .into(holder.image);
         } else {
