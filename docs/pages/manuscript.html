@@ -44,9 +44,10 @@ title: Manuscript
     <li>Create the TracksActivity. TracksActivity will perform the actual search, and display a list containing the search results. Add entries to the Android Manifest</li>
     <li>Start TracksActivity from MainActivity, and also pass the search input as an extra. Retrieve the bundle in TracksActivity.</li>
     <li>Explain that we now want to set up a service for performing the search. Explain AsyncTasks (<a href="working-in-the-background.html"> Working In the Background.</a>)
-        <code><p>Retrofit is a library for turning your Rest API into a Java Interface.</p>
+        Say that for this course we will use Retrofit, and provide Retrofit basics (background thread, GSON, etc). 
+      <code><p>Retrofit is a library for turning your Rest API into a Java Interface.</p>
         <p> It handles moving the network call into a background thread, parsing JSON with GSON, and returning the result to the UI thread.</p></code>
-        Say that for this course we will use Retrofit, and provide Retrofit basics (background thread, GSON, etc). Add Gradle dependency:
+        Add Gradle dependency:
         <p><code> compile 'com.squareup.retrofit:retrofit:1.9.0'</code></p></li>
 	<li>Add SpotifySearchService which is the Retrofit interface. Maybe live code this. Also, add URL as a final variable to the MainActivity.
         <p><code>"/search/1/track.json"</code></p>
