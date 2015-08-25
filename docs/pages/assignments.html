@@ -6,6 +6,7 @@ title: Assignments
 <h3>1. Displaying the messages</h3>
 <ol>
   <li>Create a MessagesActivity and corresponding layout. Add a RecyclerView to the layout and get a reference to it in the activity.</li>
+  <code>compile 'com.android.support:recyclerview-v7:+'</code>
   <li>Create a layout file for displaying messages in the list, f. ex /res/layout/item_message.xml, and put in some views to display the message sender, text and date.</li>
   <li>Create a MessagesAdapter class that extends RecyclerView.Adapter and implement the required methods.</li>
   <li>Use Retrofit to create a client for the REST API and fetch the messages asynchronously.</li>
