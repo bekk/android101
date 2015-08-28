@@ -14,16 +14,22 @@ title: Manuscript
 <ol>
 	<li>Open Android Studio. Decribe that it is the standard IDE choice. Create an empty project. Briefly mention what an Activity is, along with the xml layout.</li>
     <li> Say that we use Gradle instead of Maven, as it is Googles' top choice </li>
+    <li> Briefly explain the package system in Android Studio. Say that the most important part in /res is layout </li>
 	<li>Explain Activities (<a href="android-app-structure-and-components.html"> App Structure And Components</a>)</li>
     <code><p>An activity can be seen as a controller in an MVC pattern. </p>
     <p>It is a single focused screen the user can interact with. It is responsible for creating a view, and coordinating interaction and state.</p>
-    <p>An application typically has multiple Activities, and during use, switches between them</p></code>
+    <p>An application typically has multiple Activities, and during use, switches between them</p>
+    <p>An activity goes through a life cycle, and we have hooks where we can perform operations at given states. First is onCreate()</p>
+    </code>
     <code> <p>The R file is a generated file that hold references to all resources in your app.</p> 
         <p>These are resources souch as images and drawables, layout files and strings</p></code>
-	<li>Explain layouts and layout controls (<a href="common-view-controls.html"> Common View Controls</a>), (<a href="view-layout.html"> View Layout</a>)). Mention the other folders and files in the res folder</li>
+	<li>Explain layouts and layout controls (<a href="common-view-controls.html"> Common View Controls</a>), (<a href="view-layout.html"> View Layout</a>)).</li>
 	<li>Explain the UI builder. Mention that we will return to this when we start working on the Spotify app</li>
     <li>Explain the Android Manifest and show that we have registred our Activity here.</li>
-    <li>Run Hello World app and explain debugging.</li>
+    <li>Run Hello World app and explain debugging. Mention that we need either an emulator or a device. If you have a device, don't forget
+        to enable developer options</li>
+    <li> Add hook for onResume() and onDestroy(), and add log statements</li>
+    <li> Run the app and show the different states </li>
 	<li>Update the MainActivity. It will display an input text field and a button. </li>
       <code><p>LinearLayout: Positions element either in a single row or column, based on orientation.</p>
         <p>Can adjust and move elements by using the gravity property</p>
@@ -40,7 +46,8 @@ title: Manuscript
             <p>An example is when you want to open a location in Google Maps in Chrome.</p> 
             <p>You are then presented with the option to open Maps in either the Maps app or the browser.</p>
             <p>This is possible as both of the apps are listening for the intent in their declared intent filter.</p>
-            <p>Intent filters describe which types of implicit intents can be received.</p></code>
+            <p>Intent filters describe which types of implicit intents can be received.</p>
+            <p> Another example is to switch out stock SMS app</p></code>
     <li>Create the TracksActivity. TracksActivity will perform the actual search, and display a list containing the search results. Add entries to the Android Manifest</li>
     <li>Start TracksActivity from MainActivity, and also pass the search input as an extra. Retrieve the bundle in TracksActivity.</li>
     <li>Explain that we now want to set up a service for performing the search. Explain AsyncTasks (<a href="working-in-the-background.html"> Working In the Background.</a>)
