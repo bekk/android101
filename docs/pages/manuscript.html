@@ -14,23 +14,21 @@ title: Manuscript
 <ol>
 	<li>Open Android Studio. Decribe that it is the standard IDE choice. Create an empty project. Briefly mention what an Activity is, along with the xml layout.</li>
     <li> Say that we use Gradle instead of Maven, as it is Googles' top choice </li>
-    <li> Briefly explain the package system in Android Studio. Say that the most important part in /res is layout </li>
-	<li>Explain Activities (<a href="android-app-structure-and-components.html"> App Structure And Components</a>)</li>
+    <li> Do not create any activity (choose no activity) </li>
+    <li> Briefly explain the package system in Android Studio</li>
+	<li>Create SpotifyActivity without layout.</li>
+    <li>Explain Activities (<a href="android-app-structure-and-components.html"> App Structure And Components</a>)</li>
     <code><p>An activity can be seen as a controller in an MVC pattern. </p>
     <p>It is a single focused screen the user can interact with. It is responsible for creating a view, and coordinating interaction and state.</p>
     <p>An application typically has multiple Activities, and during use, switches between them</p>
     <p>An activity goes through a life cycle, and we have hooks where we can perform operations at given states. First is onCreate()</p>
     </code>
-    <code> <p>The R file is a generated file that hold references to all resources in your app.</p> 
-        <p>These are resources souch as images and drawables, layout files and strings</p></code>
-	<li>Explain layouts and layout controls (<a href="common-view-controls.html"> Common View Controls</a>), (<a href="view-layout.html"> View Layout</a>)).</li>
-	<li>Explain the UI builder. Mention that we will return to this when we start working on the Spotify app</li>
-    <li>Explain the Android Manifest and show that we have registred our Activity here.</li>
-    <li>Run Hello World app and explain debugging. Mention that we need either an emulator or a device. If you have a device, don't forget
-        to enable developer options</li>
-    <li> Add hook for onResume() and onDestroy(), and add log statements</li>
-    <li> Run the app and show the different states </li>
-	<li>Update the MainActivity. It will display an input text field and a button. Mention that Linear and Relative are the most popular ones. Also mention FrameLayout</li>
+    <li>Explain the Android Manifest</li>
+    <li>Say that we need to register our Activity here and register SpotifyActivity in the Android Manifest</li>
+    <li> Say that we now need to create a layout for our activity</li>
+	<li>Explain the UI builder</li>
+    <li>Explain layouts and layout controls (<a href="common-view-controls.html"> Common View Controls</a>), (<a href="view-layout.html"> View Layout</a>)).</li>
+	<li>Update the MainActivity layout. It will display an input text field and a button. Mention that Linear and Relative are the most popular ones. Also mention FrameLayout</li>
       <code><p>LinearLayout: Positions element either in a single row or column, based on orientation.</p>
         <p>Can adjust and move elements by using the gravity property</p>
         <p>Relative Layout: Positions elements relative to each other or the parent container.</p>
@@ -41,8 +39,15 @@ title: Manuscript
     <li>Show relational parameters (below, left of)</li>
     <li>Say that we prefer to use RelativeLayout for Complex layouts, but that you can nest layouts as well</li>
     <li>Create the layout files and controls for the activity.</li>
-    <li>Create a click listener for the button. This is where we want to initiate the search. For now, add a Toast, and run the app.
-    </li>
+     <code> <p>The R file is a generated file that hold references to all resources in your app.</p> 
+        <p>These are resources souch as images and drawables, layout files and strings</p></code>
+    <li> Connect the layout to our Activity with setContentView()</li>
+    <li>Run Hello World app and explain debugging. Mention that we need either an emulator or a device. If you have a device, don't forget
+        to enable developer options</li>
+    <li> Add hook for onResume() and onDestroy(), and add log statements</li>
+    <li> Run the app and show the different states </li>
+    <li> Connect view elements in Java code </li>
+     <li>Create a click listener for the button. This is where we want to initiate the search. For now, add a Toast, and run the app.</li>
     <li>Replace the Toast with an Intent which we will use to start the TracksActivity. Describe intents</li>
     <code><p>Intents are Android's way of communicating between components such as Activities and Services. We can use intents to launch activities and 
             pass data between them.</p>
