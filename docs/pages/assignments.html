@@ -53,13 +53,34 @@ title: Assignments
   <li>Set the imgur url on the message and post it as before.</li>
 </ol>
 
-<h4>Store the captured photo in external storage</h4>
-Use <code>intent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri)</code> on your camera intent to store the photo on external storage. In <code>onActivityResult(...)</code> you can use <code>BitmapFactory.decodeFile(...)</code> to get the photo.
+<h4>Create a file to store the captured photo<h4>
+  Use <code>getExternalFilesDir(Environment.DIRECTORY_PICTURES)</code> to get a directory where you can create a file for storing the captured photo.
+
+<h4>Create an intent to start the camera</h4>
+  {% highlight java %}
+  Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+  intent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri);
+  int REQUEST_IMAGE_CAPTURE = 0; // Some constant
+  startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+  {% endhighlight %}
+
+<h4>Receive the captured photo</h4>
 {% highlight java %}
-String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-String imageFilePath = Environment.getExternalStorageDirectory().toString()+"/Android/data/no.bekk.android.messages/Image-"+timeStamp+".png";
-File imageFile = new File(imageFilePath);
-Uri imageFileUri = Uri.fromFile(imageFile); // convert path to Uri
+@Override
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+  if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+    BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();
+    bmpFactoryOptions.inJustDecodeBounds = false;
+    BitmapFactory.decodeFile(imageFile.getPath(), bmpFactoryOptions);
+
+    bmpFactoryOptions = new BitmapFactory.Options();
+    int inSampleSize = 4; // Scale the image to a quarter of the original size
+    bmpFactoryOptions.inSampleSize = inSampleSize;
+    Bitmap scaledBitmap = BitmapFactory.decodeFile(imageFile.getPath(), bmpFactoryOptions);
+
+    // Upload bitmap to Imgur
+  }
+}
 {% endhighlight %}
 
 <h3>5. Improve the design or implement more API operations. Choose 5a or 5b.</h3>
