@@ -29,20 +29,58 @@
 <h3>Main</h3>
 <ol>
 	<li>Open Android Studio. Decribe that it is the standard IDE choice. Create an empty project. Briefly mention what an Activity is, along with the xml layout.</li>
-	<li>Explain Activities (<a href="android-app-structure-and-components.html"> App Structure And Components</a>)</li>
-    <li>Explain the Android Manifest and show that we have registred our Activity here.</li>
-	<li>Explain layouts and layout controls (<a href="common-view-controls.html"> Common View Controls</a>), (<a href="view-layout.html"> View Layout</a>))</li>
+    <li> Say that we use Gradle instead of Maven, as it is Googles' top choice </li>
+    <li> Do not create any activity (choose no activity) </li>
+    <li> Briefly explain the package system in Android Studio</li>
+	<li>Create SpotifyActivity without layout.</li>
+    <li>Explain Activities and onCreate() (<a href="android-app-structure-and-components.html"> App Structure And Components</a>)</li>
+    <code><p>An activity can be seen as a controller in an MVC pattern. </p>
+    <p>It is a single focused screen the user can interact with. It is responsible for creating a view, and coordinating interaction and state.</p>
+    <p>An application typically has multiple Activities, and during use, switches between them</p>
+    <p>An activity goes through a life cycle, and we have hooks where we can perform operations at given states. First is onCreate()</p>
+    </code>
+    <li>Explain the Android Manifest</li>
+    <li>Say that we need to register our Activity here and register SpotifyActivity in the Android Manifest</li>
+    <li> Say that we now need to create a layout for our activity</li>
 	<li>Explain the UI builder</li>
-    <li>Run Hello World app and explain debugging.</li>
-	<li>Update the MainActivity. It will display an input text field and a button. </li>
-    <li>Create the layout files and controls for the activity.</li>
-    <li>Create a click listener for the button. This is where we want to initiate the search. For now, add a Toast, and run the app.
-    </li>
+    <li>Explain layouts and layout controls (<a href="common-view-controls.html"> Common View Controls</a>), (<a href="view-layout.html"> View Layout</a>)).</li>
+          <code><p>LinearLayout: Positions element either in a single row or column, based on orientation.</p>
+        <p>Can adjust and move elements by using the gravity property</p>
+        <p>Relative Layout: Positions elements relative to each other or the parent container.</p>
+        <p> Position is controlled by positioning attributes</p></code>
+	<li>Update the MainActivity layout. It will display an input text field and a button. Mention that Linear and Relative are the most popular ones. Also mention FrameLayout</li>
+
+    <li>Show use of match_parent and wrap_content, as well as difference between horizontal and vertical.</li>
+    <li>Show use of gravity and layout_gravity (parent container) and explain difference</li>
+    <li>Switch to RelativeLayout and experiment with match_parent and wrap_content</li>
+    <li>Show relational parameters (below, left of)</li>
+    <li>Say that we prefer to use RelativeLayout for Complex layouts, but that you can nest layouts as well</li>
+    <li> Connect the layout to our Activity with setContentView() and explain the use of R</li>
+         <code> <p>The R file is a generated file that hold references to all resources in your app.</p> 
+        <p>These are resources souch as images and drawables, layout files and strings</p></code>
+    <li>Run Hello World app and explain debugging. Mention that we need either an emulator or a device. If you have a device, don't forget
+        to enable developer options</li>
+    <li> Add hook for onResume() and onDestroy(), and add log statements</li>
+    <li> Run the app and show the different states </li>
+    <li> Connect view elements in Java code </li>
+     <li>Create a click listener for the button. This is where we want to initiate the search. For now, add a Toast, and run the app.</li>
     <li>Replace the Toast with an Intent which we will use to start the TracksActivity. Describe intents</li>
+    <code><p>Intents are Android's way of communicating between components such as Activities and Services. We can use intents to launch activities and 
+            pass data between them.</p>
+            <p>Explicit Intents: Explicitly declare which activity to start</p>
+            <p>Implicit Intents: Declares an action to start, which allows components listening for this action to respond to it.</p> 
+            <p>An example is when you want to open a location in Google Maps in Chrome.</p> 
+            <p>You are then presented with the option to open Maps in either the Maps app or the browser.</p>
+            <p>This is possible as both of the apps are listening for the intent in their declared intent filter.</p>
+            <p>Intent filters describe which types of implicit intents can be received.</p>
+            <p> Another example is to switch out stock SMS app</p></code>
     <li>Create the TracksActivity. TracksActivity will perform the actual search, and display a list containing the search results. Add entries to the Android Manifest</li>
     <li>Start TracksActivity from MainActivity, and also pass the search input as an extra. Retrieve the bundle in TracksActivity.</li>
     <li>Explain that we now want to set up a service for performing the search. Explain AsyncTasks (<a href="working-in-the-background.html"> Working In the Background.</a>)
-        Say that for this course we will use Retrofit, and provide Retrofit basics (background thread, GSON, etc). Add Gradle dependency:
+        Say that for this course we will use Retrofit, and provide Retrofit basics (background thread, GSON, etc). 
+      <code><p>Retrofit is a library for turning your Rest API into a Java Interface.</p>
+        <p> It handles moving the network call into a background thread, parsing JSON with GSON, and returning the result to the UI thread.</p></code>
+        Add Gradle dependency:
         <p><code> compile 'com.squareup.retrofit:retrofit:1.9.0'</code></p></li>
 	<li>Add SpotifySearchService which is the Retrofit interface. Maybe live code this. Also, add URL as a final variable to the MainActivity.
         <p><code>"/search/1/track.json"</code></p>
@@ -80,6 +118,9 @@
     <li> Set up a RecyclerView, and populate the RecyclerViewAdapter fields with properties from the Track domain objects</li>
     <li>Add a click handler for the list elements, where clicks will start Spotify and play song. Explain the use of implicit intents. An example
         can be opening Google Maps in Chrome, where the user is presented with options for which app to open maps in.</li>
+    <li> Now it's time to do assignments. Open Wiki in browser, and say that this contains all info needed. Menu on the right hand side</li>
+    <li>Enter the assignments page. First describe the task (create a twitter like app), then describe the backend. Finally, describe each section.</li>
+    <li>Quick break. We will be here to assist you</li>
 </ol>
 
 <h3> MainActivity</h3>

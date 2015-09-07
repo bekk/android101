@@ -21,6 +21,7 @@
             <h3>1. Displaying the messages</h3>
 <ol>
   <li>Create a MessagesActivity and corresponding layout. Add a RecyclerView to the layout and get a reference to it in the activity.</li>
+  <code>compile 'com.android.support:recyclerview-v7:+'</code>
   <li>Create a layout file for displaying messages in the list, f. ex /res/layout/item_message.xml, and put in some views to display the message sender, text and date.</li>
   <li>Create a MessagesAdapter class that extends RecyclerView.Adapter and implement the required methods.</li>
   <li>Use Retrofit to create a client for the REST API and fetch the messages asynchronously.</li>
@@ -55,7 +56,7 @@
 
 <h4>Hints</h4>
 <ul>
-  <li>Add the Picasso dependency to your app.gradle file: compile 'com.squareup.picasso:picasso:2.5.0'.</li>
+  <li>Add the Picasso dependency to your app.gradle file: compile 'com.squareup.picasso:picasso:2.5.2'.</li>
 </ul>
 
 <h3>4. Use the camera to add images to your messages</h3>
@@ -67,12 +68,31 @@
   <li>Set the imgur url on the message and post it as before.</li>
 </ol>
 
-<h4>Store the captured photo in external storage</h4>
-Use <code>intent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri)</code> on your camera intent to store the photo on external storage. In <code>onActivityResult(...)</code> you can use <code>BitmapFactory.decodeFile(...)</code> to get the photo.
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">String</span> <span class="n">timeStamp</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">SimpleDateFormat</span><span class="o">(</span><span class="s">&quot;yyyyMMdd_HHmmss&quot;</span><span class="o">).</span><span class="na">format</span><span class="o">(</span><span class="k">new</span> <span class="nf">Date</span><span class="o">());</span>
-<span class="n">String</span> <span class="n">imageFilePath</span> <span class="o">=</span> <span class="n">Environment</span><span class="o">.</span><span class="na">getExternalStorageDirectory</span><span class="o">().</span><span class="na">toString</span><span class="o">()+</span><span class="s">&quot;/Android/data/no.bekk.android.messages/Image-&quot;</span><span class="o">+</span><span class="n">timeStamp</span><span class="o">+</span><span class="s">&quot;.png&quot;</span><span class="o">;</span>
-<span class="n">File</span> <span class="n">imageFile</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">File</span><span class="o">(</span><span class="n">imageFilePath</span><span class="o">);</span>
-<span class="n">Uri</span> <span class="n">imageFileUri</span> <span class="o">=</span> <span class="n">Uri</span><span class="o">.</span><span class="na">fromFile</span><span class="o">(</span><span class="n">imageFile</span><span class="o">);</span> <span class="c1">// convert path to Uri</span></code></pre></div>
+<h4>Create a file to store the captured photo<h4>
+  Use <code>getExternalFilesDir(Environment.DIRECTORY_PICTURES)</code> to get a directory where you can create a file for storing the captured photo.
+
+<h4>Create an intent to start the camera</h4>
+  <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">MediaStore</span><span class="o">.</span><span class="na">ACTION_IMAGE_CAPTURE</span><span class="o">);</span>
+  <span class="n">intent</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="n">MediaStore</span><span class="o">.</span><span class="na">EXTRA_OUTPUT</span><span class="o">,</span> <span class="n">imageFileUri</span><span class="o">);</span>
+  <span class="kt">int</span> <span class="n">REQUEST_IMAGE_CAPTURE</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="c1">// Some constant</span>
+  <span class="n">startActivityForResult</span><span class="o">(</span><span class="n">intent</span><span class="o">,</span> <span class="n">REQUEST_IMAGE_CAPTURE</span><span class="o">);</span></code></pre></div>
+
+<h4>Receive the captured photo</h4>
+<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onActivityResult</span><span class="o">(</span><span class="kt">int</span> <span class="n">requestCode</span><span class="o">,</span> <span class="kt">int</span> <span class="n">resultCode</span><span class="o">,</span> <span class="n">Intent</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">requestCode</span> <span class="o">==</span> <span class="n">REQUEST_IMAGE_CAPTURE</span> <span class="o">&amp;&amp;</span> <span class="n">resultCode</span> <span class="o">==</span> <span class="n">RESULT_OK</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">BitmapFactory</span><span class="o">.</span><span class="na">Options</span> <span class="n">bmpFactoryOptions</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BitmapFactory</span><span class="o">.</span><span class="na">Options</span><span class="o">();</span>
+    <span class="n">bmpFactoryOptions</span><span class="o">.</span><span class="na">inJustDecodeBounds</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="n">BitmapFactory</span><span class="o">.</span><span class="na">decodeFile</span><span class="o">(</span><span class="n">imageFile</span><span class="o">.</span><span class="na">getPath</span><span class="o">(),</span> <span class="n">bmpFactoryOptions</span><span class="o">);</span>
+
+    <span class="n">bmpFactoryOptions</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BitmapFactory</span><span class="o">.</span><span class="na">Options</span><span class="o">();</span>
+    <span class="kt">int</span> <span class="n">inSampleSize</span> <span class="o">=</span> <span class="mi">4</span><span class="o">;</span> <span class="c1">// Scale the image to a quarter of the original size</span>
+    <span class="n">bmpFactoryOptions</span><span class="o">.</span><span class="na">inSampleSize</span> <span class="o">=</span> <span class="n">inSampleSize</span><span class="o">;</span>
+    <span class="n">Bitmap</span> <span class="n">scaledBitmap</span> <span class="o">=</span> <span class="n">BitmapFactory</span><span class="o">.</span><span class="na">decodeFile</span><span class="o">(</span><span class="n">imageFile</span><span class="o">.</span><span class="na">getPath</span><span class="o">(),</span> <span class="n">bmpFactoryOptions</span><span class="o">);</span>
+
+    <span class="c1">// Upload bitmap to Imgur</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
 
 <h3>5. Improve the design or implement more API operations. Choose 5a or 5b.</h3>
 
