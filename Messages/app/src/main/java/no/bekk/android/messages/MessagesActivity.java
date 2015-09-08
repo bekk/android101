@@ -116,6 +116,7 @@ public class MessagesActivity extends Activity implements TapDelegate, LongTapDe
     public void tappedItemAtPosition(int position) {
         Intent intent = new Intent(this, EditMessageActivity.class);
         intent.putExtra("message", GetGson.getInstance().toJson(messages.get(position), Message.class));
+
         startActivity(intent);
     }
 }
