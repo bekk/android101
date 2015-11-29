@@ -3,7 +3,46 @@ layout: default
 title: Assignments
 ---
 
-<h3>1. Displaying the messages</h3>
+<h3>1a. Creating a new message screen</h3>
+<ol>
+  <li>Create new Activity called NewMessageActivity and override onCreate(Bundle savedInstanceState).</li>
+  <li>Create a layout resource file for the new activity by right-clicking the res folder and selecting New -> Android resource file. Name it layout_new_message. Leave everything else as is.</li>
+  <li>Tell NewMessageActivity to use the layout by calling setContentView(int layoutResId) with resource id of layout_new_message. Android automatically generates this id in the globally available R class. Layout files are put inside R.layout.</li>
+  <li>We will now create a label for the message sender input field. Go back to the layout and add TextView component inside the root LinearLayout. Give it a width of wrap_content (as wide as the text inside it plus paddings etc.) and height of wrap_content (will be as big as the text content plus paddings etc.). To show the label text, add the android:text attribute and refer to a string in the res/values/strings.xml file by using the syntax @string/your_string. You will need to create this string in the strings resource file.</li>
+  <li>Create the input field for message sender by adding an EditText component inside the root LinearLayout. Give it a width of match_parent (fill the screen from left to right) and height of wrap_content. To be able to access the input text in the activity, we need to give the edittext an android:id attribute. We will use a special syntax when creating this id for the first time: @+id/your_id. Later on, if you need to refer to this component you can skip the + sign.</li>
+  <li>Repeat the two above steps for creating a label and input field for the message text.<li>
+  <li>Add a button component for sending the message. Give it wrap_content for width and height. Give it an id. Give it the text "send" (use the strings.xml file).<li>
+  <li>By now, you should have two pairs of TextView and EditText and a send button, and the EditTexts and the button should each have an id. To test your app, you need to tell android which activity to launch when your app is launched. To do this you need to add your activity to the manifest file and specify an intent filter with action MAIN and category LAUNCHER. Then start your app by clicking Run -> Debug and select "Launch emulator".
+    {% highlight xml %}
+    <activity android:name=".NewMessageActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+    {% endhighlight %}
+  <li>
+    To send the message we need to respond to pressing the send button. Go to NewMessageActivity and inside the onCreate method, use the activity method View findViewById(int id) to get a reference to the button. The id will be available on the global R object by R.id.your_button_id. Do the same with the sender and message EditText. Remember to cast the generic views to EditText and Button. Use setOnClickListener on the button and inside the onClick callback you can get the text of the sender and message by using getText().toString() on the instances. To test everything, display a Toast message with the sender and message, and test using the emulator/device.
+  </li>
+</ol>
+
+<h4>Hints</h4>
+<ul>
+  <li></li>
+</ul>
+
+<h3>1b. Sending a message to the API</h3>
+<ol>
+  <li>Extend the client Retrofit API with a send message operation and call it in the OnClickListener.</li>
+  <li>Show the MessagesActivity with the updated message list.</li>
+</ol>
+
+<h4>Hints</h4>
+<ul>
+  <li>Use <code>NewMessageActivity.this.finish();</code> to navigate back to the previous Activity.</li>
+</ul>
+
+<h3>2. Displaying the messages</h3>
 <ol>
   <li>Create a MessagesActivity and corresponding layout. Add a RecyclerView to the layout and get a reference to it in the activity.</li>
   <code>compile 'com.android.support:recyclerview-v7:+'</code>
@@ -18,19 +57,6 @@ title: Assignments
   <li>The ViewHolder you create should contain references to all the TextViews you need to show for each position in the message list.</li>
   <li>You will need a <code>LayoutInflater</code> in MessagesAdapter in <code>onCreateViewHolder</code> to create the layout view of the message. It is probably easiest to use Activitys <code>getLayoutInflater()</code> and pass it to the adapter.</li>
   <li>Store a reference to the list of messages in MessagesAdapter. When you have added some messages to the list, call <code>notifyDataSetChanged</code> on the adapter, and it will render the messages again.</li>
-</ul>
-
-<h3>2. Sending a new message</h3>
-<ol>
-  <li>Create a NewMessageActivity and corresponding layout with some EditText views to fill in the sender and the message text.</li>
-  <li>Create a send button and add an OnClickListener that will create a new Message object based on the input views.</li>
-  <li>Extend the client Retrofit API with a send message operation and call it in the OnClickListener.</li>
-  <li>Show the MessagesActivity with the updated message list.</li>
-</ol>
-
-<h4>Hints</h4>
-<ul>
-  <li>Use <code>NewMessageActivity.this.finish();</code> to navigate back to the previous Activity.</li>
 </ul>
 
 <h3>3. Show images</h3>
