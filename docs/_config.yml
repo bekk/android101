@@ -1,4 +1,4 @@
 name: iOS 101
 markdown: redcarpet
-pygments: true
+highlighter: pygments
 baseurl: /android101
