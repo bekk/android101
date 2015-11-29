@@ -21,31 +21,31 @@
             <h3>TextView</h3>
 A TextView is used to display text.
 
-<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;TextView</span>
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;TextView</span>
 <span class="na">android:id=</span><span class="s">&quot;@+id/tvText&quot;</span>
 <span class="na">android:layout_width=</span><span class="s">&quot;wrap_content&quot;</span>
 <span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>
-<span class="na">android:text=</span><span class="s">&quot;Message&quot;</span> <span class="nt">/&gt;</span></code></pre></div>
+<span class="na">android:text=</span><span class="s">&quot;Message&quot;</span> <span class="nt">/&gt;</span></code></pre></figure>
 
 We use the id of the view to get the view in e.g. an activity that needs to update the text.
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">TextView</span> <span class="n">tv</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">parentView</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">tvText</span><span class="o">);</span>
-<span class="n">tv</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;New text&quot;</span><span class="o">);</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">TextView</span> <span class="n">tv</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">parentView</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">tvText</span><span class="o">);</span>
+<span class="n">tv</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;New text&quot;</span><span class="o">);</span></code></pre></figure>
 
 If the text is not dynamic, you should define the text in <code>res/values/strings.xml</code> so that it can be internationalized.
 
 <h3>EditText</h3>
 When you need text input from the user, you can use the EditText control.
 
-<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;EditText</span>
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;EditText</span>
     <span class="na">android:id=</span><span class="s">&quot;@+id/search&quot;</span>
     <span class="na">android:layout_width=</span><span class="s">&quot;fill_parent&quot;</span>
     <span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>
     <span class="na">android:hint=</span><span class="s">&quot;@string/search_hint&quot;</span>
     <span class="na">android:inputType=</span><span class="s">&quot;text&quot;</span>
-    <span class="na">android:imeOptions=</span><span class="s">&quot;actionSend&quot;</span> <span class="nt">/&gt;</span></code></pre></div>
+    <span class="na">android:imeOptions=</span><span class="s">&quot;actionSend&quot;</span> <span class="nt">/&gt;</span></code></pre></figure>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">EditText</span> <span class="n">editText</span> <span class="o">=</span> <span class="o">(</span><span class="n">EditText</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">search</span><span class="o">);</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">EditText</span> <span class="n">editText</span> <span class="o">=</span> <span class="o">(</span><span class="n">EditText</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">search</span><span class="o">);</span>
 <span class="n">editText</span><span class="o">.</span><span class="na">setOnEditorActionListener</span><span class="o">(</span><span class="k">new</span> <span class="nf">OnEditorActionListener</span><span class="o">()</span> <span class="o">{</span>
     <span class="nd">@Override</span>
     <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">onEditorAction</span><span class="o">(</span><span class="n">TextView</span> <span class="n">v</span><span class="o">,</span> <span class="kt">int</span> <span class="n">actionId</span><span class="o">,</span> <span class="n">KeyEvent</span> <span class="n">event</span><span class="o">)</span> <span class="o">{</span>
@@ -56,33 +56,33 @@ When you need text input from the user, you can use the EditText control.
         <span class="o">}</span>
         <span class="k">return</span> <span class="n">handled</span><span class="o">;</span>
     <span class="o">}</span>
-<span class="o">});</span></code></pre></div>
+<span class="o">});</span></code></pre></figure>
 
 <h3>Button</h3>
 
-<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;Button</span>
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;Button</span>
     <span class="na">android:layout_width=</span><span class="s">&quot;wrap_content&quot;</span>
     <span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>
     <span class="na">android:text=</span><span class="s">&quot;@string/button_text&quot;</span>
-    <span class="err">...</span> <span class="nt">/&gt;</span></code></pre></div>
+    <span class="err">...</span> <span class="nt">/&gt;</span></code></pre></figure>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Button</span> <span class="n">button</span> <span class="o">=</span> <span class="o">(</span><span class="n">Button</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">button_send</span><span class="o">);</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Button</span> <span class="n">button</span> <span class="o">=</span> <span class="o">(</span><span class="n">Button</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">button_send</span><span class="o">);</span>
 <span class="n">button</span><span class="o">.</span><span class="na">setOnClickListener</span><span class="o">(</span><span class="k">new</span> <span class="n">View</span><span class="o">.</span><span class="na">OnClickListener</span><span class="o">()</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
         <span class="c1">// Do something in response to button click</span>
     <span class="o">}</span>
-<span class="o">});</span></code></pre></div>
+<span class="o">});</span></code></pre></figure>
 
 <h3>ImageView</h3>
 
 Images files are referred to as drawables. They are put in folders for each device resolution inside the res directory, e.g. <code>res/drawable-xxhdpi</code>. The runtime chooses which image to use on each device. <code>@drawable/my_image</code> refers to the image <code>my_image.png</code> located in all the drawable folders you are providing.
 
-<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;ImageView</span>
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;ImageView</span>
     <span class="na">android:id=</span><span class="s">&quot;@+id/image&quot;</span>
     <span class="na">android:layout_width=</span><span class="s">&quot;wrap_content&quot;</span>
     <span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>
     <span class="na">android:scaleType=</span><span class="s">&quot;center&quot;</span>
-    <span class="na">android:src=</span><span class="s">&quot;@drawable/my_image&quot;</span> <span class="nt">/&gt;</span></code></pre></div>
+    <span class="na">android:src=</span><span class="s">&quot;@drawable/my_image&quot;</span> <span class="nt">/&gt;</span></code></pre></figure>
 
 
           </div>
@@ -93,8 +93,6 @@ Images files are referred to as drawables. They are put in folders for each devi
 
   
 
-  
-    
   
 
   
@@ -125,8 +123,6 @@ Images files are referred to as drawables. They are put in folders for each devi
   
 
   
-    
-  
 
   
     
@@ -156,8 +152,6 @@ Images files are referred to as drawables. They are put in folders for each devi
   
 
   
-    
-  
 
   
     
@@ -186,8 +180,6 @@ Images files are referred to as drawables. They are put in folders for each devi
 
   
 
-  
-    
   
 
   
@@ -224,8 +216,6 @@ Images files are referred to as drawables. They are put in folders for each devi
   
 
   
-    
-  
 
   
     
@@ -254,8 +244,6 @@ Images files are referred to as drawables. They are put in folders for each devi
 
   
 
-  
-    
   
 
   
@@ -292,8 +280,6 @@ Images files are referred to as drawables. They are put in folders for each devi
   
 
   
-    
-  
 
   
     
@@ -323,8 +309,6 @@ Images files are referred to as drawables. They are put in folders for each devi
   
 
   
-    
-  
 
   
     
@@ -353,8 +337,6 @@ Images files are referred to as drawables. They are put in folders for each devi
 
   
 
-  
-    
   
 
   

@@ -36,7 +36,7 @@ TrackSearchAsyncTask overrides three methods:
 <li><code>onPostExecute</code> - runs in the main UI thread. Gets the result from doInBackground and sends these to a new activity</li>
 </ul>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">class</span> <span class="nc">TrackSearchAsyncTask</span> <span class="kd">extends</span> <span class="n">AsyncTask</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Void</span><span class="o">,</span> <span class="n">TrackSearchResult</span><span class="o">&gt;</span> <span class="o">{</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">class</span> <span class="nc">TrackSearchAsyncTask</span> <span class="kd">extends</span> <span class="n">AsyncTask</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Void</span><span class="o">,</span> <span class="n">TrackSearchResult</span><span class="o">&gt;</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="n">SearchService</span> <span class="n">searchService</span><span class="o">;</span>
 
     <span class="nd">@Override</span>
@@ -62,7 +62,7 @@ TrackSearchAsyncTask overrides three methods:
         <span class="n">resultActivity</span><span class="o">.</span><span class="na">putParcelableArrayListExtra</span><span class="o">(</span><span class="s">&quot;tracks&quot;</span><span class="o">,</span> <span class="n">tracks</span><span class="o">);</span>
         <span class="n">startActivity</span><span class="o">(</span><span class="n">resultActivity</span><span class="o">);</span>
   <span class="o">}</span>
-<span class="o">}</span></code></pre></div>
+<span class="o">}</span></code></pre></figure>
 
           </div>
           <nav class="span4">
@@ -72,8 +72,6 @@ TrackSearchAsyncTask overrides three methods:
 
   
 
-  
-    
   
 
   
@@ -104,8 +102,6 @@ TrackSearchAsyncTask overrides three methods:
   
 
   
-    
-  
 
   
     
@@ -135,8 +131,6 @@ TrackSearchAsyncTask overrides three methods:
   
 
   
-    
-  
 
   
     
@@ -165,8 +159,6 @@ TrackSearchAsyncTask overrides three methods:
 
   
 
-  
-    
   
 
   
@@ -203,8 +195,6 @@ TrackSearchAsyncTask overrides three methods:
   
 
   
-    
-  
 
   
     
@@ -233,8 +223,6 @@ TrackSearchAsyncTask overrides three methods:
 
   
 
-  
-    
   
 
   
@@ -271,8 +259,6 @@ TrackSearchAsyncTask overrides three methods:
   
 
   
-    
-  
 
   
     
@@ -302,8 +288,6 @@ TrackSearchAsyncTask overrides three methods:
   
 
   
-    
-  
 
   
     
@@ -332,8 +316,6 @@ TrackSearchAsyncTask overrides three methods:
 
   
 
-  
-    
   
 
   

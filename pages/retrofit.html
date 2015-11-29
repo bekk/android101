@@ -27,18 +27,18 @@ As Retrofit handles the communication between the main UI thread and a backgroun
 <br/>
 <p>Below is an example of the <code>MessageService.java</code> interface.</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">MessageService</span> <span class="o">{</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">MessageService</span> <span class="o">{</span>
     <span class="nd">@GET</span><span class="o">(</span><span class="s">&quot;/messages&quot;</span><span class="o">)</span>
     <span class="kt">void</span> <span class="nf">listMessages</span><span class="o">(</span><span class="n">Callback</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;&gt;</span> <span class="n">callback</span><span class="o">);</span>
 
     <span class="nd">@POST</span><span class="o">(</span><span class="s">&quot;/message&quot;</span><span class="o">)</span>
     <span class="kt">void</span> <span class="nf">send</span><span class="o">(</span><span class="nd">@Body</span> <span class="n">Message</span> <span class="n">message</span><span class="o">,</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="n">callback</span><span class="o">);</span>
-<span class="o">}</span></code></pre></div>
+<span class="o">}</span></code></pre></figure>
 
 The example below shows usage in an activity that displays the messages. Notice the Callback parameter that returns a success handler and a failure handler.
 These will be run depending on the success of the request.
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// compile &#39;com.fatboyindustrial.gson-jodatime-serialisers:gson-jodatime-serialisers:1.0.0&#39;</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// compile &#39;com.fatboyindustrial.gson-jodatime-serialisers:gson-jodatime-serialisers:1.0.0&#39;</span>
 <span class="kd">final</span> <span class="n">Gson</span> <span class="n">gson</span> <span class="o">=</span> <span class="n">Converters</span><span class="o">.</span><span class="na">registerDateTime</span><span class="o">(</span><span class="k">new</span> <span class="nf">GsonBuilder</span><span class="o">()).</span><span class="na">create</span><span class="o">();</span>
 <span class="n">RestAdapter</span> <span class="n">restAdapter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RestAdapter</span><span class="o">.</span><span class="na">Builder</span><span class="o">()</span>
         <span class="o">.</span><span class="na">setEndpoint</span><span class="o">(</span><span class="s">&quot;http://mobile-course.herokuapp.com&quot;</span><span class="o">)</span>
@@ -55,7 +55,7 @@ These will be run depending on the success of the request.
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">failure</span><span class="o">(</span><span class="n">RetrofitError</span> <span class="n">retrofitError</span><span class="o">)</span> <span class="o">{</span>
         <span class="c1">// Failed request</span>
     <span class="o">}</span>
-<span class="o">});</span></code></pre></div>
+<span class="o">});</span></code></pre></figure>
 
 
           </div>
@@ -66,8 +66,6 @@ These will be run depending on the success of the request.
 
   
 
-  
-    
   
 
   
@@ -98,8 +96,6 @@ These will be run depending on the success of the request.
   
 
   
-    
-  
 
   
     
@@ -129,8 +125,6 @@ These will be run depending on the success of the request.
   
 
   
-    
-  
 
   
     
@@ -159,8 +153,6 @@ These will be run depending on the success of the request.
 
   
 
-  
-    
   
 
   
@@ -197,8 +189,6 @@ These will be run depending on the success of the request.
   
 
   
-    
-  
 
   
     
@@ -227,8 +217,6 @@ These will be run depending on the success of the request.
 
   
 
-  
-    
   
 
   
@@ -265,8 +253,6 @@ These will be run depending on the success of the request.
   
 
   
-    
-  
 
   
     
@@ -296,8 +282,6 @@ These will be run depending on the success of the request.
   
 
   
-    
-  
 
   
     
@@ -326,8 +310,6 @@ These will be run depending on the success of the request.
 
   
 
-  
-    
   
 
   

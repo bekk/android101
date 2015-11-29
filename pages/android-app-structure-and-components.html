@@ -23,7 +23,7 @@ You will most likely have an object extending <code>Activity</code> for each scr
 
 An example is <code>onCreate()</code>: Here you should create all the components for your activity and call <code>setContentView()</code> to define layout for the user interface.
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainActivity</span> <span class="kd">extends</span> <span class="n">Activity</span> <span class="o">{</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainActivity</span> <span class="kd">extends</span> <span class="n">Activity</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="n">EditText</span> <span class="n">inputField</span><span class="o">;</span>
     <span class="kd">private</span> <span class="n">Button</span> <span class="n">searchButton</span><span class="o">;</span>
 
@@ -48,60 +48,60 @@ An example is <code>onCreate()</code>: Here you should create all the components
             <span class="o">}</span>
         <span class="o">});</span>
     <span class="o">}</span>
-<span class="o">}</span></code></pre></div>
+<span class="o">}</span></code></pre></figure>
 
 <h3> Declare activities in the manifest</h3>
 You must declare all your activities in the AndroidManifest.xml file, which is the application's contract.
 
-<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;manifest</span> <span class="err">...</span> <span class="nt">&gt;</span>
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;manifest</span> <span class="err">...</span> <span class="nt">&gt;</span>
   <span class="nt">&lt;application</span> <span class="err">...</span> <span class="nt">&gt;</span>
       <span class="nt">&lt;activity</span> <span class="na">android:name=</span><span class="s">&quot;.ExampleActivity&quot;</span> <span class="nt">/&gt;</span>
       ...
   <span class="err">&lt;</span>/application ... &gt;
   ...
-<span class="nt">&lt;/manifest &gt;</span></code></pre></div>
+<span class="nt">&lt;/manifest &gt;</span></code></pre></figure>
 
 <h2> Intents</h2>
 Intents are Android's way of communicating between both activities belonging to other applications and an application's own activities.
 
 In order for other applications to activate your activity, you must list up which intents the activity listens for using intent filters.
-<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;intent-filter&gt;</span>
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;intent-filter&gt;</span>
   <span class="nt">&lt;action</span> <span class="na">android:name=</span><span class="s">&quot;android.intent.action.MAIN&quot;</span> <span class="nt">/&gt;</span>
   <span class="nt">&lt;category</span> <span class="na">android:name=</span><span class="s">&quot;android.intent.category.LAUNCHER&quot;</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;/intent-filter&gt;</span></code></pre></div>
+<span class="nt">&lt;/intent-filter&gt;</span></code></pre></figure>
 The above intent filter exists for most applications, as it describes for the system which activity will be launched when the user first opens the application.
 
 Taking a picture is a task which is delegated to the native camera application by using intens.
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// create Intent to take a picture and return control to the calling application</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">// create Intent to take a picture and return control to the calling application</span>
 <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">MediaStore</span><span class="o">.</span><span class="na">ACTION_IMAGE_CAPTURE</span><span class="o">);</span>
 <span class="n">intent</span><span class="o">.</span><span class="na">putExtra</span><span class="o">(</span><span class="n">MediaStore</span><span class="o">.</span><span class="na">EXTRA_OUTPUT</span><span class="o">,</span> <span class="n">someExistingFileUri</span><span class="o">);</span> <span class="c1">// set the image file name</span>
 <span class="c1">// start the image capture Intent</span>
 <span class="n">startActivityForResult</span><span class="o">(</span><span class="n">intent</span><span class="o">,</span> <span class="n">CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE</span><span class="o">);</span> <span class="cm">/** you determine your own request code, which is later</span>
-<span class="cm">used in onActivityResult() in order to know which action was performed by the external activity */</span></code></pre></div>
+<span class="cm">used in onActivityResult() in order to know which action was performed by the external activity */</span></code></pre></figure>
 
 You switch between in-app activitivities by using intents in the following way:
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">OtherActivitiy</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-<span class="n">startActivity</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">OtherActivitiy</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="n">startActivity</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span></code></pre></figure>
 
 <h2> View Event Listeners </h2>
 
 To listen to user interaction, you register listeners to the clickable view elements. You can do this in one of two ways, either by attaching the handler manually in code, or by pointing to the handler method from the layout file.
 
 Programmatically:
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Button</span> <span class="n">btnExample</span> <span class="o">=</span> <span class="o">(</span><span class="n">Button</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">btnExample</span><span class="o">);</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Button</span> <span class="n">btnExample</span> <span class="o">=</span> <span class="o">(</span><span class="n">Button</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">btnExample</span><span class="o">);</span>
 <span class="n">btnExample</span><span class="o">.</span><span class="na">setOnClickListener</span><span class="o">(</span><span class="k">new</span> <span class="n">View</span><span class="o">.</span><span class="na">OnClickListener</span><span class="o">()</span> <span class="o">{</span>
     <span class="nd">@Override</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
         <span class="c1">// Do something here    </span>
     <span class="o">}</span>
-<span class="o">});</span></code></pre></div>
+<span class="o">});</span></code></pre></figure>
 
 Or in the layout file:
-<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
 <span class="nt">&lt;Button</span> <span class="na">xmlns:android=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
     <span class="na">android:onClick=</span><span class="s">&quot;sendMessage&quot;</span> 
-    <span class="err">...</span> <span class="nt">/&gt;</span></code></pre></div>
+    <span class="err">...</span> <span class="nt">/&gt;</span></code></pre></figure>
 
 Implement <code>public void sendMessage(View view) {}</code> in the activity to handle the button click.
 
@@ -113,8 +113,6 @@ Implement <code>public void sendMessage(View view) {}</code> in the activity to 
 
   
 
-  
-    
   
 
   
@@ -145,8 +143,6 @@ Implement <code>public void sendMessage(View view) {}</code> in the activity to 
   
 
   
-    
-  
 
   
     
@@ -176,8 +172,6 @@ Implement <code>public void sendMessage(View view) {}</code> in the activity to 
   
 
   
-    
-  
 
   
     
@@ -206,8 +200,6 @@ Implement <code>public void sendMessage(View view) {}</code> in the activity to 
 
   
 
-  
-    
   
 
   
@@ -244,8 +236,6 @@ Implement <code>public void sendMessage(View view) {}</code> in the activity to 
   
 
   
-    
-  
 
   
     
@@ -274,8 +264,6 @@ Implement <code>public void sendMessage(View view) {}</code> in the activity to 
 
   
 
-  
-    
   
 
   
@@ -312,8 +300,6 @@ Implement <code>public void sendMessage(View view) {}</code> in the activity to 
   
 
   
-    
-  
 
   
     
@@ -343,8 +329,6 @@ Implement <code>public void sendMessage(View view) {}</code> in the activity to 
   
 
   
-    
-  
 
   
     
@@ -373,8 +357,6 @@ Implement <code>public void sendMessage(View view) {}</code> in the activity to 
 
   
 
-  
-    
   
 
   

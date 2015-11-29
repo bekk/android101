@@ -94,7 +94,8 @@
     <p><code> PAUSE / SWITCH PRESENTER</code></p></li>
 
 	<li>Do not add internet permission until app has run and failed. Explain the need for permissions</li>
-	<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&quot;android.permission.INTERNET&quot;</span> <span class="nt">/&gt;</span></code></pre></div>
+	<figure class="highlight"><pre><code class="language-xml" data-lang="xml">	    <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&quot;android.permission.INTERNET&quot;</span> <span class="nt">/&gt;</span>
+	</code></pre></figure>
 	<li>Run app again and see that the Toast pops up</li>
 
     <li>Remove <code>Toast</code> and explain that we now want to display the data in a list </li>
@@ -126,7 +127,7 @@
 <img src="../img/recyclerviewsequence.jpg" />
 
 <h3> MainActivity</h3>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainActivity</span> <span class="kd">extends</span> <span class="n">ActionBarActivity</span> <span class="o">{</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainActivity</span> <span class="kd">extends</span> <span class="n">ActionBarActivity</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="n">Button</span> <span class="n">searchButton</span><span class="o">;</span>
     <span class="kd">private</span> <span class="n">EditText</span> <span class="n">searchInputView</span><span class="o">;</span>
     <span class="nd">@Override</span>
@@ -147,8 +148,8 @@
             <span class="o">}</span>
         <span class="o">});</span>
     <span class="o">}</span>
-<span class="o">}</span></code></pre></div>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="o">&lt;</span><span class="n">RelativeLayout</span> <span class="nl">xmlns:</span><span class="n">android</span><span class="o">=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+<span class="o">}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="o">&lt;</span><span class="n">RelativeLayout</span> <span class="nl">xmlns:</span><span class="n">android</span><span class="o">=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
     <span class="nl">xmlns:</span><span class="n">tools</span><span class="o">=</span><span class="s">&quot;http://schemas.android.com/tools&quot;</span> <span class="nl">android:</span><span class="n">layout_width</span><span class="o">=</span><span class="s">&quot;match_parent&quot;</span>
     <span class="nl">android:</span><span class="n">layout_height</span><span class="o">=</span><span class="s">&quot;match_parent&quot;</span> <span class="nl">android:</span><span class="n">paddingLeft</span><span class="o">=</span><span class="s">&quot;@dimen/activity_horizontal_margin&quot;</span>
     <span class="nl">android:</span><span class="n">paddingRight</span><span class="o">=</span><span class="s">&quot;@dimen/activity_horizontal_margin&quot;</span>
@@ -168,27 +169,27 @@
         <span class="nl">android:</span><span class="n">layout_below</span><span class="o">=</span><span class="s">&quot;@id/input_view&quot;</span>
         <span class="nl">android:</span><span class="n">layout_centerHorizontal</span><span class="o">=</span><span class="s">&quot;true&quot;</span>
         <span class="nl">android:</span><span class="n">layout_marginTop</span><span class="o">=</span><span class="s">&quot;15dp&quot;</span><span class="o">/&gt;</span>
-<span class="o">&lt;/</span><span class="n">RelativeLayout</span><span class="o">&gt;</span></code></pre></div>
+<span class="o">&lt;/</span><span class="n">RelativeLayout</span><span class="o">&gt;</span></code></pre></figure>
 
 
 
 
 <h3> Retrofit SpotifySearchService</h3>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">SpotifyService</span> <span class="o">{</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">SpotifyService</span> <span class="o">{</span>
     <span class="nd">@GET</span><span class="o">(</span><span class="s">&quot;/search/1/track.json&quot;</span><span class="o">)</span>
     <span class="kt">void</span> <span class="nf">searchForTrack</span><span class="o">(</span><span class="nd">@Query</span><span class="o">(</span><span class="s">&quot;q&quot;</span><span class="o">)</span> <span class="n">String</span> <span class="n">input</span><span class="o">,</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">TrackResponse</span><span class="o">&gt;</span> <span class="n">trackResponse</span><span class="o">);</span>
-<span class="o">}</span></code></pre></div>
+<span class="o">}</span></code></pre></figure>
 
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">BASE_URL</span> <span class="o">=</span> <span class="s">&quot;http://ws.spotify.com/&quot;</span><span class="o">;</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">BASE_URL</span> <span class="o">=</span> <span class="s">&quot;http://ws.spotify.com/&quot;</span><span class="o">;</span>
 <span class="n">RestAdapter</span> <span class="n">adapter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RestAdapter</span><span class="o">.</span><span class="na">Builder</span><span class="o">()</span>
              <span class="o">.</span><span class="na">setEndpoint</span><span class="o">(</span><span class="s">&quot;http://ws.spotify.com/&quot;</span><span class="o">)</span>
              <span class="o">.</span><span class="na">build</span><span class="o">();</span>
-<span class="n">SpotifyService</span> <span class="n">spotifyService</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">SpotifyService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span></code></pre></div>
+<span class="n">SpotifyService</span> <span class="n">spotifyService</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">SpotifyService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span></code></pre></figure>
 
 <h3> TrackResponse, Track and Artist classes</h3>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TrackResponse</span> <span class="o">{</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TrackResponse</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">;</span>
 
     <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="nf">getTracks</span><span class="o">()</span> <span class="o">{</span>
@@ -198,9 +199,10 @@
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setTracks</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">this</span><span class="o">.</span><span class="na">tracks</span> <span class="o">=</span> <span class="n">tracks</span><span class="o">;</span>
     <span class="o">}</span>
-<span class="o">}</span></code></pre></div>
+<span class="o">}</span>
+	</code></pre></figure>
 
-   <div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Track</span> <span class="o">{</span>
+   <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Track</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
     <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Artist</span><span class="o">&gt;</span> <span class="n">artists</span><span class="o">;</span>
     <span class="kd">private</span> <span class="n">String</span> <span class="n">href</span><span class="o">;</span>
@@ -228,9 +230,9 @@
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
     <span class="o">}</span>
-<span class="o">}</span></code></pre></div>
+<span class="o">}</span></code></pre></figure>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Artist</span> <span class="o">{</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Artist</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
 
     <span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
@@ -240,12 +242,12 @@
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
     <span class="o">}</span>
-<span class="o">}</span></code></pre></div>
+<span class="o">}</span></code></pre></figure>
 
 
 <h3>RecyclerViewAdapter</h3>
 Adapter for displaying the search results in the RecyclerView
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TracksAdapter</span> <span class="kd">extends</span> <span class="n">RecyclerView</span><span class="o">.</span><span class="na">Adapter</span><span class="o">&lt;</span><span class="n">TracksAdapter</span><span class="o">.</span><span class="na">TrackViewHolder</span><span class="o">&gt;</span> <span class="o">{</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TracksAdapter</span> <span class="kd">extends</span> <span class="n">RecyclerView</span><span class="o">.</span><span class="na">Adapter</span><span class="o">&lt;</span><span class="n">TracksAdapter</span><span class="o">.</span><span class="na">TrackViewHolder</span><span class="o">&gt;</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="kd">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">;</span>
     <span class="kd">private</span> <span class="kd">final</span> <span class="n">Context</span> <span class="n">context</span><span class="o">;</span>
     <span class="kd">private</span> <span class="kd">final</span> <span class="n">ClickedTrackListener</span> <span class="n">listener</span><span class="o">;</span>
@@ -290,8 +292,8 @@ Adapter for displaying the search results in the RecyclerView
             <span class="n">trackName</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">itemView</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">trackName</span><span class="o">);</span>
         <span class="o">}</span>
     <span class="o">}</span>
-<span class="o">}</span></code></pre></div>
-<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+<span class="o">}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
 <span class="nt">&lt;LinearLayout</span> <span class="na">xmlns:android=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
     <span class="na">android:orientation=</span><span class="s">&quot;vertical&quot;</span> <span class="na">android:layout_width=</span><span class="s">&quot;match_parent&quot;</span>
     <span class="na">android:layout_height=</span><span class="s">&quot;match_parent&quot;</span><span class="nt">&gt;</span>
@@ -300,10 +302,10 @@ Adapter for displaying the search results in the RecyclerView
         <span class="na">android:layout_width=</span><span class="s">&quot;wrap_content&quot;</span>
         <span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>
         <span class="na">android:id=</span><span class="s">&quot;@+id/trackName&quot;</span><span class="nt">/&gt;</span>
-<span class="nt">&lt;/LinearLayout&gt;</span></code></pre></div>
+<span class="nt">&lt;/LinearLayout&gt;</span></code></pre></figure>
 
 <h3> TracksActivity</h3>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TracksActivity</span> <span class="kd">extends</span> <span class="n">ActionBarActivity</span> <span class="kd">implements</span> <span class="n">ClickedTrackListener</span> <span class="o">{</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TracksActivity</span> <span class="kd">extends</span> <span class="n">ActionBarActivity</span> <span class="kd">implements</span> <span class="n">ClickedTrackListener</span> <span class="o">{</span>
 
     <span class="kd">private</span> <span class="n">RecyclerView</span> <span class="n">trackList</span><span class="o">;</span>
     <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
@@ -347,8 +349,8 @@ Adapter for displaying the search results in the RecyclerView
         <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_VIEW</span><span class="o">,</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">track</span><span class="o">.</span><span class="na">getHref</span><span class="o">()));</span>
         <span class="n">startActivity</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
     <span class="o">}</span>
-<span class="o">}</span></code></pre></div>
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="o">&lt;</span><span class="n">RelativeLayout</span> <span class="nl">xmlns:</span><span class="n">android</span><span class="o">=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+<span class="o">}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="o">&lt;</span><span class="n">RelativeLayout</span> <span class="nl">xmlns:</span><span class="n">android</span><span class="o">=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
     <span class="nl">xmlns:</span><span class="n">foo</span><span class="o">=</span><span class="s">&quot;http://schemas.android.com/apk/res-auto&quot;</span>
     <span class="nl">xmlns:</span><span class="n">tools</span><span class="o">=</span><span class="s">&quot;http://schemas.android.com/tools&quot;</span> <span class="nl">android:</span><span class="n">layout_width</span><span class="o">=</span><span class="s">&quot;match_parent&quot;</span>
     <span class="nl">android:</span><span class="n">layout_height</span><span class="o">=</span><span class="s">&quot;match_parent&quot;</span> <span class="nl">android:</span><span class="n">paddingLeft</span><span class="o">=</span><span class="s">&quot;@dimen/activity_horizontal_margin&quot;</span>
@@ -363,10 +365,10 @@ Adapter for displaying the search results in the RecyclerView
         <span class="nl">android:</span><span class="n">id</span><span class="o">=</span><span class="s">&quot;@+id/trackList&quot;</span><span class="o">&gt;</span>
         <span class="o">&lt;/</span><span class="n">android</span><span class="o">.</span><span class="na">support</span><span class="o">.</span><span class="na">v7</span><span class="o">.</span><span class="na">widget</span><span class="o">.</span><span class="na">RecyclerView</span><span class="o">&gt;</span>
 
-<span class="o">&lt;/</span><span class="n">RelativeLayout</span><span class="o">&gt;</span></code></pre></div>
+<span class="o">&lt;/</span><span class="n">RelativeLayout</span><span class="o">&gt;</span></code></pre></figure>
 
 
-<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
   <span class="nt">&quot;info&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="nt">&quot;num_results&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
     <span class="nt">&quot;limit&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
@@ -404,7 +406,7 @@ Adapter for displaying the search results in the RecyclerView
       <span class="nt">&quot;track-number&quot;</span><span class="p">:</span> <span class="s2">&quot;8&quot;</span>
     <span class="p">}</span>
   <span class="p">]</span>
-<span class="p">}</span></code></pre></div>
+<span class="p">}</span></code></pre></figure>
 
 
           </div>
@@ -415,8 +417,6 @@ Adapter for displaying the search results in the RecyclerView
 
   
 
-  
-    
   
 
   
@@ -447,8 +447,6 @@ Adapter for displaying the search results in the RecyclerView
   
 
   
-    
-  
 
   
     
@@ -478,8 +476,6 @@ Adapter for displaying the search results in the RecyclerView
   
 
   
-    
-  
 
   
     
@@ -508,8 +504,6 @@ Adapter for displaying the search results in the RecyclerView
 
   
 
-  
-    
   
 
   
@@ -546,8 +540,6 @@ Adapter for displaying the search results in the RecyclerView
   
 
   
-    
-  
 
   
     
@@ -576,8 +568,6 @@ Adapter for displaying the search results in the RecyclerView
 
   
 
-  
-    
   
 
   
@@ -614,8 +604,6 @@ Adapter for displaying the search results in the RecyclerView
   
 
   
-    
-  
 
   
     
@@ -645,8 +633,6 @@ Adapter for displaying the search results in the RecyclerView
   
 
   
-    
-  
 
   
     
@@ -675,8 +661,6 @@ Adapter for displaying the search results in the RecyclerView
 
   
 
-  
-    
   
 
   
