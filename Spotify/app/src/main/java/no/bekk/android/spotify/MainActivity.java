@@ -1,4 +1,4 @@
-package com.example.sindrenordbo.spotify;
+package no.bekk.android.spotify;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,14 +14,14 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        final EditText editText = (EditText) findViewById(R.id.editText);
-        Button button = (Button) findViewById(R.id.button);
+        final EditText inputEditText = (EditText) findViewById(R.id.input);
+        Button searchButton = (Button) findViewById(R.id.search);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent tracksIntent = new Intent(MainActivity.this, TracksActivity.class);
-                tracksIntent.putExtra("input", editText.getText().toString());
+                tracksIntent.putExtra("input", inputEditText.getText().toString());
                 startActivity(tracksIntent);
             }
         });

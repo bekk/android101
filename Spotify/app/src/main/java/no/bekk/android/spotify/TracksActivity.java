@@ -1,4 +1,4 @@
-package com.example.sindrenordbo.spotify;
+package no.bekk.android.spotify;
 
 import android.app.Activity;
 import android.content.Intent;
