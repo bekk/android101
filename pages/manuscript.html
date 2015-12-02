@@ -95,7 +95,7 @@
     <li> Create the Artist and Track domain objects. Copy these</li>
     <li> Create an instance of RestAdapter, and use this to instantiate the SpotifySearchService. Add the rest call to the created click listener. </li>
     <li> Run the app and perform a search. Add a Toast to the success callback, and also log if success or error. Remember to log error</li>
-    
+
     <li>Do not add internet permission until app has run and failed. Explain the need for permissions</li>
     <figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&quot;android.permission.INTERNET&quot;</span> <span class="nt">/&gt;</span></code></pre></figure>
     <li>Run app again and see that the Toast pops up</li>
@@ -107,25 +107,32 @@
 
     <li>Remove <code>Toast</code> and explain that we now want to display the data in a list </li>
     <li>
-            Explain that a <code>RecyclerView</code> can be used for displaying the results (<a href="list-recycler-view.html"> Lists and RecyclerView)</a>
-            <div>
-                <h4>RecyclerView</h4>
-                <p>
-                    RecyclerView is a subclass of ViewGroup. It displays a list of child View objects, one for each item in your list of items. If you have 100 items in the list, the RecyclerView will only create e.g. 12 views, just enough to fill the visible part of the screen. When you scroll, it will reuse these views and just update the data inside them - it recycles views over and over.
-                </p>
-            </div>
-            <div>
-                <h4>ViewHolders and Adapters</h4>
-                <p>
-                    RecyclerView only recycles views and positions them on screen. To create the views we will use a RecyclerView.Adapter subclass and a RecyclerView.ViewHolder subclass. The ViewHolder only does one thing: Hold on to a view and subviews inside it. The RecyclerView does not create these ViewHolders itself, instead it asks an Adapter to create them. The Adapter is responsible for creating the necessary ViewHolders and then populating them with data for each item. RecyclerView first asks the Adapter how many items it has using getItemCount(). Then it wants to create the view holder using createViewHolder(). Finally it wants to bind the data for this item using bindViewHolder(). It then repeats this for all the items in the list.
-                </p>
-            </div>
-
-        </li>
-    <code>compile 'com.android.support:recyclerview-v7:+'</code> <code> compile 'com.android.support:cardview-v7:+'</code>
-    <li> Set up a RecyclerView, and populate the RecyclerViewAdapter fields with properties from the Track domain objects</li>
-    <li>Add a click handler for the list elements, where clicks will start Spotify and play song. Explain the use of implicit intents. An example
-        can be opening Google Maps in Chrome, where the user is presented with options for which app to open maps in.</li>
+        Explain that a <code>RecyclerView</code> can be used for displaying the results (<a href="list-recycler-view.html"> Lists and RecyclerView)</a>
+        <div>
+            <h4>RecyclerView</h4>
+            <p>
+                RecyclerView is a subclass of ViewGroup. It displays a list of child View objects, one for each item in your list of items. If you have 100 items in the list, the RecyclerView will only create e.g. 12 views, just enough to fill the visible part of the screen. When you scroll, it will reuse these views and just update the data inside them - it recycles views over and over.
+            </p>
+        </div>
+        <div>
+            <h4>ViewHolders and Adapters</h4>
+            <p>
+                RecyclerView only recycles views and positions them on screen. To create the views we will use a RecyclerView.Adapter subclass and a RecyclerView.ViewHolder subclass. The ViewHolder only does one thing: Hold on to a view and subviews inside it. The RecyclerView does not create these ViewHolders itself, instead it asks an Adapter to create them. The Adapter is responsible for creating the necessary ViewHolders and then populating them with data for each item. RecyclerView first asks the Adapter how many items it has using getItemCount(). Then it wants to create the view holder using createViewHolder(). Finally it wants to bind the data for this item using bindViewHolder(). It then repeats this for all the items in the list.
+            </p>
+        </div>
+    </li>
+    <code>compile 'com.android.support:recyclerview-v7:+'</code>
+    <li>Add the recyclerview in tracks_activity.xml. android.support.v7.widget.RecyclerView</id>
+    <li>Create a layout for each track, item_track.xml. Add two textviews, one for artist another for track name.</li>
+    <li>Get the recyclerview in TracksActivity and set a LinearLayoutManager.</li>
+    <li>Create a TracksAdapter with an inner view holder class.</li>
+    <li>The TracksAdapter needs a reference to a List of tracks and a Context (for creating layout inflater).</li>
+    <li>Implement onBind (set text of views inside view holder) and onCreate (inflate item_track.xml).</li>
+    <li>Go back to TracksActivity and setAdapter on the recyclerview.</li>
+    <li>Remove toast in retrofit success callback and clear the tracklist and add all new tracks. Remember to notify adapter.</li>
+    <li>Test app.</li>
+    <li>Set onclicklistener on the view in view holder. Notify activity via a delegate interface.</li>
+    <li>In TracksActivity, create implicit intent with action view and uri.parse(href). Check with packageManager if activity for intent exists. startActivity(intent).</li>
     <li>Describe the rest of the assignments.</li>
     <li>Quick break. We will be here to assist you</li>
 </ol>
