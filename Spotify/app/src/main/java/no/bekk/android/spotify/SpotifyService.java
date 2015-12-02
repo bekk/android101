@@ -1,4 +1,4 @@
-package com.example.sindrenordbo.spotify;
+package no.bekk.android.spotify;
 
 import retrofit.Callback;
 import retrofit.http.GET;

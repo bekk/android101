@@ -79,16 +79,15 @@ title: Manuscript
     <li> Create the Artist and Track domain objects. Copy these</li>
     <li> Create an instance of RestAdapter, and use this to instantiate the SpotifySearchService. Add the rest call to the created click listener. </li>
     <li> Run the app and perform a search. Add a Toast to the success callback, and also log if success or error. Remember to log error</li>
+    
+    <li>Do not add internet permission until app has run and failed. Explain the need for permissions</li>
+    {% highlight xml %}<uses-permission android:name="android.permission.INTERNET" />{% endhighlight %}
+    <li>Run app again and see that the Toast pops up</li>
+
     <li>
         <strong>ASSIGNMENT 1B</strong> Describe assignment 1B (displaying messages using Retrofit).
         <p><code>PAUSE WHILE PARTICIPANTS DO ASSIGNMENT 1B / SWITCH PRESENTER</code></p>
     </li>
-
-    <li>Do not add internet permission until app has run and failed. Explain the need for permissions</li>
-    {% highlight xml %}
-        <uses-permission android:name="android.permission.INTERNET" />
-    {% endhighlight %}
-    <li>Run app again and see that the Toast pops up</li>
 
     <li>Remove <code>Toast</code> and explain that we now want to display the data in a list </li>
     <li>

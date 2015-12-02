@@ -12,6 +12,7 @@ logs
 results
 _docs
 docs/_site/
+docs/.jekyll-metadata
 npm-debug.log
 
 # built application files

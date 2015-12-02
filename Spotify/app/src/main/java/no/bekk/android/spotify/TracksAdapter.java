@@ -1,4 +1,4 @@
-package com.example.sindrenordbo.spotify;
+package no.bekk.android.spotify;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
