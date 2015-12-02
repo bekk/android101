@@ -28,11 +28,11 @@
 
 <h3>Main</h3>
 <ol>
-	<li>Open Android Studio. Decribe that it is the standard IDE choice. Create an empty project. Briefly mention what an Activity is, along with the xml layout.</li>
+    <li>Open Android Studio. Decribe that it is the standard IDE choice. Create an empty project. Briefly mention what an Activity is, along with the xml layout.</li>
     <li> Say that we use Gradle instead of Maven, as it is Googles' top choice </li>
     <li> Do not create any activity (choose no activity) </li>
     <li> Briefly explain the package system in Android Studio</li>
-	<li>Create SpotifyActivity without layout.</li>
+    <li>Create SpotifyActivity without layout.</li>
     <li>Explain Activities and onCreate() (<a href="android-app-structure-and-components.html"> App Structure And Components</a>)</li>
     <code><p>An activity can be seen as a controller in an MVC pattern. </p>
     <p>It is a single focused screen the user can interact with. It is responsible for creating a view, and coordinating interaction and state.</p>
@@ -42,13 +42,13 @@
     <li>Explain the Android Manifest</li>
     <li>Say that we need to register our Activity here and register SpotifyActivity in the Android Manifest</li>
     <li> Say that we now need to create a layout for our activity</li>
-	<li>Explain the UI builder</li>
+    <li>Explain the UI builder</li>
     <li>Explain layouts and layout controls (<a href="common-view-controls.html"> Common View Controls</a>), (<a href="view-layout.html"> View Layout</a>)).</li>
           <code><p>LinearLayout: Positions element either in a single row or column, based on orientation.</p>
         <p>Can adjust and move elements by using the gravity property</p>
         <p>Relative Layout: Positions elements relative to each other or the parent container.</p>
         <p> Position is controlled by positioning attributes</p></code>
-	<li>Update the MainActivity layout. It will display an input text field and a button. Mention that Linear and Relative are the most popular ones. Also mention FrameLayout</li>
+    <li>Update the MainActivity layout. It will display an input text field and a button. Mention that Linear and Relative are the most popular ones. Also mention FrameLayout</li>
 
     <li>Show use of match_parent and wrap_content, as well as difference between horizontal and vertical.</li>
     <li>Show use of gravity and layout_gravity (parent container) and explain difference</li>
@@ -64,6 +64,11 @@
     <li> Run the app and show the different states </li>
     <li> Connect view elements in Java code </li>
      <li>Create a click listener for the button. This is where we want to initiate the search. For now, add a Toast, and run the app.</li>
+    <li>
+        <strong>ASSIGNMENT 1A</strong> It's time for the first assignment. Open Wiki in browser, and say that this contains all info needed. Menu on the right hand side.<br>
+        Enter the assignments page. Describe the task (create a Twitter like app), then describe the backend. Finally, describe assignment 1A.<br>
+        <code>PAUSE WHILE PARTICIPANTS DO ASSIGNMENT 1A</code>
+    </li>
     <li>Replace the Toast with an Intent which we will use to start the TracksActivity. Describe intents</li>
     <code><p>Intents are Android's way of communicating between components such as Activities and Services. We can use intents to launch activities and
             pass data between them.</p>
@@ -82,7 +87,7 @@
         <p> It handles moving the network call into a background thread, parsing JSON with GSON, and returning the result to the UI thread.</p></code>
         Add Gradle dependency:
         <p><code> compile 'com.squareup.retrofit:retrofit:1.9.0'</code></p></li>
-	<li>Add SpotifySearchService which is the Retrofit interface. Maybe live code this. Also, add URL as a final variable to the MainActivity.
+    <li>Add SpotifySearchService which is the Retrofit interface. Maybe live code this. Also, add URL as a final variable to the MainActivity.
         <p><code>"/search/1/track.json"</code></p>
         <p><code>http://ws.spotify.com/</code></p>
     </li>
@@ -90,37 +95,38 @@
     <li> Create the Artist and Track domain objects. Copy these</li>
     <li> Create an instance of RestAdapter, and use this to instantiate the SpotifySearchService. Add the rest call to the created click listener. </li>
     <li> Run the app and perform a search. Add a Toast to the success callback, and also log if success or error. Remember to log error</li>
+    
+    <li>Do not add internet permission until app has run and failed. Explain the need for permissions</li>
+    <figure class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&quot;android.permission.INTERNET&quot;</span> <span class="nt">/&gt;</span></code></pre></figure>
+    <li>Run app again and see that the Toast pops up</li>
 
-    <p><code> PAUSE / SWITCH PRESENTER</code></p></li>
-
-	<li>Do not add internet permission until app has run and failed. Explain the need for permissions</li>
-	<figure class="highlight"><pre><code class="language-xml" data-lang="xml">	    <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&quot;android.permission.INTERNET&quot;</span> <span class="nt">/&gt;</span>
-	</code></pre></figure>
-	<li>Run app again and see that the Toast pops up</li>
+    <li>
+        <strong>ASSIGNMENT 1B</strong> Describe assignment 1B (displaying messages using Retrofit).
+        <p><code>PAUSE WHILE PARTICIPANTS DO ASSIGNMENT 1B / SWITCH PRESENTER</code></p>
+    </li>
 
     <li>Remove <code>Toast</code> and explain that we now want to display the data in a list </li>
     <li>
-			Explain that a <code>RecyclerView</code> can be used for displaying the results (<a href="list-recycler-view.html"> Lists and RecyclerView)</a>
-			<div>
-				<h4>RecyclerView</h4>
-				<p>
-					RecyclerView is a subclass of ViewGroup. It displays a list of child View objects, one for each item in your list of items. If you have 100 items in the list, the RecyclerView will only create e.g. 12 views, just enough to fill the visible part of the screen. When you scroll, it will reuse these views and just update the data inside them - it recycles views over and over.
-				</p>
-			</div>
-			<div>
-				<h4>ViewHolders and Adapters</h4>
-				<p>
-					RecyclerView only recycles views and positions them on screen. To create the views we will use a RecyclerView.Adapter subclass and a RecyclerView.ViewHolder subclass. The ViewHolder only does one thing: Hold on to a view and subviews inside it. The RecyclerView does not create these ViewHolders itself, instead it asks an Adapter to create them. The Adapter is responsible for creating the necessary ViewHolders and then populating them with data for each item. RecyclerView first asks the Adapter how many items it has using getItemCount(). Then it wants to create the view holder using createViewHolder(). Finally it wants to bind the data for this item using bindViewHolder(). It then repeats this for all the items in the list.
-				</p>
-			</div>
+            Explain that a <code>RecyclerView</code> can be used for displaying the results (<a href="list-recycler-view.html"> Lists and RecyclerView)</a>
+            <div>
+                <h4>RecyclerView</h4>
+                <p>
+                    RecyclerView is a subclass of ViewGroup. It displays a list of child View objects, one for each item in your list of items. If you have 100 items in the list, the RecyclerView will only create e.g. 12 views, just enough to fill the visible part of the screen. When you scroll, it will reuse these views and just update the data inside them - it recycles views over and over.
+                </p>
+            </div>
+            <div>
+                <h4>ViewHolders and Adapters</h4>
+                <p>
+                    RecyclerView only recycles views and positions them on screen. To create the views we will use a RecyclerView.Adapter subclass and a RecyclerView.ViewHolder subclass. The ViewHolder only does one thing: Hold on to a view and subviews inside it. The RecyclerView does not create these ViewHolders itself, instead it asks an Adapter to create them. The Adapter is responsible for creating the necessary ViewHolders and then populating them with data for each item. RecyclerView first asks the Adapter how many items it has using getItemCount(). Then it wants to create the view holder using createViewHolder(). Finally it wants to bind the data for this item using bindViewHolder(). It then repeats this for all the items in the list.
+                </p>
+            </div>
 
-		</li>
+        </li>
     <code>compile 'com.android.support:recyclerview-v7:+'</code> <code> compile 'com.android.support:cardview-v7:+'</code>
     <li> Set up a RecyclerView, and populate the RecyclerViewAdapter fields with properties from the Track domain objects</li>
     <li>Add a click handler for the list elements, where clicks will start Spotify and play song. Explain the use of implicit intents. An example
         can be opening Google Maps in Chrome, where the user is presented with options for which app to open maps in.</li>
-    <li> Now it's time to do assignments. Open Wiki in browser, and say that this contains all info needed. Menu on the right hand side</li>
-    <li>Enter the assignments page. First describe the task (create a twitter like app), then describe the backend. Finally, describe each section.</li>
+    <li>Describe the rest of the assignments.</li>
     <li>Quick break. We will be here to assist you</li>
 </ol>
 
@@ -200,7 +206,7 @@
         <span class="k">this</span><span class="o">.</span><span class="na">tracks</span> <span class="o">=</span> <span class="n">tracks</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
-	</code></pre></figure>
+    </code></pre></figure>
 
    <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Track</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
