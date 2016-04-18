@@ -28,7 +28,7 @@ These will be run depending on the success of the request.
 // compile 'com.fatboyindustrial.gson-jodatime-serialisers:gson-jodatime-serialisers:1.0.0'
 final Gson gson = Converters.registerDateTime(new GsonBuilder()).create();
 RestAdapter restAdapter = new RestAdapter.Builder()
-        .setEndpoint("http://mobile-course.herokuapp.com")
+        .baseUrl("http://mobile-course.herokuapp.com")
         .setConverter(new GsonConverter(gson))
         .build();
 MessageService msgs = restAdapter.create(MessageService.class);
