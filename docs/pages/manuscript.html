@@ -69,8 +69,9 @@ title: Manuscript
         Say that for this course we will use Retrofit, and provide Retrofit basics (background thread, GSON, etc).
       <code><p>Retrofit is a library for turning your Rest API into a Java Interface.</p>
         <p> It handles moving the network call into a background thread, parsing JSON with GSON, and returning the result to the UI thread.</p></code>
-        Add Gradle dependency:
-        <p><code> compile 'com.squareup.retrofit:retrofit:1.9.0'</code></p></li>
+        Add Gradle dependency and say that retrofit2.0 requires a converter in order to parse JSON:
+        <p><code>compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'</code></p>
+        <p><code>compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'</code></p>
     <li>Add SpotifySearchService which is the Retrofit interface. Maybe live code this. Also, add URL as a final variable to the MainActivity.
         <p><code>"/search/1/track.json"</code></p>
         <p><code>http://ws.spotify.com/</code></p>
