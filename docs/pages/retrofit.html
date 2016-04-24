@@ -4,9 +4,9 @@ title: Consume REST APIs with Retrofit
 ---
 Retrofit is a third-party library by Square for communicating with REST APIs over HTTP. Similarly to <code>AsyncTasks</code>, work is done in a background thread, and upon completion it returns the result to the main UI thread.
 
-To use Retrofit, declare a service using a simple interface using annotations. Then, use the built-in RestAdapter to create an object which can be used for REST calls. When Retrofit returns the result of the network call to the main UI thread, it automatically maps JSON to Java domain objects when using getters and setters with the same name as the JSON object keys.
+To use Retrofit, declare a service using a simple interface with annotated methods. Then, use the <code>Retrofit</code> class to create an object which can be used for REST calls. When Retrofit returns the result of the network call to the main UI thread, it automatically maps JSON to Java domain objects when using getters and setters with the same name as the JSON object keys.
 
-As Retrofit handles the communication between the main UI thread and a background thread, in addition to JSON parsing, it can greatly simply the workflow by reducing the amount of overhead.
+As Retrofit handles the communication between the main UI thread and a background thread, in addition to JSON parsing when using a converter, it can greatly simply the workflow by reducing the amount of overhead.
 
 <br/>
 <p>Below is an example of the <code>MessageService.java</code> interface.</p>
@@ -14,27 +14,27 @@ As Retrofit handles the communication between the main UI thread and a backgroun
 {% highlight java %}
 public interface MessageService {
     @GET("/messages")
-    void listMessages(Callback<List<Message>> callback);
+    Call<List<Message>> listMessages();
 
     @POST("/message")
-    void send(@Body Message message, Callback<Message> callback);
+    Call<Message> send(@Body Message message);
 }
 {% endhighlight %}
 
 The example below shows usage in an activity that displays the messages. Notice the Callback parameter that returns a success handler and a failure handler.
-These will be run depending on the success of the request.
+These will be run depending on the success of the request. Also, notice that we use the method <code>enqueue()</code>. This is to run our request asynchronously. If we wanted to run a synchronous request, <code>execute()</code> could be used instead.
 
 {% highlight java %}
-// compile 'com.fatboyindustrial.gson-jodatime-serialisers:gson-jodatime-serialisers:1.0.0'
-final Gson gson = Converters.registerDateTime(new GsonBuilder()).create();
-RestAdapter restAdapter = new RestAdapter.Builder()
+// Retrofit needs to know how to deserialize response, for instance into JSON
+Retrofit retrofit = new Retrofit.Builder()
         .baseUrl("http://mobile-course.herokuapp.com")
-        .setConverter(new GsonConverter(gson))
+        .addConverterFactory(GsonConverterFactory.create())
         .build();
-MessageService msgs = restAdapter.create(MessageService.class);
-msgs.listMessages(new Callback<List<Message>>() {
+MessageService msgs = retrofit.create(MessageService.class);
+msgs.listMessages().enqueue(new Callback<List<Message>>() {
     @Override
-    public void success(List<Message> messages, Response response) {
+    public void success(Response<List<Message>> messages) {
+        List<Message> messages = messages.response.body();
         // Successfull request, do something with the retrieved messages
     }
 
