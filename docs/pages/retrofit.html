@@ -4,7 +4,7 @@ title: Consume REST APIs with Retrofit
 ---
 Retrofit is a third-party library by Square for communicating with REST APIs over HTTP. Similarly to <code>AsyncTasks</code>, work is done in a background thread, and upon completion it returns the result to the main UI thread.
 
-To use Retrofit, declare a service using a simple interface with annotated methods. Then, use the <code>Retrofit</code> class to create an object which can be used for REST calls. When Retrofit returns the result of the network call to the main UI thread, it automatically maps JSON to Java domain objects when using getters and setters with the same name as the JSON object keys.
+To use Retrofit, declare a service using a simple interface with annotated methods. Then, use the <code>Retrofit</code> class to create an object which can be used for REST calls. When Retrofit returns the result of the network call to the main UI thread, it can be parsed from JSON to Java domain objects by using a converter such as the <code>GsonConverter</code>. The use of this converter requires getters and setters with the same name as the JSON object keys.
 
 As Retrofit handles the communication between the main UI thread and a background thread, in addition to JSON parsing when using a converter, it can greatly simply the workflow by reducing the amount of overhead.
 
