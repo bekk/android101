@@ -133,17 +133,6 @@
   <li>To pass objects between activities in intents, you can serialize them using Gson, and pass the serialized string instead. Convert back from json to java at the destination activity.</li>
 </ul>
 
-<h3>6. Android Wear</h3>
-
-For theory on Android Wear, take a look at our
-<a href="http://bekk.github.io/android-wear-kurs/">  Android Wear workshop</a> or the <a href="https://developer.android.com/wear/index.html"> developer docs</a>. All material in the Android Wear workshop is in Norwegian.
-
-<ol>
-  <li>Show the list of messages on an Android Wear device, using either a DataListener or a WearableListenerService. When a list element on the watch is tapped, open it on the mobile device.</li>
-  <li>Add deletion of messages.</li>
-  <li>Create a message using speech-to-text.</li>
-</ol>
-
 <h3>API</h3>
 
 <p>The server is at: <a href="http://mobile-course.herokuapp.com">
@@ -195,7 +184,7 @@ It hosts the following JSON endpoints:
 
 <h3> Retrofit </h3>
 If you want to use retrofit, you will need the following gradle dependency:
-<code>compile 'com.squareup.retrofit:retrofit:1.9.0'</code>.
+<code>compile 'com.squareup.retrofit:retrofit:2.0.2'</code>.
 
 If you want to do things manually and need a framework for JSON-parsing, we suggest using Gson.
 
