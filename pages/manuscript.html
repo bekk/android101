@@ -89,10 +89,11 @@
         <p><code>compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'</code></p>
         <p><code>compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'</code></p>
     <li>Add SpotifySearchService which is the Retrofit interface. Maybe live code this. Also, add URL as a final variable to the MainActivity.
-        <p><code>"/search/1/track.json"</code></p>
-        <p><code>http://ws.spotify.com/</code></p>
+        <p><code>https://api.spotify.com</code></p>
+        <p><code>"/v1/search"</code></p>
     </li>
-    <li> Create the Result object and explain its connection to the JSON structure returned by the Spotify API. It will hold a list of tracks.</li>
+    <li> Create the Result object and explain its connection to the JSON structure returned by the Spotify API. It will hold a Tracks object, which in turn will hold a list of items</li>
+    <li> Create the Tracks object, which will contain a list of Track. Copy this</li>
     <li> Create the Artist and Track domain objects. Copy these</li>
     <li> Create an instance of RestAdapter, and use this to instantiate the SpotifySearchService. Add the rest call to the created click listener. </li>
     <li> Run the app and perform a search. Add a Toast to the success callback, and also log if success or error. Remember to log error</li>
@@ -202,16 +203,27 @@
 <span class="n">SpotifyService</span> <span class="n">spotifyService</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">SpotifyService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span></code></pre></figure>
 
 <h3> TrackResponse, Track and Artist classes</h3>
-
 <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TrackResponse</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Tracks</span> <span class="n">tracks</span><span class="o">;</span>
 
-    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="nf">getTracks</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">Tracks</span> <span class="nf">getTracks</span><span class="o">()</span> <span class="o">{</span>
         <span class="k">return</span> <span class="n">tracks</span><span class="o">;</span>
     <span class="o">}</span>
 
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setTracks</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">tracks</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setTracks</span><span class="o">(</span><span class="n">Tracks</span> <span class="n">tracks</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">this</span><span class="o">.</span><span class="na">tracks</span> <span class="o">=</span> <span class="n">tracks</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Tracks</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">items</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="nf">getItems</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">items</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setItems</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Track</span><span class="o">&gt;</span> <span class="n">items</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">items</span> <span class="o">=</span> <span class="n">items</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
     </code></pre></figure>
