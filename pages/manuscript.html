@@ -191,14 +191,13 @@
 
 <h3> Retrofit SpotifySearchService</h3>
 <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">SpotifyService</span> <span class="o">{</span>
-    <span class="nd">@GET</span><span class="o">(</span><span class="s">&quot;/search/1/track.json&quot;</span><span class="o">)</span>
-    <span class="kt">void</span> <span class="nf">searchForTrack</span><span class="o">(</span><span class="nd">@Query</span><span class="o">(</span><span class="s">&quot;q&quot;</span><span class="o">)</span> <span class="n">String</span> <span class="n">input</span><span class="o">,</span> <span class="n">Callback</span><span class="o">&lt;</span><span class="n">TrackResponse</span><span class="o">&gt;</span> <span class="n">trackResponse</span><span class="o">);</span>
+    <span class="nd">@GET</span><span class="o">(</span><span class="s">&quot;/v1/search&quot;</span><span class="o">)</span>
+    <span class="n">Call</span><span class="o">&lt;</span><span class="n">TrackResponse</span><span class="o">&gt;</span> <span class="nf">searchForTrack</span><span class="o">(</span><span class="nd">@Query</span><span class="o">(</span><span class="s">&quot;q&quot;</span><span class="o">)</span> <span class="n">String</span> <span class="n">input</span><span class="o">,</span> <span class="nd">@Query</span><span class="o">(</span><span class="s">&quot;type&quot;</span><span class="o">)</span> <span class="n">String</span> <span class="n">type</span><span class="o">);</span>
 <span class="o">}</span></code></pre></figure>
 
 
-<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">BASE_URL</span> <span class="o">=</span> <span class="s">&quot;http://ws.spotify.com/&quot;</span><span class="o">;</span>
-<span class="n">RestAdapter</span> <span class="n">adapter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RestAdapter</span><span class="o">.</span><span class="na">Builder</span><span class="o">()</span>
-             <span class="o">.</span><span class="na">setEndpoint</span><span class="o">(</span><span class="s">&quot;http://ws.spotify.com/&quot;</span><span class="o">)</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">RestAdapter</span> <span class="n">adapter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RestAdapter</span><span class="o">.</span><span class="na">Builder</span><span class="o">()</span>
+             <span class="o">.</span><span class="na">setEndpoint</span><span class="o">(</span><span class="s">&quot;https://api.spotify.com&quot;</span><span class="o">)</span>
              <span class="o">.</span><span class="na">build</span><span class="o">();</span>
 <span class="n">SpotifyService</span> <span class="n">spotifyService</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">SpotifyService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span></code></pre></figure>
 
