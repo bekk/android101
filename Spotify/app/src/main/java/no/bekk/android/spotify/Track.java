@@ -5,14 +5,14 @@ import java.util.List;
 public class Track {
     private String name;
     private List<Artist> artists;
-    private String href;
+    private String uri;
 
-    public String getHref() {
-        return href;
+    public String getUri() {
+        return uri;
     }
 
-    public void setHref(String href) {
-        this.href = href;
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
     public List<Artist> getArtists() {

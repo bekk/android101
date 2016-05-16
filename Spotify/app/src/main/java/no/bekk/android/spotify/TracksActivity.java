@@ -11,10 +11,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.GsonConverterFactory;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class TracksActivity extends Activity implements TapDelegate {
 
@@ -32,30 +33,32 @@ public class TracksActivity extends Activity implements TapDelegate {
         final TracksAdapter tracksAdapter = new TracksAdapter(tracks, this, this);
         recyclerView.setAdapter(tracksAdapter);
 
-        final RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint("http://ws.spotify.com")
+        final Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.spotify.com")
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        SpotifyService spotifyService = restAdapter.create(SpotifyService.class);
-        spotifyService.searchForTrack(input, new Callback<TrackResult>() {
+        SpotifyService spotifyService = retrofit.create(SpotifyService.class);
+        spotifyService.searchForTrack(input, "track").enqueue(new Callback<TracksResult>() {
             @Override
-            public void success(TrackResult trackResult, Response response) {
-                tracks.clear();
-                tracks.addAll(trackResult.getTracks());
-                tracksAdapter.notifyDataSetChanged();
+            public void onResponse(Call<TracksResult> call, Response<TracksResult> response) {
+                if (response.isSuccessful()) {
+                    tracks.clear();
+                    tracks.addAll(response.body().getTracks().getItems());
+                    tracksAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
-            public void failure(RetrofitError error) {
-                Toast.makeText(TracksActivity.this, error.getMessage(),
+            public void onFailure(Call<TracksResult> call, Throwable t) {
+                Toast.makeText(TracksActivity.this, t.getMessage(),
                         Toast.LENGTH_LONG).show();
             }
         });
-
     }
 
     @Override
     public void didTapOnTrack(Track track) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(track.getHref()));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(track.getUri()));
         if (getPackageManager().resolveActivity(intent, 0) != null) {
             startActivity(intent);
         }

@@ -1,13 +1,12 @@
 package no.bekk.android.spotify;
 
-import retrofit.Callback;
-import retrofit.http.GET;
-import retrofit.http.Query;
+
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 public interface SpotifyService {
 
-    @GET("/search/1/track.json")
-    void searchForTrack(@Query("q") String query,
-                        Callback<TrackResult> trackResult);
-
+    @GET("/v1/search")
+    Call<TracksResult> searchForTrack(@Query("q") String query, @Query("type") String type);
 }
