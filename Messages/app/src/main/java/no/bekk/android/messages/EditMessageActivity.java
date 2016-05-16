@@ -11,9 +11,9 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class EditMessageActivity extends Activity {
@@ -50,19 +50,17 @@ public class EditMessageActivity extends Activity {
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Message sendMsg = new Message(fromText.getText().toString(),msgText.getText().toString());
-                App.getMessageService().update(sendMsg, message.getId(), new Callback<Message>() {
+                Message sendMsg = new Message(fromText.getText().toString(), msgText.getText().toString());
+                App.getMessageService().update(sendMsg, message.getId()).enqueue(new Callback<Message>() {
                     @Override
-                    public void success(Message s, Response response) {
+                    public void onResponse(Response<Message> response) {
                         Toast.makeText(EditMessageActivity.this, "Meldingen ble oppdatert", Toast.LENGTH_SHORT).show();
                         EditMessageActivity.this.finish();
                     }
 
                     @Override
-                    public void failure(RetrofitError error) {
+                    public void onFailure(Throwable t) {
                         Toast.makeText(EditMessageActivity.this, "Kunne ikke sende melding", Toast.LENGTH_SHORT).show();
-                        if (BuildConfig.DEBUG)
-                            throw error;
                     }
                 });
             }

@@ -4,8 +4,8 @@ import com.fatboyindustrial.gsonjodatime.Converters;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import retrofit.RestAdapter;
-import retrofit.converter.GsonConverter;
+import retrofit2.GsonConverterFactory;
+import retrofit2.Retrofit;
 
 public class App {
 
@@ -14,11 +14,11 @@ public class App {
     public static MessageService getMessageService() {
         if (messageService == null) {
             final Gson gson = Converters.registerDateTime(new GsonBuilder()).create();
-            RestAdapter restAdapter = new RestAdapter.Builder()
-                    .setEndpoint("http://mobile-course.herokuapp.com")
-                    .setConverter(new GsonConverter(gson))
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("http://mobile-course.herokuapp.com")
+                    .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
-            messageService = restAdapter.create(MessageService.class);
+            messageService = retrofit.create(MessageService.class);
         }
         return messageService;
     }

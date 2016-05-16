@@ -25,9 +25,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import no.bekk.android.messages.imgur.ImgurUpload;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class NewMessageActivity extends Activity {
@@ -57,28 +57,22 @@ public class NewMessageActivity extends Activity {
             }
         });
 
-//        showKeyboard();
-
         View actionButton = findViewById(R.id.action_button);
-
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Message message = new Message(fromField.getText().toString(), messageField.getText().toString());
                 message.setImage(imageUrl);
-                App.getMessageService().send(message, new Callback<Message>() {
+                App.getMessageService().send(message).enqueue(new Callback<Message>() {
                     @Override
-                    public void success(Message message, Response response) {
+                    public void onResponse(Response<Message> response) {
                         Toast.makeText(NewMessageActivity.this, "Meldingen ble sendt", Toast.LENGTH_SHORT).show();
                         NewMessageActivity.this.finish();
                     }
 
                     @Override
-                    public void failure(RetrofitError retrofitError) {
+                    public void onFailure(Throwable t) {
                         Toast.makeText(NewMessageActivity.this, "Kunne ikke sende melding", Toast.LENGTH_SHORT).show();
-                        if (BuildConfig.DEBUG) {
-                            throw retrofitError;
-                        }
                     }
                 });
             }

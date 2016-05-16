@@ -21,9 +21,9 @@ import java.util.List;
 
 import no.bekk.android.messages.utils.LongTapDelegate;
 import no.bekk.android.messages.utils.TapDelegate;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class MessagesActivity extends Activity implements TapDelegate, LongTapDelegate {
@@ -61,22 +61,19 @@ public class MessagesActivity extends Activity implements TapDelegate, LongTapDe
 
     private void fetchMessagesAsync() {
         setProgressBarIndeterminateVisibility(true);
-        App.getMessageService().fetchMessages(new Callback<List<Message>>() {
+        App.getMessageService().fetchMessages().enqueue(new Callback<List<Message>>() {
             @Override
-            public void success(List<Message> messages, Response response) {
+            public void onResponse(Response<List<Message>> response) {
                 MessagesActivity.this.messages.clear();
-                MessagesActivity.this.messages.addAll(Ordering.from(Message.comparator).sortedCopy(messages));
+                MessagesActivity.this.messages.addAll(Ordering.from(Message.comparator).sortedCopy(response.body()));
                 getAdapter().notifyDataSetChanged();
                 setProgressBarIndeterminateVisibility(false);
             }
 
             @Override
-            public void failure(RetrofitError retrofitError) {
+            public void onFailure(Throwable t) {
                 setProgressBarIndeterminateVisibility(false);
                 Toast.makeText(MessagesActivity.this, "Could not fetch messages at this time", Toast.LENGTH_SHORT).show();
-                if (BuildConfig.DEBUG) {
-                    throw retrofitError;
-                }
             }
         });
     }

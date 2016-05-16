@@ -40,8 +40,8 @@ public class TracksActivity extends Activity implements TapDelegate {
         SpotifyService spotifyService = retrofit.create(SpotifyService.class);
         spotifyService.searchForTrack(input, "track").enqueue(new Callback<TracksResult>() {
             @Override
-            public void onResponse(Call<TracksResult> call, Response<TracksResult> response) {
-                if (response.isSuccessful()) {
+            public void onResponse(Response<TracksResult> response) {
+                if (response.isSuccess()) {
                     tracks.clear();
                     tracks.addAll(response.body().getTracks().getItems());
                     tracksAdapter.notifyDataSetChanged();
@@ -49,7 +49,7 @@ public class TracksActivity extends Activity implements TapDelegate {
             }
 
             @Override
-            public void onFailure(Call<TracksResult> call, Throwable t) {
+            public void onFailure(Throwable t) {
                 Toast.makeText(TracksActivity.this, t.getMessage(),
                         Toast.LENGTH_LONG).show();
             }

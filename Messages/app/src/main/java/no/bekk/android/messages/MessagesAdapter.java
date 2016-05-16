@@ -2,6 +2,7 @@ package no.bekk.android.messages;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +67,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
             holder.image.setVisibility(View.GONE);
         }
 
-        if (message.getFrom() != null) {
+        if (message.getFrom() != null && message.getFrom().length() > 0) {
             String letter = message.getFrom().substring(0, 1);
             TextDrawable textDrawable = senderIcons.get(letter);
             if (textDrawable == null) {

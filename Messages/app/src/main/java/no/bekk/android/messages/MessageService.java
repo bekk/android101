@@ -2,24 +2,24 @@ package no.bekk.android.messages;
 
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.http.Body;
-import retrofit.http.DELETE;
-import retrofit.http.GET;
-import retrofit.http.POST;
-import retrofit.http.PUT;
-import retrofit.http.Path;
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface MessageService {
     @GET("/message")
-    void fetchMessages(Callback<List<Message>> callback);
+    Call<List<Message>> fetchMessages();
 
     @POST("/message")
-    void send(@Body Message message, Callback<Message> callback);
+    Call<Message> send(@Body Message message);
 
     @DELETE("/message/{id}")
-    void delete(@Path("id") String id, Callback<String> callback);
+    Call<String> delete(@Path("id") String id);
 
     @PUT("/message/{id}")
-    void update(@Body Message message,@Path("id") String id, Callback<Message> callback);
+    Call<Message> update(@Body Message message, @Path("id") String id);
 }
