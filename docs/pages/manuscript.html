@@ -181,16 +181,15 @@ public class MainActivity extends ActionBarActivity {
 <h3> Retrofit SpotifySearchService</h3>
 {% highlight java %}
 public interface SpotifyService {
-    @GET("/search/1/track.json")
-    void searchForTrack(@Query("q") String input, Callback<TrackResponse> trackResponse);
+    @GET("/v1/search")
+    Call<TrackResponse> searchForTrack(@Query("q") String input, @Query("type") String type);
 }
 {% endhighlight %}
 
 
 {% highlight java %}
-private static final String BASE_URL = "http://ws.spotify.com/";
 RestAdapter adapter = new RestAdapter.Builder()
-             .setEndpoint("http://ws.spotify.com/")
+             .setEndpoint("https://api.spotify.com")
              .build();
 SpotifyService spotifyService = adapter.create(SpotifyService.class);
 {% endhighlight %}

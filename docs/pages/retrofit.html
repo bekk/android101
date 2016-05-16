@@ -34,15 +34,14 @@ Retrofit retrofit = new Retrofit.Builder()
 MessageService msgs = retrofit.create(MessageService.class);
 msgs.listMessages().enqueue(new Callback<List<Message>>() {
     @Override
-    public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
+    public void onResponse(Response<List<Message>> response) {
         List<Message> messages = messages.response.body();
         // Successfull request, do something with the retrieved messages
-        // Call is passed as it contains state. You can for instance check if the request was cancelled by the user
     }
 
     @Override
-    public void onFailure(Call<List<Message>> call, Throwable t) {
-        // Failed request. Call is passed as it contains state. You can for instance check if the request was cancelled by the user
+    public void onFailure(Throwable t) {
+        // Failed request. 
     }
 });
 {% endhighlight %}
