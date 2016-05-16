@@ -34,22 +34,23 @@ Retrofit retrofit = new Retrofit.Builder()
 MessageService msgs = retrofit.create(MessageService.class);
 msgs.listMessages().enqueue(new Callback<List<Message>>() {
     @Override
-    public void success(Response<List<Message>> messages) {
+    public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
         List<Message> messages = messages.response.body();
         // Successfull request, do something with the retrieved messages
+        // Call is passed as it contains state. You can for instance check if the request was cancelled by the user
     }
 
     @Override
-    public void failure(RetrofitError retrofitError) {
-        // Failed request
+    public void onFailure(Call<List<Message>> call, Throwable t) {
+        // Failed request. Call is passed as it contains state. You can for instance check if the request was cancelled by the user
     }
 });
 {% endhighlight %}
 
 <h3>Gradle dependecy</h3>
 This workshop is using the following dependencies for Retrofit and GSON converter:
-<code>compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'</code>
-<code>compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'</code>
+<p><code>compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'</code></p>
+<p><code>compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'</code></p>
 The newest version of Retrofit is 2.0.2, but we experienced issues when using different versions for Retrofit and the GSON converter.
 Therefore, we use version 2.0.
 
