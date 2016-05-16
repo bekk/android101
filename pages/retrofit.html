@@ -25,6 +25,7 @@ To use Retrofit, declare a service using a simple interface with annotated metho
 As Retrofit handles the communication between the main UI thread and a background thread, in addition to JSON parsing when using a converter, it can greatly simply the workflow by reducing the amount of overhead.
 
 <br/>
+
 <p>Below is an example of the <code>MessageService.java</code> interface.</p>
 
 <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">MessageService</span> <span class="o">{</span>
@@ -56,6 +57,18 @@ These will be run depending on the success of the request. Also, notice that we 
         <span class="c1">// Failed request</span>
     <span class="o">}</span>
 <span class="o">});</span></code></pre></figure>
+
+<h3>Gradle dependecy</h3>
+This workshop is using the following dependencies for Retrofit and GSON converter:
+<code>compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'</code>
+<code>compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'</code>
+The newest version of Retrofit is 2.0.2, but we experienced issues when using different versions for Retrofit and the GSON converter.
+Therefore, we use version 2.0.
+
+
+
+
+
 
 
           </div>
