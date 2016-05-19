@@ -195,7 +195,7 @@
 <span class="o">}</span></code></pre></figure>
 
 
-<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">RestAdapter</span> <span class="n">adapter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RestAdapter</span><span class="o">.</span><span class="na">Builder</span><span class="o">()</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">Retrofit</span> <span class="n">adapter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Retrofit</span><span class="o">.</span><span class="na">Builder</span><span class="o">()</span>
              <span class="o">.</span><span class="na">setEndpoint</span><span class="o">(</span><span class="s">&quot;https://api.spotify.com&quot;</span><span class="o">)</span>
              <span class="o">.</span><span class="na">build</span><span class="o">();</span>
 <span class="n">SpotifyService</span> <span class="n">spotifyService</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">SpotifyService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span></code></pre></figure>
