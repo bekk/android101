@@ -187,7 +187,7 @@ public interface SpotifyService {
 
 
 {% highlight java %}
-RestAdapter adapter = new RestAdapter.Builder()
+Retrofit adapter = new Retrofit.Builder()
              .setEndpoint("https://api.spotify.com")
              .build();
 SpotifyService spotifyService = adapter.create(SpotifyService.class);
