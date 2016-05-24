@@ -69,13 +69,13 @@ title: Manuscript
       <code><p>Retrofit is a library for turning your Rest API into a Java Interface.</p>
         <p> It handles moving the network call into a background thread, parsing JSON with GSON, and returning the result to the UI thread.</p></code>
         Add Gradle dependency and say that retrofit2.0 requires a converter in order to parse JSON:
-        <p><code>compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'</code></p>
-        <p><code>compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'</code></p>
+        <p><code>compile 'com.squareup.retrofit2:retrofit:2.0.2'</code></p>
+        <p><code>compile 'com.squareup.retrofit2:converter-gson:2.0.2'</code></p>
     <li>Add SpotifySearchService which is the Retrofit interface. Maybe live code this. Also, add URL as a final variable to the MainActivity.
         <p><code>https://api.spotify.com</code></p>
         <p><code>"/v1/search"</code></p>
     </li>
-    <li> Create the Result object and explain its connection to the JSON structure returned by the Spotify API. It will hold a Tracks object, which in turn will hold a list of items</li>
+    <li> Create the TrackResponse object and explain its connection to the JSON structure returned by the Spotify API. It will hold a Tracks object, which in turn will hold a list of items</li>
     <li> Create the Tracks object, which will contain a list of Track. Copy this</li>
     <li> Create the Artist and Track domain objects. Copy these</li>
     <li> Create an instance of Retrofit, and use this to instantiate the SpotifySearchService. </li>

@@ -48,12 +48,10 @@ msgs.listMessages().enqueue(new Callback<List<Message>>() {
 
 <h3>Gradle dependecy</h3>
 This workshop is using the following dependencies for Retrofit and GSON converter:
-<p><code>compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'</code></p>
-<p><code>compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'</code></p>
-The newest version of Retrofit is 2.0.2, but we experienced issues when using different versions for Retrofit and the GSON converter.
-Therefore, we use version 2.0.
 
-
-
+{% highlight groovy %}
+compile 'com.squareup.retrofit2:retrofit:2.0.2'
+compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+{% endhighlight %}
 
 
