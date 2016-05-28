@@ -5,7 +5,7 @@ title: Manuscript
 <h3>Introduction</h3>
 <li>Who are we, where do we work and what experience do we have with Android? </li>
 <li>What are we presenting today? We will live code an application and show how the different components work. The app will allow the user to search for a Spotify track, and play the found track on a device</li>
-<li> Afterwards, you will do assignments where the goal is to create a Twitter like app which communicates with a REST API</li>
+<li> Along the way, you will do assignments where the goal is to create a Twitter like app which communicates with a REST API</li>
 <li> Please ask questions.</li>
 <li> How many have brought devices/installed emulators?  </li>
 <li> If you do not have a device or an emulator, join those who do.</li>
@@ -108,13 +108,16 @@ title: Manuscript
     </li>
     <code>compile 'com.android.support:recyclerview-v7:+'</code>
     <li>Add the recyclerview in tracks_activity.xml. android.support.v7.widget.RecyclerView</id>
-    <li>Create a layout for each track, item_track.xml. Add two textviews, one for artist another for track name.</li>
-    <li>Get the recyclerview in TracksActivity and set a LinearLayoutManager.</li>
+    <li> When binding the recyclerview to Java code, first set the Layoutmanager </li>
+    <li> When setting the adapter, say briefly that the adapter will be used for setting data in each list element</li>
+    <li> Create Arraylist with tracks. Create constructor for Tracksadapter with this list and the context</li>
+    <li>Remove toast in retrofit success callback and clear the tracklist and add all new tracks. Remember to notify adapter.</li>
     <li>Create a TracksAdapter with an inner view holder class.</li>
     <li>The TracksAdapter needs a reference to a List of tracks and a Context (for creating layout inflater).</li>
-    <li>Implement onBind (set text of views inside view holder) and onCreate (inflate item_track.xml).</li>
-    <li>Go back to TracksActivity and setAdapter on the recyclerview.</li>
-    <li>Remove toast in retrofit success callback and clear the tracklist and add all new tracks. Remember to notify adapter.</li>
+    <li>Create a layout for each track, item_track.xml. Add two textviews, one for artist another for track name.</li>
+    <li>Implement onCreateViewHolder, and describe what it does</li>
+    <li>Implement onBindViewHolder, and describe the reuse of views</li>
+    <li>Set the item count</li>
     <li>Test app.</li>
     <li>Set onclicklistener on the view in view holder. Notify activity via a delegate interface.</li>
     <li>In TracksActivity, create implicit intent with action view and uri.parse(href). Check with packageManager if activity for intent exists. startActivity(intent).</li>
