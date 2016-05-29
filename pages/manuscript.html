@@ -21,7 +21,7 @@
             <h3>Introduction</h3>
 <li>Who are we, where do we work and what experience do we have with Android? </li>
 <li>What are we presenting today? We will live code an application and show how the different components work. The app will allow the user to search for a Spotify track, and play the found track on a device</li>
-<li> Afterwards, you will do assignments where the goal is to create a Twitter like app which communicates with a REST API</li>
+<li> Along the way, you will do assignments where the goal is to create a Twitter like app which communicates with a REST API</li>
 <li> Please ask questions.</li>
 <li> How many have brought devices/installed emulators?  </li>
 <li> If you do not have a device or an emulator, join those who do.</li>
@@ -30,11 +30,11 @@
 <h3>Main</h3>
 <ol>
     <li>Open Android Studio. Decribe that it is the standard IDE choice. Create an empty project. Briefly mention what an Activity is, along with the xml layout.</li>
-    <li> Say that we use Gradle instead of Maven, as it is Googles' top choice </li>
     <li> Create simple activity (Choose Empty activity) </li>
     <li> Briefly explain the package system in Android Studio</li>
+    <li> Say that we use Gradle instead of Maven, as it is Googles' top choice </li>
     <li>Explain the Android Manifest</li>
-    <li>Explain Activities and onCreate() (<a href="android-app-structure-and-components.html"> App Structure And Components</a>)</li>
+    <li>Explain Activities and onCreate() (<a href="android-app-structure-and-components.html">App Structure And Components</a>)</li>
     <code><p>An activity can be seen as a controller in an MVC pattern. </p>
     <p>It is a single focused screen the user can interact with. It is responsible for creating a view, and coordinating interaction and state.</p>
     <p>An application typically has multiple Activities, and during use, switches between them</p>
@@ -42,7 +42,7 @@
     </code>
     <li> Say that we now need to create a layout for our activity</li>
     <li>Explain the UI builder</li>
-    <li>Explain layouts and layout controls (<a href="common-view-controls.html"> Common View Controls</a>), (<a href="view-layout.html"> View Layout</a>)).</li>
+    <li>Explain layouts and layout controls (<a href="common-view-controls.html">Common View Controls</a>), (<a href="view-layout.html">View Layout</a>)).</li>
           <code><p>LinearLayout: Positions element either in a single row or column, based on orientation.</p>
         <p>Can adjust and move elements by using the gravity property</p>
         <p>Relative Layout: Positions elements relative to each other or the parent container.</p>
@@ -85,13 +85,13 @@
       <code><p>Retrofit is a library for turning your Rest API into a Java Interface.</p>
         <p> It handles moving the network call into a background thread, parsing JSON with GSON, and returning the result to the UI thread.</p></code>
         Add Gradle dependency and say that retrofit2.0 requires a converter in order to parse JSON:
-        <p><code>compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'</code></p>
-        <p><code>compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'</code></p>
+        <p><code>compile 'com.squareup.retrofit2:retrofit:2.0.2'</code></p>
+        <p><code>compile 'com.squareup.retrofit2:converter-gson:2.0.2'</code></p>
     <li>Add SpotifySearchService which is the Retrofit interface. Maybe live code this. Also, add URL as a final variable to the MainActivity.
         <p><code>https://api.spotify.com</code></p>
         <p><code>"/v1/search"</code></p>
     </li>
-    <li> Create the Result object and explain its connection to the JSON structure returned by the Spotify API. It will hold a Tracks object, which in turn will hold a list of items</li>
+    <li> Create the TrackResponse object and explain its connection to the JSON structure returned by the Spotify API. It will hold a Tracks object, which in turn will hold a list of items</li>
     <li> Create the Tracks object, which will contain a list of Track. Copy this</li>
     <li> Create the Artist and Track domain objects. Copy these</li>
     <li> Create an instance of Retrofit, and use this to instantiate the SpotifySearchService. </li>
@@ -124,13 +124,16 @@
     </li>
     <code>compile 'com.android.support:recyclerview-v7:+'</code>
     <li>Add the recyclerview in tracks_activity.xml. android.support.v7.widget.RecyclerView</id>
-    <li>Create a layout for each track, item_track.xml. Add two textviews, one for artist another for track name.</li>
-    <li>Get the recyclerview in TracksActivity and set a LinearLayoutManager.</li>
+    <li> When binding the recyclerview to Java code, first set the Layoutmanager </li>
+    <li> When setting the adapter, say briefly that the adapter will be used for setting data in each list element</li>
+    <li> Create Arraylist with tracks. Create constructor for Tracksadapter with this list and the context</li>
+    <li>Remove toast in retrofit success callback and clear the tracklist and add all new tracks. Remember to notify adapter.</li>
     <li>Create a TracksAdapter with an inner view holder class.</li>
     <li>The TracksAdapter needs a reference to a List of tracks and a Context (for creating layout inflater).</li>
-    <li>Implement onBind (set text of views inside view holder) and onCreate (inflate item_track.xml).</li>
-    <li>Go back to TracksActivity and setAdapter on the recyclerview.</li>
-    <li>Remove toast in retrofit success callback and clear the tracklist and add all new tracks. Remember to notify adapter.</li>
+    <li>Create a layout for each track, item_track.xml. Add two textviews, one for artist another for track name.</li>
+    <li>Implement onCreateViewHolder, and describe what it does</li>
+    <li>Implement onBindViewHolder, and describe the reuse of views</li>
+    <li>Set the item count</li>
     <li>Test app.</li>
     <li>Set onclicklistener on the view in view holder. Notify activity via a delegate interface.</li>
     <li>In TracksActivity, create implicit intent with action view and uri.parse(href). Check with packageManager if activity for intent exists. startActivity(intent).</li>
@@ -229,14 +232,14 @@
    <figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Track</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
     <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Artist</span><span class="o">&gt;</span> <span class="n">artists</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">href</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">uri</span><span class="o">;</span>
 
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getHref</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">href</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getUri</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">uri</span><span class="o">;</span>
     <span class="o">}</span>
 
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setHref</span><span class="o">(</span><span class="n">String</span> <span class="n">href</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">href</span> <span class="o">=</span> <span class="n">href</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setUri</span><span class="o">(</span><span class="n">String</span> <span class="n">uri</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">uri</span> <span class="o">=</span> <span class="n">uri</span><span class="o">;</span>
     <span class="o">}</span>
 
     <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Artist</span><span class="o">&gt;</span> <span class="nf">getArtists</span><span class="o">()</span> <span class="o">{</span>
