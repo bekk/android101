@@ -109,10 +109,10 @@ title: Manuscript
     <code>compile 'com.android.support:recyclerview-v7:+'</code>
     <li>Add the recyclerview in tracks_activity.xml. android.support.v7.widget.RecyclerView</id>
     <li> When binding the recyclerview to Java code, first set the Layoutmanager </li>
-    <li> When setting the adapter, say briefly that the adapter will be used for setting data in each list element</li>
+    <li> When setting the adapter, say that the adapter will be used for creating layout for each row, setting data and recycling data. </li>
     <li> Create Arraylist with tracks. Create constructor for Tracksadapter with this list and the context</li>
     <li>Remove toast in retrofit success callback and clear the tracklist and add all new tracks. Remember to notify adapter.</li>
-    <li>Create a TracksAdapter with an inner view holder class.</li>
+    <li>Create a TracksAdapter with an inner static view holder class. Describe that ViewHolder holds views and subviews, and that adapter creates as many ViewHolders that are visible to screen. Adapter populates and updates data in each ViewHolder. ListView would create views for each row.    </li>
     <li>The TracksAdapter needs a reference to a List of tracks and a Context (for creating layout inflater).</li>
     <li>Create a layout for each track, item_track.xml. Add two textviews, one for artist another for track name.</li>
     <li>Implement onCreateViewHolder, and describe what it does</li>
