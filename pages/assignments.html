@@ -20,7 +20,7 @@
             <h1 class="page-header">Assignments</h1>
             <h3>1a. Creating a new message screen</h3>
 <ol>
-  <li>Create new Activity (Right click package in the Project View -> New -> Activity -> Blank Activity) called NewMessageActivity.</li>
+  <li>Create a new project in Android Studio. Name your Activity NewMessageActivity.</li>
   <li>We will now create a label for the message sender input field. Go to the layout file (activity_new_message.xml) and add TextView component inside the root LinearLayout. Give it a width of wrap_content (as wide as the text inside it plus paddings etc.) and height of wrap_content (will be as big as the text content plus paddings etc.). To show the label text, add the android:text attribute and refer to a string in the res/values/strings.xml file by using the syntax @string/your_string. You will need to create this string in the strings resource file.</li>
   <li>Create the input field for message sender by adding an EditText component inside the root LinearLayout. Give it a width of match_parent (fill the screen from left to right) and height of wrap_content. To be able to access the input text in the activity, we need to give the edittext an android:id attribute. We will use a special syntax when creating this id for the first time: @+id/your_id. Later on, if you need to refer to this component you can skip the + sign.</li>
   <li>Repeat the two above steps for creating a label and input field for the message text.</li>
@@ -186,6 +186,7 @@ were used when creating this workshop:
 <figure class="highlight"><pre><code class="language-groovy" data-lang="groovy"><span class="n">compile</span> <span class="s1">&#39;com.squareup.retrofit2:retrofit:2.0.2&#39;</span>
 <span class="n">compile</span> <span class="s1">&#39;com.squareup.retrofit2:converter-gson:2.0.2&#39;</span></code></pre></figure>
 For updated versions, feel free to check out the <a href="http://square.github.io/retrofit/">Retrofit</a> homepage. 
+
 
           </div>
           <nav class="span4">
